@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0e1420"/>
+<!-- shared by link, not meant for search engines — remove this line if you ever want indexing -->
+<meta name="robots" content="noindex"/>
+<title>Jeremy's Hub — study tools & apps</title>
+<style>
+:root{
+  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
+  --line:#27324a; --line2:#33405c;
+  --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
+  --acc:#4f9dff; --acc2:#2f6fd0;
+  --good:#39d98a; --hard:#ffce54;
+  --shadow:0 10px 40px rgba(0,0,0,.45);
+  --r:16px; --maxw:900px;
+}
+html[data-theme="light"]{
+  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
+  --line:#dbe3ef; --line2:#c7d3e6;
+  --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
+  --acc:#1f6fe0; --acc2:#1657b8;
+  --good:#128a55; --hard:#a9791a;
+  --shadow:0 8px 30px rgba(30,50,90,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 80px}
+button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
+header{display:flex;align-items:flex-start;gap:12px;margin-bottom:6px}
+h1{font-size:26px;margin:0;letter-spacing:-.4px}
+.sub{color:var(--tx2);font-size:14px;margin:4px 0 0}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto;transition:.15s;flex:0 0 auto}
+.iconbtn:hover{border-color:var(--line2);color:var(--tx)}
+.search{margin:20px 0 6px}
+.search input{width:100%;background:var(--card);border:1.5px solid var(--line2);border-radius:12px;padding:12px 16px;color:var(--tx);font:inherit;outline:none;transition:.15s}
+.search input:focus{border-color:var(--acc)}
+h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px}
+.tile{display:flex;flex-direction:column;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;text-decoration:none;color:inherit;transition:.16s;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.tile:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:var(--shadow)}
+.tile .top{display:flex;align-items:center;gap:10px}
+.tile .ic{font-size:24px;line-height:1}
+.tile .nm{font-weight:800;font-size:15px;letter-spacing:-.2px;line-height:1.25}
+.tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.45}
+.tile .badge{position:absolute;top:12px;right:12px;font-size:9.5px;font-weight:800;letter-spacing:.7px;padding:3px 7px;border-radius:6px;text-transform:uppercase}
+.badge.beta{background:rgba(255,206,84,.14);color:var(--hard);border:1px solid rgba(255,206,84,.35)}
+.badge.new{background:rgba(57,217,138,.13);color:var(--good);border:1px solid rgba(57,217,138,.35)}
+.empty{color:var(--tx3);text-align:center;padding:50px 10px;font-size:14px}
+.foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
+.foot a{color:var(--tx3)}
+@media(max-width:520px){.grid{grid-template-columns:1fr 1fr}.tile .ds{display:none}.tile{padding:13px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>🧭 Jeremy's Hub</h1>
+      <p class="sub">Study tools, simulators &amp; apps — everything in one place. All free, all offline-capable, nothing tracked.</p>
+    </div>
+    <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+  </header>
+  <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
+  <div id="sections"></div>
+  <div class="foot">One link to rule them all: <a href="https://jeremyspm.github.io/">jeremyspm.github.io</a><br/>Made by a BN student, for BN students. Check answers against your own course material — it always wins.</div>
+</div>
+
+<script>
+'use strict';
+/* ╔════════════════════════════════════════════════════════════════════╗
+   ║ ADDING A PROJECT = add ONE object to PROJECTS below. Fields:       ║
+   ║   cat  — must match a CATEGORIES id                                ║
+   ║   ic   — emoji icon      nm — display name                        ║
+   ║   ds   — one-line description (what it is + what it's for)         ║
+   ║   url  — full https URL of the live app                            ║
+   ║   badge (optional) — 'new' | 'beta'                                ║
+   ║ Then commit + push this repo. That's the whole integration.        ║
+   ╚════════════════════════════════════════════════════════════════════╝ */
+/* ===== PROJECTS START ===== */
+const CATEGORIES=[
+  {id:'cram',  name:'📚 Cram & study tools'},
+  {id:'sim',   name:'🫀 Interactive explorers'},
+  {id:'clin',  name:'🩺 Clinical & career'},
+  {id:'tool',  name:'🧰 Toolbox'},
+  {id:'life',  name:'🌏 Beyond nursing'},
+];
+const PROJECTS=[
+  // --- cram & study ---
+  {cat:'cram', ic:'🧠', nm:'BN1 722.553 Final Cram', ds:'669-card active-recall trainer for the Foundations of Nursing final — MCQ + 5-mark drills mirroring the real paper.', url:'https://jeremyspm.github.io/bn1-cram/'},
+  {cat:'cram', ic:'🍽️', nm:'Test 3 Cram — Health Science 1', ds:'Digestion, nutrients & metabolism: MCQ trainer, case vault, exam mode, glossary, read-aloud.', url:'https://jeremyspm.github.io/health-science-test3-cram/'},
+  {cat:'cram', ic:'⚡', nm:'BN1 Drill — Health Science 1', ds:'Rapid-fire drill tool for Health Science 1.', url:'https://jeremyspm.github.io/bn1-drill/'},
+  {cat:'cram', ic:'🔬', nm:'Module 1 Deep Dive — Health Science 2', ds:'Pre-class deep-dive study hub for 722.541 Module 1.', url:'https://jeremyspm.github.io/module1-study-hub/'},
+  {cat:'cram', ic:'📝', nm:'Continuous Test 2 Hub', ds:'Study hub for Health Science 1 Continuous Test 2.', url:'https://1999jeremym.github.io/continuoustest2/'},
+  {cat:'cram', ic:'👶', nm:'Lifespan Quiz 1 Study Hub', ds:'Human lifespan & development — quiz prep hub.', url:'https://1999jeremym.github.io/FONlifespanquiz1/'},
+  {cat:'cram', ic:'🤝', nm:'FOPD Professionalism Summative', ds:'Foundations of Professional Development — summative prep.', url:'https://1999jeremym.github.io/FOPDProfessionalismSummative/'},
+  {cat:'cram', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
+  // --- explorers ---
+  {cat:'sim', ic:'🫘', nm:'Nephron Simulator', ds:'Nephron flow & fluid balance simulator — student nurse edition.', url:'https://1999jeremym.github.io/nephron/'},
+  {cat:'sim', ic:'🚻', nm:'Urinary System Hub', ds:'Interactive urinary system study hub.', url:'https://1999jeremym.github.io/urinary/'},
+  {cat:'sim', ic:'🦴', nm:'BN1 Anatomy Explorer', ds:'Interactive anatomy explorer for BN1.', url:'https://1999jeremym.github.io/test2outline/'},
+  // --- clinical & career ---
+  {cat:'clin', ic:'🛂', nm:'Placement Passport', ds:'Clinical portfolio: placement hours, skills sign-offs, Gibbs reflections, printable PDF report. Your data stays on your device.', url:'https://jeremyspm.github.io/placement-passport/', badge:'beta'},
+  // --- toolbox ---
+  {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
+  // --- beyond nursing ---
+  {cat:'life', ic:'✈️', nm:'Japan 2027 Trip Tracker', ds:'Trip planning & tracking for Japan, February 2027.', url:'https://jeremyspm.github.io/japan-2027/'},
+  // Not yet published (flip in when live):
+  // {cat:'cram', ic:'🗺️', nm:'Giga Study App', ds:'SRS mindmap study app.', url:'…'},
+  // {cat:'life', ic:'💍', nm:'Vow — Wedding Cut Coach', ds:'…', url:'…'},
+];
+/* ===== PROJECTS END ===== */
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function render(filter){
+  const toks=(filter||'').trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const secs=CATEGORIES.map(cat=>{
+    const items=PROJECTS.filter(p=>p.cat===cat.id&&toks.every(t=>(p.nm+' '+p.ds).toLowerCase().includes(t)));
+    if(!items.length) return '';
+    return `<h2 class="sec">${cat.name}</h2><div class="grid">${items.map(p=>`
+      <a class="tile" href="${p.url}" ${p.badge?`data-b="${p.badge}"`:''}>
+        ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
+        <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
+        <span class="ds">${esc(p.ds)}</span>
+      </a>`).join('')}</div>`;
+  }).join('');
+  $('#sections').innerHTML=secs||`<div class="empty">Nothing matches "${esc(f)}".</div>`;
+}
+$('#q').oninput=e=>render(e.target.value);
+const TK='hub.theme';
+function applyTheme(){ document.documentElement.setAttribute('data-theme',localStorage.getItem(TK)||'dark'); }
+$('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
+applyTheme();
+render('');
+</script>
+</body>
+</html>
