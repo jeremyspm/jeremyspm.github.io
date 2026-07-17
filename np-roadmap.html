@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0e1420"/>
+<meta name="robots" content="noindex"/>
+<title>NP Roadmap — BN1 to Nurse Practitioner</title>
+<style>
+:root{
+  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
+  --line:#27324a; --line2:#33405c;
+  --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
+  --acc:#9b8cff; --acc2:#7a63e8;
+  --good:#39d98a; --hard:#ffce54;
+  --shadow:0 10px 40px rgba(0,0,0,.45);
+  --r:16px; --maxw:820px;
+}
+html[data-theme="light"]{
+  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
+  --line:#dbe3ef; --line2:#c7d3e6;
+  --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
+  --acc:#6a52e8; --acc2:#5540c2;
+  --good:#128a55; --hard:#a9791a;
+  --shadow:0 8px 30px rgba(30,50,90,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+a{color:var(--acc)}
+button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.top a.back{font-size:13px;text-decoration:none;color:var(--tx3);border:1px solid var(--line);border-radius:9px;padding:7px 12px;background:var(--card)}
+.top a.back:hover{color:var(--tx);border-color:var(--line2)}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.4px}
+.sub{color:var(--tx2);font-size:14px;margin:0 0 8px}
+.updated{font-size:12px;color:var(--tx3);margin-bottom:22px}
+.now{background:linear-gradient(160deg,rgba(155,140,255,.16),rgba(155,140,255,.04));border:1px solid rgba(155,140,255,.45);border-radius:var(--r);padding:15px 18px;margin-bottom:26px;font-size:14.5px}
+.now b{color:var(--acc)}
+/* timeline */
+.tl{position:relative;padding-left:34px}
+.tl::before{content:"";position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:var(--line2);border-radius:2px}
+.stage{position:relative;margin-bottom:22px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.stage::before{content:"";position:absolute;left:-28px;top:22px;width:14px;height:14px;border-radius:50%;background:var(--acc);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--acc)}
+.stage.done::before{background:var(--good);box-shadow:0 0 0 2px var(--good)}
+.stage .when{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--acc);margin-bottom:3px}
+.stage h2{font-size:17px;margin:0 0 8px;letter-spacing:-.2px}
+.stage p{margin:0 0 8px;font-size:14px;color:var(--tx2)}
+.stage p:last-child{margin-bottom:0}
+.stage ul{margin:6px 0 4px;padding-left:20px;font-size:14px;color:var(--tx2)}
+.stage li{margin-bottom:5px}
+.stage .key{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px;margin-top:10px}
+.stage .key b{color:var(--hard)}
+.pill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:6px;background:rgba(57,217,138,.13);color:var(--good);border:1px solid rgba(57,217,138,.35);margin-left:6px;vertical-align:2px}
+h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin:30px 0 12px}
+.watch{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:9px;font-size:14px}
+.watch b{color:var(--hard)}
+.src{font-size:12.5px;color:var(--tx3);line-height:1.8}
+.foot{margin-top:34px;text-align:center;font-size:12px;color:var(--tx3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="./">← Hub</a>
+    <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+  </div>
+  <h1>🎓 The NP Roadmap</h1>
+  <p class="sub">BN1 → Registered Nurse → Nurse Practitioner, in Aotearoa New Zealand — personalised to a July 2026 start point.</p>
+  <p class="updated">Researched 18 July 2026 · funding schemes and Council processes change — recheck the sources yearly.</p>
+
+  <div class="now">📍 <b>You are here:</b> BN Year 1, Semester 2 (July 2026). Everything below is sequenced from this point. Realistic NP registration window on this path: <b>≈ 2034–2036</b> — and nearly half of that time is normal paid RN work that counts toward it.</div>
+
+  <div class="tl">
+    <div class="stage">
+      <div class="when">Now → late 2028</div>
+      <h2>1 · Finish the BN</h2>
+      <p>Three years, heavy on placements from here on. Two things in this window quietly matter for NP later:</p>
+      <ul>
+        <li><b>Keep an evidence trail</b> — hours, skills sign-offs, reflections (the Placement Passport exists for exactly this).</li>
+        <li><b>Start noticing which practice area pulls you</b> — primary care, mental health, acute, aged care. The NP clock runs on experience <i>in one area of practice</i>, so the earlier the area is chosen, the less time is wasted later.</li>
+      </ul>
+      <div class="key">In BN3: apply for new-graduate (NETP) positions — applications run months before graduation via the national ACE process. Confirm the current process with your school when you get there.</div>
+    </div>
+
+    <div class="stage">
+      <div class="when">Late 2028 → early 2029</div>
+      <h2>2 · RN registration — State Final Examination</h2>
+      <p>Sit the Nursing Council's State Final Examination and register as an RN. Note: NCNZ is transitioning exam content onto its new RN standards of competence ("pou") across 2026–2028 — your cohort sits the updated version, so learn the new standards, not old past-paper folklore.</p>
+    </div>
+
+    <div class="stage">
+      <div class="when">2029</div>
+      <h2>3 · New-grad year (NETP)</h2>
+      <p>Supported first year of practice. <b>This is the biggest fork on the whole road:</b> the area you land in starts (or doesn't start) your NP experience clock. Primary care and mental health are also where nearly all the funded NP training places sit — 120 of 180 and 23 of 180 respectively.</p>
+    </div>
+
+    <div class="stage">
+      <div class="when">2029 → ~2033</div>
+      <h2>4 · Build the experience + stack postgrad papers early</h2>
+      <p>NCNZ requires at least <b>4 years' experience in your area of practice</b> before NP registration. The efficient move: start funded postgraduate papers (PGCert → PGDip) part-time from year one or two of RN work — Health NZ runs postgraduate nursing funding rounds, and those papers ladder directly into the clinical master's.</p>
+      <div class="key"><b>Compounding trick:</b> experience years and master's papers run in parallel, not in sequence. Nurses who wait to "finish getting experience first" add 2–3 years to the road for nothing.</div>
+    </div>
+
+    <div class="stage">
+      <div class="when">~2032 → 2034</div>
+      <h2>5 · Clinical Master's + NP practicum year</h2>
+      <p>Complete an NCNZ-accredited clinical master's (advanced assessment, pharmacology/prescribing, and ≥300 hours of supervised advanced clinical practice). The final practicum year is where the <b>Nurse Practitioner Training Support Scheme</b> comes in: ~180 funded places/year with wraparound support for you and your employer, applications typically open Aug–Sep the year before.</p>
+      <div class="key">The scheme needs your <b>employer on board</b> — being the kind of RN a practice wants to grow into their NP is half the application.</div>
+    </div>
+
+    <div class="stage">
+      <div class="when">~2034 → 2036</div>
+      <h2>6 · NP registration <span class="pill">goal</span></h2>
+      <p>Portfolio + assessment against the NP competencies by a Council-approved panel → registered Nurse Practitioner: autonomous practice, diagnosing, and prescribing. The scheme's support runs through your first six months as an NP.</p>
+    </div>
+  </div>
+
+  <h2 class="sec">⚠️ Watch-items (recheck these yearly)</h2>
+  <div class="watch"><b>Funding is political.</b> The NP <i>transition</i> programme's funding has already ended once (RNZ, 2024) while the Training Support Scheme continued — scheme names, place counts, and windows shift with budgets. Verify against Health NZ each year from RN registration onward.</div>
+  <div class="watch"><b>Area of practice lock-in.</b> Switching specialty areas mid-path can reset the 4-year experience requirement. Choose deliberately in the new-grad year.</div>
+  <div class="watch"><b>Exam standards transition.</b> The State Final Exam is absorbing the new RN standards through 2026–2028 — by BN3, study to the new pou, and treat older prep material with suspicion.</div>
+
+  <h2 class="sec">Sources</h2>
+  <p class="src">
+    <a href="https://www.nursingcouncil.org.nz/common/Uploaded%20files/Public/Nursing/Nurse%20Practitioner/Nurse%20Practitioner%20Scope%20Guidelines%202023.pdf">NCNZ — Nurse Practitioner scope &amp; guidelines</a> ·
+    <a href="https://www.nurse.org.nz/do-you-want-to-become-an-np-in-new-zealand.html">College of Nurses Aotearoa — Becoming an NP</a> ·
+    <a href="https://nursingcouncil.org.nz/Public/NCNZ/Education-section/State_final_examinations.aspx">NCNZ — State Final Examinations</a> ·
+    <a href="https://nursingcouncil.org.nz/Public/NCNZ/nursing-section/Guidance-to-EN-and-RN-new-scopes-and-standards-of-competence.aspx">NCNZ — new RN scopes &amp; standards of competence</a> ·
+    <a href="https://www.healthnz.govt.nz/health-professionals/workforce-development/scholarships-and-grants/professions/registered-nurses-funding/nurse-practitioner-training-support-scheme">Health NZ — NP Training Support Scheme</a> ·
+    <a href="https://www.tewhatuora.govt.nz/for-health-professionals/health-workforce-development/nursing/postgraduate-funding-applications">Health NZ — postgraduate nursing funding</a> ·
+    <a href="https://www.rnz.co.nz/news/national/545207/funding-for-the-nurse-practitioners-transition-programme-comes-to-an-end">RNZ — NP transition programme funding ends</a>
+  </p>
+
+  <div class="foot">Made for one specific future NP. Verify everything against NCNZ &amp; Health NZ when each stage arrives.</div>
+</div>
+<script>
+'use strict';
+const TK='hub.theme';
+function applyTheme(){ document.documentElement.setAttribute('data-theme',localStorage.getItem(TK)||'dark'); }
+document.querySelector('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
+applyTheme();
+</script>
+</body>
+</html>
