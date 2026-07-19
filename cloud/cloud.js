@@ -62,7 +62,7 @@
       if (!ok) { log('supabase-js not available — staying local-only'); Cloud._readyResolve(false); return; }
       // persistSession:true + shared origin = one login at the hub carries to every app.
       Cloud.client = window.supabase.createClient(CFG.url, CFG.key, {
-        auth: { persistSession: true, autoRefreshToken: true, storageKey: 'hub-auth' }
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storageKey: 'hub-auth' }
       });
       Cloud.client.auth.getSession().then(function (r) {
         Cloud._user = (r && r.data && r.data.session && r.data.session.user) || null;
@@ -113,6 +113,18 @@
   Cloud.signOut = function () {
     if (!Cloud.client) return Promise.resolve({});
     return Cloud.client.auth.signOut();
+  };
+  // Send a password-reset email; the link lands on the hub's reset page.
+  Cloud.resetPassword = function (email) {
+    if (!Cloud.client) return Promise.resolve({ error: { message: 'Cloud not ready' } });
+    return guard(Cloud.client.auth.resetPasswordForEmail(email, {
+      redirectTo: (CFG.resetUrl || 'https://jeremyspm.github.io/reset.html')
+    }));
+  };
+  // Set a new password (used on the reset page once the recovery link is open).
+  Cloud.updatePassword = function (newPassword) {
+    if (!Cloud.client) return Promise.resolve({ error: { message: 'Cloud not ready' } });
+    return guard(Cloud.client.auth.updateUser({ password: newPassword }));
   };
 
   /* ---------- data sync ---------- */

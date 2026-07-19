@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0e1420"/>
+<meta name="robots" content="noindex"/>
+<title>Reset password — Jeremy's Hub</title>
+<style>
+:root{
+  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
+  --line:#27324a; --line2:#33405c; --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
+  --acc:#4f9dff; --acc2:#2f6fd0; --good:#39d98a; --miss:#ff6b6b;
+  --shadow:0 10px 40px rgba(0,0,0,.45);
+}
+@media(prefers-color-scheme:light){:root{
+  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
+  --line:#dbe3ef; --line2:#c7d3e6; --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
+  --acc:#1f6fe0; --acc2:#1657b8; --good:#128a55; --miss:#c53b3b;
+  --shadow:0 8px 30px rgba(30,50,90,.14);
+}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100%;padding:18px}
+.sheet{background:var(--card);border:1px solid var(--line2);border-radius:16px;max-width:400px;width:100%;padding:24px;box-shadow:var(--shadow)}
+h1{font-size:19px;margin:0 0 4px}
+.lead{margin:0 0 16px;font-size:13.5px;color:var(--tx2);line-height:1.5}
+label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);margin:0 0 5px}
+input{width:100%;background:var(--card2);border:1.5px solid var(--line2);border-radius:10px;padding:11px 13px;color:var(--tx);font:inherit;outline:none;margin-bottom:12px}
+input:focus{border-color:var(--acc)}
+.go{width:100%;background:var(--acc);color:#fff;border:none;border-radius:11px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;transition:.12s}
+.go:hover{background:var(--acc2)} .go:disabled{opacity:.55;cursor:default}
+.msg{font-size:13.5px;border-radius:9px;padding:10px 13px;margin-bottom:12px;line-height:1.45}
+.msg.err{background:rgba(255,107,107,.13);border:1px solid rgba(255,107,107,.4);color:#ff9a9a}
+.msg.ok{background:rgba(57,217,138,.12);border:1px solid rgba(57,217,138,.4);color:var(--good)}
+a{color:var(--acc);text-decoration:none;font-weight:700}
+.center{text-align:center;margin-top:14px;font-size:13.5px}
+.spin{width:22px;height:22px;border:2.5px solid var(--line2);border-top-color:var(--acc);border-radius:50%;animation:s .7s linear infinite;margin:8px auto 0}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="sheet" id="box">
+  <h1>Reset password</h1>
+  <p class="lead">Checking your reset link…</p>
+  <div class="spin"></div>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="cloud/config.js"></script>
+<script src="cloud/cloud.js"></script>
+<script>
+'use strict';
+const box = document.getElementById('box');
+function view(html){ box.innerHTML = html; }
+
+function noLink(){
+  view(`<h1>Reset password</h1>
+    <p class="lead">This page opens from the link in a password-reset email. It looks like the link is missing, already used, or expired.</p>
+    <div class="center"><a href="./">← Back to the hub</a> — sign in there and use “Forgot password?” to get a fresh link.</div>`);
+}
+
+function form(){
+  view(`<h1>Set a new password</h1>
+    <p class="lead">Choose a new password for your account.</p>
+    <div id="m"></div>
+    <label>New password</label>
+    <input id="p1" type="password" autocomplete="new-password" placeholder="at least 6 characters"/>
+    <label>Confirm new password</label>
+    <input id="p2" type="password" autocomplete="new-password" placeholder="type it again"/>
+    <button class="go" id="save">Save new password</button>`);
+  const p1=document.getElementById('p1'), p2=document.getElementById('p2'), save=document.getElementById('save'), m=document.getElementById('m');
+  p1.focus();
+  const submit=async()=>{
+    const a=p1.value, b=p2.value;
+    if(a.length<6){ m.innerHTML=`<div class="msg err">Password must be at least 6 characters.</div>`; return; }
+    if(a!==b){ m.innerHTML=`<div class="msg err">The two passwords don’t match.</div>`; return; }
+    save.disabled=true; save.textContent='Saving…';
+    let r; try{ r=await Cloud.updatePassword(a); }catch(e){ r={error:{message:'Something went wrong — try again.'}}; }
+    if(r && r.error){ m.innerHTML=`<div class="msg err">${(r.error.message||'Could not update password.')}</div>`; save.disabled=false; save.textContent='Save new password'; return; }
+    view(`<h1>Password updated ✅</h1>
+      <p class="lead">Your password has been changed. Taking you to the hub to sign in…</p>`);
+    try{ await Cloud.signOut(); }catch(e){}
+    setTimeout(()=>{ location.href='./'; }, 2200);
+  };
+  save.onclick=submit;
+  p2.addEventListener('keydown',e=>{ if(e.key==='Enter') submit(); });
+}
+
+(async function(){
+  if(!window.Cloud || !Cloud.enabled){ noLink(); return; }
+  // The recovery session may arrive via the URL slightly after init — wait for it.
+  let done=false;
+  Cloud.onChange(user=>{ if(user && !done){ done=true; form(); } });
+  await Cloud.ready;
+  if(!done && Cloud.user()){ done=true; form(); return; }
+  // Give the URL-detected recovery session a few seconds to land, else treat as no valid link.
+  setTimeout(()=>{ if(!done){ done=true; noLink(); } }, 5000);
+})();
+</script>
+</body>
+</html>

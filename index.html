@@ -205,10 +205,11 @@ render('');
         <label>Email</label><input id="ae" type="email" autocomplete="email" placeholder="you@example.com"/>
         <label>Password</label><input id="ap" type="password" autocomplete="${mode==='in'?'current-password':'new-password'}" placeholder="${mode==='in'?'your password':'at least 6 characters'}"/>
         <button class="go" id="ago">${mode==='in'?'Sign in':'Create account'}</button>
-        <div class="alt">${mode==='in'?`No account? <a id="aswap">Create one</a>`:`Have an account? <a id="aswap">Sign in</a>`}</div>
+        <div class="alt">${mode==='in'?`No account? <a id="aswap">Create one</a> &nbsp;·&nbsp; <a id="aforgot">Forgot password?</a>`:`Have an account? <a id="aswap">Sign in</a>`}</div>
       </div>`;
       m.querySelector('#ax').onclick=()=>m.remove();
       m.querySelector('#aswap').onclick=()=>{ mode=mode==='in'?'up':'in'; draw(); };
+      const fg=m.querySelector('#aforgot'); if(fg) fg.onclick=forgot;
       m.querySelector('#ago').onclick=submit;
       m.querySelector('#ap').onkeydown=e=>{ if(e.key==='Enter') submit(); };
       m.querySelector('#ae').focus();
@@ -232,6 +233,15 @@ render('');
         go.disabled=false; go.textContent='Sign in'; mode='in'; return;
       }
       m.remove();   // onAuthStateChange updates the button + pulls data
+    }
+    async function forgot(){
+      const email=m.querySelector('#ae').value.trim();
+      const msg=m.querySelector('#amsg');
+      if(!email){ msg.innerHTML=`<div class="msg err">Type your email above first, then tap “Forgot password?”.</div>`; m.querySelector('#ae').focus(); return; }
+      msg.innerHTML=`<div class="msg ok">Sending…</div>`;
+      let r; try{ r=await Cloud.resetPassword(email); }catch(e){ r={error:{message:'Something went wrong.'}}; }
+      if(r && r.error){ msg.innerHTML=`<div class="msg err">${esc(r.error.message||'Could not send the reset email.')}</div>`; return; }
+      msg.innerHTML=`<div class="msg ok">If an account exists for <b>${esc(email)}</b>, a reset link is on its way. <b>Check your spam folder</b> — it can take a few minutes.</div>`;
     }
     m.onclick=e=>{ if(e.target===m) m.remove(); };
     draw(); document.body.appendChild(m);
