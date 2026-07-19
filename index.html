@@ -57,6 +57,30 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
 .foot a{color:var(--tx3)}
 @media(max-width:520px){.grid{grid-template-columns:1fr 1fr}.tile .ds{display:none}.tile{padding:13px 14px}}
+/* account button + auth modal (only shown when cloud sync is configured) */
+.acct{display:flex;align-items:center;gap:8px}
+.acctbtn{border:1px solid var(--line);background:var(--card);color:var(--tx2);border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+.acctbtn:hover{border-color:var(--acc);color:var(--tx)}
+.acctbtn .who{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acctbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex:0 0 auto}
+.cloudnote{font-size:12px;color:var(--tx3);margin:0 0 14px;padding:9px 13px;border:1px dashed var(--line2);border-radius:10px;background:var(--card)}
+.cloudnote b{color:var(--acc)}
+.modal{position:fixed;inset:0;background:rgba(5,9,16,.68);display:flex;align-items:center;justify-content:center;z-index:60;padding:18px;animation:fade .16s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--card);border:1px solid var(--line2);border-radius:16px;max-width:400px;width:100%;padding:22px;box-shadow:var(--shadow)}
+.sheet h3{margin:0 0 4px;font-size:18px}
+.sheet .lead{margin:0 0 16px;font-size:13px;color:var(--tx2);line-height:1.5}
+.sheet label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);margin:0 0 5px}
+.sheet input{width:100%;background:var(--card2);border:1.5px solid var(--line2);border-radius:10px;padding:11px 13px;color:var(--tx);font:inherit;outline:none;margin-bottom:12px}
+.sheet input:focus{border-color:var(--acc)}
+.sheet .go{width:100%;background:var(--acc);color:#fff;border-radius:11px;padding:12px;font-size:15px;font-weight:800;transition:.12s}
+.sheet .go:hover{background:var(--acc2)} .sheet .go:disabled{opacity:.55}
+.sheet .alt{margin-top:12px;text-align:center;font-size:13px;color:var(--tx2)}
+.sheet .alt a{color:var(--acc);cursor:pointer;font-weight:700}
+.sheet .msg{font-size:13px;border-radius:9px;padding:9px 12px;margin-bottom:12px;line-height:1.45}
+.sheet .msg.err{background:rgba(255,107,107,.13);border:1px solid rgba(255,107,107,.4);color:#ff9a9a}
+.sheet .msg.ok{background:rgba(57,217,138,.12);border:1px solid rgba(57,217,138,.4);color:var(--good)}
+.sheet .x{float:right;font-size:19px;color:var(--tx3);padding:0 4px;margin:-4px -4px 0 0}
 </style>
 </head>
 <body>
@@ -66,12 +90,21 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
       <h1>🧭 Jeremy's Hub</h1>
       <p class="sub">Study tools, simulators &amp; apps — everything in one place. All free, all offline-capable, nothing tracked.</p>
     </div>
-    <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+    <div class="acct">
+      <button class="acctbtn" id="btnAcct" style="display:none"></button>
+      <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+    </div>
   </header>
+  <div id="cloudNote"></div>
   <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
   <div class="foot">One link to rule them all: <a href="https://jeremyspm.github.io/">jeremyspm.github.io</a><br/>Made by a BN student, for BN students. Check answers against your own course material — it always wins.</div>
 </div>
+
+<!-- Cloud sync (optional): dormant until hub/cloud/config.js is filled in -->
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="cloud/config.js"></script>
+<script src="cloud/cloud.js"></script>
 
 <script>
 'use strict';
@@ -141,6 +174,69 @@ function applyTheme(){ document.documentElement.setAttribute('data-theme',localS
 $('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
 applyTheme();
 render('');
+
+/* ---------- cloud account UI (only if Cloud is configured) ---------- */
+(function(){
+  if(!window.Cloud || !Cloud.enabled) return;   // dormant → hub looks exactly as before
+  const btn=$('#btnAcct'), note=$('#cloudNote');
+  btn.style.display='inline-flex';
+  Cloud.onChange(user=>{
+    if(user){
+      btn.innerHTML=`<span class="dot"></span><span class="who">${esc(user.email||'signed in')}</span>`;
+      btn.title='Signed in — click to sign out';
+      note.innerHTML=`<span>☁️ <b>Synced.</b> Your progress in every app follows you to any device you sign in on.</span>`;
+    } else {
+      btn.innerHTML=`☁️ Sign in`;
+      btn.title='Sign in to sync your progress across devices';
+      note.innerHTML=`<span>☁️ <b>Cloud sync available.</b> Sign in once here and your progress syncs across devices. Optional — everything works offline without it.</span>`;
+    }
+  });
+  btn.onclick=()=>{ Cloud.user() ? Cloud.signOut() : openAuth(); };
+
+  function openAuth(){
+    let mode='in';
+    const m=document.createElement('div'); m.className='modal';
+    const draw=()=>{
+      m.innerHTML=`<div class="sheet">
+        <button class="x" id="ax">✕</button>
+        <h3>${mode==='in'?'Sign in':'Create account'}</h3>
+        <p class="lead">${mode==='in'?'Sign in to sync your progress across devices.':'Just an email and a password — used only to keep your own data yours.'}</p>
+        <div id="amsg"></div>
+        <label>Email</label><input id="ae" type="email" autocomplete="email" placeholder="you@example.com"/>
+        <label>Password</label><input id="ap" type="password" autocomplete="${mode==='in'?'current-password':'new-password'}" placeholder="${mode==='in'?'your password':'at least 6 characters'}"/>
+        <button class="go" id="ago">${mode==='in'?'Sign in':'Create account'}</button>
+        <div class="alt">${mode==='in'?`No account? <a id="aswap">Create one</a>`:`Have an account? <a id="aswap">Sign in</a>`}</div>
+      </div>`;
+      m.querySelector('#ax').onclick=()=>m.remove();
+      m.querySelector('#aswap').onclick=()=>{ mode=mode==='in'?'up':'in'; draw(); };
+      m.querySelector('#ago').onclick=submit;
+      m.querySelector('#ap').onkeydown=e=>{ if(e.key==='Enter') submit(); };
+      m.querySelector('#ae').focus();
+    };
+    async function submit(){
+      const email=m.querySelector('#ae').value.trim(), pw=m.querySelector('#ap').value;
+      const msg=m.querySelector('#amsg'), go=m.querySelector('#ago');
+      if(!email||!pw){ msg.innerHTML=`<div class="msg err">Enter your email and password.</div>`; return; }
+      go.disabled=true; go.textContent='…';
+      let r;
+      try{ r = mode==='in' ? await Cloud.signIn(email,pw) : await Cloud.signUp(email,pw); }
+      catch(e){ r = {error:{message:'Something went wrong — try again.'}}; }
+      if(r && r.error){
+        msg.innerHTML=`<div class="msg err">${esc(r.error.message||'Something went wrong.')}</div>`;
+        go.disabled=false; go.textContent=mode==='in'?'Sign in':'Create account';
+        return;
+      }
+      // Sign-up with email confirmation ON returns a user but no session yet.
+      if(mode==='up' && !(r.data&&r.data.session)){
+        msg.innerHTML=`<div class="msg ok">Account made — check your email to confirm, then sign in.</div>`;
+        go.disabled=false; go.textContent='Sign in'; mode='in'; return;
+      }
+      m.remove();   // onAuthStateChange updates the button + pulls data
+    }
+    m.onclick=e=>{ if(e.target===m) m.remove(); };
+    draw(); document.body.appendChild(m);
+  }
+})();
 </script>
 </body>
 </html>
