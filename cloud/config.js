@@ -1,13 +1,9 @@
-/* Cloud sync config for Jeremy's Hub.
-   Fill these two values in from Supabase (Settings → API), then commit + push.
-   Until BOTH are filled, cloud sync stays completely dormant and every app
-   behaves exactly as it does today (offline, local-only) — nothing breaks.
-
-   These two values are PUBLIC by design: the anon key is meant to ship in the
-   browser. It grants NO access on its own — Row-Level Security means a user can
-   only ever reach their own rows, and only after signing in. Never paste the
-   "service_role" key here; that one is secret. Only the "anon" / "public" key. */
+/* Cloud sync config for Jeremy's Hub (project: BN-hub).
+   These two values are PUBLIC by design — the anon key is meant to ship in the
+   browser. It grants NO access on its own: Row-Level Security means a user can
+   only ever reach their own rows, and only after signing in. The secret
+   "service_role" key is NOT here and must never be. */
 window.HUB_CLOUD = {
-  url: "",   // e.g. "https://abcdefgh.supabase.co"
-  key: ""    // the anon / public key (a long token starting with "eyJ...")
+  url: "https://lnfoyklfxrkwgvqkoeor.supabase.co",
+  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxuZm95a2xmeHJrd2d2cWtvZW9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzYxNjksImV4cCI6MjEwMDAxMjE2OX0.WAlvKYEe556z5ExafHFkWPJMnAZ-maMo2dPytTQ3xsA"
 };
