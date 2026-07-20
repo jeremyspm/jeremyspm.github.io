@@ -43,7 +43,9 @@ h1{font-size:26px;margin:0;letter-spacing:-.4px}
 .search input:focus{border-color:var(--acc)}
 h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
 h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;padding-left:11px;border-left:2px solid var(--line2)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px}
+.grid+h3.subsec{margin-top:20px}
 .tile{display:flex;flex-direction:column;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;text-decoration:none;color:inherit;transition:.16s;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .tile:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:var(--shadow)}
 .tile .top{display:flex;align-items:center;gap:10px}
@@ -56,6 +58,7 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .badge.new{background:rgba(57,217,138,.13);color:var(--good);border:1px solid rgba(57,217,138,.35)}
 .empty{color:var(--tx3);text-align:center;padding:50px 10px;font-size:14px}
 .soon{color:var(--tx3);font-size:12.5px;padding:11px 15px;border:1px dashed var(--line2);border-radius:12px}
+.soon-sub{padding:9px 13px;font-size:12px}
 .foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
 .foot a{color:var(--tx3)}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
@@ -121,11 +124,15 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
    ╚════════════════════════════════════════════════════════════════════╝ */
 /* ===== PROJECTS START ===== */
 const CATEGORIES=[
-  {id:'sem2', name:'📗 Semester 2'},
-  {id:'sem3', name:'📘 Semester 3'},
-  {id:'sem4', name:'📙 Semester 4'},
-  {id:'sem5', name:'📕 Semester 5'},
-  {id:'sem6', name:'📓 Semester 6'},
+  {id:'sem2', name:'📗 Semester 2', subs:[
+    {id:'sem2-pharm',   name:'Introduction to Pharmacology'},
+    {id:'sem2-nursing', name:'Introduction to Nursing Practice'},
+    {id:'sem2-hs2',     name:'Health Science 2'},
+  ]},
+  {id:'sem3', name:'📘 Semester 3', hidden:true},
+  {id:'sem4', name:'📙 Semester 4', hidden:true},
+  {id:'sem5', name:'📕 Semester 5', hidden:true},
+  {id:'sem6', name:'📓 Semester 6', hidden:true},
   {id:'skills', name:'🧮 Clinical skills'},   // cross-semester tools (e.g. med-calc gate)
   {id:'career', name:'🩺 Career'},
 ];
@@ -133,12 +140,14 @@ const PROJECTS=[
   // --- clinical skills (not tied to one semester) ---
   {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
   // --- career ---
-  {cat:'career', ic:'🛂', nm:'Placement Passport', ds:'Clinical portfolio: placement hours, skills sign-offs, Gibbs reflections, printable PDF report. Your data stays on your device.', url:'https://jeremyspm.github.io/placement-passport/', badge:'beta'},
   {cat:'career', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa: every stage, requirement, funding scheme and decision point, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
   {cat:'career', ic:'🚑', nm:'ED Nurse Checklist', ds:'2,341-item tickable competency map from Semester 1-2 student to competent ED nurse, staged and searchable.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
   // ── Dev tool — kept INTERNAL, not shown on the hub (2026-07-20). Still live at its URL for building
   //    packs, but future study hubs are meant to be bespoke/polished per topic, not one-size-fits-all. ──
   // {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
+
+  // ── Legacy (Jeremy's call, 2026-07-20) — still live at its URL, just not advertised on the hub ──
+  // {cat:'career', ic:'🛂', nm:'Placement Passport', ds:'Clinical portfolio: placement hours, skills sign-offs, Gibbs reflections, printable PDF report. Your data stays on your device.', url:'https://jeremyspm.github.io/placement-passport/', badge:'beta'},
 
   // ── Culled from the hub 2026-07-18 (apps still live at their URLs; un-comment any line to restore it) ──
   // {cat:'cram', ic:'🧠', nm:'BN1 722.553 Final Cram', ds:'669-card active-recall trainer for the Foundations of Nursing final — MCQ + 5-mark drills mirroring the real paper.', url:'https://jeremyspm.github.io/bn1-cram/'},
@@ -157,17 +166,32 @@ const PROJECTS=[
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function tileHtml(p){
+  return `<a class="tile" href="${p.url}" ${p.badge?`data-b="${p.badge}"`:''}>
+    ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
+    <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
+    <span class="ds">${esc(p.ds)}</span>
+  </a>`;
+}
 function render(filter){
   const toks=(filter||'').trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const secs=CATEGORIES.map(cat=>{
+  const secs=CATEGORIES.filter(cat=>!cat.hidden).map(cat=>{
     const hay=cat.name.toLowerCase();  // let a category name (e.g. "career") surface its tiles too
-    const items=PROJECTS.filter(p=>p.cat===cat.id&&toks.every(t=>(p.nm+' '+p.ds+' '+hay).toLowerCase().includes(t)));
-    if(items.length) return `<h2 class="sec">${cat.name}</h2><div class="grid">${items.map(p=>`
-      <a class="tile" href="${p.url}" ${p.badge?`data-b="${p.badge}"`:''}>
-        ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
-        <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
-        <span class="ds">${esc(p.ds)}</span>
-      </a>`).join('')}</div>`;
+    const matches=p=>toks.every(t=>(p.nm+' '+p.ds+' '+hay).toLowerCase().includes(t));
+
+    if(cat.subs){   // e.g. Semester 2 -> its papers
+      const subHtml=cat.subs.map(sub=>{
+        const items=PROJECTS.filter(p=>p.cat===sub.id&&matches(p));
+        if(items.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="grid">${items.map(tileHtml).join('')}</div>`;
+        if(!toks.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="soon soon-sub">No study hubs here yet.</div>`;
+        return '';
+      }).join('');
+      if(!subHtml) return '';
+      return `<h2 class="sec">${cat.name}</h2>${subHtml}`;
+    }
+
+    const items=PROJECTS.filter(p=>p.cat===cat.id&&matches(p));
+    if(items.length) return `<h2 class="sec">${cat.name}</h2><div class="grid">${items.map(tileHtml).join('')}</div>`;
     // empty semester sections still show — the degree-long scaffolding (hidden while searching)
     if(cat.id.startsWith('sem') && !toks.length)
       return `<h2 class="sec">${cat.name}</h2><div class="soon">Study hubs for this semester will appear here as you build them.</div>`;
