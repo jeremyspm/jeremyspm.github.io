@@ -55,6 +55,7 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .badge.beta{background:rgba(255,206,84,.14);color:var(--hard);border:1px solid rgba(255,206,84,.35)}
 .badge.new{background:rgba(57,217,138,.13);color:var(--good);border:1px solid rgba(57,217,138,.35)}
 .empty{color:var(--tx3);text-align:center;padding:50px 10px;font-size:14px}
+.soon{color:var(--tx3);font-size:12.5px;padding:11px 15px;border:1px dashed var(--line2);border-radius:12px}
 .foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
 .foot a{color:var(--tx3)}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
@@ -120,18 +121,20 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
    ╚════════════════════════════════════════════════════════════════════╝ */
 /* ===== PROJECTS START ===== */
 const CATEGORIES=[
-  {id:'cram',  name:'📚 Cram & study tools'},
-  {id:'sim',   name:'🫀 Interactive explorers'},
-  {id:'clin',  name:'🩺 Clinical & career'},
-  {id:'tool',  name:'🧰 Toolbox'},
-  {id:'life',  name:'🌏 Beyond nursing'},
+  {id:'sem2', name:'📗 Semester 2'},
+  {id:'sem3', name:'📘 Semester 3'},
+  {id:'sem4', name:'📙 Semester 4'},
+  {id:'sem5', name:'📕 Semester 5'},
+  {id:'sem6', name:'📓 Semester 6'},
+  {id:'skills', name:'🧮 Clinical skills'},   // cross-semester tools (e.g. med-calc gate)
+  {id:'career', name:'🩺 Career'},
 ];
 const PROJECTS=[
-  // --- study tools ---
-  {cat:'cram', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
-  // --- clinical & career ---
-  {cat:'clin', ic:'🛂', nm:'Placement Passport', ds:'Clinical portfolio: placement hours, skills sign-offs, Gibbs reflections, printable PDF report. Your data stays on your device.', url:'https://jeremyspm.github.io/placement-passport/', badge:'beta'},
-  {cat:'clin', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa: every stage, requirement, funding scheme and decision point, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
+  // --- clinical skills (not tied to one semester) ---
+  {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
+  // --- career ---
+  {cat:'career', ic:'🛂', nm:'Placement Passport', ds:'Clinical portfolio: placement hours, skills sign-offs, Gibbs reflections, printable PDF report. Your data stays on your device.', url:'https://jeremyspm.github.io/placement-passport/', badge:'beta'},
+  {cat:'career', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa: every stage, requirement, funding scheme and decision point, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
   // ── Dev tool — kept INTERNAL, not shown on the hub (2026-07-20). Still live at its URL for building
   //    packs, but future study hubs are meant to be bespoke/polished per topic, not one-size-fits-all. ──
   // {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
@@ -156,16 +159,20 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function render(filter){
   const toks=(filter||'').trim().toLowerCase().split(/\s+/).filter(Boolean);
   const secs=CATEGORIES.map(cat=>{
-    const items=PROJECTS.filter(p=>p.cat===cat.id&&toks.every(t=>(p.nm+' '+p.ds).toLowerCase().includes(t)));
-    if(!items.length) return '';
-    return `<h2 class="sec">${cat.name}</h2><div class="grid">${items.map(p=>`
+    const hay=cat.name.toLowerCase();  // let a category name (e.g. "career") surface its tiles too
+    const items=PROJECTS.filter(p=>p.cat===cat.id&&toks.every(t=>(p.nm+' '+p.ds+' '+hay).toLowerCase().includes(t)));
+    if(items.length) return `<h2 class="sec">${cat.name}</h2><div class="grid">${items.map(p=>`
       <a class="tile" href="${p.url}" ${p.badge?`data-b="${p.badge}"`:''}>
         ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
         <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
         <span class="ds">${esc(p.ds)}</span>
       </a>`).join('')}</div>`;
+    // empty semester sections still show — the degree-long scaffolding (hidden while searching)
+    if(cat.id.startsWith('sem') && !toks.length)
+      return `<h2 class="sec">${cat.name}</h2><div class="soon">Study hubs for this semester will appear here as you build them.</div>`;
+    return '';
   }).join('');
-  $('#sections').innerHTML=secs||`<div class="empty">Nothing matches "${esc(f)}".</div>`;
+  $('#sections').innerHTML=secs||`<div class="empty">Nothing matches "${esc(toks.join(' '))}".</div>`;
 }
 $('#q').oninput=e=>render(e.target.value);
 const TK='hub.theme';
