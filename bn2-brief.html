@@ -1,0 +1,693 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"></head><body>
+<title>Semester 2 2026 — BN2 Bird's-Eye Brief</title>
+<style>
+  /* ── Palette matched to the BN Hub house look (dark default, flat, blue) ──
+     Per-paper colour-coding kept but remapped to house hues:
+     HS = blue · INP = green · Pharm = violet. Headings use the house sans. */
+  :root {
+    --ground: #0e1420; --surface: #182133; --surface-2: #1e2941;
+    --ink: #e8eef7; --ink-soft: #9fb0c8; --ink-faint: #6d7f9c;
+    --line: #27324a; --line-strong: #33405c;
+    --accent: #4f9dff; --accent-deep: #7ab6ff; --accent-wash: rgba(79,157,255,0.12);
+    --warn: #ffce54; --warn-wash: rgba(255,206,84,0.12);
+    --crit: #e5534b; --crit-wash: rgba(229,83,75,0.13);
+    --hs: #4f9dff;  --hs-wash: rgba(79,157,255,0.15);
+    --inp: #39d98a; --inp-wash: rgba(57,217,138,0.15);
+    --ph: #9d8bff;  --ph-wash: rgba(157,139,255,0.15);
+    --serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    --mono: ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Consolas,monospace;
+    --shadow: 0 2px 10px rgba(0,0,0,.35);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+      --ground: #eef2f8; --surface: #ffffff; --surface-2: #f4f7fc;
+      --ink: #16202f; --ink-soft: #4a5a72; --ink-faint: #6d7f9c;
+      --line: #dbe3ef; --line-strong: #c7d3e6;
+      --accent: #1f6fe0; --accent-deep: #1657b8; --accent-wash: rgba(31,111,224,0.10);
+      --warn: #a9791a; --warn-wash: rgba(169,121,26,0.12);
+      --crit: #c5302a; --crit-wash: rgba(197,48,42,0.10);
+      --hs: #1f6fe0; --hs-wash: rgba(31,111,224,0.12);
+      --inp: #128a55; --inp-wash: rgba(18,138,85,0.12);
+      --ph: #6d40e0; --ph-wash: rgba(109,64,224,0.12);
+      --shadow: 0 2px 12px rgba(30,50,90,.10);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #eef2f8; --surface: #ffffff; --surface-2: #f4f7fc;
+    --ink: #16202f; --ink-soft: #4a5a72; --ink-faint: #6d7f9c;
+    --line: #dbe3ef; --line-strong: #c7d3e6;
+    --accent: #1f6fe0; --accent-deep: #1657b8; --accent-wash: rgba(31,111,224,0.10);
+    --warn: #a9791a; --warn-wash: rgba(169,121,26,0.12);
+    --crit: #c5302a; --crit-wash: rgba(197,48,42,0.10);
+    --hs: #1f6fe0; --hs-wash: rgba(31,111,224,0.12);
+    --inp: #128a55; --inp-wash: rgba(18,138,85,0.12);
+    --ph: #6d40e0; --ph-wash: rgba(109,64,224,0.12);
+    --shadow: 0 2px 12px rgba(30,50,90,.10);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0e1420; --surface: #182133; --surface-2: #1e2941;
+    --ink: #e8eef7; --ink-soft: #9fb0c8; --ink-faint: #6d7f9c;
+    --line: #27324a; --line-strong: #33405c;
+    --accent: #4f9dff; --accent-deep: #7ab6ff; --accent-wash: rgba(79,157,255,0.12);
+    --warn: #ffce54; --warn-wash: rgba(255,206,84,0.12);
+    --crit: #e5534b; --crit-wash: rgba(229,83,75,0.13);
+    --hs: #4f9dff; --hs-wash: rgba(79,157,255,0.15);
+    --inp: #39d98a; --inp-wash: rgba(57,217,138,0.15);
+    --ph: #9d8bff; --ph-wash: rgba(157,139,255,0.15);
+    --shadow: 0 2px 10px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---- top bar ---- */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--ground) 86%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap { display: flex; align-items: center; gap: 16px; height: 54px; }
+  .topbar .mark {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-faint); white-space: nowrap;
+  }
+  .topbar .mark b { color: var(--accent); font-weight: 600; }
+  .topbar nav { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
+  .topbar nav a {
+    font-size: 13px; text-decoration: none; color: var(--ink-soft);
+    padding: 5px 10px; border-radius: 7px; white-space: nowrap;
+  }
+  .topbar nav a:hover { background: var(--surface-2); color: var(--ink); }
+  .topbar nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* house back-to-Hub button + theme toggle */
+  .topbar .hubback {
+    font-size: 13px; font-weight: 600; text-decoration: none; color: var(--ink-soft);
+    padding: 6px 11px; border-radius: 9px; border: 1px solid var(--line);
+    background: var(--surface); white-space: nowrap; flex: 0 0 auto;
+  }
+  .topbar .hubback:hover { color: var(--ink); border-color: var(--accent); }
+  .topbar .themebtn {
+    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 9px; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink-soft);
+    font-size: 15px; line-height: 1; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .topbar .themebtn:hover { color: var(--ink); border-color: var(--accent); }
+  .topbar nav { margin-left: auto; }
+  @media (max-width: 720px) { .topbar .mark { display: none; } }
+
+  /* ---- hero ---- */
+  .hero { padding: 56px 0 30px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent-deep); margin: 0 0 16px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(34px, 5.4vw, 58px);
+    line-height: 1.04; letter-spacing: -0.015em; margin: 0 0 18px;
+    text-wrap: balance; max-width: 16ch;
+  }
+  .lede { font-size: clamp(16px, 2vw, 19px); color: var(--ink-soft); max-width: 60ch; margin: 0; }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  .paper-strip { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .paper-chip {
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 13px 17px; border-radius: 12px; background: var(--surface);
+    border: 1px solid var(--line); box-shadow: var(--shadow);
+    text-decoration: none; color: inherit; flex: 1 1 220px; min-width: 210px;
+    border-left: 4px solid var(--hue);
+    transition: transform .12s ease;
+  }
+  .paper-chip:hover { transform: translateY(-2px); }
+  .paper-chip .code { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing: .04em; }
+  .paper-chip .name { font-weight: 600; font-size: 15.5px; }
+  .paper-chip .split { font-size: 13px; color: var(--ink-soft); }
+
+  /* ---- section frame ---- */
+  section { padding: 34px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin: 0 0 22px; flex-wrap: wrap; }
+  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .1em; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3.4vw, 33px);
+       letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .sec-sub { color: var(--ink-soft); font-size: 15px; margin: -10px 0 24px; max-width: 68ch; }
+
+  /* ---- the big alerts ---- */
+  .alert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 14px; }
+  .alert {
+    padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line);
+    background: var(--surface); box-shadow: var(--shadow);
+  }
+  .alert.crit { border-color: color-mix(in srgb, var(--crit) 40%, var(--line)); background: var(--crit-wash); }
+  .alert.warn { border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); background: var(--warn-wash); }
+  .alert .tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 600; display: inline-block; margin-bottom: 8px;
+  }
+  .alert.crit .tag { color: var(--crit); }
+  .alert.warn .tag { color: var(--warn); }
+  .alert.calm .tag { color: var(--accent-deep); }
+  .alert h3 { margin: 0 0 6px; font-size: 16.5px; font-family: var(--sans); font-weight: 650; }
+  .alert p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .alert .dates { font-family: var(--mono); font-size: 13px; color: var(--ink); margin-top: 9px; }
+
+  /* ---- timeline ---- */
+  .month { display: grid; grid-template-columns: 92px 1fr; gap: 6px; }
+  .month + .month { border-top: 1px dashed var(--line); }
+  .month .m-label {
+    font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink);
+    padding: 16px 0; position: sticky; top: 54px;
+  }
+  .month .m-label span { display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-faint); font-weight: 400; letter-spacing: .08em; }
+  .m-items { padding: 12px 0; display: flex; flex-direction: column; gap: 9px; }
+  .ev {
+    display: grid; grid-template-columns: 62px 1fr auto; gap: 14px; align-items: baseline;
+    padding: 10px 14px; border-radius: 10px; background: var(--surface);
+    border: 1px solid var(--line); border-left: 4px solid var(--hue);
+  }
+  .ev .d { font-family: var(--mono); font-size: 12.5px; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ev .t { font-size: 14.5px; }
+  .ev .t small { display: block; color: var(--ink-faint); font-size: 12.5px; }
+  .ev .w {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 20px;
+    white-space: nowrap; background: var(--hue-wash); color: var(--hue-ink);
+  }
+  .ev.milestone { background: var(--accent-wash); border-left-color: var(--accent); }
+  .ev.milestone .t { font-weight: 600; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 20px; font-size: 13px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-soft); }
+  .dot { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
+  /* ---- paper deep cards ---- */
+  .paper { border-radius: 16px; border: 1px solid var(--line); background: var(--surface);
+           box-shadow: var(--shadow); overflow: hidden; }
+  .paper + .paper { margin-top: 20px; }
+  .paper-top { padding: 20px 24px; border-bottom: 1px solid var(--line); border-top: 5px solid var(--hue);
+               display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+  .paper-top .pcode { font-family: var(--mono); font-size: 12px; color: var(--hue-ink); letter-spacing: .05em; font-weight: 600; }
+  .paper-top h3 { font-family: var(--serif); font-size: 23px; font-weight: 600; margin: 0; }
+  .paper-top .meta { margin-left: auto; font-size: 13px; color: var(--ink-faint); font-family: var(--mono); text-align: right; }
+  .paper-body { padding: 22px 24px; display: grid; gap: 24px; }
+  @media (min-width: 720px) { .paper-body { grid-template-columns: 1fr 1fr; } .paper-body .full { grid-column: 1 / -1; } }
+  .blk h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint);
+            margin: 0 0 11px; font-weight: 650; font-family: var(--sans); }
+
+  .topic-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .topic-tags b { font-weight: 600; color: var(--hue-ink); }
+  .tt { font-size: 13px; padding: 4px 10px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--line); }
+  .tt.head { background: var(--hue-wash); border-color: transparent; font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .tscroll { overflow-x: auto; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+       color: var(--ink-faint); font-weight: 650; padding: 0 10px 8px; border-bottom: 1px solid var(--line-strong); white-space: nowrap; }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.a { font-weight: 600; }
+  td .when { font-family: var(--mono); font-size: 12.5px; color: var(--ink); white-space: nowrap; }
+  .pct { font-family: var(--mono); font-weight: 600; color: var(--hue-ink); font-variant-numeric: tabular-nums; }
+  .mnm { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--warn); background: var(--warn-wash);
+         padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+
+  ul.notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  ul.notes li { position: relative; padding-left: 20px; font-size: 14px; color: var(--ink-soft); }
+  ul.notes li::before { content: ""; position: absolute; left: 0; top: 9px; width: 7px; height: 7px;
+                        border-radius: 2px; background: var(--hue); }
+  ul.notes li b { color: var(--ink); font-weight: 600; }
+  sup a { color: var(--accent-deep); text-decoration: none; font-family: var(--mono); font-size: 10px; font-weight: 600; }
+  sup a:hover { text-decoration: underline; }
+
+  /* ---- hurdles ---- */
+  .hurdles { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 12px; }
+  .hurdle { padding: 15px 17px; border-radius: 12px; background: var(--surface); border: 1px dashed var(--line-strong); }
+  .hurdle .h-p { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--hue-ink); text-transform: uppercase; font-weight: 600; }
+  .hurdle .h-t { font-weight: 600; font-size: 14.5px; margin: 5px 0 3px; }
+  .hurdle .h-w { font-size: 12.5px; color: var(--ink-faint); font-family: var(--mono); }
+
+  /* ---- footnotes ---- */
+  .refs { counter-reset: r; display: grid; gap: 2px; }
+  .ref { display: grid; grid-template-columns: 30px 1fr; gap: 4px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .ref .n { font-family: var(--mono); color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ref .txt { color: var(--ink-soft); }
+  .ref .txt b { color: var(--ink); font-weight: 600; }
+  .ref .txt em { color: var(--ink); font-style: italic; }
+  .ref a { color: var(--accent-deep); text-decoration: none; word-break: break-word; }
+  .ref a:hover { text-decoration: underline; }
+
+  footer { padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 12.5px; }
+  footer p { margin: 4px 0; }
+  .disclaim { font-style: italic; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 560px) {
+    .ev { grid-template-columns: 1fr auto; }
+    .ev .d { grid-column: 1 / -1; }
+    .month { grid-template-columns: 1fr; }
+    .month .m-label { position: static; padding-bottom: 4px; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="hubback" href="https://jeremyspm.github.io/" title="Back to the BN Hub">← Hub</a>
+    <div class="mark"><b>BN2</b> · Sem 2 2026 · MIT</div>
+    <nav>
+      <a href="#watch">What to watch</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#hs">Health Sci 2</a>
+      <a href="#inp">Nursing Practice</a>
+      <a href="#ph">Pharmacology</a>
+      <a href="#hurdles">Hurdles</a>
+      <a href="#refs">Readings</a>
+    </nav>
+    <button class="themebtn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <p class="eyebrow">Semester 2 · 2026 · Bachelor of Nursing Year 2</p>
+  <h1>Your semester, distilled to one page.</h1>
+  <p class="lede">Three papers, thirteen teaching weeks, then four-plus weeks on placement. This brief pulls everything that was readable from Canvas into a single map — <b>what you'll learn, what's assessed, when it's due, and what actually decides whether you pass.</b> Much of Canvas is still gated until the semester opens, so treat dates as the plan-of-record and re-check the live calendar as content unlocks.</p>
+
+  <div class="paper-strip">
+    <a class="paper-chip" href="#hs" style="--hue:var(--hs)">
+      <span class="code">722.541 · Hannetjie Meintjes</span>
+      <span class="name">Health Science 2</span>
+      <span class="split">3 tests (50%) + exam (50%) · anatomy &amp; physiology</span>
+    </a>
+    <a class="paper-chip" href="#inp" style="--hue:var(--inp)">
+      <span class="code">722.556 · Janine Craig</span>
+      <span class="name">Introduction to Nursing Practice</span>
+      <span class="split">Presentation 20% · Case study 30% · Exam 50% + placement</span>
+    </a>
+    <a class="paper-chip" href="#ph" style="--hue:var(--ph)">
+      <span class="code">722 · Pharmacology · Joan Mackie</span>
+      <span class="name">Introduction to Pharmacology</span>
+      <span class="split">Essay 50% · Exam 50% + 2 Met/Not-Met hurdles</span>
+    </a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="watch">
+    <div class="sec-head"><span class="sec-num">01</span><h2>What to watch this semester</h2></div>
+    <p class="sec-sub">Read this part even if you read nothing else. The individual papers each look manageable; the difficulty is where they <em>collide</em>.</p>
+    <div class="alert-grid">
+      <div class="alert crit">
+        <span class="tag">Peak crunch</span>
+        <h3>Three exams in one week</h3>
+        <p>All three finals land in the first week of November, on alternating days. Reverse-plan your revision from here.</p>
+        <div class="dates">Mon 2 Nov · HS2 &nbsp;→&nbsp; Wed 4 Nov · INP &nbsp;→&nbsp; Fri 6 Nov · Pharmacology</div>
+      </div>
+      <div class="alert warn">
+        <span class="tag">October gauntlet</span>
+        <h3>Written &amp; practical work stacks up</h3>
+        <p>The month before exams is when the big-weight coursework and hands-on assessments all fall due together.</p>
+        <div class="dates">5 Oct med-admin starts · 12 Oct Pharm essay · 26 Oct HS2 Test 3</div>
+      </div>
+      <div class="alert warn">
+        <span class="tag">Early spike</span>
+        <h3>Late-August double-up</h3>
+        <p>Your first two graded hurdles arrive in the same window — don't let orientation lull you.</p>
+        <div class="dates">23 Aug · HS2 Test 1 closes &nbsp;·&nbsp; 25 Aug · Med Calc Test</div>
+      </div>
+      <div class="alert calm">
+        <span class="tag">After the exams</span>
+        <h3>Placement runs Nov → Dec</h3>
+        <p>Once finals finish you move into ~116 clinical hours across inpatient &amp; community settings, right through to mid-December.</p>
+        <div class="dates">9 Nov – 18 Dec · Standards of Competence signed off 20 Nov, 4 Dec, 18 Dec</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Assessment timeline</h2></div>
+    <p class="sec-sub">Every graded checkpoint and hurdle across the three papers, month by month. Colour = paper. Dates for HS2 tests are the ProctorU <em>close</em> dates (the window runs Mon–Sun of that week); several practical dates depend on your stream/roster.</p>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--hs)"></i> Health Science 2</span>
+      <span><i class="dot" style="background:var(--inp)"></i> Nursing Practice</span>
+      <span><i class="dot" style="background:var(--ph)"></i> Pharmacology</span>
+      <span><i class="dot" style="background:var(--accent)"></i> Milestone / placement</span>
+    </div>
+
+    <div class="month">
+      <div class="m-label">July<span>Wk 1</span></div>
+      <div class="m-items">
+        <div class="ev milestone" style="--hue:var(--accent)"><span class="d">Wed 29</span><span class="t">Orientation — all BN2 courses begin<small>Teaching starts; HS2 Module 1 (CVS) opens</small></span><span class="w" style="--hue-wash:var(--accent-wash);--hue-ink:var(--accent-deep)">start</span></div>
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Tue 28</span><span class="t">HS2 Orientation Quiz<small>Formative · 5 pts</small></span><span class="w" style="--hue-wash:var(--hs-wash);--hue-ink:var(--hs)">quiz</span></div>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="m-label">August<span>Wk 2–5</span></div>
+      <div class="m-items">
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Fri 7</span><span class="t">Community Profile — assessment briefing<small>Group presentation is set up here</small></span><span class="w" style="--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">brief</span></div>
+        <div class="ev" style="--hue:var(--hs)"><span class="d">Sat 23</span><span class="t">HS2 Test 1 closes<small>Module 1 · 35 Q · 20% SAQ · covers Wk 1–4 + BP &amp; Vaccination cases</small></span><span class="w" style="--hue-wash:var(--hs-wash);--hue-ink:var(--hs)">16.6%</span></div>
+        <div class="ev" style="--hue:var(--ph)"><span class="d">Mon 25</span><span class="t">Medication Calculations Test<small>Must pass · re-sits available</small></span><span class="w" style="--hue-wash:var(--ph-wash);--hue-ink:var(--ph)">Met/Not</span></div>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="m-label">September<span>Wk 6–9</span></div>
+      <div class="m-items">
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Fri 4</span><span class="t">Community Profile presentations — Streams 1A &amp; 1B<small>Group presentation · 20%</small></span><span class="w" style="--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">20%</span></div>
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Mon 14</span><span class="t">INP Case Study due — Stream 2A<small>Written · 30% · then 2B 21 Sep, 1A 28 Sep, 1B 5 Oct</small></span><span class="w" style="--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">30%</span></div>
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Fri 18</span><span class="t">Community Profile presentations — Streams 2A &amp; 2B<small>Group presentation · 20%</small></span><span class="w" style="--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">20%</span></div>
+        <div class="ev" style="--hue:var(--hs)"><span class="d">Sun 21</span><span class="t">HS2 Test 2 closes<small>Module 2 · 42 Q · 22% SAQ · covers Wk 5–8 + Car Accident case</small></span><span class="w" style="--hue-wash:var(--hs-wash);--hue-ink:var(--hs)">16.6%</span></div>
+        <div class="ev milestone" style="--hue:var(--accent)"><span class="d">~22 Sep</span><span class="t">Mid-semester break begins<small>Some stream case-study dates fall inside the break</small></span><span class="w" style="--hue-wash:var(--accent-wash);--hue-ink:var(--accent-deep)">break</span></div>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="m-label">October<span>Wk 11–14</span></div>
+      <div class="m-items">
+        <div class="ev" style="--hue:var(--ph)"><span class="d">Mon 5</span><span class="t">Med Administration Competence begins<small>Runs with INP Vital Signs assessment · max 2 attempts</small></span><span class="w" style="--hue-wash:var(--ph-wash);--hue-ink:var(--ph)">Met/Not</span></div>
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Oct</span><span class="t">Vital Signs &amp; Med-Admin practical assessments<small>Across Wk 11–14 — see your roster for date/time</small></span><span class="w" style="--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">Met/Not</span></div>
+        <div class="ev" style="--hue:var(--ph)"><span class="d">Mon 12</span><span class="t">Pharmacology Essay due — 0900<small>LO1 &amp; 4 · APA 7th</small></span><span class="w" style="--hue-wash:var(--ph-wash);--hue-ink:var(--ph)">50%</span></div>
+        <div class="ev" style="--hue:var(--hs)"><span class="d">Mon 26</span><span class="t">HS2 Test 3 closes<small>Module 3 · 37 Q · 30% SAQ · covers Wk 9–11 + Deafness &amp; Lactation cases</small></span><span class="w" style="--hue-wash:var(--hs-wash);--hue-ink:var(--hs)">16.6%</span></div>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="m-label">November<span>Wk 15–17</span></div>
+      <div class="m-items">
+        <div class="ev" style="--hue:var(--hs)"><span class="d">Mon 2</span><span class="t">HS2 Final Exam<small>On campus · 32 Q · 37% SAQ · based on starred* Booklet A cases · Wk 1–12</small></span><span class="w" style="--hue-wash:var(--hs-wash);--hue-ink:var(--hs)">50%</span></div>
+        <div class="ev" style="--hue:var(--inp)"><span class="d">Wed 4</span><span class="t">INP Final Exam · 1300–1540<small>60 MCQ + 10 SAQ</small></span><span class="w" style="--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">50%</span></div>
+        <div class="ev" style="--hue:var(--ph)"><span class="d">Fri 6</span><span class="t">Pharmacology Exam<small>MCQs &amp; SAQs · LO1, 3 &amp; 4</small></span><span class="w" style="--hue-wash:var(--ph-wash);--hue-ink:var(--ph)">50%</span></div>
+        <div class="ev milestone" style="--hue:var(--accent)"><span class="d">Mon 9</span><span class="t">Clinical placement begins<small>Inpatient + community · runs to 18 Dec · Standards of Competence signed 20 Nov</small></span><span class="w" style="--hue-wash:var(--accent-wash);--hue-ink:var(--accent-deep)">placement</span></div>
+      </div>
+    </div>
+
+    <div class="month">
+      <div class="m-label">Dec<span>Wk 18–21</span></div>
+      <div class="m-items">
+        <div class="ev milestone" style="--hue:var(--accent)"><span class="d">to 18</span><span class="t">Placement continues → Standards of Competence signed off<small>Assessment points: 4 Dec &amp; 18 Dec · then transition toward BN3</small></span><span class="w" style="--hue-wash:var(--accent-wash);--hue-ink:var(--accent-deep)">Met/Not</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HEALTH SCIENCE 2 ============ -->
+  <section id="hs">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Health Science 2</h2></div>
+    <div class="paper" style="--hue:var(--hs);--hue-wash:var(--hs-wash);--hue-ink:var(--hs)">
+      <div class="paper-top">
+        <div>
+          <div class="pcode">722.541 · Principal Lecturer: Hannetjie Meintjes</div>
+          <h3>Anatomy &amp; physiology for safe practice</h3>
+        </div>
+        <div class="meta">3 tests = 50%<br>Exam = 50%<br>Avg 50% to pass · no sub-minimum</div>
+      </div>
+      <div class="paper-body">
+        <div class="blk full">
+          <h4>The shape of it</h4>
+          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">Rigidly structured: <b>3 modules · 3 topics each · ~4 weeks each · 2 labs each.</b> A test closes at the end of every module; the exam is Week 13. The whole thing is built around <b>Case Study Booklet A</b> — <b>un-starred</b> cases are tested in the <em>tests</em>, <b>starred (*)</b> cases are tested in the <em>exam</em>. That booklet is repeatedly called the single most important exam-prep resource.<sup><a href="#r13">13</a></sup></p>
+        </div>
+
+        <div class="blk">
+          <h4>Module 1 · Wk 1–4</h4>
+          <div class="topic-tags">
+            <span class="tt head">Cardiovascular</span>
+            <span class="tt head">Respiratory</span>
+            <span class="tt head">Lymphatic</span>
+            <span class="tt">Blood vessels &amp; heart</span>
+            <span class="tt">Cardiac physiology / ECG</span>
+            <span class="tt">Blood-pressure regulation</span>
+            <span class="tt">Gas exchange &amp; transport</span>
+            <span class="tt">Acid–base balance</span>
+            <span class="tt">Fluid &amp; electrolytes</span>
+          </div>
+        </div>
+        <div class="blk">
+          <h4>Modules 2 &amp; 3 · Wk 5–11</h4>
+          <div class="topic-tags">
+            <span class="tt head">Musculoskeletal</span>
+            <span class="tt head">Nervous</span>
+            <span class="tt head">Endocrine</span>
+            <span class="tt">Bones, joints, levers</span>
+            <span class="tt">Muscle action &amp; energy</span>
+            <span class="tt">Brain &amp; spinal cord</span>
+            <span class="tt">Glucose &amp; calcium homeostasis</span>
+            <span class="tt head">Reproduction</span>
+            <span class="tt head">Special senses</span>
+            <span class="tt head">Genetics</span>
+          </div>
+        </div>
+
+        <div class="blk full">
+          <h4>Assessments</h4>
+          <div class="tscroll">
+          <table>
+            <thead><tr><th>Assessment</th><th>When</th><th>Format &amp; scope</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td class="a">Test 1 — Module 1</td><td><span class="when">closes 23 Aug</span></td><td>35 Q · 20% SAQ · Wk 1–4 · verbs: <em>Explain, Analyse</em></td><td class="pct">16.6%</td></tr>
+              <tr><td class="a">Test 2 — Module 2</td><td><span class="when">closes 21 Sep</span></td><td>42 Q · 22% SAQ · Wk 5–8 · verbs: <em>Explain, Analyse, Describe</em></td><td class="pct">16.6%</td></tr>
+              <tr><td class="a">Test 3 — Module 3</td><td><span class="when">closes 26 Oct</span></td><td>37 Q · 30% SAQ · Wk 9–11 · adds <em>Apply, Demonstrate</em></td><td class="pct">16.6%</td></tr>
+              <tr><td class="a">Final Exam</td><td><span class="when">Wk 13 · ~2 Nov</span></td><td>32 Q · 37% SAQ · on campus · starred* Booklet A cases · Wk 1–12</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Practical labs</td><td><span class="when">throughout</span></td><td>Participate in 5 of 6 · at least 3 on campus (online 50% can substitute)</td><td><span class="mnm">Met / Not Met</span></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="blk full">
+          <h4>Useful to know</h4>
+          <ul class="notes">
+            <li>Tests are sat online through <b>ProctorU</b>, with a window that runs <b>Monday–Sunday</b> of test week. Past students who sat early scored well — you can also wait until Friday if you want all content taught first.</li>
+            <li>The exam is <b>on campus</b> (MIT rules require ≥50% of a course assessed on campus); the three tests are the online half.</li>
+            <li><b>Anatomy Mondays</b> pre-teach each topic before lectures — used well, they turn the fast pace into an advantage. Core reading is <b>Patton's Anatomy &amp; Physiology</b> via ClinicalKey, mapped chapter-by-chapter each week.<sup><a href="#r1">1</a></sup></li>
+            <li>Lecturer's own advice for the pace: attend every lecture &amp; lab, do the formative quizzes <em>as</em> each system is taught, and form a study group early for exam-prep scenarios.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRO TO NURSING PRACTICE ============ -->
+  <section id="inp">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Introduction to Nursing Practice</h2></div>
+    <div class="paper" style="--hue:var(--inp);--hue-wash:var(--inp-wash);--hue-ink:var(--inp)">
+      <div class="paper-top">
+        <div>
+          <div class="pcode">722.556 · Coordinator: Janine Craig · Lecturer: Lisa Andrew</div>
+          <h3>Philosophy &amp; principles of practice + first placement</h3>
+        </div>
+        <div class="meta">300 hrs · 30 credits<br>116 clinical hrs</div>
+      </div>
+      <div class="paper-body">
+        <div class="blk full">
+          <h4>The shape of it</h4>
+          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">The "how to be a nurse" paper — the nursing process, cultural safety and <b>Te Tiriti o Waitangi</b>, determinants of health, assessment skills and communication, threaded to the NCNZ competencies. It's the paper with your <b>first clinical placement</b>, so a chunk of it is hands-on and pass/fail rather than percentage-graded.</p>
+        </div>
+
+        <div class="blk">
+          <h4>Topics — theory</h4>
+          <div class="topic-tags">
+            <span class="tt">Social determinants of health</span>
+            <span class="tt">Demography &amp; epidemiology</span>
+            <span class="tt">Community needs assessment</span>
+            <span class="tt">Tikanga &amp; cultural safety</span>
+            <span class="tt">The nursing process</span>
+            <span class="tt">Informed consent</span>
+            <span class="tt">Holistic &amp; pain assessment</span>
+            <span class="tt">Nursing care plans</span>
+            <span class="tt">Evidence-based practice</span>
+            <span class="tt">Health literacy</span>
+          </div>
+        </div>
+        <div class="blk">
+          <h4>Topics — applied</h4>
+          <div class="topic-tags">
+            <span class="tt">Vital signs</span>
+            <span class="tt">Family-centred care</span>
+            <span class="tt">Therapeutic use of self</span>
+            <span class="tt">Long-term conditions</span>
+            <span class="tt">Diabetes mellitus</span>
+            <span class="tt">Infection prevention &amp; control</span>
+            <span class="tt">Rheumatic fever</span>
+            <span class="tt">Discharge planning</span>
+            <span class="tt">Clinical documentation</span>
+            <span class="tt">Primary health care</span>
+          </div>
+        </div>
+
+        <div class="blk full">
+          <h4>Assessments</h4>
+          <div class="tscroll">
+          <table>
+            <thead><tr><th>Assessment</th><th>When</th><th>Format</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td class="a">Community Profile — group presentation</td><td><span class="when">4 Sep / 18 Sep</span></td><td>By stream (1A/1B then 2A/2B) · LO1, 2, 4</td><td class="pct">20%</td></tr>
+              <tr><td class="a">Case Study — written</td><td><span class="when">14 Sep – 5 Oct</span></td><td>Due date depends on stream · LO1, 3, 4</td><td class="pct">30%</td></tr>
+              <tr><td class="a">Final Exam</td><td><span class="when">Wed 4 Nov · 1300–1540</span></td><td>60 MCQ + 10 SAQ · LO1–4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Vital signs practical</td><td><span class="when">Oct · per roster</span></td><td>Clinical competency · LO3, 5</td><td><span class="mnm">Met / Not Met</span></td></tr>
+              <tr><td class="a">Inpatient Standards of Competence</td><td><span class="when">20 Nov, 4 Dec, 18 Dec</span></td><td>Signed off on placement · LO1–5</td><td><span class="mnm">Met / Not Met</span></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="blk full">
+          <h4>Useful to know</h4>
+          <ul class="notes">
+            <li><b>Your stream (1A / 1B / 2A / 2B) sets your dates</b> for the case study, CLS simulations, and practical assessments — check the roster early; the timeline above shows the range, not your personal date.</li>
+            <li>The <b>Community Profile</b> is a <em>group</em> presentation briefed back in Week 2 — start forming your group and picking a community well before September.</li>
+            <li>Written work uses <b>APA 7th</b> and goes through Turnitin.<sup><a href="#r12">12</a></sup> The "Meet &amp; Greet" asks for a pepeha — build one at pepeha.nz.<sup><a href="#r14">14</a></sup></li>
+            <li>Placement (weeks 16–21, <b>9 Nov – 18 Dec</b>) is inpatient + community; the Standards of Competence sign-offs are non-negotiable gateways, not scored marks.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHARMACOLOGY ============ -->
+  <section id="ph">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Introduction to Pharmacology</h2></div>
+    <div class="paper" style="--hue:var(--ph);--hue-wash:var(--ph-wash);--hue-ink:var(--ph)">
+      <div class="paper-top">
+        <div>
+          <div class="pcode">722 · Kaiako: Joan Mackie (part-time) · Coordinator TBA</div>
+          <h3>Pharmacological concepts &amp; safe medication practice</h3>
+        </div>
+        <div class="meta">150 hrs total<br>60 taught · 90 self-directed</div>
+      </div>
+      <div class="paper-body">
+        <div class="blk full">
+          <h4>The shape of it</h4>
+          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">Two graded pieces (essay + exam, 50/50) sitting on top of <b>two must-pass practical hurdles</b>. The theory is drug classes — their mechanisms, therapeutic uses and side effects — plus safe administration and patient medication education. <b>Coordinator was still listed as TBA</b> in the export, so watch for that appointment.</p>
+        </div>
+
+        <div class="blk">
+          <h4>What you'll cover</h4>
+          <div class="topic-tags">
+            <span class="tt head">Pharmacological principles</span>
+            <span class="tt head">Safe medication administration</span>
+            <span class="tt">Mechanisms of action</span>
+            <span class="tt">Therapeutic uses &amp; side effects</span>
+            <span class="tt">Drug classes for nursing</span>
+            <span class="tt">Medication calculations</span>
+            <span class="tt">Medication education &amp; health literacy</span>
+            <span class="tt">Legal &amp; ethical standards</span>
+          </div>
+        </div>
+        <div class="blk">
+          <h4>Core resources</h4>
+          <ul class="notes">
+            <li><b>Knights et al. — Pharmacology for Health Professionals (6th ed)</b> is the set text.<sup><a href="#r2">2</a></sup></li>
+            <li>Live drug references you'll actually use: <b>NZ Formulary</b><sup><a href="#r4">4</a></sup> and <b>Medsafe</b>.<sup><a href="#r5">5</a></sup></li>
+            <li>Potter &amp; Perry Ch 19 for medication-safety fundamentals.<sup><a href="#r3">3</a></sup></li>
+          </ul>
+        </div>
+
+        <div class="blk full">
+          <h4>Assessments</h4>
+          <div class="tscroll">
+          <table>
+            <thead><tr><th>Assessment</th><th>When</th><th>Format</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td class="a">Medication Calculations Test</td><td><span class="when">25 Aug</span></td><td>Re-sits available · LO1, 2, 3</td><td><span class="mnm">Met / Not Met</span></td></tr>
+              <tr><td class="a">Medication Administration Competence</td><td><span class="when">from 5 Oct</span></td><td>With INP Vital Signs · max 2 attempts · LO1</td><td><span class="mnm">Met / Not Met</span></td></tr>
+              <tr><td class="a">Pharmacology Essay</td><td><span class="when">12 Oct · 0900</span></td><td>APA 7th · LO1 &amp; 4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Exam</td><td><span class="when">Fri 6 Nov</span></td><td>MCQs &amp; SAQs · LO1, 3 &amp; 4</td><td class="pct">50%</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="blk full">
+          <h4>Useful to know</h4>
+          <ul class="notes">
+            <li>The <b>Medication Calculations Test</b> is a drug-maths hurdle in late August — because re-sits are offered, it's easy to underestimate, but you can't pass the paper without clearing it. Practise calculations early.</li>
+            <li>The <b>essay is worth half the paper</b> and is due <em>before</em> the exam crush (12 Oct) — get it done in the quieter first half of the semester.</li>
+            <li>Med-Admin competence runs <b>concurrently with INP's Vital Signs assessment</b> in October — the two papers share that practical window, so prep once, use twice.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HURDLES ============ -->
+  <section id="hurdles">
+    <div class="sec-head"><span class="sec-num">06</span><h2>The Met / Not-Met hurdles</h2></div>
+    <p class="sec-sub">These carry <b>zero percent</b> — but failing any one can stop you passing the paper regardless of your grades. They're the quiet way people come unstuck, so track them like deadlines.</p>
+    <div class="hurdles">
+      <div class="hurdle" style="--hue:var(--hs);--hue-ink:var(--hs)">
+        <div class="h-p">Health Science 2</div>
+        <div class="h-t">Practical lab participation</div>
+        <div class="h-w">5 of 6 labs · ≥3 on campus · 80% attendance</div>
+      </div>
+      <div class="hurdle" style="--hue:var(--ph);--hue-ink:var(--ph)">
+        <div class="h-p">Pharmacology</div>
+        <div class="h-t">Medication Calculations Test</div>
+        <div class="h-w">25 Aug · re-sits available</div>
+      </div>
+      <div class="hurdle" style="--hue:var(--ph);--hue-ink:var(--ph)">
+        <div class="h-p">Pharmacology</div>
+        <div class="h-t">Med Administration Competence</div>
+        <div class="h-w">from 5 Oct · max 2 attempts</div>
+      </div>
+      <div class="hurdle" style="--hue:var(--inp);--hue-ink:var(--inp)">
+        <div class="h-p">Nursing Practice</div>
+        <div class="h-t">Vital Signs practical</div>
+        <div class="h-w">October · per your roster</div>
+      </div>
+      <div class="hurdle" style="--hue:var(--inp);--hue-ink:var(--inp)">
+        <div class="h-p">Nursing Practice</div>
+        <div class="h-t">Inpatient Standards of Competence</div>
+        <div class="h-w">signed on placement · to 18 Dec</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCES ============ -->
+  <section id="refs">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Recommended readings &amp; references</h2></div>
+    <p class="sec-sub">Footnotes from the brief above — the texts, official NZ nursing documents, and drug references that give the context behind each paper. Numbers match the <sup><a href="#refs">superscripts</a></sup> in the sections.</p>
+    <div class="refs">
+      <div class="ref" id="r1"><span class="n">1</span><span class="txt"><b>Patton's Anatomy &amp; Physiology (ANZ).</b> HS2's core text, accessed via ClinicalKey Student; chapters are mapped to each weekly topic (e.g. cardiovascular Ch 31–36, musculoskeletal Ch 11–17, neuro Ch 18–22, endocrine Ch 25–26, reproduction/genetics Ch 45–48). The backbone for every test and the exam.</span></div>
+      <div class="ref" id="r2"><span class="n">2</span><span class="txt">Knights, K., Rowland, A., Darroch, S., &amp; Bushell, M. (2023). <em>Pharmacology for Health Professionals</em> (6th ed.). Elsevier. — The set text for Pharmacology; on ClinicalKey.</span></div>
+      <div class="ref" id="r3"><span class="n">3</span><span class="txt">Frotjold, A., &amp; Bloomfield, J. (2026). Ch 19: Ensuring medication safety. In <em>Potter &amp; Perry's Fundamentals of Nursing: ANZ edition</em> (7th ed., pp. 477–511). Elsevier. — Most-referenced chapter for safe administration.</span></div>
+      <div class="ref" id="r4"><span class="n">4</span><span class="txt"><b>New Zealand Formulary.</b> The national prescribing reference — dosing, interactions, cautions. <a href="https://nzformulary.org/">nzformulary.org</a></span></div>
+      <div class="ref" id="r5"><span class="n">5</span><span class="txt"><b>Medsafe — Medicine Information.</b> NZ regulator; data sheets &amp; consumer medicine information. <a href="https://www.medsafe.govt.nz/Medicines/medicine-information.asp">medsafe.govt.nz</a></span></div>
+      <div class="ref" id="r6"><span class="n">6</span><span class="txt">NZNO. (2024). <em>Guidelines for Nurses on the Administration of Medicines.</em> — Professional standard underpinning the med-admin competency.</span></div>
+      <div class="ref" id="r7"><span class="n">7</span><span class="txt">Nursing Council of NZ. (2025). <em>Te Tiriti o Waitangi, Māori Health &amp; Kawa Whakaruruhau / Cultural Safety: Guidance for Nursing Education and Practice.</em> — Core context for INP's cultural-safety and Te Tiriti outcomes. <a href="https://www.nursingcouncil.org.nz/">nursingcouncil.org.nz</a></span></div>
+      <div class="ref" id="r8"><span class="n">8</span><span class="txt">Nursing Council of NZ. (2025). <em>Scope of Practice &amp; Standards of Competence for Registered Nurses.</em> — The NCNZ competencies your placement sign-offs assess against.</span></div>
+      <div class="ref" id="r9"><span class="n">9</span><span class="txt">Nursing Council of NZ. <em>Code of Conduct for Nurses.</em> — Referenced across the "Professionalism in Nursing" modules in both HS2 and INP.</span></div>
+      <div class="ref" id="r10"><span class="n">10</span><span class="txt"><b>Healthify — He Puna Waiora.</b> Plain-language NZ health &amp; medicines info, useful for patient-education tasks. <a href="https://healthify.nz/">healthify.nz</a></span></div>
+      <div class="ref" id="r11"><span class="n">11</span><span class="txt"><b>Pharmac — Most-Prescribed Medicines.</b> Which drugs you'll actually meet in NZ practice — helpful framing for the pharmacology essay. <a href="https://www.pharmac.govt.nz/">pharmac.govt.nz</a></span></div>
+      <div class="ref" id="r12"><span class="n">12</span><span class="txt"><b>MIT Guide to APA 7th Referencing (2024)</b> &amp; the Nursing/Health APA examples. Required style for all written work; check Turnitin similarity before final submission.</span></div>
+      <div class="ref" id="r13"><span class="n">13</span><span class="txt"><b>HS2 Case Study Booklet A (Canvas).</b> The through-line of Health Science 2 — un-starred cases feed the tests, starred (*) cases feed the exam. Repeatedly named the most important exam-prep resource; work it over the whole semester.</span></div>
+      <div class="ref" id="r14"><span class="n">14</span><span class="txt"><b>pepeha.nz.</b> Build a mihi/pepeha for the INP "Meet &amp; Greet" introduction. <a href="https://pepeha.nz/create-pepeha">pepeha.nz/create-pepeha</a></span></div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="wrap">
+  <p><b>Sources.</b> Synthesised from the Canvas export of all three Semester 2 2026 papers (Health Science 2 · 722.541, Introduction to Nursing Practice · 722.556, Introduction to Pharmacology). Weightings, formats and dates are quoted directly from the syllabus, assessment-overview and timetable pages.</p>
+  <p class="disclaim">Much of Canvas was still gated at export time. Dates — especially stream-specific practicals and roster times — may shift; confirm against the live Canvas calendar as content unlocks. This is a study aid, not the official course document.</p>
+</footer>
+
+<script>
+  /* Theme: default dark (house default); share the Hub's storage key so the
+     whole BN estate stays in sync when you toggle anywhere. */
+  (function(){
+    var TK='hub.theme', de=document.documentElement;
+    function apply(){ de.setAttribute('data-theme', localStorage.getItem(TK) || 'dark'); }
+    apply();
+    var b=document.getElementById('themeBtn');
+    if(b) b.addEventListener('click', function(){
+      localStorage.setItem(TK, (localStorage.getItem(TK)||'dark')==='dark' ? 'light' : 'dark');
+      apply();
+    });
+  })();
+</script>
+</body></html>

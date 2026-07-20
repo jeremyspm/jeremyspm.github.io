@@ -138,6 +138,8 @@ const CATEGORIES=[
   {id:'career', name:'🩺 Career'},
 ];
 const PROJECTS=[
+  // --- Semester 2 → whole-semester overview (sits directly under Semester 2, above the papers) ---
+  {cat:'sem2', ic:'🗺️', nm:'Semester 2 · Bird’s-Eye Brief', ds:'The whole semester on one page: all three papers, every assessment, due date, hurdle and what actually decides your pass — synthesised from Canvas.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new', date:'21/07/2026'},
   // --- Semester 2 → Health Science 2 ---
   {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
   // --- clinical skills (not tied to one semester) ---
@@ -184,14 +186,17 @@ function render(filter){
     const matches=p=>toks.every(t=>(p.nm+' '+p.ds+' '+hay).toLowerCase().includes(t));
 
     if(cat.subs){   // e.g. Semester 2 -> its papers
+      // category-level tiles (cat:'sem2') render directly under the section heading, above the papers
+      const direct=PROJECTS.filter(p=>p.cat===cat.id&&matches(p));
+      const directHtml=direct.length?`<div class="grid">${direct.map(tileHtml).join('')}</div>`:'';
       const subHtml=cat.subs.map(sub=>{
         const items=PROJECTS.filter(p=>p.cat===sub.id&&matches(p));
         if(items.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="grid">${items.map(tileHtml).join('')}</div>`;
         if(!toks.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="soon soon-sub">No study hubs here yet.</div>`;
         return '';
       }).join('');
-      if(!subHtml) return '';
-      return `<h2 class="sec">${cat.name}</h2>${subHtml}`;
+      if(!directHtml && !subHtml) return '';
+      return `<h2 class="sec">${cat.name}</h2>${directHtml}${subHtml}`;
     }
 
     const items=PROJECTS.filter(p=>p.cat===cat.id&&matches(p));
