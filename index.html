@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0e1420"/>
 <!-- shared by link, not meant for search engines — remove this line if you ever want indexing -->
 <meta name="robots" content="noindex"/>
-<title>Jeremy's Hub — study tools & apps</title>
+<title>BN Hub — study tools & apps</title>
 <style>
 :root{
   --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
@@ -47,6 +47,7 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .tile{display:flex;flex-direction:column;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;text-decoration:none;color:inherit;transition:.16s;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .tile:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:var(--shadow)}
 .tile .top{display:flex;align-items:center;gap:10px}
+.tile[data-b] .top{padding-right:46px}   /* keep the title clear of the corner badge, esp. when it wraps on narrow screens */
 .tile .ic{font-size:24px;line-height:1}
 .tile .nm{font-weight:800;font-size:15px;letter-spacing:-.2px;line-height:1.25}
 .tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.45}
@@ -56,7 +57,7 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .empty{color:var(--tx3);text-align:center;padding:50px 10px;font-size:14px}
 .foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
 .foot a{color:var(--tx3)}
-@media(max-width:520px){.grid{grid-template-columns:1fr 1fr}.tile .ds{display:none}.tile{padding:13px 14px}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
 /* account button + auth modal (only shown when cloud sync is configured) */
 .acct{display:flex;align-items:center;gap:8px}
 .acctbtn{border:1px solid var(--line);background:var(--card);color:var(--tx2);border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s;display:inline-flex;align-items:center;gap:7px}
@@ -87,8 +88,8 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 <div class="wrap">
   <header>
     <div>
-      <h1>🧭 Jeremy's Hub</h1>
-      <p class="sub">Study tools, simulators &amp; apps — everything in one place. All free, all offline-capable, nothing tracked.</p>
+      <h1>🧭 BN Hub</h1>
+      <p class="sub">Study tools &amp; apps for the BN — everything in one place. All free, all offline-capable, nothing tracked.</p>
     </div>
     <div class="acct">
       <button class="acctbtn" id="btnAcct" style="display:none"></button>
@@ -126,29 +127,26 @@ const CATEGORIES=[
   {id:'life',  name:'🌏 Beyond nursing'},
 ];
 const PROJECTS=[
-  // --- cram & study ---
-  {cat:'cram', ic:'🧠', nm:'BN1 722.553 Final Cram', ds:'669-card active-recall trainer for the Foundations of Nursing final — MCQ + 5-mark drills mirroring the real paper.', url:'https://jeremyspm.github.io/bn1-cram/'},
-  {cat:'cram', ic:'🍽️', nm:'Test 3 Cram — Health Science 1', ds:'Digestion, nutrients & metabolism: MCQ trainer, case vault, exam mode, glossary, read-aloud.', url:'https://jeremyspm.github.io/health-science-test3-cram/'},
-  {cat:'cram', ic:'⚡', nm:'BN1 Drill — Health Science 1', ds:'Rapid-fire drill tool for Health Science 1.', url:'https://jeremyspm.github.io/bn1-drill/'},
-  {cat:'cram', ic:'🔬', nm:'Module 1 Deep Dive — Health Science 2', ds:'Pre-class deep-dive study hub for 722.541 Module 1.', url:'https://jeremyspm.github.io/module1-study-hub/'},
-  {cat:'cram', ic:'📝', nm:'Continuous Test 2 Hub', ds:'Study hub for Health Science 1 Continuous Test 2.', url:'https://1999jeremym.github.io/continuoustest2/'},
-  {cat:'cram', ic:'👶', nm:'Lifespan Quiz 1 Study Hub', ds:'Human lifespan & development — quiz prep hub.', url:'https://1999jeremym.github.io/FONlifespanquiz1/'},
-  {cat:'cram', ic:'🤝', nm:'FOPD Professionalism Summative', ds:'Foundations of Professional Development — summative prep.', url:'https://1999jeremym.github.io/FOPDProfessionalismSummative/'},
+  // --- study tools ---
   {cat:'cram', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
-  // --- explorers ---
-  {cat:'sim', ic:'🫘', nm:'Nephron Simulator', ds:'Nephron flow & fluid balance simulator — student nurse edition.', url:'https://1999jeremym.github.io/nephron/'},
-  {cat:'sim', ic:'🚻', nm:'Urinary System Hub', ds:'Interactive urinary system study hub.', url:'https://1999jeremym.github.io/urinary/'},
-  {cat:'sim', ic:'🦴', nm:'BN1 Anatomy Explorer', ds:'Interactive anatomy explorer for BN1.', url:'https://1999jeremym.github.io/test2outline/'},
   // --- clinical & career ---
   {cat:'clin', ic:'🛂', nm:'Placement Passport', ds:'Clinical portfolio: placement hours, skills sign-offs, Gibbs reflections, printable PDF report. Your data stays on your device.', url:'https://jeremyspm.github.io/placement-passport/', badge:'beta'},
   {cat:'clin', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa: every stage, requirement, funding scheme and decision point, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
   // --- toolbox ---
   {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
-  // --- beyond nursing ---
-  {cat:'life', ic:'✈️', nm:'Japan 2027 Trip Tracker', ds:'Trip planning & tracking for Japan, February 2027.', url:'https://jeremyspm.github.io/japan-2027/'},
-  // Not yet published (flip in when live):
-  // {cat:'cram', ic:'🗺️', nm:'Giga Study App', ds:'SRS mindmap study app.', url:'…'},
-  // {cat:'life', ic:'💍', nm:'Vow — Wedding Cut Coach', ds:'…', url:'…'},
+
+  // ── Culled from the hub 2026-07-18 (apps still live at their URLs; un-comment any line to restore it) ──
+  // {cat:'cram', ic:'🧠', nm:'BN1 722.553 Final Cram', ds:'669-card active-recall trainer for the Foundations of Nursing final — MCQ + 5-mark drills mirroring the real paper.', url:'https://jeremyspm.github.io/bn1-cram/'},
+  // {cat:'cram', ic:'🍽️', nm:'Test 3 Cram — Health Science 1', ds:'Digestion, nutrients & metabolism: MCQ trainer, case vault, exam mode, glossary, read-aloud.', url:'https://jeremyspm.github.io/health-science-test3-cram/'},
+  // {cat:'cram', ic:'⚡', nm:'BN1 Drill — Health Science 1', ds:'Rapid-fire drill tool for Health Science 1.', url:'https://jeremyspm.github.io/bn1-drill/'},
+  // {cat:'cram', ic:'🔬', nm:'Module 1 Deep Dive — Health Science 2', ds:'Pre-class deep-dive study hub for 722.541 Module 1.', url:'https://jeremyspm.github.io/module1-study-hub/'},
+  // {cat:'cram', ic:'📝', nm:'Continuous Test 2 Hub', ds:'Study hub for Health Science 1 Continuous Test 2.', url:'https://1999jeremym.github.io/continuoustest2/'},
+  // {cat:'cram', ic:'👶', nm:'Lifespan Quiz 1 Study Hub', ds:'Human lifespan & development — quiz prep hub.', url:'https://1999jeremym.github.io/FONlifespanquiz1/'},
+  // {cat:'cram', ic:'🤝', nm:'FOPD Professionalism Summative', ds:'Foundations of Professional Development — summative prep.', url:'https://1999jeremym.github.io/FOPDProfessionalismSummative/'},
+  // {cat:'sim', ic:'🫘', nm:'Nephron Simulator', ds:'Nephron flow & fluid balance simulator — student nurse edition.', url:'https://1999jeremym.github.io/nephron/'},
+  // {cat:'sim', ic:'🚻', nm:'Urinary System Hub', ds:'Interactive urinary system study hub.', url:'https://1999jeremym.github.io/urinary/'},
+  // {cat:'sim', ic:'🦴', nm:'BN1 Anatomy Explorer', ds:'Interactive anatomy explorer for BN1.', url:'https://1999jeremym.github.io/test2outline/'},
+  // {cat:'life', ic:'✈️', nm:'Japan 2027 Trip Tracker', ds:'Trip planning & tracking for Japan, February 2027.', url:'https://jeremyspm.github.io/japan-2027/'},
 ];
 /* ===== PROJECTS END ===== */
 

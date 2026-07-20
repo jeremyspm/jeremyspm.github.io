@@ -1,4 +1,4 @@
-/* Cloud sync config for Jeremy's Hub (project: BN-hub).
+/* Cloud sync config for BN Hub (Supabase project: BN-hub).
    These two values are PUBLIC by design — the anon key is meant to ship in the
    browser. It grants NO access on its own: Row-Level Security means a user can
    only ever reach their own rows, and only after signing in. The secret

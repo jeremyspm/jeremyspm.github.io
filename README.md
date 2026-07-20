@@ -1,4 +1,4 @@
-# Jeremy's Hub
+# BN Hub
 
 The landing page / directory for every study tool and app — live at
 **https://jeremyspm.github.io/** (this repo must stay named
