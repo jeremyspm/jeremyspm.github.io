@@ -53,6 +53,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .tile .ic{font-size:24px;line-height:1}
 .tile .nm{font-weight:800;font-size:15px;letter-spacing:-.2px;line-height:1.25}
 .tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.45}
+.tile .tiledate{align-self:flex-end;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums;margin-top:2px}
 .tile .badge{position:absolute;top:12px;right:12px;font-size:9.5px;font-weight:800;letter-spacing:.7px;padding:3px 7px;border-radius:6px;text-transform:uppercase}
 .badge.beta{background:rgba(255,206,84,.14);color:var(--hard);border:1px solid rgba(255,206,84,.35)}
 .badge.new{background:rgba(57,217,138,.13);color:var(--good);border:1px solid rgba(57,217,138,.35)}
@@ -93,7 +94,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
   <header>
     <div>
       <h1>🧭 BN Hub</h1>
-      <p class="sub">Study tools &amp; apps for the BN — everything in one place. All free, all offline-capable, nothing tracked.</p>
+      <p class="sub">Study tools &amp; apps for the BN — everything in one place. All free, all offline-capable.</p>
     </div>
     <div class="acct">
       <button class="acctbtn" id="btnAcct" style="display:none"></button>
@@ -103,7 +104,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
   <div id="cloudNote"></div>
   <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
-  <div class="foot">One link to rule them all: <a href="https://jeremyspm.github.io/">jeremyspm.github.io</a><br/>Made by a BN student, for BN students. Check answers against your own course material — it always wins.</div>
+  <div class="foot">Made by a BN student, for BN students. Check answers against your own course material — it always wins.</div>
 </div>
 
 <!-- Cloud sync (optional): dormant until hub/cloud/config.js is filled in -->
@@ -137,6 +138,8 @@ const CATEGORIES=[
   {id:'career', name:'🩺 Career'},
 ];
 const PROJECTS=[
+  // --- Semester 2 → Health Science 2 ---
+  {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
   // --- clinical skills (not tied to one semester) ---
   {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
   // --- career ---
@@ -171,6 +174,7 @@ function tileHtml(p){
     ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
     <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
     <span class="ds">${esc(p.ds)}</span>
+    ${p.date?`<span class="tiledate">${esc(p.date)}</span>`:''}
   </a>`;
 }
 function render(filter){
