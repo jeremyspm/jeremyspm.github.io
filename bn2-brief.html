@@ -96,6 +96,9 @@
   .sec-num { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .1em; }
   h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
   .sec-sub { color: var(--ink-soft); font-size: 15px; margin: -10px 0 24px; max-width: 72ch; }
+  .subsec-head { margin: 46px 0 14px; padding-top: 30px; border-top: 1px dashed var(--line-strong); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; scroll-margin-top: 66px; }
+  .subsec-head .subsec-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-deep); white-space: nowrap; }
+  .subsec-head h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2.8vw, 27px); letter-spacing: -0.01em; margin: 0; }
 
   /* ---- alerts ---- */
   .alert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 14px; }
@@ -134,6 +137,9 @@
   .row.hs { --rc: var(--hs); } .row.inp { --rc: var(--inp); } .row.ph { --rc: var(--ph); } .row.gen { --rc: var(--accent); }
   .row.assess { background: var(--warn-wash); border-left-width: 4px; }
   .row.exam { background: var(--crit-wash); border-left-width: 4px; }
+  /* unverified post-DST times: flagged, NOT yet Canvas-checked */
+  .row.unconf { background: var(--warn-wash); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 55%, transparent); }
+  .row.unconf .rt::after { content: "⚠ time unverified — confirm on the live Canvas calendar"; display: block; margin-top: 5px; padding-top: 4px; border-top: 1px dashed color-mix(in srgb, var(--warn) 40%, var(--line)); color: var(--warn); font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .01em; }
   @media (max-width: 460px) { .row { grid-template-columns: minmax(0,1fr); gap: 2px; } .row .rd { color: var(--ink-soft); } }
 
   /* ---- collapsible weeks ---- */
@@ -228,13 +234,13 @@
     <div class="mark"><b>BN2</b> · Sem 2 2026 · MIT</div>
     <nav>
       <a href="#watch">What to watch</a>
+      <a href="#smart">Play it smart</a>
       <a href="#weeks">Week by week</a>
       <a href="#master">Checkpoints</a>
       <a href="#hs">Health Sci 2</a>
       <a href="#inp">Nursing Practice</a>
       <a href="#ph">Pharmacology</a>
       <a href="#verify">Verify dates</a>
-      <a href="#smart">Play it smart</a>
     </nav>
     <button class="themebtn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
   </div>
@@ -275,19 +281,19 @@
         <span class="tag">Peak crunch · early Nov</span>
         <h3>Three finals in three days</h3>
         <p>All three exams land in the same short window — <b>not</b> the tidy Mon/Wed/Fri the earlier brief assumed. Canvas puts HS2 on Thursday. Reverse-plan every bit of revision back from here.</p>
-        <div class="dates">Wed 4 Nov · INP (1300–1540) &nbsp;→&nbsp; Thu 5 Nov · HS2 (1130–1540) &nbsp;→&nbsp; Thu 5 / Fri 6 Nov · Pharmacology</div>
+        <div class="dates">Wed 4 Nov · INP (1230–1540) &nbsp;→&nbsp; Thu 5 Nov · HS2 (1230–1640) &nbsp;→&nbsp; Fri 6 Nov · Pharmacology</div>
       </div>
-      <div class="alert crit">
-        <span class="tag">Confirm urgently</span>
-        <h3>Possible HS2 + Pharm clash on 5 Nov</h3>
-        <p>The Canvas <em>calendar</em> shows the Pharmacology exam on the afternoon of Thu 5 Nov — the same slot as HS2's afternoon exam. The Pharmacology <em>syllabus</em> instead says Fri 6 Nov. You can't sit two at once, so confirm the real date with the paper coordinator early.</p>
-        <div class="dates">HS2 Thu 5 Nov 1130–1540 · Pharm "afternoon" 5 Nov (calendar) vs 6 Nov (syllabus)</div>
+      <div class="alert calm">
+        <span class="tag">Now resolved</span>
+        <h3>Pharm exam confirmed Fri 6 Nov — no HS2 clash</h3>
+        <p>This earlier looked like a possible clash — the Canvas <em>calendar</em> seemed to put the Pharmacology exam on the afternoon of Thu 5 Nov, HS2's slot. Re-checked against the live calendar, it renders on <b>Fri 6 Nov</b>, agreeing with the syllabus. The "5 Nov" reading was a timezone-conversion artefact, so there's no double-booking with the HS2 exam.</p>
+        <div class="dates">HS2 Thu 5 Nov 1230–1640 · Pharm exam Fri 6 Nov (calendar + syllabus agree)</div>
       </div>
       <div class="alert warn">
         <span class="tag">October gauntlet</span>
         <h3>Coursework + practicals + a test, all at once</h3>
         <p>The month before exams is the busiest stretch: the big Pharmacology essay, the roster-based clinical practicals, and HS2's last test all fall together, then roll straight into exam week.</p>
-        <div class="dates">11–12 Oct Pharm essay · 5–30 Oct Vital Signs &amp; Med-Admin window · Mon 26 Oct HS2 Test 3 closes</div>
+        <div class="dates">Mon 12 Oct Pharm essay · 5–30 Oct Vital Signs &amp; Med-Admin window · Mon 26 Oct HS2 Test 3 closes</div>
       </div>
       <div class="alert warn">
         <span class="tag">Early spike · late Aug</span>
@@ -308,6 +314,44 @@
         <div class="dates">Mon 9 Nov – Fri 18 Dec · sign-offs 20 Nov, 4 Dec, 18 Dec</div>
       </div>
     </div>
+
+    <div class="subsec-head" id="smart">
+      <span class="subsec-eyebrow">Play it smart</span>
+      <h3>Playing the semester well</h3>
+    </div>
+    <p class="sec-sub">Now the flip side of those pinch points — the moves that make this particular semester shape easier, drawn from where the workload actually clusters. Take what's useful.</p>
+    <div class="alert-grid">
+      <div class="alert">
+        <span class="tag" style="color:var(--accent-deep)">Week 1</span>
+        <h3>Clear the admin traps first</h3>
+        <p>Two small things gate the whole semester: the <b>Lab H&amp;S quiz needs 100%</b> before you can enter any lab, and <b>lab-group swaps close Fri 31 Jul</b>. Both take minutes now and are painful later.</p>
+      </div>
+      <div class="alert">
+        <span class="tag" style="color:var(--accent-deep)">Front-load</span>
+        <h3>Move the Pharm essay early</h3>
+        <p>It's 50% of the paper and due Mon 12 Oct — right as the practicals and Test 3 hit. Drafting it in the quieter Aug–Sept stretch pulls one big rock out of October.</p>
+      </div>
+      <div class="alert">
+        <span class="tag" style="color:var(--accent-deep)">Prep once</span>
+        <h3>Treat the October practicals as one block</h3>
+        <p>INP Vital Signs and Pharm Med-Admin share the same 5–30 Oct window and skill set. Prepare the practical once and you're ready for both hurdles.</p>
+      </div>
+      <div class="alert">
+        <span class="tag" style="color:var(--accent-deep)">All semester</span>
+        <h3>Make Booklet A the through-line</h3>
+        <p>HS2's un-starred cases feed the tests and the starred* ones feed the exam. Working it steadily each week is worth more than any single cram.</p>
+      </div>
+      <div class="alert">
+        <span class="tag" style="color:var(--accent-deep)">Test windows</span>
+        <h3>Use the ProctorU week deliberately</h3>
+        <p>Each HS2 test is open Mon–Sun. Sit it early once the material's taught, or hold to Friday for the full syllabus — just decide on purpose rather than drifting into Sunday night.</p>
+      </div>
+      <div class="alert">
+        <span class="tag" style="color:var(--accent-deep)">Early Nov</span>
+        <h3>Reverse-plan from the exam cluster</h3>
+        <p>With three finals in three days (Wed 4 → Thu 5 → Fri 6 Nov), the revision has to be banked <em>before</em> that week — the days between are for light review, not first passes.</p>
+      </div>
+    </div>
   </section>
 
   <!-- ============ 02 · WEEK BY WEEK ============ -->
@@ -323,6 +367,13 @@
       </div>
       <div><b>Heads-up on week numbers:</b> the two papers count weeks differently — HS2 doesn't number the break, so the same calendar week is "HS2 Week 9" but "INP Week 11". To avoid confusion, this map is anchored to <b>real dates</b>, not week numbers.</div>
       <div><b>HS2 lab groups</b> rotate fortnightly: <b>Blue &amp; Green</b> in the first lab week, <b>Red &amp; Yellow</b> in the second. Times below are the group start times. <b>Stream (1A/1B/2A/2B)</b> sets your personal times for INP sims, case-study briefings and the October practicals — always check your roster.</div>
+      <div><b style="color:var(--warn)">⚠ time unverified</b> on a row means that session's exact clock time is still being reconciled after the daylight-saving fix and has <b>not</b> been confirmed against the live Canvas calendar — check it yourself before relying on it. The day/date is reliable; only the start–end time is provisional.</div>
+    </div>
+
+    <div class="alert warn" role="note" style="margin:0 0 18px">
+      <span class="tag">⚠ Work in progress · times being reconciled</span>
+      <h3>Some late-Sept → November times are still being verified</h3>
+      <p>New Zealand switched to daylight time (NZDT, UTC+13) on <b>Sun 27 Sep 2026</b>, and the original build converted Canvas's stored times at UTC+12 all year — so every <b>timed</b> session from 27 Sep onward first showed an hour too early. The <b>exams</b>, the two <b>Clinical Meetings</b>, <b>Transition to BN3</b> and the <b>5 Oct Inpatient Prep</b> have been corrected and cross-checked against Canvas. Every other post-27-Sep session still flagged <b style="color:var(--warn)">⚠ time unverified</b> below has <b>not</b> been confirmed yet — <b>treat its start/end time as provisional and verify it against the live Canvas calendar</b> before you rely on it. The days are right; it's the exact times that still need confirming.</p>
     </div>
 
     <div class="wk-controls">
@@ -467,15 +518,14 @@
       <div class="wk-h"><span class="wk-n">HS2 Wk 9 · INP Wk 11</span><span class="wk-d">Mon 5 – Fri 9 Oct</span><span class="wk-tag warn">Practical window opens</span></div>
       <div class="wk-body">
         <div class="row assess inp"><span class="rd">Mon 5</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 1B · 0900</b> · <b>30%</b></span></div>
-        <div class="row inp"><span class="rd">Mon 5</span><span class="rt"><span class="p">INP</span> CLS Inpatient Prep — 2B 0630, 2A 0930 · <b>Vital Signs &amp; Med-Admin assessments begin</b> 1200–1700 (roster) <em>· CLS</em></span></div>
-        <div class="row assess inp"><span class="rd">Tue 6</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (see roster) · <b>Met / Not Met</b></span></div>
-        <div class="row hs"><span class="rd">Wed 7</span><span class="rt"><span class="p">HS2</span> Lecture 1130–1330 · Module 3 (Reproduction) <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Wed 7</span><span class="rt"><span class="p">INP</span> Lecture: Clinical Documentation · 0900–1100 <em>· 110</em></span></div>
-        <div class="row ph"><span class="rd">Wed 7</span><span class="rt"><span class="p">PHARM</span> Immunology, Vaccines &amp; Allergy · 1330–1630 <em>· 110</em> · <b>Med Calc Resit 2</b> 1545–1630</span></div>
-        <div class="row hs"><span class="rd">Thu 8</span><span class="rt"><span class="p">HS2</span> <b>Reproduction labs (online, all groups)</b> — Male 0700, Female 1000 · lecture 1230–1430 <em>· Teams / 110</em></span></div>
-        <div class="row hs"><span class="rd">Fri 9</span><span class="rt"><span class="p">HS2</span> Lecture · from 1330 <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Fri 9</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin (0700–1100, roster) · <b>First Clinical Meeting 1330–1530</b> <em>· 301</em></span></div>
-        <div class="row assess ph"><span class="rd">Sun 11</span><span class="rt"><span class="p">PHARM</span> <b>Essay due 0900 (Canvas calendar)</b> — the syllabus says Mon 12 Oct; confirm which · APA 7th · <b>50%</b></span></div>
+        <div class="row inp unconf"><span class="rd">Mon 5</span><span class="rt"><span class="p">INP</span> CLS Inpatient Prep — 2B 0730, 2A 1030 · <b>Vital Signs &amp; Med-Admin assessments begin</b> 1200–1700 (roster) <em>· CLS</em></span></div>
+        <div class="row assess inp unconf"><span class="rd">Tue 6</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (see roster) · <b>Met / Not Met</b></span></div>
+        <div class="row hs"><span class="rd">Wed 7</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 · Module 3 (Reproduction) <em>· 110</em></span></div>
+        <div class="row inp unconf"><span class="rd">Wed 7</span><span class="rt"><span class="p">INP</span> Lecture: Clinical Documentation · 0900–1100 <em>· 110</em></span></div>
+        <div class="row ph unconf"><span class="rd">Wed 7</span><span class="rt"><span class="p">PHARM</span> Immunology, Vaccines &amp; Allergy · 1330–1630 <em>· 110</em> · <b>Med Calc Resit 2</b> 1545–1630</span></div>
+        <div class="row hs unconf"><span class="rd">Thu 8</span><span class="rt"><span class="p">HS2</span> <b>Reproduction labs (online, all groups)</b> — Male 0700, Female 1000 · lecture 1230–1430 <em>· Teams / 110</em></span></div>
+        <div class="row hs"><span class="rd">Fri 9</span><span class="rt"><span class="p">HS2</span> Lecture · <b>time TBC</b> <em>· 110</em> — Canvas entry is malformed (start = end = 1430, zero duration); confirm on Canvas</span></div>
+        <div class="row inp"><span class="rd">Fri 9</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin (0800–1200, roster) · <b>First Clinical Meeting 1430–1630</b> <em>· 301</em></span></div>
       </div>
     </div>
 
@@ -483,15 +533,15 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">HS2 Wk 10 · INP Wk 12</span><span class="wk-d">Mon 12 – Fri 16 Oct</span><span class="wk-tag warn">Essay · practicals</span></div>
       <div class="wk-body">
-        <div class="row assess ph"><span class="rd">Mon 12</span><span class="rt"><span class="p">PHARM</span> <b>Essay due 0900 (syllabus date)</b> — vs 11 Oct on the calendar; confirm · <b>50%</b></span></div>
-        <div class="row assess inp"><span class="rd">Mon 12</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (roster) · <b>Met / Not Met</b></span></div>
-        <div class="row assess inp"><span class="rd">Tue 13</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (roster)</span></div>
-        <div class="row hs"><span class="rd">Wed 14</span><span class="rt"><span class="p">HS2</span> Lectures 0700–0900 &amp; 1130–1330 · Special Senses <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Wed 14</span><span class="rt"><span class="p">INP</span> Lecture: Primary Health Care &amp; Health Promotion · 0900–1100 <em>· 110</em></span></div>
-        <div class="row ph"><span class="rd">Wed 14</span><span class="rt"><span class="p">PHARM</span> Self-directed Canvas quiz: Socioeconomic Factors &amp; Complementary/Alternative Medicines · 1130–1630 <em>· 110/remote</em></span></div>
-        <div class="row hs"><span class="rd">Thu 15</span><span class="rt"><span class="p">HS2</span> <b>Special Senses labs</b> (Blue 0700, Green 1000) + lecture 1230–1430 <em>· 110</em></span></div>
-        <div class="row hs"><span class="rd">Fri 16</span><span class="rt"><span class="p">HS2</span> Lecture 0900–1100 · Special Senses <em>· 110</em></span></div>
-        <div class="row assess inp"><span class="rd">Fri 16</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 1200–1700 (roster)</span></div>
+        <div class="row assess ph"><span class="rd">Mon 12</span><span class="rt"><span class="p">PHARM</span> <b>Essay due 0900</b> · Mon 12 Oct — Canvas calendar and syllabus agree · APA 7th · <b>50%</b></span></div>
+        <div class="row assess inp unconf"><span class="rd">Mon 12</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (roster) · <b>Met / Not Met</b></span></div>
+        <div class="row assess inp unconf"><span class="rd">Tue 13</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (roster)</span></div>
+        <div class="row hs unconf"><span class="rd">Wed 14</span><span class="rt"><span class="p">HS2</span> Lectures 0700–0900 &amp; 1130–1330 · Special Senses <em>· 110</em></span></div>
+        <div class="row inp unconf"><span class="rd">Wed 14</span><span class="rt"><span class="p">INP</span> Lecture: Primary Health Care &amp; Health Promotion · 0900–1100 <em>· 110</em></span></div>
+        <div class="row ph unconf"><span class="rd">Wed 14</span><span class="rt"><span class="p">PHARM</span> Self-directed Canvas quiz: Socioeconomic Factors &amp; Complementary/Alternative Medicines · 1130–1630 <em>· 110/remote</em></span></div>
+        <div class="row hs unconf"><span class="rd">Thu 15</span><span class="rt"><span class="p">HS2</span> <b>Special Senses labs</b> (Blue 0700, Green 1000) + lecture 1230–1430 <em>· 110</em></span></div>
+        <div class="row hs"><span class="rd">Fri 16</span><span class="rt"><span class="p">HS2</span> Lecture 1000–1200 · Special Senses <em>· 110</em></span></div>
+        <div class="row assess inp unconf"><span class="rd">Fri 16</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 1200–1700 (roster)</span></div>
       </div>
     </div>
 
@@ -499,15 +549,15 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">HS2 Wk 11 · INP Wk 13</span><span class="wk-d">Mon 19 – Fri 23 Oct</span><span class="wk-tag warn">Test 3 window</span></div>
       <div class="wk-body">
-        <div class="row assess inp"><span class="rd">Mon 19</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (roster) · <b>Met / Not Met</b></span></div>
-        <div class="row inp"><span class="rd">Tue 20</span><span class="rt"><span class="p">INP</span> Lecture: Health Screening &amp; Standards of Competence · 0930–1130 <em>· 110</em></span></div>
-        <div class="row ph"><span class="rd">Tue 20</span><span class="rt"><span class="p">PHARM</span> Lecture: Licit &amp; Illicit Drugs &amp; Toxicology · 0700–0900 <em>· 110</em></span></div>
-        <div class="row hs"><span class="rd">Wed 21</span><span class="rt"><span class="p">HS2</span> Lecture 1130–1330 · Special Senses / Genetics <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Wed 21</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0800–1200 (roster) <em>· Sim suite</em></span></div>
-        <div class="row ph"><span class="rd">Wed 21</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 1 · 1330–1630 <em>· 110</em> · <b>Med Calc Resit 3</b> 1545–1630</span></div>
-        <div class="row hs"><span class="rd">Thu 22</span><span class="rt"><span class="p">HS2</span> <b>Special Senses labs</b> (Red 0700, Yellow 1000) + lecture 1230–1430 <em>· 110</em></span></div>
-        <div class="row hs"><span class="rd">Fri 23</span><span class="rt"><span class="p">HS2</span> Lecture 0800–1000 <em>· 201/301</em></span></div>
-        <div class="row inp"><span class="rd">Fri 23</span><span class="rt"><span class="p">INP</span> Lecture: Revision One (1030–1230, 301) · Vital Signs &amp; Med-Admin 1300–1700 (roster)</span></div>
+        <div class="row assess inp unconf"><span class="rd">Mon 19</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0700–1700 (roster) · <b>Met / Not Met</b></span></div>
+        <div class="row inp unconf"><span class="rd">Tue 20</span><span class="rt"><span class="p">INP</span> Lecture: Health Screening &amp; Standards of Competence · 0930–1130 <em>· 110</em></span></div>
+        <div class="row ph unconf"><span class="rd">Tue 20</span><span class="rt"><span class="p">PHARM</span> Lecture: Licit &amp; Illicit Drugs &amp; Toxicology · 0700–0900 <em>· 110</em></span></div>
+        <div class="row hs"><span class="rd">Wed 21</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 · Special Senses / Genetics <em>· 110</em></span></div>
+        <div class="row inp unconf"><span class="rd">Wed 21</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0800–1200 (roster) <em>· Sim suite</em></span></div>
+        <div class="row ph unconf"><span class="rd">Wed 21</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 1 · 1330–1630 <em>· 110</em> · <b>Med Calc Resit 3</b> 1545–1630</span></div>
+        <div class="row hs unconf"><span class="rd">Thu 22</span><span class="rt"><span class="p">HS2</span> <b>Special Senses labs</b> (Red 0700, Yellow 1000) + lecture 1230–1430 <em>· 110</em></span></div>
+        <div class="row hs unconf"><span class="rd">Fri 23</span><span class="rt"><span class="p">HS2</span> Lecture 0800–1000 <em>· 201/301</em></span></div>
+        <div class="row inp unconf"><span class="rd">Fri 23</span><span class="rt"><span class="p">INP</span> Lecture: Revision One (1030–1230, 301) · Vital Signs &amp; Med-Admin 1300–1700 (roster)</span></div>
       </div>
     </div>
 
@@ -516,16 +566,16 @@
       <div class="wk-h"><span class="wk-n">HS2 Wk 12 · INP Wk 14</span><span class="wk-d">Mon 26 – Fri 30 Oct</span><span class="wk-tag warn">Test 3 closes · revision</span></div>
       <div class="wk-body">
         <div class="row assess hs"><span class="rd">Mon 26</span><span class="rt"><span class="p">HS2</span> <b>Test 3 closes — Module 3 (Repro, Genetics, Special Senses)</b> · 37 Q · 30% SAQ · covers Wk 9–11 + Deafness &amp; Lactation cases · <b>16.6%</b> &nbsp;·&nbsp; <em>Labour Day public holiday</em></span></div>
-        <div class="row hs"><span class="rd">Tue 27</span><span class="rt"><span class="p">HS2</span> Lecture 1130–1330 <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Tue 27</span><span class="rt"><span class="p">INP</span> Lecture: Revision Two (0930–1130, 110) · Vital Signs &amp; Med-Admin 1200–1700 (roster)</span></div>
-        <div class="row ph"><span class="rd">Tue 27</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 2 · 0700–0900 <em>· 110</em></span></div>
-        <div class="row hs"><span class="rd">Wed 28</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Wed 28</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin · 0700–1100 (roster) <em>· Sim suite</em></span></div>
-        <div class="row ph"><span class="rd">Wed 28</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 3 · 1330–1630 <em>· 110</em></span></div>
-        <div class="row hs"><span class="rd">Thu 29</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 <em>· 110</em></span></div>
-        <div class="row inp"><span class="rd">Thu 29</span><span class="rt"><span class="p">INP</span> Lecture: Transition to BN3 · 1100–1230 <em>· online</em></span></div>
-        <div class="row hs"><span class="rd">Fri 30</span><span class="rt"><span class="p">HS2</span> Lecture 0700–0830 <em>· 301/127</em></span></div>
-        <div class="row inp"><span class="rd">Fri 30</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin (0900–1300, roster) · <b>Second Clinical Meeting 1330–1530</b> <em>· 301</em></span></div>
+        <div class="row hs unconf"><span class="rd">Tue 27</span><span class="rt"><span class="p">HS2</span> Lecture 1130–1330 <em>· 110</em></span></div>
+        <div class="row inp unconf"><span class="rd">Tue 27</span><span class="rt"><span class="p">INP</span> Lecture: Revision Two (0930–1130, 110) · Vital Signs &amp; Med-Admin 1200–1700 (roster)</span></div>
+        <div class="row ph unconf"><span class="rd">Tue 27</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 2 · 0700–0900 <em>· 110</em></span></div>
+        <div class="row hs unconf"><span class="rd">Wed 28</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 <em>· 110</em></span></div>
+        <div class="row inp unconf"><span class="rd">Wed 28</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin · 0700–1100 (roster) <em>· Sim suite</em></span></div>
+        <div class="row ph unconf"><span class="rd">Wed 28</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 3 · 1330–1630 <em>· 110</em></span></div>
+        <div class="row hs unconf"><span class="rd">Thu 29</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 <em>· 110</em></span></div>
+        <div class="row inp"><span class="rd">Thu 29</span><span class="rt"><span class="p">INP</span> Lecture: Transition to BN3 · 1200–1330 <em>· online</em></span></div>
+        <div class="row hs unconf"><span class="rd">Fri 30</span><span class="rt"><span class="p">HS2</span> Lecture 0700–0830 <em>· 301/127</em></span></div>
+        <div class="row inp"><span class="rd">Fri 30</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin (1000–1400, roster) · <b>Second Clinical Meeting 1430–1630</b> <em>· 301</em></span></div>
       </div>
     </div>
 
@@ -533,9 +583,9 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">Exam week</span><span class="wk-d">Mon 2 – Fri 6 Nov</span><span class="wk-tag crit">Three finals</span></div>
       <div class="wk-body">
-        <div class="row exam inp"><span class="rd">Wed 4</span><span class="rt"><span class="p">INP</span> <b>Final Exam · 1300–1540</b> · 60 MCQ + 10 SAQ · <b>50%</b> <em>· venue TBA</em></span></div>
-        <div class="row exam hs"><span class="rd">Thu 5</span><span class="rt"><span class="p">HS2</span> <b>Final Exam · 1130–1540</b> · 32 Q · 37% SAQ · on campus · starred* Booklet A cases (Wk 1–12) · <b>50%</b> <em>· rooms 301/312</em></span></div>
-        <div class="row exam ph"><span class="rd">Thu 5 / Fri 6</span><span class="rt"><span class="p">PHARM</span> <b>Final Exam (afternoon)</b> · MCQs &amp; SAQs · <b>50%</b> — <b>date unconfirmed:</b> Canvas calendar shows Thu 5 Nov, syllabus shows Fri 6 Nov. <b>Confirm to rule out a clash with HS2.</b></span></div>
+        <div class="row exam inp"><span class="rd">Wed 4</span><span class="rt"><span class="p">INP</span> <b>Final Exam · 1230–1540</b> · 60 MCQ + 10 SAQ · <b>50%</b> <em>· venue TBA</em> — ⚠ Canvas event time is 1230–1540 but its title text reads 1300–1540; confirm the start with the coordinator</span></div>
+        <div class="row exam hs"><span class="rd">Thu 5</span><span class="rt"><span class="p">HS2</span> <b>Final Exam · 1230–1640</b> · 32 Q · 37% SAQ · on campus · starred* Booklet A cases (Wk 1–12) · <b>50%</b> <em>· rooms 301/312</em></span></div>
+        <div class="row exam ph"><span class="rd">Fri 6</span><span class="rt"><span class="p">PHARM</span> <b>Final Exam (afternoon)</b> · MCQs &amp; SAQs · <b>50%</b> — Canvas calendar and syllabus agree; no clash with HS2 (Thu 5 Nov).</span></div>
       </div>
     </div>
 
@@ -555,7 +605,7 @@
   <!-- ============ 03 · MASTER CHECKPOINT LIST ============ -->
   <section id="master">
     <div class="sec-head"><span class="sec-num">03</span><h2>Every graded checkpoint, in date order</h2></div>
-    <p class="sec-sub">The quick-reference version: strip out the lectures and you're left with what actually earns (or gates) your marks. Dates flagged "confirm" are unresolved in the source — see <a href="#verify" style="color:var(--accent-deep);text-decoration:none">§08</a>.</p>
+    <p class="sec-sub">The quick-reference version: strip out the lectures and you're left with what actually earns (or gates) your marks. Dates that once conflicted between Canvas's calendar and syllabus are now reconciled — see <a href="#verify" style="color:var(--accent-deep);text-decoration:none">§08</a> for what changed.</p>
     <div class="tscroll">
     <table>
       <thead><tr><th>Date</th><th>Paper</th><th>Checkpoint</th><th>Weight</th></tr></thead>
@@ -573,12 +623,12 @@
         <tr><td><span class="when">Mon 5 Oct</span></td><td><span class="ppill inp">INP</span></td><td>Case Study due — Stream 1B</td><td class="pct">30%</td></tr>
         <tr><td><span class="when">5–30 Oct</span></td><td><span class="ppill inp">INP</span> <span class="ppill ph">Pharm</span></td><td>Vital Signs + Med-Admin practicals (roster)</td><td><span class="mnm">Met / Not Met</span></td></tr>
         <tr><td><span class="when">Wed 7 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Med Calc Resit 2</td><td><span class="mnm">re-sit</span></td></tr>
-        <tr><td><span class="when">11 / 12 Oct <b>?</b></span></td><td><span class="ppill ph">Pharm</span></td><td>Essay due 0900 <em>(date to confirm)</em></td><td class="pct">50%</td></tr>
+        <tr><td><span class="when">Mon 12 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Essay due 0900</td><td class="pct">50%</td></tr>
         <tr><td><span class="when">Wed 21 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Med Calc Resit 3</td><td><span class="mnm">re-sit</span></td></tr>
         <tr><td><span class="when">Mon 26 Oct</span></td><td><span class="ppill hs">HS2</span></td><td>Test 3 closes — Module 3 <em>(Labour Day)</em></td><td class="pct">16.6%</td></tr>
-        <tr><td><span class="when">Wed 4 Nov</span></td><td><span class="ppill inp">INP</span></td><td>Final Exam · 1300–1540</td><td class="pct">50%</td></tr>
-        <tr><td><span class="when">Thu 5 Nov</span></td><td><span class="ppill hs">HS2</span></td><td>Final Exam · 1130–1540 · rooms 301/312</td><td class="pct">50%</td></tr>
-        <tr><td><span class="when">5 / 6 Nov <b>?</b></span></td><td><span class="ppill ph">Pharm</span></td><td>Final Exam · afternoon <em>(date to confirm)</em></td><td class="pct">50%</td></tr>
+        <tr><td><span class="when">Wed 4 Nov</span></td><td><span class="ppill inp">INP</span></td><td>Final Exam · 1230–1540</td><td class="pct">50%</td></tr>
+        <tr><td><span class="when">Thu 5 Nov</span></td><td><span class="ppill hs">HS2</span></td><td>Final Exam · 1230–1640 · rooms 301/312</td><td class="pct">50%</td></tr>
+        <tr><td><span class="when">Fri 6 Nov</span></td><td><span class="ppill ph">Pharm</span></td><td>Final Exam · afternoon</td><td class="pct">50%</td></tr>
         <tr><td><span class="when">20 Nov · 4 Dec · 18 Dec</span></td><td><span class="ppill inp">INP</span></td><td>Standards of Competence sign-offs</td><td><span class="mnm">Met / Not Met</span></td></tr>
       </tbody>
     </table>
@@ -638,7 +688,7 @@
               <tr><td class="a">Test 1 — Module 1</td><td><span class="when">closes Sun 23 Aug</span></td><td>35 Q · 20% SAQ · Wk 1–4 · verbs: <em>Explain, Analyse</em></td><td class="pct">16.6%</td></tr>
               <tr><td class="a">Test 2 — Module 2</td><td><span class="when">closes Mon 21 Sep</span></td><td>42 Q · 22% SAQ · Wk 5–8 · adds <em>Describe</em></td><td class="pct">16.6%</td></tr>
               <tr><td class="a">Test 3 — Module 3</td><td><span class="when">closes Mon 26 Oct</span></td><td>37 Q · 30% SAQ · Wk 9–11 · adds <em>Apply, Demonstrate</em></td><td class="pct">16.6%</td></tr>
-              <tr><td class="a">Final Exam</td><td><span class="when">Thu 5 Nov · 1130–1540</span></td><td>32 Q · 37% SAQ · on campus (rooms 301/312) · starred* Booklet A · Wk 1–12</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Final Exam</td><td><span class="when">Thu 5 Nov · 1230–1640</span></td><td>32 Q · 37% SAQ · on campus (rooms 301/312) · starred* Booklet A · Wk 1–12</td><td class="pct">50%</td></tr>
               <tr><td class="a">Practical labs</td><td><span class="when">throughout</span></td><td>Participate in 5 of 6 · ≥3 on campus (online ≥50% can substitute) · Labs 5 &amp; 6 are two-part</td><td><span class="mnm">Met / Not Met</span></td></tr>
             </tbody>
           </table>
@@ -711,7 +761,7 @@
             <tbody>
               <tr><td class="a">Community Profile — group presentation</td><td><span class="when">4 Sep / 18 Sep</span></td><td>By stream (1A/1B, then 2A/2B) · LO1, 2, 4</td><td class="pct">20%</td></tr>
               <tr><td class="a">Case Study — written</td><td><span class="when">14 Sep – 5 Oct</span></td><td>Due date by stream (2A → 2B → 1A → 1B) · LO1, 3, 4</td><td class="pct">30%</td></tr>
-              <tr><td class="a">Final Exam</td><td><span class="when">Wed 4 Nov · 1300–1540</span></td><td>60 MCQ + 10 SAQ · LO1–4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Final Exam</td><td><span class="when">Wed 4 Nov · 1230–1540</span></td><td>60 MCQ + 10 SAQ · LO1–4 · confirm start (Canvas title says 1300)</td><td class="pct">50%</td></tr>
               <tr><td class="a">Vital signs practical</td><td><span class="when">Oct · per roster</span></td><td>Clinical competency · LO3, 5</td><td><span class="mnm">Met / Not Met</span></td></tr>
               <tr><td class="a">Inpatient Standards of Competence</td><td><span class="when">20 Nov, 4 Dec, 18 Dec</span></td><td>Signed off on placement · LO1–5</td><td><span class="mnm">Met / Not Met</span></td></tr>
             </tbody>
@@ -746,7 +796,7 @@
       <div class="paper-body">
         <div class="blk full">
           <h4>The shape of it</h4>
-          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">Two graded pieces (essay + exam, 50/50) sitting on top of <b>two must-pass practical hurdles</b>. The theory is drug classes — mechanisms, therapeutic uses and side effects — plus safe administration and patient medication education. <b>Coordinator was still listed as TBA</b> in the export, so watch for that appointment — and note the essay and exam dates disagree between the syllabus and the calendar (see below).</p>
+          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">Two graded pieces (essay + exam, 50/50) sitting on top of <b>two must-pass practical hurdles</b>. The theory is drug classes — mechanisms, therapeutic uses and side effects — plus safe administration and patient medication education. <b>Coordinator was still listed as TBA</b> in the export, so watch for that appointment. The essay and exam dates once looked like they disagreed between the syllabus and the calendar, but that was a timezone artefact — both are now reconciled (see below).</p>
         </div>
 
         <div class="blk">
@@ -779,8 +829,8 @@
             <tbody>
               <tr><td class="a">Medication Calculations Test</td><td><span class="when">Tue 25 Aug</span></td><td>Drug-maths hurdle · re-sits 15 Sep, 7 Oct, 21 Oct · LO1–3</td><td><span class="mnm">Met / Not Met</span></td></tr>
               <tr><td class="a">Medication Administration Competence</td><td><span class="when">from 5 Oct</span></td><td>With INP Vital Signs · max 2 attempts · LO1</td><td><span class="mnm">Met / Not Met</span></td></tr>
-              <tr><td class="a">Pharmacology Essay</td><td><span class="when">11 / 12 Oct · 0900 ⚠</span></td><td>APA 7th · calendar says 11 Oct, syllabus says 12 Oct — confirm · LO1 &amp; 4</td><td class="pct">50%</td></tr>
-              <tr><td class="a">Exam</td><td><span class="when">5 / 6 Nov ⚠</span></td><td>MCQs &amp; SAQs · calendar says 5 Nov, syllabus says 6 Nov — confirm · LO1, 3 &amp; 4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Pharmacology Essay</td><td><span class="when">Mon 12 Oct · 0900</span></td><td>APA 7th · calendar and syllabus agree · LO1 &amp; 4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Exam</td><td><span class="when">Fri 6 Nov</span></td><td>MCQs &amp; SAQs · calendar and syllabus agree · LO1, 3 &amp; 4</td><td class="pct">50%</td></tr>
             </tbody>
           </table>
           </div>
@@ -790,7 +840,7 @@
           <h4>Useful to know</h4>
           <ul class="notes" style="--hue:var(--ph)">
             <li>The <b>Medication Calculations Test</b> (Tue 25 Aug) is a drug-maths hurdle. Re-sits exist (15 Sep, 7 Oct, 21 Oct), which makes it easy to underestimate — but you can't pass the paper without clearing it. Practise calculations early and treat the resits as a safety net, not the plan.</li>
-            <li>The <b>essay is worth half the paper</b> and is due <em>before</em> the exam crush (~11–12 Oct) — get it done in the quieter first half of the semester.</li>
+            <li>The <b>essay is worth half the paper</b> and is due <em>before</em> the exam crush (Mon 12 Oct) — get it done in the quieter first half of the semester.</li>
             <li>Med-Admin competence runs <b>concurrently with INP's Vital Signs assessment</b> in October — the two papers share that practical window, so prep once and use it twice.</li>
           </ul>
         </div>
@@ -834,63 +884,28 @@
   <!-- ============ 08 · VERIFY DATES ============ -->
   <section id="verify">
     <div class="sec-head"><span class="sec-num">08</span><h2>Dates I changed, and dates you must confirm</h2></div>
-    <p class="sec-sub">Honesty section. Some dates in the earlier brief were wrong and I've corrected them; others genuinely conflict between Canvas's syllabus and its calendar, and I won't guess. Treat the flagged ones as <em>unconfirmed</em> until you check them yourself.</p>
+    <p class="sec-sub">Honesty section. Some dates in the earlier brief were wrong and I've corrected them — including a daylight-saving fix that shifted the November exams. Two that looked like syllabus-vs-calendar conflicts turned out to be timezone artefacts and are now resolved. A few others genuinely depend on your stream or roster — treat those as <em>unconfirmed</em> until you check them yourself — and two are Canvas-side data errors worth raising with the school.</p>
     <div class="refs" style="counter-reset:none">
-      <div class="vrow"><span class="vbadge fix">Corrected</span><span class="vt"><b>HS2 final exam is Thu 5 Nov (1130–1540, rooms 301/312).</b> The earlier brief guessed <span class="old">Mon 2 Nov</span>. Canvas is consistent on 5 Nov across its calendar and class schedule, so that's the plan-of-record here.</span></div>
-      <div class="vrow"><span class="vbadge fix">Corrected</span><span class="vt"><b>The exams aren't spread Mon/Wed/Fri.</b> The old "alternating days" story assumed HS2 on 2 Nov. The real cluster is <b>Wed 4 → Thu 5 → Thu 5 / Fri 6 Nov</b> — three finals in two-to-three days.</span></div>
+      <div class="vrow"><span class="vbadge fix">Corrected</span><span class="vt"><b>HS2 final exam is Thu 5 Nov (1230–1640, rooms 301/312).</b> The earlier brief guessed <span class="old">Mon 2 Nov</span>, and an earlier version of this page showed <span class="old">1130–1540</span> before the daylight-saving conversion was fixed. Canvas is consistent on 5 Nov across its calendar and class schedule, so that's the plan-of-record here.</span></div>
+      <div class="vrow"><span class="vbadge fix">Corrected</span><span class="vt"><b>The exams aren't spread Mon/Wed/Fri.</b> The old "alternating days" story assumed HS2 on 2 Nov. The real cluster is <b>Wed 4 → Thu 5 → Fri 6 Nov</b> — three finals over three consecutive days, with no same-day overlap.</span></div>
       <div class="vrow"><span class="vbadge fix">Corrected</span><span class="vt"><b>HS2 Orientation Quiz is due Wed 29 Jul 1100 and worth 10 pts</b> (unlocks Mon 27 Jul). The earlier brief said <span class="old">Tue 28, 5 pts</span>.</span></div>
-      <div class="vrow"><span class="vbadge conflict">Confirm</span><span class="vt"><b>Pharmacology exam: Thu 5 Nov (calendar) vs Fri 6 Nov (syllabus).</b> Unresolved in the source. This matters most because <b>if it's 5 Nov it may overlap the HS2 exam that afternoon</b> — check with the coordinator early so you're not double-booked.</span></div>
-      <div class="vrow"><span class="vbadge conflict">Confirm</span><span class="vt"><b>Pharmacology essay: Sun 11 Oct (calendar) vs Mon 12 Oct 0900 (syllabus).</b> Only a day apart, but plan for the earlier one until it's confirmed.</span></div>
+      <div class="vrow"><span class="vbadge fix">Corrected</span><span class="vt"><b>Daylight-saving: timed items from late September on were an hour early.</b> NZ moves to NZDT (UTC+13) on <b>Sun 27 Sep 2026</b>; the earlier build converted Canvas's stored UTC times at UTC+12 all year, so every timed item from 27 Sep onward displayed one hour too early. The Canvas-verified items — both the <b>HS2 and Pharm exam times</b>, the two <b>Clinical Meetings</b>, <b>Transition to BN3</b>, and the <b>5 Oct Inpatient Prep</b> — have been shifted +1 hr to match Canvas. <b>The remaining roster-based October times (Vital Signs / Med-Admin windows and lab start times) haven't been re-verified — check those cell-by-cell against the live calendar.</b></span></div>
+      <div class="vrow"><span class="vbadge fix">Resolved</span><span class="vt"><b>Pharmacology exam: Fri 6 Nov.</b> Resolved — the Canvas calendar renders the exam on Fri 6 Nov, matching the syllabus. The earlier "Thu 5 Nov" reading was a timezone-conversion artefact, so there's no overlap with the HS2 exam (Thu 5 Nov).</span></div>
+      <div class="vrow"><span class="vbadge fix">Resolved</span><span class="vt"><b>Pharmacology essay: Mon 12 Oct 0900.</b> Resolved — the Canvas calendar renders the all-day "Essay Due 0900" item in the Mon 12 Oct cell, matching the syllabus. The earlier "Sun 11 Oct" was a timezone-conversion artefact.</span></div>
       <div class="vrow"><span class="vbadge check">Check yourself</span><span class="vt"><b>Stream- and roster-based dates.</b> Every CLS simulation, case-study briefing, and the October Vital Signs / Med-Admin practicals depend on your stream (1A/1B/2A/2B) and the published roster. The times above are the whole-cohort ranges, not your personal slot.</span></div>
       <div class="vrow"><span class="vbadge check">Check yourself</span><span class="vt"><b>HS2 lecture topics after Week 1.</b> Canvas only spelled out the specific learning pages for the first week; later HS2 lectures are labelled here by <em>module/system</em> (accurate) rather than an exact daily topic, which Canvas didn't publish at extraction.</span></div>
       <div class="vrow"><span class="vbadge check">Check yourself</span><span class="vt"><b>A few HS2 rooms are marked provisional</b> in Canvas (e.g. 22 Oct "110 also booked in 201 — needs clarification"). Confirm rooms on the day's calendar entry.</span></div>
+      <div class="vrow"><span class="vbadge conflict">Canvas</span><span class="vt"><b>INP final exam — Canvas contradicts itself.</b> The event's stored time is <b>1230–1540</b>, but its own title text reads "Final Exam (1300 – 1540)". This page shows the stored start (1230); <b>confirm 1230 vs 1300 with the coordinator</b>, and it's worth asking the school to fix the Canvas entry.</span></div>
+      <div class="vrow"><span class="vbadge check">Canvas</span><span class="vt"><b>HS2 lecture Fri 9 Oct is malformed in Canvas.</b> It's stored with an identical start and end (1430–1430, zero duration), so no usable time can be read from it — shown here as <b>time TBC</b>. This one needs fixing in Canvas.</span></div>
     </div>
     <div class="callout">
       <b>The one rule for all of the above:</b> this page is a working map synthesised from a partial Canvas export, not the official course document. When a date here disagrees with your live Canvas calendar or a lecturer's announcement, <b>the school's own calendar wins</b> — check it as content unlocks, and re-confirm the early-November exam dates specifically once they're finalised.
     </div>
   </section>
 
-  <!-- ============ 09 · PLAY IT SMART ============ -->
-  <section id="smart">
-    <div class="sec-head"><span class="sec-num">09</span><h2>Playing the semester well</h2></div>
-    <p class="sec-sub">Not a lecture — just the moves that tend to make this particular semester shape easier, drawn from where the workload actually clusters. Take what's useful.</p>
-    <div class="alert-grid">
-      <div class="alert">
-        <span class="tag" style="color:var(--accent-deep)">Week 1</span>
-        <h3>Clear the admin traps first</h3>
-        <p>Two small things gate the whole semester: the <b>Lab H&amp;S quiz needs 100%</b> before you can enter any lab, and <b>lab-group swaps close Fri 31 Jul</b>. Both take minutes now and are painful later.</p>
-      </div>
-      <div class="alert">
-        <span class="tag" style="color:var(--accent-deep)">Front-load</span>
-        <h3>Move the Pharm essay early</h3>
-        <p>It's 50% of the paper and due ~11–12 Oct — right as the practicals and Test 3 hit. Drafting it in the quieter Aug–Sept stretch pulls one big rock out of October.</p>
-      </div>
-      <div class="alert">
-        <span class="tag" style="color:var(--accent-deep)">Prep once</span>
-        <h3>Treat the October practicals as one block</h3>
-        <p>INP Vital Signs and Pharm Med-Admin share the same 5–30 Oct window and skill set. Prepare the practical once and you're ready for both hurdles.</p>
-      </div>
-      <div class="alert">
-        <span class="tag" style="color:var(--accent-deep)">All semester</span>
-        <h3>Make Booklet A the through-line</h3>
-        <p>HS2's un-starred cases feed the tests and the starred* ones feed the exam. Working it steadily each week is worth more than any single cram.</p>
-      </div>
-      <div class="alert">
-        <span class="tag" style="color:var(--accent-deep)">Test windows</span>
-        <h3>Use the ProctorU week deliberately</h3>
-        <p>Each HS2 test is open Mon–Sun. Sit it early once the material's taught, or hold to Friday for the full syllabus — just decide on purpose rather than drifting into Sunday night.</p>
-      </div>
-      <div class="alert">
-        <span class="tag" style="color:var(--accent-deep)">Early Nov</span>
-        <h3>Reverse-plan from the exam cluster</h3>
-        <p>With three finals in ~three days, the revision has to be banked <em>before</em> that week — the days between them are for light review, not first passes. Confirm the Pharm date so you know whether it's 5 or 6 Nov.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 10 · REFERENCES ============ -->
+  <!-- ============ 09 · REFERENCES ============ -->
   <section id="refs">
-    <div class="sec-head"><span class="sec-num">10</span><h2>Recommended readings &amp; references</h2></div>
+    <div class="sec-head"><span class="sec-num">09</span><h2>Recommended readings &amp; references</h2></div>
     <p class="sec-sub">The texts, official NZ nursing documents, and drug references behind each paper. Numbers match the <sup>superscripts</sup> in the sections above.</p>
     <div class="refs">
       <div class="ref" id="r1"><span class="n">1</span><span class="txt"><b>Patton's Anatomy &amp; Physiology (ANZ).</b> HS2's core text, via ClinicalKey Student; chapters mapped to each weekly topic (CVS Ch 31–36 + 44, lymphatic 43, neuro 18–22, endocrine 25–26, reproduction/genetics 45–48, special senses 24). The backbone for every test and the exam.</span></div>
