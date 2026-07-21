@@ -41,8 +41,12 @@ create policy "own rows delete" on public.app_data
   for delete using (auth.uid() = user_id);
 
 -- Keep updated_at honest on every write (so "newest wins" conflict handling works).
+-- `set search_path = ''` pins the function's schema resolution so it can't be
+-- hijacked via a mutable search_path (clears the Supabase linter warning).
 create or replace function public.touch_app_data() returns trigger
-  language plpgsql as $$
+  language plpgsql
+  set search_path = ''
+  as $$
 begin
   new.updated_at = now();
   return new;

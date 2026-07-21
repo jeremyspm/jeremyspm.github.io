@@ -246,6 +246,7 @@ render('');
         <label>Password</label><input id="ap" type="password" autocomplete="${mode==='in'?'current-password':'new-password'}" placeholder="${mode==='in'?'your password':'at least 6 characters'}"/>
         <button class="go" id="ago">${mode==='in'?'Sign in':'Create account'}</button>
         <div class="alt">${mode==='in'?`No account? <a id="aswap">Create one</a> &nbsp;·&nbsp; <a id="aforgot">Forgot password?</a>`:`Have an account? <a id="aswap">Sign in</a>`}</div>
+        ${mode==='up'?`<p class="fineprint" style="margin:14px 0 0;font-size:12px;line-height:1.5;opacity:.6;text-align:center;">🔒 Your password is encrypted by our login provider — no one, including us, can ever see it. Please don't reuse a password from your bank or email. We only store your study progress.</p>`:''}
       </div>`;
       m.querySelector('#ax').onclick=()=>m.remove();
       m.querySelector('#aswap').onclick=()=>{ mode=mode==='in'?'up':'in'; draw(); };
