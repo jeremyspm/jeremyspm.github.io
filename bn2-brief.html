@@ -76,7 +76,7 @@
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
   }
-  .topbar .wrap { display: flex; align-items: center; gap: 16px; height: 54px; }
+  .topbar .wrap { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 16px; min-height: 54px; padding-top: 6px; padding-bottom: 6px; }
   .topbar .mark {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--ink-faint); white-space: nowrap;
@@ -161,7 +161,7 @@
   .alert .dates { font-family: var(--mono); font-size: 13px; color: var(--ink); margin-top: 9px; }
 
   /* ---- timeline ---- */
-  .month { display: grid; grid-template-columns: 92px 1fr; gap: 6px; }
+  .month { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 6px; }
   .month + .month { border-top: 1px dashed var(--line); }
   .month .m-label {
     font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink);
@@ -170,7 +170,7 @@
   .month .m-label span { display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-faint); font-weight: 400; letter-spacing: .08em; }
   .m-items { padding: 12px 0; display: flex; flex-direction: column; gap: 9px; }
   .ev {
-    display: grid; grid-template-columns: 62px 1fr auto; gap: 14px; align-items: baseline;
+    display: grid; grid-template-columns: 62px minmax(0,1fr) auto; gap: 14px; align-items: baseline;
     padding: 10px 14px; border-radius: 10px; background: var(--surface);
     border: 1px solid var(--line); border-left: 4px solid var(--hue);
   }
@@ -196,8 +196,10 @@
   .paper-top .pcode { font-family: var(--mono); font-size: 12px; color: var(--hue-ink); letter-spacing: .05em; font-weight: 600; }
   .paper-top h3 { font-family: var(--serif); font-size: 23px; font-weight: 600; margin: 0; }
   .paper-top .meta { margin-left: auto; font-size: 13px; color: var(--ink-faint); font-family: var(--mono); text-align: right; }
-  .paper-body { padding: 22px 24px; display: grid; gap: 24px; }
-  @media (min-width: 720px) { .paper-body { grid-template-columns: 1fr 1fr; } .paper-body .full { grid-column: 1 / -1; } }
+  .paper-body { padding: 22px 24px; display: grid; grid-template-columns: minmax(0,1fr); gap: 24px; }
+  /* mobile: let blocks shrink to the screen instead of blowing the grid track wider than the viewport */
+  .paper-body > * { min-width: 0; }
+  @media (min-width: 720px) { .paper-body { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } .paper-body .full { grid-column: 1 / -1; } }
   .blk h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint);
             margin: 0 0 11px; font-weight: 650; font-family: var(--sans); }
 
@@ -248,10 +250,13 @@
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   @media (max-width: 560px) {
-    .ev { grid-template-columns: 1fr auto; }
+    .ev { grid-template-columns: minmax(0,1fr) auto; }
     .ev .d { grid-column: 1 / -1; }
-    .month { grid-template-columns: 1fr; }
+    .month { grid-template-columns: minmax(0,1fr); }
     .month .m-label { position: static; padding-bottom: 4px; }
+    /* phones: drop the in-page jump-nav so the sticky bar stays slim (Hub + theme remain) */
+    .topbar nav { display: none; }
+    .topbar .themebtn { margin-left: auto; }
   }
 </style>
 
