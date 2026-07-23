@@ -61,6 +61,9 @@ the whole thing end-to-end.
   any failure.
 - `config.js` — the two-value config (empty = dormant).
 - Hub login panel — appears automatically once `config.js` is filled.
+- `suggestions.sql` — the public suggestions box on the hub (anyone can suggest
+  & upvote without an account; already applied to the BN-hub project). To
+  moderate: Table Editor → `suggestions` → set `hidden` to true on a row.
 
 ## Adding sync to any app later (the whole integration)
 

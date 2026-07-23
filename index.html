@@ -87,6 +87,27 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sheet .msg.err{background:rgba(255,107,107,.13);border:1px solid rgba(255,107,107,.4);color:#ff9a9a}
 .sheet .msg.ok{background:rgba(57,217,138,.12);border:1px solid rgba(57,217,138,.4);color:var(--good)}
 .sheet .x{float:right;font-size:19px;color:var(--tx3);padding:0 4px;margin:-4px -4px 0 0}
+/* suggestions box (public — works signed out) */
+.acct{margin-left:auto}
+.suggbtn{border:1px solid var(--acc2);background:var(--acc);color:#fff;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:800;letter-spacing:.2px;display:inline-flex;align-items:center;gap:6px;transition:.15s;box-shadow:0 3px 14px rgba(79,157,255,.3);flex:0 0 auto}
+.suggbtn:hover{background:var(--acc2)}
+.sheet.wide{max-width:560px;display:flex;flex-direction:column;max-height:min(84vh,700px)}
+.sugg-form textarea{width:100%;background:var(--card2);border:1.5px solid var(--line2);border-radius:10px;padding:11px 13px;color:var(--tx);font:inherit;font-size:14px;outline:none;resize:vertical;min-height:62px;margin-bottom:9px}
+.sugg-form textarea:focus{border-color:var(--acc)}
+.sugg-row{display:flex;gap:9px}
+.sugg-row input{flex:1;margin-bottom:0}
+.sugg-row .go{width:auto;padding:11px 18px;font-size:14px;flex:0 0 auto}
+.sugg-list{overflow-y:auto;margin:12px -6px 0;padding:0 6px;flex:1;min-height:60px}
+.sugg-item{display:flex;gap:12px;align-items:flex-start;padding:12px 2px;border-top:1px solid var(--line)}
+.sugg-item .txt{flex:1;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.sugg-item .byline{display:block;font-size:11.5px;color:var(--tx3);margin-top:3px}
+.upvote{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:44px;border:1px solid var(--line2);background:var(--card2);border-radius:10px;padding:7px 8px;color:var(--tx2);font-weight:800;transition:.13s;flex:0 0 auto}
+.upvote:hover{border-color:var(--acc);color:var(--tx)}
+.upvote.on{background:rgba(79,157,255,.16);border-color:var(--acc);color:var(--acc);cursor:default}
+.upvote .arr{font-size:11px;line-height:1}
+.upvote .n{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}
+.sugg-note{font-size:12.5px;color:var(--tx3);text-align:center;padding:18px 6px 6px}
+@media(max-width:520px){.suggbtn{padding:9px 11px;font-size:12px}}
 </style>
 </head>
 <body>
@@ -97,6 +118,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
       <p class="sub">Study tools &amp; apps for the BN — everything in one place. All free, all offline-capable.</p>
     </div>
     <div class="acct">
+      <button class="suggbtn" id="btnSugg" title="Tell me what to build next — no account needed">💡 Suggestions</button>
       <button class="acctbtn" id="btnAcct" style="display:none"></button>
       <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
     </div>
@@ -289,6 +311,104 @@ render('');
     m.onclick=e=>{ if(e.target===m) m.remove(); };
     draw(); document.body.appendChild(m);
   }
+})();
+
+/* ---------- suggestions box: anyone can suggest & upvote, no login ---------- */
+(function(){
+  const DEV='hub.sugg.device', VOTED='hub.sugg.voted';
+  // A random id per browser — the database's primary key makes it one upvote
+  // per suggestion per device (honest visitors; not bulletproof, doesn't need to be).
+  function dev(){
+    let d=localStorage.getItem(DEV);
+    if(!d){ d=(crypto.randomUUID&&crypto.randomUUID())||(Date.now().toString(36)+Math.random().toString(36).slice(2,12));
+      try{ localStorage.setItem(DEV,d); }catch(e){} }
+    return d;
+  }
+  function voted(){ try{ return new Set(JSON.parse(localStorage.getItem(VOTED))||[]); }catch(e){ return new Set(); } }
+  function remember(id){ const s=voted(); s.add(id); try{ localStorage.setItem(VOTED,JSON.stringify([...s])); }catch(e){} }
+  async function db(){ if(window.Cloud&&Cloud.enabled){ await Cloud.ready; return Cloud.client; } return null; }
+  const fmt=d=>{ try{ return new Date(d).toLocaleDateString(undefined,{day:'numeric',month:'short'}); }catch(e){ return ''; } };
+
+  $('#btnSugg').onclick=function(){
+    const m=document.createElement('div'); m.className='modal';
+    m.innerHTML=`<div class="sheet wide">
+      <button class="x" id="sx">✕</button>
+      <h3>💡 Suggestions</h3>
+      <p class="lead">What should I build next for the BN Hub? No account needed — drop an idea below, and upvote the ones you want most.</p>
+      <div id="smsg"></div>
+      <div class="sugg-form">
+        <textarea id="sbody" maxlength="500" placeholder="e.g. A fluid &amp; electrolytes cram tool… a quiz per drug class… anything you wish existed."></textarea>
+        <div class="sugg-row">
+          <input id="sname" maxlength="40" placeholder="Name (optional — blank = anonymous)"/>
+          <button class="go" id="ssend">Suggest</button>
+        </div>
+      </div>
+      <div class="sugg-list" id="slist"><div class="sugg-note">Loading…</div></div>
+    </div>`;
+    m.onclick=e=>{ if(e.target===m) m.remove(); };
+    m.querySelector('#sx').onclick=()=>m.remove();
+    m.querySelector('#ssend').onclick=submit;
+    document.body.appendChild(m);
+    load();
+
+    async function load(){
+      const list=m.querySelector('#slist'); if(!list) return;
+      const c=await db();
+      if(!c){ list.innerHTML=`<div class="sugg-note">The suggestions box can't reach the server right now — try again in a minute.</div>`; return; }
+      let r; try{ r=await c.from('suggestions')
+        .select('id,body,author,created_at,votes:suggestion_votes(count)')
+        .order('created_at',{ascending:false}).limit(200); }
+      catch(e){ r={error:e}; }
+      if(!r||r.error){ list.innerHTML=`<div class="sugg-note">Couldn't load suggestions — check your connection and try again.</div>`; return; }
+      const mine=voted();
+      const rows=(r.data||[])
+        .map(s=>({id:s.id,body:s.body,author:s.author,created_at:s.created_at,n:(s.votes&&s.votes[0]&&s.votes[0].count)||0}))
+        .sort((a,b)=>b.n-a.n || new Date(b.created_at)-new Date(a.created_at));
+      list.innerHTML = rows.length ? rows.map(s=>`
+        <div class="sugg-item">
+          <button class="upvote${mine.has(s.id)?' on':''}" data-id="${s.id}" title="${mine.has(s.id)?'You upvoted this':'Upvote'}">
+            <span class="arr">▲</span><span class="n">${s.n}</span>
+          </button>
+          <div class="txt">${esc(s.body)}<span class="byline">${s.author?esc(s.author):'Anonymous'} · ${fmt(s.created_at)}</span></div>
+        </div>`).join('')
+        : `<div class="sugg-note">No suggestions yet — yours could be the first.</div>`;
+      list.querySelectorAll('.upvote').forEach(b=>{ b.onclick=()=>vote(b); });
+    }
+
+    async function vote(b){
+      const id=b.dataset.id;
+      if(voted().has(id)) return;
+      const n=b.querySelector('.n');
+      b.classList.add('on'); n.textContent=String((+n.textContent||0)+1);   // optimistic
+      const c=await db();
+      let r; try{ r=c?await c.from('suggestion_votes').insert({suggestion_id:id,voter:dev()}):{error:{message:'offline'}}; }
+      catch(e){ r={error:{message:String(e)}}; }
+      // 23505 = this device already voted (e.g. in another tab) — that still counts.
+      if(r&&r.error&&r.error.code!=='23505'){
+        b.classList.remove('on'); n.textContent=String(Math.max(0,+n.textContent-1));
+        const msg=m.querySelector('#smsg');
+        if(msg) msg.innerHTML=`<div class="msg err">Couldn't save your upvote — check your connection and try again.</div>`;
+        return;
+      }
+      remember(id);
+    }
+
+    async function submit(){
+      const body=m.querySelector('#sbody').value.trim();
+      const name=m.querySelector('#sname').value.trim();
+      const msg=m.querySelector('#smsg'), go=m.querySelector('#ssend');
+      if(body.length<3){ msg.innerHTML=`<div class="msg err">Write a little more — a few words at least.</div>`; return; }
+      go.disabled=true; go.textContent='…';
+      const c=await db();
+      let r; try{ r=c?await c.from('suggestions').insert({body:body,author:name||null}):{error:{message:'offline'}}; }
+      catch(e){ r={error:{message:String(e)}}; }
+      go.disabled=false; go.textContent='Suggest';
+      if(r&&r.error){ msg.innerHTML=`<div class="msg err">Couldn't send it — check your connection and try again.</div>`; return; }
+      m.querySelector('#sbody').value='';
+      msg.innerHTML=`<div class="msg ok">Added — thank you! 🎉</div>`;
+      load();
+    }
+  };
 })();
 </script>
 </body>
