@@ -62,6 +62,17 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .soon-sub{padding:9px 13px;font-size:12px}
 .foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
 .foot a{color:var(--tx3)}
+/* ⚡ Study engine button */
+.sbGo{width:100%;display:none;align-items:center;gap:12px;text-align:left;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-radius:14px;padding:13px 16px;min-height:62px;margin:16px 0 0;box-shadow:0 6px 22px rgba(79,157,255,.32);transition:.15s}
+.sbGo.on{display:flex}
+.sbGo:hover{transform:translateY(-1px)}
+.sbGo .zap{font-size:24px;flex:0 0 auto}
+.sbGo .txt{flex:1;min-width:0}
+.sbGo .txt b{display:block;font-size:15px;letter-spacing:-.2px}
+.sbGo .txt span{display:block;font-size:12px;opacity:.88;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbGo .sbBudget{flex:0 0 auto;background:rgba(255,255,255,.18);border-radius:9px;padding:8px 11px;font-size:13px;font-weight:800;min-height:36px;display:inline-flex;align-items:center}
+.sbDone .big{font-size:38px;font-weight:800;letter-spacing:-1px;margin:6px 0 2px;color:var(--good)}
+.sbDone .sub2{font-size:13px;color:var(--tx2);margin:0 0 14px}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
 /* account button + auth modal (only shown when cloud sync is configured) */
 .acct{display:flex;align-items:center;gap:8px}
@@ -126,6 +137,11 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
       <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
     </div>
   </header>
+  <button class="sbGo" id="sbGo" title="One press — the highest-yield session across every app, precomputed">
+    <span class="zap">⚡</span>
+    <span class="txt"><b id="sbT">Study</b><span id="sbS">…</span></span>
+    <span class="sbBudget" id="sbB" title="Session length — tap to change">20′</span>
+  </button>
   <div id="cloudNote"></div>
   <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
@@ -136,6 +152,8 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="cloud/config.js"></script>
 <script src="cloud/cloud.js"></script>
+<!-- ⚡ Study engine calendar — the machine-readable mirror of bn2-brief.html -->
+<script src="deadlines.js"></script>
 
 <script>
 'use strict';
@@ -241,6 +259,139 @@ function applyTheme(){ document.documentElement.setAttribute('data-theme',localS
 $('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
 applyTheme();
 render('');
+
+/* ---------- ⚡ Study engine (v0) — see STUDY-ENGINE-SPEC.md ----------
+   Reads studybus.pulse.* bids off the shared-origin bus, weights them by
+   the DEADLINES calendar, precompiles a session plan, and deep-links
+   through the apps with ?sb=N return tickets. Semester-agnostic: BN3 is
+   a data append in deadlines.js, never a change here. */
+(function(){
+  const D=window.DEADLINES; if(!D){ return; }
+  const DAY=86400e3, PK='studybus.plan', BK='studybus.budget', SK='studybus.streak';
+  const today=new Date().setHours(0,0,0,0);
+  const parseD=s=>new Date(s+'T12:00:00').getTime();
+  const jget=(k,d)=>{ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?d:v; }catch(e){ return d; } };
+  const jset=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
+  const addQ=(u,q)=>u+(u.includes('?')?'&':'?')+q;
+
+  // next future sitting of an assessment, or null if past/done/archived
+  function nextDate(a){
+    if(a.done) return null;
+    const p=D.papers[a.paper]; if(p&&p.archived) return null;
+    let c=[];
+    if(a.window) c.push(a.window.close);
+    else if(a.streamDates) c=(D.stream&&a.streamDates[D.stream])?[a.streamDates[D.stream]]:Object.values(a.streamDates);
+    else if(a.due) c.push(a.due);
+    (a.resits||[]).forEach(r=>c.push(r));
+    const fut=c.map(parseD).filter(t=>t>=today).sort((x,y)=>x-y);
+    return fut.length?fut[0]:null;
+  }
+  // score = evPerMin × weight × urgency × hurdleBoost, vs the offer's strongest assessment
+  function scoreOffer(o,pulse){
+    let best=0, bestA=null;
+    (o.assess||[]).forEach(id=>{
+      const a=D.assessments.find(x=>x.id===id);
+      if(!a||a.kind==='assignment'||a.kind==='signoff') return;   // recall work only
+      const t=nextDate(a); if(t==null) return;
+      const d=Math.max(0,(t-today)/DAY);
+      const W=a.hurdle?1:(a.weight?a.weight/100:0.03);
+      const s=W * (1/(1+d/7)) * (a.hurdle&&d<=21?3:1);
+      if(s>best){ best=s; bestA=a; }
+    });
+    if(!bestA) return null;
+    // stale pulses undersell their app (cards decayed since ts) — inflate, plus a neglect bump
+    const age=(Date.now()-(pulse.ts||0))/DAY;
+    let f=Math.min(2,Math.exp(age/7)); if(age>7) f*=1.25;
+    return { score:(o.evPerMin||0.2)*best*f, paper:bestA.paper };
+  }
+  function pulses(){
+    const out=[];
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&k.indexOf('studybus.pulse.')===0){
+        const p=jget(k,null);
+        if(p&&p.app&&p.url&&Array.isArray(p.offers)) out.push(p);
+      }
+    }
+    return out;
+  }
+  function buildPlan(budget){
+    const cand=[];
+    pulses().forEach(p=>p.offers.forEach(o=>{
+      const r=scoreOffer(o,p); if(!r) return;
+      cand.push({ app:p.app, name:p.name||p.app, url:o.deep?p.url+o.deep:p.url,
+        label:o.label||p.name, minutes:Math.max(3,Math.min(o.minutes||8,budget)),
+        score:r.score, paper:r.paper });
+    }));
+    cand.sort((a,b)=>b.score-a.score);
+    // ≤60% of a session from one paper — but only once ≥2 papers have apps
+    // enrolled; with a single paper there's nothing to diversify into
+    const nPapers=new Set(cand.map(c=>c.paper)).size;
+    const legs=[], per={}, cap=nPapers>1?Math.ceil(budget*0.6):budget;
+    let used=0;
+    for(const c of cand){
+      if(legs.length>=4||used>=budget) break;
+      if(legs.some(l=>l.url===c.url)) continue;
+      const m=Math.min(c.minutes,budget-used); if(m<3) continue;
+      if(legs.length&&(per[c.paper]||0)+m>cap) continue;
+      legs.push({...c,minutes:m}); per[c.paper]=(per[c.paper]||0)+m; used+=m;
+    }
+    return { v:1, builtTs:Date.now(), budget, used, legs, hub:location.origin+location.pathname };
+  }
+  // fallback when no app has enrolled yet: point at the nearest deadline
+  function nearest(){
+    let best=null;
+    D.assessments.forEach(a=>{ const t=nextDate(a); if(t!=null&&(!best||t<best.t)) best={t,a}; });
+    return best;
+  }
+
+  const btn=$('#sbGo'), tEl=$('#sbT'), sEl=$('#sbS'), bEl=$('#sbB');
+  let budget=jget(BK,20), plan=null;
+  function refresh(){
+    bEl.textContent=budget+'′';
+    plan=buildPlan(budget);
+    if(plan.legs.length){
+      tEl.textContent='⚡ Study · '+plan.used+' min, ready to go';
+      sEl.textContent=plan.legs.map(l=>l.label).join('  →  ');
+    } else {
+      const n=nearest();
+      tEl.textContent='⚡ Study';
+      sEl.textContent=n?('open an app once to enrol it · next up: '+n.a.name+' in '+Math.round((n.t-today)/DAY)+' d')
+                      :'add this semester to deadlines.js to begin';
+    }
+    btn.classList.add('on');
+  }
+  btn.onclick=e=>{
+    if(e.target.closest('#sbB')){ budget=({10:20,20:40,40:10})[budget]||20; jset(BK,budget); refresh(); return; }
+    if(!plan||!plan.legs.length){ location.href='bn2-brief.html'; return; }
+    plan=buildPlan(budget); jset(PK,plan);          // rebuild fresh at press time
+    location.href=addQ(plan.legs[0].url,'sb=0');
+  };
+  refresh();
+  window.addEventListener('pageshow',refresh);       // coming back from an app re-scores
+
+  /* ---- done screen (?sbdone=1): one number + streak ---- */
+  if(new URLSearchParams(location.search).get('sbdone')){
+    const p=jget(PK,null);
+    const marks=p&&p.legs?p.legs.reduce((s,l)=>s+l.score*l.minutes,0):0;
+    const t=new Date(), iso=d=>new Date(d).toISOString().slice(0,10);
+    const st=jget(SK,{last:'',n:0});
+    if(st.last!==iso(t)){ st.n=(st.last===iso(t-DAY))?st.n+1:1; st.last=iso(t); jset(SK,st); }
+    const m=document.createElement('div'); m.className='modal';
+    m.innerHTML=`<div class="sheet sbDone" style="text-align:center">
+      <h3>Session done ✅</h3>
+      <div class="big">≈ ${(Math.round(marks*10)/10).toFixed(1)}</div>
+      <p class="sub2">marks defended · ${st.n}-day streak 🔥</p>
+      <button class="go" id="sbAgain">⚡ One more session</button>
+      <div class="alt"><a id="sbClose">Done for now</a></div>
+    </div>`;
+    m.querySelector('#sbClose').onclick=()=>m.remove();
+    m.querySelector('#sbAgain').onclick=()=>{ m.remove(); btn.click(); };
+    m.onclick=e=>{ if(e.target===m) m.remove(); };
+    document.body.appendChild(m);
+    history.replaceState(null,'',location.pathname);   // clean the URL so refresh ≠ re-celebrate
+  }
+})();
 
 /* ---------- cloud account UI (only if Cloud is configured) ---------- */
 (function(){
