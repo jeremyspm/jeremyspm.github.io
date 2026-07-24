@@ -71,8 +71,69 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sbGo .txt b{display:block;font-size:15px;letter-spacing:-.2px}
 .sbGo .txt span{display:block;font-size:12px;opacity:.88;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sbGo .sbBudget{flex:0 0 auto;background:rgba(255,255,255,.18);border-radius:9px;padding:8px 11px;font-size:13px;font-weight:800;min-height:36px;display:inline-flex;align-items:center}
+.sbGo .sbHelp{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);font-size:14px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+/* idle = engine has no real plan; must NOT look like a recommendation */
+.sbGo.idle{background:var(--card2);color:var(--tx2);box-shadow:none;border:1px solid var(--line2)}
+.sbGo.idle .zap{opacity:.45;filter:grayscale(1)}
+.sbGo.idle .txt b{color:var(--tx)}
+.sbGo.idle .sbHelp,.sbGo.idle .sbBudget{background:var(--line2);color:var(--tx2)}
+.sbGo.idle .sbBudget{opacity:.55}
+.sheet .hRow{margin:0 0 12px;font-size:13px;line-height:1.5}
+.sheet .hRow b{display:block;color:var(--tx);font-size:13px;margin-bottom:2px}
+.sheet .hRow span{color:var(--tx2)}
+.sheet code{background:var(--card2);border-radius:5px;padding:1px 5px;font-size:11px}
 .sbDone .big{font-size:38px;font-weight:800;letter-spacing:-1px;margin:6px 0 2px;color:var(--good)}
 .sbDone .sub2{font-size:13px;color:var(--tx2);margin:0 0 14px}
+/* ⚡ in-hub card player (v1) — one card at a time, produce → reveal → grade */
+.sbPlayer{position:fixed;inset:0;z-index:70;background:linear-gradient(180deg,var(--bg),var(--bg2));display:flex;flex-direction:column;padding:calc(10px + env(safe-area-inset-top)) 16px calc(14px + env(safe-area-inset-bottom));animation:fade .16s ease;overflow-y:auto}
+.sbpTop{display:flex;align-items:center;gap:10px;max-width:560px;width:100%;margin:0 auto;flex:0 0 auto}
+.sbpX{font-size:17px;color:var(--tx3);min-width:44px;min-height:44px;margin-left:-10px}
+.sbpX:hover{color:var(--tx)}
+.sbpBar{flex:1;height:5px;border-radius:3px;background:var(--line);overflow:hidden}
+.sbpBar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .25s ease}
+.sbpN{font-size:12px;font-weight:800;color:var(--tx3);font-variant-numeric:tabular-nums}
+.sbpMeta{display:flex;align-items:center;gap:8px;max-width:560px;width:100%;margin:14px auto 8px;font-size:12px;font-weight:700;color:var(--tx2);flex:0 0 auto}
+.sbpMeta .who{margin-left:auto;color:var(--tx3);font-weight:600;white-space:nowrap}
+.sbpRe{color:var(--hard)}
+.sbpCard{max-width:560px;width:100%;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow);flex:0 0 auto}
+.sbpCard.tap{cursor:pointer}
+.sbpQ{font-size:18px;font-weight:700;line-height:1.45;letter-spacing:-.2px}
+.sbpHint{margin:14px 0 0;font-size:12.5px;color:var(--tx3)}
+.sbpA{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line2);font-size:15px;line-height:1.55}
+.sbpA ol{margin:6px 0 0;padding-left:20px}.sbpA li{margin:4px 0}
+.sbpModel{margin:10px 0 0;font-size:12.5px;color:var(--tx3);line-height:1.5}
+.sbpOpts{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.sbpOpts button{text-align:left;background:var(--card2);border:1.5px solid var(--line2);border-radius:11px;padding:12px 14px;font-size:14.5px;line-height:1.4;min-height:48px;transition:.12s}
+.sbpOpts button:hover:not(:disabled){border-color:var(--acc)}
+.sbpOpts button:disabled{cursor:default;opacity:.85}
+.sbpOpts button.right{border-color:var(--good);background:rgba(57,217,138,.12);opacity:1}
+.sbpOpts button.wrong{border-color:#ff6b6b;background:rgba(255,107,107,.1);opacity:1}
+.sbpWhy{margin-top:14px;font-size:13.5px;line-height:1.5;color:var(--tx2);border-left:3px solid var(--line2);padding-left:11px}
+.sbpMiss{color:var(--hard);font-weight:700}
+.sbpActs{max-width:560px;width:100%;margin:14px auto 0;flex:0 0 auto}
+.sbpGo{width:100%;background:var(--acc);color:#fff;border-radius:12px;padding:15px;font-size:15px;font-weight:800;min-height:52px}
+.sbpGo:hover{background:var(--acc2)}
+.sbpGrades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.sbpGrades button{border-radius:12px;padding:12px 4px;min-height:56px;font-weight:800;font-size:13px;border:1.5px solid var(--line2);background:var(--card2);display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center}
+.sbpGrades .k{font-size:10px;font-weight:700;color:var(--tx3)}
+.sbpGrades .g0{color:#ff8585;border-color:rgba(255,107,107,.5)}
+.sbpGrades .g1{color:var(--hard);border-color:rgba(255,206,84,.45)}
+.sbpGrades .g2{color:var(--good);border-color:rgba(57,217,138,.45)}
+.sbpGrades .g3{color:var(--acc);border-color:rgba(79,157,255,.5)}
+.sbpChips{display:flex;flex-wrap:wrap;gap:8px}
+.sbpChips button{min-width:48px;min-height:48px;border-radius:12px;border:1.5px solid var(--line2);background:var(--card2);font-weight:800;font-size:15px;flex:1}
+.sbpChips button:hover{border-color:var(--acc)}
+.sbpSkip{display:block;margin:12px auto 0;color:var(--tx3);font-size:12.5px;text-decoration:underline;text-underline-offset:3px}
+.sbpToast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--card2);border:1px solid var(--line2);color:var(--tx2);font-size:12.5px;font-weight:700;padding:10px 16px;border-radius:999px;box-shadow:var(--shadow);animation:sbToast 1.6s ease forwards;white-space:nowrap;z-index:75}
+@keyframes sbToast{0%{opacity:0;transform:translate(-50%,8px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+.sbpDone{max-width:560px;width:100%;margin:8vh auto 0;text-align:center}
+.sbpDone .big{font-size:44px;font-weight:800;letter-spacing:-1.5px;color:var(--good);margin:10px 0 0}
+.sbpDone .sub2{font-size:13px;color:var(--tx2);margin:2px 0 16px}
+.sbpDone .row{display:flex;justify-content:center;gap:18px;font-size:13px;color:var(--tx2);margin:0 0 6px}
+.sbpDone .row b{color:var(--tx)}
+.sbpDone .weak{font-size:12.5px;color:var(--tx3);margin:0 0 18px;line-height:1.5}
+.sbpDone .alt{margin-top:12px;font-size:13px;color:var(--tx2)}
+.sbpDone .alt a{color:var(--acc);cursor:pointer;font-weight:700}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
 /* account button + auth modal (only shown when cloud sync is configured) */
 .acct{display:flex;align-items:center;gap:8px}
@@ -140,6 +201,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
   <button class="sbGo" id="sbGo" title="One press — the highest-yield session across every app, precomputed">
     <span class="zap">⚡</span>
     <span class="txt"><b id="sbT">Study</b><span id="sbS">…</span></span>
+    <span class="sbHelp" id="sbHelp" title="What is this?" aria-label="What is this?">?</span>
     <span class="sbBudget" id="sbB" title="Session length — tap to change">20′</span>
   </button>
   <div id="cloudNote"></div>
@@ -260,14 +322,20 @@ $('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||
 applyTheme();
 render('');
 
-/* ---------- ⚡ Study engine (v0) — see STUDY-ENGINE-SPEC.md ----------
-   Reads studybus.pulse.* bids off the shared-origin bus, weights them by
-   the DEADLINES calendar, precompiles a session plan, and deep-links
-   through the apps with ?sb=N return tickets. Semester-agnostic: BN3 is
-   a data append in deadlines.js, never a change here. */
+/* ---------- ⚡ Study engine (v1) — see STUDY-ENGINE-SPEC.md ----------
+   Apps bid CARDS onto the shared-origin bus (studybus.pulse.*, v2); the
+   hub weights them by the DEADLINES calendar and plays them RIGHT HERE —
+   one card at a time, produce → reveal → self-grade. Every grade writes
+   back to the owning app's studybus.grades.* log. kind:'link' offers
+   (true drills, e.g. MedCalc) become the one outro hand-off after the
+   cards. Semester-agnostic: BN3 is a data append in deadlines.js. */
 (function(){
   const D=window.DEADLINES; if(!D){ return; }
-  const DAY=86400e3, PK='studybus.plan', BK='studybus.budget', SK='studybus.streak';
+  const DAY=86400e3, HOUR=3600e3,
+        PK='studybus.plan', BK='studybus.budget', SK='studybus.streak',
+        HP='studybus.hubplays', LK='studybus.last';
+  const CARD_MIN={flash:0.6,mcq:0.7,saq:1.5};       // honest per-type minutes
+  const estMin=c=>CARD_MIN[c.type]||0.8;
   const today=new Date().setHours(0,0,0,0);
   const parseD=s=>new Date(s+'T12:00:00').getTime();
   const jget=(k,d)=>{ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?d:v; }catch(e){ return d; } };
@@ -310,33 +378,70 @@ render('');
       const k=localStorage.key(i);
       if(k&&k.indexOf('studybus.pulse.')===0){
         const p=jget(k,null);
-        if(p&&p.app&&p.url&&Array.isArray(p.offers)) out.push(p);
+        // v2 only — v1 pulses described URL legs (the retired handoff model)
+        if(p&&p.v===2&&p.app&&p.url&&Array.isArray(p.offers)) out.push(p);
       }
     }
     return out;
   }
+  // what the player graded recently, before the owning app has consumed its
+  // grade log — stops ⚡-twice-in-a-row replaying what you just nailed
+  function plays(){
+    const h=jget(HP,{}), now=Date.now(); let ch=false;
+    for(const k in h){ if(now-h[k].ts>48*HOUR){ delete h[k]; ch=true; } }
+    if(ch) jset(HP,h);
+    return h;
+  }
   function buildPlan(budget){
-    const cand=[];
+    const played=plays(), now=Date.now();
+    const offers=[], links=[];
     pulses().forEach(p=>p.offers.forEach(o=>{
       const r=scoreOffer(o,p); if(!r) return;
-      cand.push({ app:p.app, name:p.name||p.app, url:o.deep?p.url+o.deep:p.url,
-        label:o.label||p.name, minutes:Math.max(3,Math.min(o.minutes||8,budget)),
-        score:r.score, paper:r.paper });
+      const base={ app:p.app, appName:p.name||p.app, label:o.label||p.name||p.app,
+        topic:o.topic||null, score:r.score, paper:r.paper };
+      if(o.kind==='link'&&o.deep!=null){
+        links.push({...base, url:p.url+o.deep, minutes:Math.max(3,Math.min(o.minutes||6,10))});
+      } else if(Array.isArray(o.cards)&&o.cards.length){
+        // suppress cards nailed in the last 12h; recent misses jump the queue
+        const cs=o.cards
+          .filter(c=>c&&c.id&&c.q&&CARD_MIN[c.type])
+          .filter(c=>{ const h=played[p.app+':'+c.id]; return !(h&&h.r>=2&&now-h.ts<12*HOUR); })
+          .sort((a,b)=>{
+            const ha=played[p.app+':'+a.id], hb=played[p.app+':'+b.id];
+            return ((hb&&hb.r===0)?1:0)-((ha&&ha.r===0)?1:0);
+          });
+        if(cs.length) offers.push({...base, cards:cs});
+      }
     }));
-    cand.sort((a,b)=>b.score-a.score);
-    // ≤60% of a session from one paper — but only once ≥2 papers have apps
-    // enrolled; with a single paper there's nothing to diversify into
-    const nPapers=new Set(cand.map(c=>c.paper)).size;
-    const legs=[], per={}, cap=nPapers>1?Math.ceil(budget*0.6):budget;
+    offers.sort((a,b)=>b.score-a.score); links.sort((a,b)=>b.score-a.score);
+    const outro=links.length?[links[0]]:[];
+    // interleave chunks of ~2 cards round-robin over offers by priority;
+    // ≤60% of minutes from one paper once ≥2 papers have apps enrolled
+    const nPapers=new Set(offers.map(o=>o.paper).concat(outro.map(o=>o.paper))).size;
+    const cap=nPapers>1?budget*0.6:budget;
+    const per={}, queue=[];
     let used=0;
-    for(const c of cand){
-      if(legs.length>=4||used>=budget) break;
-      if(legs.some(l=>l.url===c.url)) continue;
-      const m=Math.min(c.minutes,budget-used); if(m<3) continue;
-      if(legs.length&&(per[c.paper]||0)+m>cap) continue;
-      legs.push({...c,minutes:m}); per[c.paper]=(per[c.paper]||0)+m; used+=m;
+    if(outro.length){ used=Math.min(outro[0].minutes,budget); per[outro[0].paper]=used; }
+    const cursors=offers.map(()=>0);
+    let progress=true;
+    while(progress&&used<budget&&queue.length<40){
+      progress=false;
+      for(let i=0;i<offers.length&&used<budget;i++){
+        const o=offers[i];
+        for(let t=0;t<2;t++){
+          const c=o.cards[cursors[i]]; if(!c) break;
+          const m=estMin(c);
+          if(used+m>budget+0.3) break;
+          if(nPapers>1&&(per[o.paper]||0)+m>cap) break;
+          cursors[i]++; used+=m; per[o.paper]=(per[o.paper]||0)+m;
+          queue.push({ app:o.app, appName:o.appName, label:o.label, topic:o.topic,
+            paper:o.paper, score:o.score, card:c });
+          progress=true;
+        }
+      }
     }
-    return { v:1, builtTs:Date.now(), budget, used, legs, hub:location.origin+location.pathname };
+    return { v:2, builtTs:Date.now(), budget, estMin:Math.round(used*10)/10,
+      nCards:queue.length, queue, outro, hub:location.origin+location.pathname };
   }
   // fallback when no app has enrolled yet: point at the nearest deadline
   function nearest(){
@@ -344,51 +449,252 @@ render('');
     D.assessments.forEach(a=>{ const t=nextDate(a); if(t!=null&&(!best||t<best.t)) best={t,a}; });
     return best;
   }
+  // plain-English "what is this?" — works for a stranger and for future-admin-me
+  function showHelp(){
+    const n=nearest();
+    const m=document.createElement('div'); m.className='modal';
+    m.innerHTML=`<div class="sheet">
+      <span class="x" id="hX">×</span>
+      <h3>⚡ What the Study button does</h3>
+      <p class="lead">One tap deals a short quiz, right here — the highest-value questions pulled from all your study apps. You answer card by card and grade yourself; questions you miss come back sooner. No choosing, no browsing, no reading assignments.</p>
+      <div class="hRow"><b>How it decides</b><span>Every upcoming test &amp; exam is scored by <i>how soon it's due</i> × <i>how much it's worth</i> × <i>whether it's a must-pass</i> — then each app offers up the questions you're closest to forgetting.</span></div>
+      <div class="hRow"><b>Where your answers go</b><span>Every self-grade flows back into the app the question came from, so its own scheduling gets smarter too.</span></div>
+      <div class="hRow"><b>Why it can say “not set up yet”</b><span>Apps hand over their questions <i>after you've opened them once on this device</i>. Until then the button just shows your nearest deadline as a heads-up, <b>not</b> a recommendation. That's why it looks greyed out.</span></div>
+      <div class="hRow"><b>The 20′ chip</b><span>Your time budget. Tap it to cycle 10 / 20 / 40 min and the quiz is packed to fit.</span></div>
+      ${n?`<p class="lead" style="margin-top:14px">Right now your nearest deadline is <b>${n.a.name}</b> in ${Math.max(0,Math.floor((n.t-today)/DAY))} days.</p>`:''}
+      <button class="go" id="hBrief">See all my deadlines →</button>
+      <p class="fineprint" style="margin:12px 0 0;font-size:11px;line-height:1.5;opacity:.55;text-align:center">Admin: dates &amp; weights live in <code>deadlines.js</code>; apps enrol by writing a v2 <code>studybus.pulse.*</code> bid carrying cards; grades flow back via <code>studybus.grades.*</code>.</p>
+    </div>`;
+    const close=()=>m.remove();
+    m.querySelector('#hX').onclick=close;
+    m.querySelector('#hBrief').onclick=()=>{ location.href='bn2-brief.html'; };
+    m.onclick=e=>{ if(e.target===m) close(); };
+    document.body.appendChild(m);
+  }
 
   const btn=$('#sbGo'), tEl=$('#sbT'), sEl=$('#sbS'), bEl=$('#sbB');
   let budget=jget(BK,20), plan=null;
   function refresh(){
     bEl.textContent=budget+'′';
     plan=buildPlan(budget);
-    if(plan.legs.length){
-      tEl.textContent='⚡ Study · '+plan.used+' min, ready to go';
-      sEl.textContent=plan.legs.map(l=>l.label).join('  →  ');
+    if(plan.queue.length){
+      btn.classList.remove('idle');
+      tEl.textContent='Study · ~'+Math.round(plan.estMin)+' min · '+plan.nCards+' cards';
+      const names=[...new Set(plan.queue.map(l=>l.label))];
+      if(plan.outro.length) names.push(plan.outro[0].label);
+      sEl.textContent=names.join('  →  ');
+    } else if(plan.outro.length){
+      // only a link drill enrolled (e.g. just MedCalc) — still a real session
+      btn.classList.remove('idle');
+      tEl.textContent='Study · '+plan.outro[0].minutes+' min drill';
+      sEl.textContent=plan.outro[0].label+' · opens the app';
     } else {
+      btn.classList.add('idle');            // dim it — this is NOT a recommendation
       const n=nearest();
-      tEl.textContent='⚡ Study';
-      sEl.textContent=n?('open an app once to enrol it · next up: '+n.a.name+' in '+Math.floor((n.t-today)/DAY)+' d')
-                      :'add this semester to deadlines.js to begin';
+      if(n){
+        const days=Math.max(0,Math.floor((n.t-today)/DAY));
+        tEl.textContent='Study — not set up yet';
+        sEl.textContent='No study apps connected · nearest deadline: '+n.a.name+' in '+days+' d · tap for how';
+      } else {
+        tEl.textContent='Study — no dates yet';
+        sEl.textContent='Add this semester to the calendar to begin · tap for how';
+      }
     }
     btn.classList.add('on');
   }
-  btn.onclick=e=>{
-    if(e.target.closest('#sbB')){ budget=({10:20,20:40,40:10})[budget]||20; jset(BK,budget); refresh(); return; }
-    if(!plan||!plan.legs.length){ location.href='bn2-brief.html'; return; }
+  function start(){
     plan=buildPlan(budget); jset(PK,plan);          // rebuild fresh at press time
-    location.href=addQ(plan.legs[0].url,'sb=0');
+    if(plan.queue.length){ openPlayer(plan); }
+    else if(plan.outro.length){
+      jset(LK,{ts:Date.now(),done:0,correct:0,missed:0,marks:0,weak:null,outro:true,outroDone:false});
+      location.href=addQ(plan.outro[0].url,'sb=out');
+    } else showHelp();                        // idle: explain, don't silently jump elsewhere
+  }
+  btn.onclick=e=>{
+    if(e.target.closest('#sbHelp')){ showHelp(); return; }
+    if(e.target.closest('#sbB')){ budget=({10:20,20:40,40:10})[budget]||20; jset(BK,budget); refresh(); return; }
+    start();
   };
+
+  /* ---- the player: one card at a time, produce → reveal → self-grade ----
+     flash = think → flip → Again/Hard/Good/Easy (keys 1–4)
+     mcq   = pick (keys 1–n) → instant right/wrong + why → Next
+     saq   = say your points → flip → "how many did you get?" (keys 0–n)   */
+  const GRADES=[['Again','1','g0'],['Hard','2','g1'],['Good','3','g2'],['Easy','4','g3']];
+  const saqGrade=(n,tot)=>{ const p=tot?n/tot:0; return p>=1?3:p>=0.8?2:p>=0.5?1:0; };
+  function toast(msg){ const t=document.createElement('div'); t.className='sbpToast';
+    t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1700); }
+  function bumpStreak(){
+    const iso=d=>new Date(d).toISOString().slice(0,10), t=Date.now();
+    const st=jget(SK,{last:'',n:0});
+    if(st.last!==iso(t)){ st.n=(st.last===iso(t-DAY))?st.n+1:1; st.last=iso(t); jset(SK,st); }
+    return st.n;
+  }
+
+  function openPlayer(plan){
+    const q=plan.queue.slice(), repeated={};
+    const tally={done:0,correct:0,missed:0,marks:0,byLabel:{}};
+    let i=0, phase='produce';
+    const ov=document.createElement('div'); ov.className='sbPlayer';
+    document.body.appendChild(ov); document.body.style.overflow='hidden';
+    const teardown=()=>{ document.removeEventListener('keydown',onKey); ov.remove(); document.body.style.overflow=''; };
+
+    function writeGrade(leg,r){          // crash-safe: every grade lands immediately
+      const gk='studybus.grades.'+leg.app, log=jget(gk,[]);
+      log.push({card:leg.card.id,r,ts:Date.now()}); jset(gk,log);
+      const h=plays(); h[leg.app+':'+leg.card.id]={ts:Date.now(),r}; jset(HP,h);
+    }
+    function record(leg,r){
+      writeGrade(leg,r);
+      if(leg.repeat) return;                 // round 2 trains the SRS, not the tally
+      tally.done++; tally.marks+=leg.score*estMin(leg.card);
+      if(r===0){
+        tally.missed++; tally.byLabel[leg.label]=(tally.byLabel[leg.label]||0)+1;
+        const k=leg.app+':'+leg.card.id;
+        if(!repeated[k]&&q.length<44){ repeated[k]=1; q.push({...leg,repeat:true});
+          toast("Missed — it'll come back before the end ↩"); }
+      } else tally.correct++;
+    }
+    function advance(){ i++; draw(); }
+
+    function draw(){
+      if(i>=q.length){ finish(false); return; }
+      const leg=q[i], c=leg.card; phase='produce';
+      const head=`<div class="sbpTop">
+          <button class="sbpX" data-a="close" title="End session — answers so far are already saved">✕</button>
+          <div class="sbpBar"><i style="width:${Math.round(i/q.length*100)}%"></i></div>
+          <span class="sbpN">${i+1}/${q.length}</span></div>
+        <div class="sbpMeta">${esc(leg.label)}${leg.repeat?' · <b class="sbpRe">round 2</b>':''}<span class="who">${esc(leg.appName)}</span></div>`;
+      if(c.type==='mcq'){
+        ov.innerHTML=head+`<div class="sbpCard"><div class="sbpQ">${c.q}</div>
+            <div class="sbpOpts">${c.options.map((o,n)=>`<button data-a="opt" data-n="${n}">${esc(o)}</button>`).join('')}</div>
+            <div class="sbpWhyBox"></div></div>
+          <div class="sbpActs"><button class="sbpSkip" data-a="skip">⏭ skip this card</button></div>`;
+      } else {
+        const hint=c.type==='saq'
+          ? `${(c.points||[]).length} marking points — say yours out loud, then flip.`
+          : 'Say the answer out loud — then flip. (tap the card or press Enter)';
+        ov.innerHTML=head+`<div class="sbpCard tap" data-a="reveal"><div class="sbpQ">${c.q}</div>
+            <p class="sbpHint">${hint}</p></div>
+          <div class="sbpActs"><button class="sbpGo" data-a="reveal">Reveal ↵</button>
+          <button class="sbpSkip" data-a="skip">⏭ skip this card</button></div>`;
+      }
+    }
+    function reveal(){
+      if(phase!=='produce') return;
+      const leg=q[i], c=leg.card; if(c.type==='mcq') return;
+      phase='reveal';
+      const card=ov.querySelector('.sbpCard'); card.classList.remove('tap'); card.removeAttribute('data-a');
+      if(c.type==='flash'){
+        card.innerHTML=`<div class="sbpQ">${c.q}</div><div class="sbpA">${c.a||''}</div>`;
+        ov.querySelector('.sbpActs').innerHTML=`<div class="sbpGrades">${GRADES.map((g,r)=>
+          `<button data-a="grade" data-r="${r}" class="${g[2]}">${g[0]}<span class="k">${g[1]}</span></button>`).join('')}</div>`;
+      } else {
+        const pts=c.points||[];
+        card.innerHTML=`<div class="sbpQ">${c.q}</div>
+          <div class="sbpA"><ol>${pts.map(p=>`<li>${p}</li>`).join('')}</ol>
+          ${c.model?`<p class="sbpModel">${c.model}</p>`:''}</div>`;
+        ov.querySelector('.sbpActs').innerHTML=
+          `<p class="sbpHint" style="margin:0 0 8px;text-align:center">Honestly — how many of those did you say?</p>
+          <div class="sbpChips">${Array.from({length:pts.length+1},(_,n)=>
+            `<button data-a="saq" data-n="${n}">${n}</button>`).join('')}</div>`;
+      }
+    }
+    function pick(n){
+      if(phase!=='produce') return;
+      const leg=q[i], c=leg.card, ok=n===c.correct; phase='reveal';
+      ov.querySelectorAll('.sbpOpts button').forEach((b,x)=>{
+        b.disabled=true;
+        if(x===c.correct) b.classList.add('right');
+        else if(x===n&&!ok) b.classList.add('wrong');
+      });
+      const why=ov.querySelector('.sbpWhyBox');
+      why.className='sbpWhy';
+      why.innerHTML=(ok?'✅ Right. ':'<span class="sbpMiss">✗ Not this one.</span> ')+(c.why||'');
+      ov.querySelector('.sbpActs').innerHTML=`<button class="sbpGo" data-a="next">Next ↵</button>`;
+      record(leg, ok?2:0);            // recognition: right = Good, never Easy
+    }
+    function finish(early){
+      const weak=Object.keys(tally.byLabel).sort((a,b)=>tally.byLabel[b]-tally.byLabel[a])[0]||null;
+      const last={ts:Date.now(),done:tally.done,correct:tally.correct,missed:tally.missed,
+        marks:Math.round(tally.marks*10)/10,weak,outro:!early&&plan.outro.length>0,outroDone:false};
+      jset(LK,last);
+      if(!early&&plan.outro.length){ drawOutro(last); }
+      else { last.outroDone=true; jset(LK,last); teardown(); showDoneOverlay(last); }
+    }
+    function drawOutro(last){
+      const o=plan.outro[0];
+      ov.innerHTML=`<div class="sbpDone">
+        <h3 style="margin:0;font-size:20px">Cards done ✅</h3>
+        <p class="sub2">${last.done} answered · one more thing before the tally…</p>
+        <a class="sbpGo" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="${esc(addQ(o.url,'sb=out'))}">${esc(o.label)} · ${o.minutes}′ →</a>
+        <div class="alt"><a data-a="finishNow">Skip the drill — see the tally</a></div>
+      </div>`;
+    }
+    function onKey(e){
+      const leg=q[i]; if(!leg) return;
+      const c=leg.card;
+      if(e.key==='Escape'){ tally.done?finish(true):(teardown(),refresh()); return; }
+      if(phase==='produce'){
+        if(e.key==='Enter') reveal();
+        else if(c.type==='mcq'&&/^[1-9]$/.test(e.key)&&+e.key<=c.options.length) pick(+e.key-1);
+      } else {
+        if(c.type==='flash'&&/^[1-4]$/.test(e.key)){ record(leg,+e.key-1); advance(); }
+        else if(c.type==='mcq'&&e.key==='Enter') advance();
+        else if(c.type==='saq'&&/^[0-9]$/.test(e.key)&&+e.key<=(c.points||[]).length){
+          record(leg,saqGrade(+e.key,(c.points||[]).length)); advance(); }
+      }
+    }
+    document.addEventListener('keydown',onKey);
+    ov.addEventListener('click',e=>{
+      const el=e.target.closest('[data-a]'); if(!el) return;
+      const a=el.dataset.a, leg=q[i];
+      if(a==='close'){ tally.done?finish(true):(teardown(),refresh()); }
+      else if(a==='reveal') reveal();
+      else if(a==='skip'){ advance(); }
+      else if(a==='opt') pick(+el.dataset.n);
+      else if(a==='next') advance();
+      else if(a==='grade'){ record(leg,+el.dataset.r); advance(); }
+      else if(a==='saq'){ record(leg,saqGrade(+el.dataset.n,(leg.card.points||[]).length)); advance(); }
+      else if(a==='finishNow'){ const last=jget(LK,null)||{};
+        last.outro=false; last.outroDone=true; jset(LK,last); teardown(); showDoneOverlay(last); }
+    });
+    draw();
+  }
+
+  /* ---- the honest done screen: real numbers, one place, never mid-session ---- */
+  function showDoneOverlay(last){
+    const n=bumpStreak();
+    const ov=document.createElement('div'); ov.className='sbPlayer';
+    document.body.appendChild(ov); document.body.style.overflow='hidden';
+    ov.innerHTML=`<div class="sbpDone">
+      <h3 style="margin:0;font-size:20px">Session done ✅</h3>
+      <div class="big">≈ ${(last.marks||0).toFixed(1)}</div>
+      <p class="sub2">marks defended · ${n}-day streak 🔥</p>
+      <div class="row"><span><b>${last.done||0}</b> cards</span><span><b>${last.correct||0}</b> right</span><span><b>${last.missed||0}</b> missed</span></div>
+      ${last.missed&&last.weak
+        ? `<p class="weak">Most missed: <b>${esc(last.weak)}</b> — those come back sooner now.</p>`
+        : `<p class="weak">Clean run — nothing missed 🎯</p>`}
+      <button class="sbpGo" data-a="again">⚡ One more session</button>
+      <div class="alt"><a data-a="close">Done for now</a></div>
+    </div>`;
+    ov.addEventListener('click',e=>{
+      const el=e.target.closest('[data-a]'); if(!el) return;
+      ov.remove(); document.body.style.overflow=''; refresh();
+      if(el.dataset.a==='again') start();
+    });
+  }
+
   refresh();
   window.addEventListener('pageshow',refresh);       // coming back from an app re-scores
 
-  /* ---- done screen (?sbdone=1): one number + streak ---- */
+  /* ---- return from the outro drill (?sbdone=1) → the full-session tally ---- */
   if(new URLSearchParams(location.search).get('sbdone')){
-    const p=jget(PK,null);
-    const marks=p&&p.legs?p.legs.reduce((s,l)=>s+l.score*l.minutes,0):0;
-    const t=new Date(), iso=d=>new Date(d).toISOString().slice(0,10);
-    const st=jget(SK,{last:'',n:0});
-    if(st.last!==iso(t)){ st.n=(st.last===iso(t-DAY))?st.n+1:1; st.last=iso(t); jset(SK,st); }
-    const m=document.createElement('div'); m.className='modal';
-    m.innerHTML=`<div class="sheet sbDone" style="text-align:center">
-      <h3>Session done ✅</h3>
-      <div class="big">≈ ${(Math.round(marks*10)/10).toFixed(1)}</div>
-      <p class="sub2">marks defended · ${st.n}-day streak 🔥</p>
-      <button class="go" id="sbAgain">⚡ One more session</button>
-      <div class="alt"><a id="sbClose">Done for now</a></div>
-    </div>`;
-    m.querySelector('#sbClose').onclick=()=>m.remove();
-    m.querySelector('#sbAgain').onclick=()=>{ m.remove(); btn.click(); };
-    m.onclick=e=>{ if(e.target===m) m.remove(); };
-    document.body.appendChild(m);
+    const last=jget(LK,null);
+    if(last&&Date.now()-last.ts<12*HOUR&&!last.outroDone){
+      last.outroDone=true; jset(LK,last);
+      showDoneOverlay(last);
+    }
     history.replaceState(null,'',location.pathname);   // clean the URL so refresh ≠ re-celebrate
   }
 })();
