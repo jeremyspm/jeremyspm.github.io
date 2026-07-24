@@ -356,7 +356,7 @@ render('');
     } else {
       const n=nearest();
       tEl.textContent='⚡ Study';
-      sEl.textContent=n?('open an app once to enrol it · next up: '+n.a.name+' in '+Math.round((n.t-today)/DAY)+' d')
+      sEl.textContent=n?('open an app once to enrol it · next up: '+n.a.name+' in '+Math.floor((n.t-today)/DAY)+' d')
                       :'add this semester to deadlines.js to begin';
     }
     btn.classList.add('on');
