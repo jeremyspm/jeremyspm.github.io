@@ -13,7 +13,7 @@
   --line:#27324a; --line2:#33405c;
   --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
   --acc:#4f9dff; --acc2:#2f6fd0;
-  --good:#39d98a; --hard:#ffce54;
+  --good:#39d98a; --hard:#ffce54; --bad:#ff6b6b;
   --shadow:0 10px 40px rgba(0,0,0,.45);
   --r:16px; --maxw:900px;
 }
@@ -22,7 +22,7 @@ html[data-theme="light"]{
   --line:#dbe3ef; --line2:#c7d3e6;
   --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
   --acc:#1f6fe0; --acc2:#1657b8;
-  --good:#128a55; --hard:#a9791a;
+  --good:#128a55; --hard:#a9791a; --bad:#c0392b;
   --shadow:0 8px 30px rgba(30,50,90,.14);
 }
 *{box-sizing:border-box}
@@ -33,7 +33,7 @@ body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--t
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 80px}
 button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:6px}
+header{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px 12px;margin-bottom:6px}
 h1{font-size:26px;margin:0;letter-spacing:-.4px}
 .sub{color:var(--tx2);font-size:14px;margin:4px 0 0}
 .iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto;transition:.15s;flex:0 0 auto}
@@ -135,6 +135,33 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sbpDone .alt{margin-top:12px;font-size:13px;color:var(--tx2)}
 .sbpDone .alt a{color:var(--acc);cursor:pointer;font-weight:700}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
+/* 🗓 What's coming — the calendar made visible + honest readiness */
+.dl{margin:16px 0 0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px 5px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.dlHead{display:flex;align-items:center;gap:9px;margin:0 0 3px}
+.dlHead b{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:var(--tx3);font-weight:800}
+.dlQ{width:23px;height:23px;border-radius:50%;background:var(--card2);border:1px solid var(--line2);color:var(--tx3);font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transition:.13s}
+.dlQ:hover{color:var(--tx);border-color:var(--acc)}
+.dlAll{margin-left:auto;font-size:12px;font-weight:700;color:var(--acc);text-decoration:none;white-space:nowrap}
+.dlAll:hover{text-decoration:underline}
+.dlRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;padding:11px 0;border-top:1px solid var(--line)}
+.dlList .dlRow:first-child{border-top:none}
+.dlNm{min-width:0;font-size:14px;font-weight:700;line-height:1.35;letter-spacing:-.1px;overflow-wrap:anywhere;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.dlDays{grid-column:2;grid-row:1;align-self:start;font-size:19px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dlDays span{font-size:11px;font-weight:700;opacity:.7;margin-left:1px}
+.dlSub{grid-column:1/-1;font-size:12px;color:var(--tx3);line-height:1.45}
+.dlHurdle{font-size:9px;font-weight:800;letter-spacing:.7px;padding:2px 6px;border-radius:5px;background:rgba(255,107,107,.14);color:var(--bad);border:1px solid rgba(255,107,107,.35);white-space:nowrap}
+.t-hot{color:var(--bad)} .t-warm{color:var(--hard)} .t-soon{color:var(--tx)} .t-far{color:var(--tx3)}
+.dlBar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
+.dlBar i{display:block;height:100%;border-radius:3px;transition:width .3s ease}
+.dlBar i.ok{background:var(--good)} .dlBar i.mid{background:var(--hard)} .dlBar i.low{background:var(--bad)}
+.dlPct{grid-column:1/-1;font-size:11.5px;color:var(--tx3);line-height:1.5;margin-top:4px;overflow-wrap:anywhere}
+.dlPct b.ok{color:var(--good)} .dlPct b.mid{color:var(--hard)} .dlPct b.low{color:var(--bad)}
+.dlNote{grid-column:1/-1;font-size:11.5px;color:var(--tx3);line-height:1.5;margin-top:5px;overflow-wrap:anywhere}
+.dlNote.dim{opacity:.72;font-style:italic}
+.dlMore{display:block;width:100%;padding:11px 0 10px;margin-top:2px;border-top:1px solid var(--line);color:var(--tx2);font-size:12.5px;font-weight:700}
+.dlMore:hover{color:var(--acc)}
+.dlEmpty{font-size:12.5px;color:var(--tx3);padding:6px 0 12px;line-height:1.5}
+@media(max-width:400px){.dl{padding:12px 13px 4px}.dlNm{font-size:13.5px}.dlDays{font-size:17px}}
 /* account button + auth modal (only shown when cloud sync is configured) */
 .acct{display:flex;align-items:center;gap:8px}
 .acctbtn{border:1px solid var(--line);background:var(--card);color:var(--tx2);border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s;display:inline-flex;align-items:center;gap:7px}
@@ -204,6 +231,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
     <span class="sbHelp" id="sbHelp" title="What is this?" aria-label="What is this?">?</span>
     <span class="sbBudget" id="sbB" title="Session length — tap to change">20′</span>
   </button>
+  <div id="dlStrip"></div>
   <div id="cloudNote"></div>
   <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
@@ -342,18 +370,23 @@ render('');
   const jset=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
   const addQ=(u,q)=>u+(u.includes('?')?'&':'?')+q;
 
-  // next future sitting of an assessment, or null if past/done/archived
-  function nextDate(a){
+  // next future sitting of an assessment, or null if past/done/archived.
+  // nextPick also reports WHICH kind of date won, so the strip can label it
+  // honestly (a window close and a stream guess are not a fixed exam date).
+  function nextPick(a){
     if(a.done) return null;
     const p=D.papers[a.paper]; if(p&&p.archived) return null;
     let c=[];
-    if(a.window) c.push(a.window.close);
-    else if(a.streamDates) c=(D.stream&&a.streamDates[D.stream])?[a.streamDates[D.stream]]:Object.values(a.streamDates);
-    else if(a.due) c.push(a.due);
-    (a.resits||[]).forEach(r=>c.push(r));
-    const fut=c.map(parseD).filter(t=>t>=today).sort((x,y)=>x-y);
+    if(a.window) c.push({iso:a.window.close,how:'window'});
+    else if(a.streamDates) c=(D.stream&&a.streamDates[D.stream])
+      ? [{iso:a.streamDates[D.stream],how:'due'}]
+      : Object.values(a.streamDates).map(iso=>({iso,how:'stream'}));
+    else if(a.due) c.push({iso:a.due,how:'due'});
+    (a.resits||[]).forEach(r=>c.push({iso:r,how:'resit'}));
+    const fut=c.map(x=>({...x,t:parseD(x.iso)})).filter(x=>x.t>=today).sort((x,y)=>x.t-y.t);
     return fut.length?fut[0]:null;
   }
+  function nextDate(a){ const p=nextPick(a); return p?p.t:null; }
   // score = evPerMin × weight × urgency × hurdleBoost, vs the offer's strongest assessment
   function scoreOffer(o,pulse){
     let best=0, bestA=null;
@@ -472,9 +505,147 @@ render('');
     document.body.appendChild(m);
   }
 
+  /* ---------- 🗓 What's coming — the calendar, made visible ----------------
+     Rows come straight from DEADLINES (previously invisible on this page —
+     you had to open the brief to learn anything was due). The readiness bar
+     is rolled up from the counts{due,total} every card app ALREADY ships on
+     its pulse offers, so it costs nothing and needs no app changes.
+
+     HONESTY RULES (non-negotiable — this number decides what you revise):
+       · The bar measures ONE thing: of the questions an app is currently
+         offering for that assessment, the share not due for review. It is
+         NOT syllabus coverage and never claims to be — hence "in play",
+         not "loaded": apps bid ≤5 decks, so the denominator moves.
+       · Every bar prints the question count beside it, so "100%" can't
+         oversell twelve cards for a twelve-week paper. Exam rows say so
+         outright, since a one-module deck bids into a whole-paper final.
+       · No deck → no bar. A row with nothing behind it says so plainly
+         rather than showing a comforting empty track. Same for written work
+         and for live drills (MedCalc), which keep their state in-app.
+       · A weak spot is named only when it genuinely lags the assessment's
+         own average — never on a cold start, where "worst" is just sort order. */
+  const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const DL_SHOW=4;                      // rows before the "show all" fold
+  let dlAll=false;
+  const fmtD=iso=>{ const d=new Date(iso+'T12:00:00');
+    return WD[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]; };
+  const fmtT=t=>String(t).length===4?String(t).slice(0,2)+':'+String(t).slice(2):String(t);
+  function whenLabel(a,p){
+    if(p.how==='window') return 'window closes '+fmtD(p.iso);
+    if(p.how==='stream') return fmtD(p.iso)+' at the earliest · your stream isn’t set';
+    const base=fmtD(p.iso)+(p.how==='resit'?' (next resit)':'');
+    if(a.timeUnconf) return base+' · time not confirmed';
+    return base+(a.time?' · '+fmtT(a.time):'');
+  }
+  // assessment id → { total, due, offers[], links[] } across every fresh pulse
+  function rollup(){
+    const m={}, get=id=>m[id]||(m[id]={total:0,due:0,offers:[],links:[]});
+    pulses().forEach(p=>(p.offers||[]).forEach(o=>{
+      (o.assess||[]).forEach(id=>{
+        const r=get(id);
+        if(o.kind==='link'){ r.links.push({label:o.label,app:p.name||p.app,url:p.url}); return; }
+        // counts is the app's own SRS truth; cards[] is only the slice it bid
+        const c=o.counts||{};
+        const total=Number(c.total)||(Array.isArray(o.cards)?o.cards.length:0);
+        if(!total) return;
+        const due=Math.max(0,Math.min(Number(c.due)||0,total));
+        r.total+=total; r.due+=due;
+        r.offers.push({label:o.label||p.name||p.app,total,due});
+      });
+    }));
+    return m;
+  }
+  // The single shakiest deck — named ONLY when it genuinely stands out.
+  // On a cold start every deck sits at 100% due, so the "worst" one is just
+  // whatever sorted first; calling that a weak spot would be inventing a
+  // finding. Require it to lag the assessment's own average by a clear
+  // margin, and to have enough cards behind it to mean anything.
+  function weakest(r){
+    if(r.offers.length<2||!r.total) return null;
+    const avg=r.due/r.total;
+    const c=r.offers.filter(o=>o.total>=3&&o.due>=2)
+      .sort((x,y)=>y.due/y.total-x.due/x.total)[0];
+    return (c&&c.due/c.total>=0.34&&c.due/c.total-avg>=0.15)?c.label:null;
+  }
+  function renderDL(){
+    const host=$('#dlStrip'); if(!host) return;
+    const roll=rollup();
+    const rows=D.assessments.map(a=>({a,p:nextPick(a)})).filter(x=>x.p)
+      .sort((x,y)=>x.p.t-y.p.t||(y.a.weight||0)-(x.a.weight||0));
+    const head=`<div class="dlHead"><b>🗓 What's coming</b>
+        <button class="dlQ" data-a="dlHelp" title="What these numbers mean" aria-label="What these numbers mean">?</button>
+        <a class="dlAll" href="bn2-brief.html">Full schedule →</a></div>`;
+    if(!rows.length){
+      host.innerHTML=`<section class="dl">${head}<div class="dlEmpty">Nothing left on the calendar — add the new semester to <code>deadlines.js</code> when it lands.</div></section>`;
+      return;
+    }
+    const rowHtml=({a,p})=>{
+      // floor, not round: dates are noon-anchored against local midnight, so
+      // a sitting 3 days out reads 3.5 — and must agree with the ⚡ button
+      const d=Math.max(0,Math.floor((p.t-today)/DAY));
+      const tone=d<=3?'t-hot':d<=10?'t-warm':d<=28?'t-soon':'t-far';
+      const paper=(D.papers[a.paper]&&D.papers[a.paper].name)||a.paper;
+      const worth=a.hurdle?null:(a.weight?a.weight+'% of the paper':(a.pts?a.pts+' pts':null));
+      const r=roll[a.id];
+      let body;
+      if(a.kind==='assignment'||a.kind==='signoff'){
+        body=`<div class="dlNote">${a.kind==='assignment'?'Written work':'Sign-offs'} — no recall deck behind this one, so ⚡ leaves it to you.</div>`;
+      } else if(r&&r.total>0){
+        const pct=Math.round((1-r.due/r.total)*100);
+        const cls=pct>=80?'ok':pct>=50?'mid':'low';
+        const w=weakest(r);
+        // A final spans the whole paper, but a deck for one module still bids
+        // into it — so this is the one row where a high % genuinely misleads.
+        // Say so on the row itself; the count alone doesn't carry it.
+        body=`<div class="dlBar"><i class="${cls}" style="width:${pct}%"></i></div>
+          <div class="dlPct"><b class="${cls}">${pct}%</b> of the ${r.total} question${r.total===1?'':'s'} in play for this are in good standing${w?` · weakest: <b>${esc(w)}</b>`:''}</div>
+          ${a.kind==='exam'?`<div class="dlNote dim">An exam spans the whole paper — this counts only the decks built so far.</div>`:''}`;
+      } else if(r&&r.links.length){
+        body=`<div class="dlNote">${esc(r.links[0].app)} is enrolled — it's a live drill, so it tracks your progress inside the app, not here.</div>`;
+      } else {
+        body=`<div class="dlNote dim">No question deck enrolled yet — ⚡ can't help with this one until an app for it is opened on this device.</div>`;
+      }
+      return `<div class="dlRow">
+        <div class="dlNm">${esc(a.name)}${a.hurdle?'<span class="dlHurdle">MUST PASS</span>':''}</div>
+        <div class="dlDays ${tone}">${d}<span>d</span></div>
+        <div class="dlSub">${esc(paper)}${worth?' · '+worth:''} · ${whenLabel(a,p)}</div>
+        ${body}</div>`;
+    };
+    const show=dlAll?rows:rows.slice(0,DL_SHOW);
+    host.innerHTML=`<section class="dl">${head}
+      <div class="dlList">${show.map(rowHtml).join('')}</div>
+      ${rows.length>DL_SHOW?`<button class="dlMore" data-a="dlMore">${dlAll?'Show less ↑':'Show all '+rows.length+' →'}</button>`:''}
+    </section>`;
+    host.querySelectorAll('[data-a]').forEach(el=>{
+      el.onclick=()=>{ if(el.dataset.a==='dlMore'){ dlAll=!dlAll; renderDL(); } else showDLHelp(); };
+    });
+  }
+  function showDLHelp(){
+    const m=document.createElement('div'); m.className='modal';
+    m.innerHTML=`<div class="sheet">
+      <span class="x" id="dX">×</span>
+      <h3>🗓 What these numbers mean</h3>
+      <p class="lead">Every test and exam left this semester, nearest first, with how many days you have. The bar underneath is the only honest readiness signal this page can give — and it's narrower than it looks.</p>
+      <div class="hRow"><b>What the bar IS</b><span>Your study apps each know how many questions they hold for a given test, and how many are due for review. The bar is the share <i>not</i> due — what you currently have in good standing.</span></div>
+      <div class="hRow"><b>What the bar is NOT</b><span>It is <b>not</b> how much of the course you've covered. It only knows questions that exist in an app. A row can read 100% off twelve cards for a twelve-week paper — that's exactly why the count is printed next to every bar. Read them together, never the percentage alone.</span></div>
+      <div class="hRow"><b>Why the question count moves</b><span>Each app offers up to five decks at a time, so on a day when one topic sits out its questions aren't counted. That's why it says “in play” rather than a fixed total — the denominator is today's offer, not the size of the course.</span></div>
+      <div class="hRow"><b>Why a row has no bar</b><span>Essays and sign-offs have nothing to recall. Live drills like MedCalc generate questions on the fly and keep score in the app. And a paper with no study app opened yet has nothing to measure — it says so instead of showing an empty track.</span></div>
+      <div class="hRow"><b>The dates</b><span>A mirror of the Master Schedule. Some are still marked unconfirmed there — <b>Canvas always wins</b>, check it before you plan around anything here.</span></div>
+      <button class="go" id="dBrief">Open the full schedule →</button>
+      <p class="fineprint" style="margin:12px 0 0;font-size:11px;line-height:1.5;opacity:.55;text-align:center">Admin: rows from <code>deadlines.js</code>; bars rolled up from <code>counts{due,total}</code> on each app's <code>studybus.pulse.*</code> offers, keyed by <code>assess</code> id. No app changes needed — an app that omits <code>counts</code> simply doesn't contribute.</p>
+    </div>`;
+    const close=()=>m.remove();
+    m.querySelector('#dX').onclick=close;
+    m.querySelector('#dBrief').onclick=()=>{ location.href='bn2-brief.html'; };
+    m.onclick=e=>{ if(e.target===m) close(); };
+    document.body.appendChild(m);
+  }
+
   const btn=$('#sbGo'), tEl=$('#sbT'), sEl=$('#sbS'), bEl=$('#sbB');
   let budget=jget(BK,20), plan=null;
   function refresh(){
+    renderDL();                          // same inputs as the plan — redraw together
     bEl.textContent=budget+'′';
     plan=buildPlan(budget);
     if(plan.queue.length){
