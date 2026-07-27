@@ -21,7 +21,15 @@
   --acc-soft:rgba(99,102,241,.16);
   --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
   --shadow:0 14px 36px rgba(0,0,0,.16);
-  --r:14px; --maxw:900px;
+  --r:14px; --maxw:620px;
+  /* Motion, Giga's own vocabulary: globals.css:109/:110, studio.css:756 */
+  --ez:cubic-bezier(.4,0,.2,1); --eze:cubic-bezier(.32,.72,0,1); --ezo:cubic-bezier(.22,1,.36,1);
+  /* Paper hues, lifted BY VALUE from bn2-brief.html:20-22 — the schedule already
+     colour-codes these three papers, so the hub now speaks the same language.
+     Semantic domain hues are explicit per-app freedom under the contract. */
+  --hs:#60A5FA;  --hs-wash:color-mix(in srgb,#60A5FA 16%,transparent);
+  --inp:var(--good); --inp-wash:color-mix(in srgb,var(--good) 16%,transparent);
+  --ph:#C084FC;  --ph-wash:color-mix(in srgb,#C084FC 16%,transparent);
 }
 html[data-theme="light"]{
   --bg:#eceef3; --bg2:#eceef3; --card:#ffffff; --card2:#f4f5f7;
@@ -35,6 +43,12 @@ html[data-theme="light"]{
      the readiness %), where on #eceef3 they land near 2:1. Same hues,
      deepened to clear 4.5:1; dark keeps Giga's values untouched. */
   --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+  --hs:#1D4ED8;  --hs-wash:color-mix(in srgb,#1D4ED8 12%,transparent);
+  /* bn2-brief uses var(--good) here; measured 4.13:1 as 10px chip text on the
+     light ground, so deepened one step to clear 4.5 — the same call made just
+     above for --good/--hard/--bad. Dark keeps --good (6.5:1). */
+  --inp:#107536; --inp-wash:color-mix(in srgb,#107536 12%,transparent);
+  --ph:#7E22CE;  --ph-wash:color-mix(in srgb,#7E22CE 12%,transparent);
   --shadow:0 14px 36px rgba(20,24,40,.10);
 }
 *{box-sizing:border-box}
@@ -45,35 +59,138 @@ body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--t
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 80px}
 button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
-header{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px 12px;margin-bottom:6px}
-h1{font-size:26px;margin:0;letter-spacing:-.4px}
-.sub{color:var(--tx2);font-size:14px;margin:4px 0 0}
-.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto;transition:.15s;flex:0 0 auto}
+/* ══════════ v3 landing: countdown hero + papers that open ══════════
+   The tiles/grid/h2.sec/h3.subsec/search stack that used to live here is gone.
+   It was built for fifty items across six semesters; there are four tools and
+   three papers, and the scaffolding outweighed the content. */
+.ic{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+  width:20px;height:20px;flex:0 0 auto;display:block}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:10px}
+header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15.5px;letter-spacing:-.022em}
+.brand .mk{width:24px;height:24px;border-radius:8px;background:var(--acc);display:grid;place-items:center;color:#fff}
+.brand .mk svg{width:14px;height:14px;stroke-width:2.1}
+/* 36px visual box, 44px hit area — the icon stays small, the target doesn't */
+.iconbtn{width:36px;height:36px;border-radius:11px;background:var(--card);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:17px;color:var(--tx2);transition:.15s;flex:0 0 auto;position:relative}
+.iconbtn::after{content:"";position:absolute;inset:-4px}
 .iconbtn:hover{border-color:var(--line2);color:var(--tx)}
-.search{margin:20px 0 6px}
-.search input{width:100%;background:var(--card);border:1.5px solid var(--line2);border-radius:12px;padding:12px 16px;color:var(--tx);font:inherit;outline:none;transition:.15s}
-.search input:focus{border-color:var(--acc)}
-h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
-h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
-h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;padding-left:11px;border-left:2px solid var(--line2)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px}
-.grid+h3.subsec{margin-top:20px}
-.tile{display:flex;flex-direction:column;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;text-decoration:none;color:inherit;transition:.16s;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.15)}
-.tile:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:var(--shadow)}
-.tile .top{display:flex;align-items:center;gap:10px}
-.tile[data-b] .top{padding-right:46px}   /* keep the title clear of the corner badge, esp. when it wraps on narrow screens */
-.tile .ic{font-size:24px;line-height:1}
-.tile .nm{font-weight:800;font-size:15px;letter-spacing:-.2px;line-height:1.25}
-.tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.45}
-.tile .tiledate{align-self:flex-end;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums;margin-top:2px}
-.tile .badge{position:absolute;top:12px;right:12px;font-size:9.5px;font-weight:800;letter-spacing:.7px;padding:3px 7px;border-radius:6px;text-transform:uppercase}
+.iconbtn:active{transform:scale(.94)}
+.iconbtn svg{width:17px;height:17px}
+.acct{margin-left:auto;display:flex;align-items:center;gap:8px}
+.eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)}
+
+/* the hero countdown — wears the hue of the paper that owns it, so one glance
+   gives you both HOW SOON and WHICH PAPER */
+.hero{display:flex;align-items:flex-start;gap:18px;width:100%;margin:18px 0 0;padding:0;
+  text-align:left;transition:transform .12s var(--ez)}
+.hero:active{transform:scale(.99)}
+.hero .cd{flex:0 0 auto;min-width:74px}
+.hero .cd b{display:block;font-size:62px;line-height:.84;font-weight:700;letter-spacing:-.052em;
+  font-variant-numeric:tabular-nums;color:var(--hue,var(--tx))}
+.hero .cd i{display:block;font-style:normal;font-size:16px;font-weight:650;letter-spacing:-.012em;
+  color:var(--tx2);margin-top:9px}
+.hero .hm{min-width:0;padding-top:3px;flex:1}
+.hero .hm b{display:block;font-size:17px;font-weight:650;letter-spacing:-.022em;line-height:1.3}
+.hero .hm i{display:block;font-style:normal;font-size:13px;color:var(--tx2);line-height:1.5;margin-top:6px}
+.hero .hm i .pn{color:var(--hue,var(--tx2));font-weight:700}
+.hero .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.chip{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;
+  border-radius:7px;background:var(--card2);color:var(--tx2);border:1px solid var(--line);white-space:nowrap}
+.chip.must{background:color-mix(in srgb,var(--bad) 13%,transparent);color:var(--bad);
+  border-color:color-mix(in srgb,var(--bad) 38%,transparent)}
+.chip.beta{background:color-mix(in srgb,var(--hard) 14%,transparent);color:var(--hard);
+  border-color:color-mix(in srgb,var(--hard) 40%,transparent)}
+.chip.new{background:color-mix(in srgb,var(--good) 13%,transparent);color:var(--good);
+  border-color:color-mix(in srgb,var(--good) 40%,transparent)}
+
+.sechead{display:flex;align-items:baseline;gap:10px;margin:34px 0 10px}
+.sechead h2{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:0}
+.sechead .lk{margin-left:auto;font-size:12px;font-weight:700;color:var(--acc-tx);
+  min-height:38px;display:inline-flex;align-items:center;padding:0 2px;text-decoration:none}
+.sechead .lk:hover{text-decoration:underline}
+
+/* papers accordion */
+.papers{display:flex;flex-direction:column;gap:8px}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:18px;position:relative;
+  overflow:hidden;transition:border-color .2s var(--ez),background .28s var(--eze)}
+.paper:hover{border-color:var(--line2)}
+/* open = RECESSED, not raised — reads more expensive and needs no white */
+.paper.open{background:var(--card2);border-color:var(--line2)}
+/* the paper's own hue as a left edge (bn2-brief.html:106 does this on
+   .paper-chip). Present at rest so the list has colour before you touch it. */
+.paper::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--hue,var(--acc));opacity:.5;transition:opacity .28s var(--eze)}
+.paper.open::before{opacity:1}
+.phead{display:flex;align-items:center;gap:13px;width:100%;padding:15px 16px;min-height:64px;
+  text-align:left;transition:transform .12s var(--ez)}
+.phead:active{transform:scale(.99)}
+.phead .sq{width:38px;height:38px;border-radius:12px;background:var(--card2);border:1px solid var(--line);
+  display:grid;place-items:center;color:var(--hue,var(--tx2));flex:0 0 auto;
+  transition:background .28s var(--eze),border-color .2s var(--ez)}
+.paper.open .phead .sq{background:var(--hue-wash,var(--acc-soft));
+  border-color:color-mix(in srgb,var(--hue,var(--acc)) 30%,transparent)}
+.phead .sq svg{width:19px;height:19px}
+.phead .t{flex:1;min-width:0}
+.phead .t b{display:block;font-size:15px;font-weight:650;letter-spacing:-.022em;line-height:1.3}
+.phead .t span{display:block;font-size:12px;color:var(--tx2);margin-top:3px}
+.phead .t span em{font-style:normal;color:var(--hue,var(--acc-tx));font-weight:700}
+.phead .chev{color:var(--tx3);width:17px;height:17px;flex:0 0 auto;
+  transition:transform .28s var(--eze),color .2s var(--ez)}
+.paper.open .phead .chev{transform:rotate(90deg);color:var(--tx2)}
+/* height 0→auto the grid way; contain:layout kills a Safari retina flicker */
+.pbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s var(--eze)}
+.paper.open .pbody{grid-template-rows:1fr}
+.pinner{overflow:hidden;contain:layout;min-height:0}
+.pinner>.pad{padding:2px 16px 16px}
+.paper.open .pinner .stg{animation:rise .42s var(--ezo) both;animation-delay:calc(var(--i,0)*45ms)}
+@keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.plab{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);
+  margin:10px 0 7px;display:flex;align-items:center;gap:8px}
+.plab::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.tool{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border-radius:12px;
+  background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;
+  transition:border-color .16s var(--ez),transform .12s var(--ez)}
+.tool+.tool{margin-top:7px}
+.tool:hover{border-color:var(--line2)}
+.tool:active{transform:scale(.99)}
+.tool .sq{width:32px;height:32px;border-radius:10px;background:var(--card2);border:1px solid var(--line);
+  display:grid;place-items:center;color:var(--hue,var(--tx2));flex:0 0 auto}
+.tool .sq svg{width:16px;height:16px}
+.tool .t{flex:1;min-width:0}
+.tool .t b{display:block;font-size:13.5px;font-weight:650;letter-spacing:-.015em;line-height:1.3}
+.tool .t span{display:block;font-size:11.5px;color:var(--tx2);line-height:1.45;margin-top:2px}
+.tool .cv{color:var(--tx3);width:15px;height:15px;flex:0 0 auto}
+.due{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 7px;border-radius:7px;
+  background:var(--hue-wash,var(--acc-soft));color:var(--hue,var(--acc-tx));
+  border:1px solid color-mix(in srgb,var(--hue,var(--acc)) 32%,transparent);white-space:nowrap}
+/* honest empty — states the absence, offers the next step, claims nothing */
+.none{border:1px dashed var(--line2);border-radius:12px;padding:12px 13px;font-size:12px;
+  color:var(--tx2);line-height:1.5}
+.none b{color:var(--tx);font-weight:650;display:block;margin-bottom:3px;font-size:12.5px}
+.none .go{color:var(--acc-tx);font-weight:700;font-size:12px;display:inline-flex;align-items:center;
+  gap:4px;margin-top:4px;min-height:38px}
+.as{display:flex;align-items:flex-start;gap:12px;width:100%;padding:9px 2px}
+.as+.as{border-top:1px solid var(--line)}
+.as .d{flex:0 0 auto;width:52px;padding-top:1px}
+.as .d b{display:block;font-size:12.5px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}
+.as .d span{display:block;font-size:10px;color:var(--tx2);margin-top:2px;font-variant-numeric:tabular-nums}
+.as .t{flex:1;min-width:0}
+.as .t b{display:block;font-size:13px;font-weight:600;line-height:1.35}
+.as .t .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.as .t .rel{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--acc-tx);
+  font-weight:650;margin-top:4px;min-height:38px;text-decoration:none}
+.as .t .rel svg{width:13px;height:13px}
+.as.soon .d b{color:var(--hue,var(--acc-tx))}
+.kit{display:flex;flex-direction:column;gap:8px}
+.kit .tool{padding:13px 14px;border-radius:18px}
+.kit .tool+.tool{margin-top:0}
 /* status chips, Giga's .st-due recipe: token tint + token border, no literals */
 .badge.beta{background:color-mix(in srgb,var(--hard) 14%,transparent);color:var(--hard);border:1px solid color-mix(in srgb,var(--hard) 40%,transparent)}
 .badge.new{background:color-mix(in srgb,var(--good) 13%,transparent);color:var(--good);border:1px solid color-mix(in srgb,var(--good) 40%,transparent)}
-.empty{color:var(--tx3);text-align:center;padding:50px 10px;font-size:14px}
-.soon{color:var(--tx3);font-size:12.5px;padding:11px 15px;border:1px dashed var(--line2);border-radius:12px}
-.soon-sub{padding:9px 13px;font-size:12px}
-.foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
+.foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx2);line-height:1.7}
 .foot a{color:var(--tx3)}
 /* Visit-counting disclosure — plain words, no consent wall. */
 .privnote{margin-top:18px;font-size:10.5px;line-height:1.55;color:var(--tx3);opacity:.8;
@@ -120,7 +237,8 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sbGo.on{display:flex}
 .sbGo:hover{filter:brightness(1.06)}
 .sbGo:active{transform:scale(.995)}
-.sbGo .zap{font-size:27px;flex:0 0 auto;line-height:1}
+.sbGo .zap{flex:0 0 auto;line-height:1;display:grid;place-items:center}
+.sbGo .zap svg{width:23px;height:23px;stroke-width:1.9}
 .sbGo .txt{flex:1;min-width:0}
 .sbGo .txt b{display:block;font-size:17px;letter-spacing:-.3px;line-height:1.3}
 .sbGo .txt span{display:block;font-size:12.5px;opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
@@ -133,36 +251,10 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sbGo.idle .txt b{color:var(--tx)}
 .sbGo.idle .sbHelp,.sbGo.idle .sbBudget{background:var(--line2);color:var(--tx2)}
 .sbGo.idle .sbBudget{opacity:.55}
-/* ── the ONE deadline line. The other fourteen live in the 🗓 sheet, one tap
-   away — the wall of rows was the single biggest source of arrival-overwhelm. */
-.nx{display:flex;flex-wrap:wrap;align-items:center;gap:11px;width:100%;margin:10px 0 0;padding:12px 15px;text-align:left;
-  background:var(--card);border:1px solid var(--line);border-radius:13px;transition:.15s}
-.nx:hover{border-color:var(--line2)}
-.nx .nxd{flex:0 0 auto;font-size:22px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;min-width:34px}
-.nx .nxd span{font-size:10.5px;font-weight:700;opacity:.7;margin-left:1px}
-.nx .nxt{flex:1;min-width:0}
-.nx .nxt b{display:block;font-size:13.5px;font-weight:700;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* the sub WRAPS rather than clipping — at 375px an ellipsis was eating the
-   date, which is the one thing on this row you actually need */
-.nx .nxt i{display:block;font-style:normal;font-size:11.5px;color:var(--tx3);line-height:1.4;margin-top:2px}
-.nx .nxr{flex:0 0 auto;font-size:11.5px;font-weight:800;color:var(--tx3);white-space:nowrap}
-.nx .nxall{flex:0 0 auto;font-size:16px;color:var(--tx3)}
-.nxbar{height:5px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:8px;width:100%}
-.nxbar i{display:block;height:100%;border-radius:3px}
-.nxbar i.ok{background:var(--good)} .nxbar i.mid{background:var(--hard)} .nxbar i.low{background:var(--bad)}
-/* ── tools: the current semester only, everything else behind one disclosure ── */
-.toolshead{display:flex;align-items:baseline;gap:10px;margin:30px 0 12px}
-.toolshead h2{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx2);margin:0;font-weight:800}
-.toolshead .more{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--acc-tx);white-space:nowrap;min-height:38px;padding:0 2px}
-.toolshead .more:hover{text-decoration:underline}
-.tile .tfoot{display:flex;align-items:center;gap:8px;margin-top:3px}
-.tile .tfoot .tiledate{margin-left:auto;align-self:auto;margin-top:0}
-/* a due-count chip, not a colour: the tile states real state instead of
-   encoding it in a hue nobody can decode (self-explaining-UI rule). */
-.tile .due{font-size:10px;font-weight:800;letter-spacing:.4px;padding:3px 7px;border-radius:6px;
-  background:var(--acc-soft);color:var(--acc-tx);border:1px solid color-mix(in srgb,var(--acc) 32%,transparent);white-space:nowrap}
-#extra{display:none} #extra.on{display:block}
-.search{margin:18px 0 6px;display:none} .search.on{display:block}
+/* The .nx deadline row, .toolshead, the "All tools" disclosure and the search
+   field all lived here. Replaced by the countdown hero + papers accordion:
+   the hero is the summary, each paper's "Coming up" is the detail, and the
+   rail/row in between was a third way to read the same dates. */
 .sheet .hRow{margin:0 0 12px;font-size:13px;line-height:1.5}
 .sheet .hRow b{display:block;color:var(--tx);font-size:13px;margin-bottom:2px}
 .sheet .hRow span{color:var(--tx2)}
@@ -425,7 +517,8 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 @media(max-width:400px){.dl{padding:12px 13px 4px}.dlNm{font-size:13.5px}.dlDays{font-size:17px}}
 /* account button + auth modal (only shown when cloud sync is configured) */
 .acct{display:flex;align-items:center;gap:8px}
-.acctbtn{border:1px solid var(--line);background:var(--card);color:var(--tx2);border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+.acctbtn{border:1px solid var(--line);background:var(--card);color:var(--tx2);border-radius:10px;padding:0 13px;min-height:38px;font-size:12.5px;font-weight:700;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+.acctbtn svg{width:15px;height:15px}
 .acctbtn:hover{border-color:var(--acc);color:var(--tx)}
 .acctbtn .who{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .acctbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex:0 0 auto}
@@ -696,39 +789,51 @@ html[data-theme="light"]{
   </filter>
 </svg>
 <!-- HOUSE:GIGA:MARKUP:END -->
+<!-- ══ Icon sprite. Replaces every emoji that used to carry the page's visual
+     load. One family, 1.7px stroke, currentColor, ~1.4KB, no request. ══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l1-8Z"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 12h4l2.5-7 4 14L15 12h7"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5V4.5Z"/><path d="M20 18v4H6.5A2.5 2.5 0 0 1 4 19.5"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.5 3v6.2L4.6 18a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3l-4.9-8.8V3"/><path d="M8 3h8M7.2 14.5h9.6"/></symbol>
+<symbol id="i-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6.5h8M8.5 12h0M12 12h0M15.5 12h0M8.5 16.5h0M12 16.5h0M15.5 16.5h0"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="m9 4 6 3 5-3v13l-5 3-6-3-5 3V7l5-3Z"/><path d="M9 4v13M15 7v13"/></symbol>
+<symbol id="i-clip" viewBox="0 0 24 24"><path d="M9 3h6v3H9z"/><path d="M15 4.5h2.5A1.5 1.5 0 0 1 19 6v14a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V6a1.5 1.5 0 0 1 1.5-1.5H9"/><path d="m8.5 13.5 2.5 2.5 4.5-5"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V3.5M5 4.5h11l-2 3.5 2 3.5H5"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-arr" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.4-9 6 6 0 0 1 11.5 1.6A3.9 3.9 0 0 1 17.5 18H7Z"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18h5M10 21h4"/><path d="M12 2a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 2Z"/></symbol>
+</defs></svg>
 <div class="wrap">
   <header>
-    <div>
-      <h1>🧭 BN Hub</h1>
-      <p class="sub">Study tools &amp; apps for the BN. All free, all offline-capable.</p>
-    </div>
+    <div class="brand"><span class="mk"><svg class="ic"><use href="#i-zap"/></svg></span>BN Hub</div>
     <div class="acct">
       <button class="acctbtn" id="btnAcct" style="display:none"></button>
-      <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+      <button class="iconbtn" id="btnTheme" title="Theme" aria-label="Toggle theme"><svg class="ic"><use href="#i-moon"/></svg></button>
     </div>
   </header>
-  <!-- v2 landing = ONE thing above the fold. The session, then the single
-       nearest deadline, then this semester's tools. Everything else (the other
-       14 calendar rows, past semesters, search) is one tap down the page. -->
+  <!-- v3 landing: the countdown answers "why am I here" before anything else,
+       then ONE action, then the papers. The nearest deadline can never be an
+       empty state, so unlike the ⚡ button it cannot greet you broken. -->
+  <div class="eyebrow" id="today"></div>
+  <div id="nextDl"></div>
   <button class="sbGo" id="sbGo" title="One press — the highest-yield session across every app, precomputed">
-    <span class="zap">⚡</span>
+    <span class="zap"><svg class="ic"><use href="#i-zap"/></svg></span>
     <span class="txt"><b id="sbT">Study</b><span id="sbS">…</span></span>
     <span class="sbHelp" id="sbHelp" title="What is this?" aria-label="What is this?">?</span>
     <span class="sbBudget" id="sbB" title="Session length — tap to change">20′</span>
   </button>
-  <div id="nextDl"></div>
-  <div class="toolshead">
-    <h2 id="toolsTitle">Your tools</h2>
-    <button class="more" id="btnMore">All tools →</button>
-  </div>
-  <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
   <div class="foot">
     <!-- Account status: a footnote to the Sign in button, not a banner wedged
          between the last tool card and the footer. -->
     <div id="cloudNote"></div>
     Made by a BN student, for BN students. Check answers against your own course material — it always wins.<br/>
-    <button id="btnSugg" style="color:var(--acc-tx);font-weight:700;font-size:12px;margin-top:8px;min-height:38px" title="Tell me what to build next — no account needed">💡 Suggest something to build</button>
+    <button id="btnSugg" style="color:var(--acc-tx);font-weight:700;font-size:12px;margin-top:8px;min-height:38px;display:inline-flex;align-items:center;gap:6px" title="Tell me what to build next — no account needed"><svg class="ic" style="width:14px;height:14px"><use href="#i-bulb"/></svg>Suggest something to build</button>
     <!-- The visible privacy note was removed by request. The counter is unchanged
          and still first-party (page, referrer, device type, timezone — no cookies,
          no IP, nothing shared); the opt-out also still works, now only via
@@ -765,9 +870,10 @@ html[data-theme="light"]{
    ║ Then commit + push this repo. That's the whole integration.        ║
    ╚════════════════════════════════════════════════════════════════════╝ */
 /* ===== PROJECTS START ===== */
-/* `primary:true` = shown on arrival. Everything else waits behind "All tools →".
-   The empty future-semester scaffolding is admin structure, not something a
-   reader arriving at 4:30 AM needs to scroll past — it only renders expanded. */
+/* v3: this is now the ID REGISTRY only — the landing page groups by PAPER, not
+   by category, so these names and `primary`/`hidden` are no longer rendered.
+   What still matters is the `id`: CAT_PAPER maps sem2-hs2 / sem2-nursing /
+   sem2-pharm onto a paper, and everything else falls through to the Toolkit. */
 const CATEGORIES=[
   {id:'sem2', name:'📗 Semester 2', primary:true, subs:[
     {id:'sem2-pharm',   name:'Introduction to Pharmacology'},
@@ -783,7 +889,7 @@ const CATEGORIES=[
 ];
 const PROJECTS=[
   // --- Semester 2 → whole-semester overview (sits directly under Semester 2, above the papers) ---
-  {cat:'sem2', ic:'🗺️', nm:'Semester 2 · Master Schedule & Guide', ds:'Every class, lab, test and exam across all three papers, week by week.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new', date:'22/07/2026'},
+  {cat:'sem2', ic:'i-map', nm:'Semester 2 · Master Schedule', ds:'Every class, lab, test and exam across all three papers, week by week.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new'},
   // --- Semester 2 → Introduction to Pharmacology ---
   // LEGACY 2026-07-27 (Jeremy's call). Still live at its URL so existing links and
   // bookmarks do not 404 — just no longer advertised here, because a replacement
@@ -792,7 +898,7 @@ const PROJECTS=[
   // delete it only once the replacement ships and takes over the category.
   // {cat:'sem2-pharm', ic:'💊', nm:'Pharmacology · Pre-Class Deep Dive', ds:'Introduction to Pharmacology (61985). Orient → see it → self-test across all ten modules: concepts & sourcing, PK/PD, med calcs, the 8 Rights, lifespan, legal/ethical & drug development.', url:'https://jeremyspm.github.io/pharmacology-hub/', badge:'new', date:'22/07/2026'},
   // --- Semester 2 → Health Science 2 ---
-  {cat:'sem2-hs2', ic:'🫀', nm:'Module 1', ds:'Cardiovascular, respiratory and lymphatic — 10 topics, each as a map you can drill.', url:'https://jeremyspm.github.io/hs2-module1/', badge:'new', date:'27/07/2026'},
+  {cat:'sem2-hs2', ic:'i-pulse', nm:'Module 1', ds:'Cardiovascular, respiratory and lymphatic — 10 topics, each as a map you can drill.', url:'https://jeremyspm.github.io/hs2-module1/', badge:'new', practises:'hs2-t1'},
   // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by the one above:
   //   • module1-study-hub (20/07) — the original pre-class deep dive, Q&A Test layer.
   //   • hs2-module1 v1 (27/07)    — first relations-first cut, 6 topics, 111 relations.
@@ -801,10 +907,12 @@ const PROJECTS=[
   // links do not 404, but is no longer advertised anywhere in the hub.
   // {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
   // --- clinical skills (not tied to one semester) ---
-  {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
+  // `practises` links a tool to the sitting it prepares you for — that link is
+  // how MedCalc reaches Pharmacology, a paper with no tool of its own.
+  {cat:'skills', ic:'i-calc', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta', practises:'pharm-medcalc'},
   // --- career ---
-  {cat:'career', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
-  {cat:'career', ic:'🚑', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
+  {cat:'career', ic:'i-flag', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
+  {cat:'career', ic:'i-clip', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
   // ── Dev tool — kept INTERNAL, not shown on the hub (2026-07-20). Still live at its URL for building
   //    packs, but future study hubs are meant to be bespoke/polished per topic, not one-size-fits-all. ──
   // {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
@@ -835,76 +943,141 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
    state real state instead of encoding it in a decorative colour. Empty until
    an app has been opened once on this device — and then the chip simply
    doesn't appear, rather than showing a confident zero. */
-let DUE={}, expanded=false, lastQ='';
+let DUE={};
 /* match on PATH, not the whole URL: a tile's href is the absolute production
    URL while a pulse records wherever the app actually ran, so comparing origins
    would break the chip on any other host (and while testing locally). */
 const key=u=>{ let p=String(u||'');
   try{ p=new URL(p,location.href).pathname; }catch(e){}
   return p.replace(/index\.html$/,'').replace(/\/+$/,'')||'/'; };
-function setDue(map){ DUE=map||{}; render(lastQ); }
+function setDue(map){ DUE=map||{}; render(); }
 
-function tileHtml(p){
+/* ── v3: PAPERS, not categories. A paper row holds that paper's tools AND its
+   deadlines, so a paper with no tool yet (two of the three) is still worth
+   opening. Hue per paper is bn2-brief's, so the two apps agree on colour. ── */
+const CAT_PAPER={'sem2-hs2':'hs2','sem2-nursing':'inp','sem2-pharm':'pharm'};
+const PAPER_HUE={hs2:'--hs', inp:'--inp', pharm:'--ph'};
+const PAPER_IC ={hs2:'i-pulse', inp:'i-book', pharm:'i-flask'};
+const hueVars=k=>PAPER_HUE[k]?`--hue:var(${PAPER_HUE[k]});--hue-wash:var(${PAPER_HUE[k]}-wash)`:'';
+const MONn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYn=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const isoD=s=>{const [y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);};
+/* effective date: an explicit due, else a window opening, else the earliest
+   stream date — the same assumption the ⚡ engine makes until the roster posts */
+function effDate(a){
+  if(a.due) return isoD(a.due);
+  if(a.window) return isoD(a.window.open);
+  if(a.streamDates) return isoD(Object.values(a.streamDates).sort()[0]);
+  return null;
+}
+const midn=d=>{const x=new Date(d);x.setHours(0,0,0,0);return x;};
+const dTo=d=>Math.round((midn(d)-midn(new Date()))/86400000);
+const fmtDay=d=>d.getDate()+' '+MONn[d.getMonth()];
+
+function toolHtml(p){
   const d=DUE[key(p.url)];
-  const chip=(d&&d.due>0)?`<span class="due">${d.due} due</span>`:'';
-  const foot=(chip||p.date)?`<span class="tfoot">${chip}${p.date?`<span class="tiledate">${esc(p.date)}</span>`:''}</span>`:'';
-  return `<a class="tile" href="${p.url}" ${p.badge?`data-b="${p.badge}"`:''}>
-    ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
-    <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
-    <span class="ds">${esc(p.ds)}</span>
-    ${foot}
-  </a>`;
+  const tag=(d&&d.due>0)?`<span class="due num">${d.due} due</span>`
+           :(p.badge?`<span class="chip ${p.badge}">${p.badge}</span>`:'');
+  return `<a class="tool" href="${p.url}">
+    <span class="sq"><svg class="ic"><use href="#${p.ic}"/></svg></span>
+    <span class="t"><b>${esc(p.nm)}</b><span>${esc(p.ds)}</span></span>
+    ${tag}<svg class="ic cv"><use href="#i-chev"/></svg></a>`;
 }
-function render(filter){
-  lastQ=filter||'';
-  const toks=lastQ.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  // Searching always searches EVERYTHING — the fold is about arrival calm, not
-  // about hiding things from someone who is actively looking for them.
-  const all=expanded||toks.length>0;
-  const secs=CATEGORIES.filter(cat=>!cat.hidden&&(all||cat.primary)).map(cat=>{
-    const hay=cat.name.toLowerCase();  // let a category name (e.g. "career") surface its tiles too
-    const matches=p=>toks.every(t=>(p.nm+' '+p.ds+' '+hay).toLowerCase().includes(t));
+function asHtml(a){
+  const n=dTo(a._d), ch=[];
+  if(a.pts)    ch.push(`<span class="chip num">${a.pts} pts</span>`);
+  if(a.weight) ch.push(`<span class="chip num">${a.weight}%</span>`);
+  if(a.hurdle) ch.push(`<span class="chip must">Must pass</span>`);
+  if(a.window) ch.push(`<span class="chip">Window opens</span>`);
+  if(a.streamDates) ch.push(`<span class="chip">Stream date</span>`);
+  // the tool that directly prepares you for THIS sitting, surfaced in place —
+  // this is how MedCalc reaches Pharmacology, a paper with no tool of its own
+  const rel=PROJECTS.find(t=>t.practises===a.id);
+  return `<div class="as${n<=7?' soon':''}">
+    <span class="d"><b>${esc(fmtDay(a._d))}</b><span>${n===0?'today':n+'d'}</span></span>
+    <span class="t"><b>${esc(a.name)}</b>
+      ${ch.length?`<span class="chips">${ch.join('')}</span>`:''}
+      ${rel?`<a class="rel" href="${rel.url}"><svg class="ic"><use href="#i-arr"/></svg>${esc(rel.nm)} practises this</a>`:''}
+    </span></div>`;
+}
+function render(){
+  const D=window.DEADLINES||{papers:{},assessments:[]};
+  const live=(D.assessments||[]).filter(a=>!a.done&&effDate(a))
+    .map(a=>Object.assign({},a,{_d:effDate(a)}))
+    .filter(a=>dTo(a._d)>=0).sort((x,y)=>x._d-y._d);
 
-    if(cat.subs){   // e.g. Semester 2 -> its papers
-      // category-level tiles (cat:'sem2') render directly under the section heading, above the papers
-      const direct=PROJECTS.filter(p=>p.cat===cat.id&&matches(p));
-      const directHtml=direct.length?`<div class="grid">${direct.map(tileHtml).join('')}</div>`:'';
-      const subHtml=cat.subs.map(sub=>{
-        const items=PROJECTS.filter(p=>p.cat===sub.id&&matches(p));
-        if(items.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="grid">${items.map(tileHtml).join('')}</div>`;
-        // "nothing here yet" placeholders are scaffolding for the builder, not
-        // information for the reader — only shown once you've asked for all.
-        if(all&&!toks.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="soon soon-sub">No study hubs here yet.</div>`;
-        return '';
-      }).join('');
-      if(!directHtml && !subHtml) return '';
-      return `<h2 class="sec" id="sec-${cat.id}">${cat.name}</h2>${directHtml}${subHtml}`;
-    }
+  const papers=Object.keys(D.papers||{}).map(k=>{
+    const p=D.papers[k];
+    const tools=PROJECTS.filter(t=>CAT_PAPER[t.cat]===k);
+    const as=live.filter(a=>a.paper===k);
+    const due=tools.reduce((s,t)=>{const d=DUE[key(t.url)];return s+((d&&d.due)||0);},0);
+    // the collapsed summary states real counts only — no tool, it says so
+    const sum=[tools.length?tools.length+(tools.length===1?' tool':' tools'):'No tools yet'];
+    if(due) sum.push(`<em>${due} due</em>`);
+    if(as.length) sum.push(as.length+(as.length===1?' deadline':' deadlines'));
 
-    const items=PROJECTS.filter(p=>p.cat===cat.id&&matches(p));
-    if(items.length) return `<h2 class="sec" id="sec-${cat.id}">${cat.name}</h2><div class="grid">${items.map(tileHtml).join('')}</div>`;
-    // the degree-long scaffolding — expanded view only
-    if(all && cat.id.startsWith('sem') && !toks.length)
-      return `<h2 class="sec" id="sec-${cat.id}">${cat.name}</h2><div class="soon">Study hubs for this semester will appear here as you build them.</div>`;
-    return '';
+    let i=0;
+    const body=`<div class="pad">
+      <div class="plab stg" style="--i:${i++}">Tools</div>
+      ${tools.length
+        ? tools.map(t=>`<div class="stg" style="--i:${i++}">${toolHtml(t)}</div>`).join('')
+        : `<div class="none stg" style="--i:${i++}"><b>No tool for this paper yet</b>
+             Nothing is being tracked here, so this paper contributes nothing to your ⚡ sessions.
+             <button class="go" data-sugg="1">Suggest one →</button></div>`}
+      <div class="plab stg" style="--i:${i++}">Coming up</div>
+      ${as.length
+        ? as.slice(0,4).map(a=>`<div class="stg" style="--i:${i++}">${asHtml(a)}</div>`).join('')
+          +(as.length>4?`<div class="stg" style="--i:${i++}"><span style="display:block;padding:9px 2px;font-size:12px;color:var(--tx2)">${as.length-4} more in this paper</span></div>`:'')
+        : `<div class="none stg" style="--i:${i++}">Nothing left on the calendar for this paper.</div>`}
+    </div>`;
+
+    return `<section class="paper" data-k="${k}" style="${hueVars(k)}">
+      <button class="phead" aria-expanded="false" aria-controls="p-${k}">
+        <span class="sq"><svg class="ic"><use href="#${PAPER_IC[k]||'i-book'}"/></svg></span>
+        <span class="t"><b>${esc(p.name)}</b><span>${sum.join(' · ')}</span></span>
+        <svg class="ic chev"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pbody" id="p-${k}" role="region" aria-label="${esc(p.name)}"><div class="pinner">${body}</div></div>
+    </section>`;
   }).join('');
-  $('#sections').innerHTML=secs||`<div class="empty">Nothing matches "${esc(toks.join(' '))}".</div>`;
+
+  // anything not owned by a single paper: the semester schedule, clinical skills, career
+  const kit=PROJECTS.filter(t=>!CAT_PAPER[t.cat]);
+
+  $('#sections').innerHTML=`
+    <div class="sechead"><h2>Semester 2</h2><a class="lk" href="bn2-brief.html">Full schedule →</a></div>
+    <div class="papers">${papers}</div>
+    <div class="sechead"><h2>Toolkit</h2><span class="lk" style="color:var(--tx2);font-weight:650">Across all papers</span></div>
+    <div class="kit">${kit.map(toolHtml).join('')}</div>`;
+
+  // one open at a time — keeps the page short and the choice obvious
+  const host=$('#sections');
+  const setOpen=(sec,open)=>{ sec.classList.toggle('open',open);
+    sec.querySelector('.phead').setAttribute('aria-expanded',open?'true':'false'); };
+  host.querySelectorAll('.paper').forEach(sec=>{
+    sec.querySelector('.phead').onclick=()=>{
+      const willOpen=!sec.classList.contains('open');
+      host.querySelectorAll('.paper').forEach(s=>setOpen(s,false));
+      setOpen(sec,willOpen);
+      try{ localStorage.setItem('hub.openPaper', willOpen?sec.dataset.k:''); }catch(e){}
+    };
+  });
+  host.querySelectorAll('[data-sugg]').forEach(b=>b.onclick=e=>{ e.preventDefault(); $('#btnSugg').click(); });
+  // on arrival: the paper you last opened, else the one owning the next deadline
+  let k=''; try{ k=localStorage.getItem('hub.openPaper')||''; }catch(e){}
+  if(k===null||k===undefined) k='';
+  if(!k && live[0]) k=live[0].paper;
+  const sec=k && host.querySelector(`.paper[data-k="${k}"]`);
+  if(sec) setOpen(sec,true);
+
+  const n=new Date();
+  $('#today').textContent=`${DAYn[n.getDay()]} ${n.getDate()} ${MONn[n.getMonth()]}`;
 }
-$('#q').oninput=e=>render(e.target.value);
-$('#btnMore').onclick=()=>{
-  expanded=!expanded;
-  $('#btnMore').textContent=expanded?'Show less ↑':'All tools →';
-  $('#toolsTitle').textContent=expanded?'Everything':'Your tools';
-  $('.search').classList.toggle('on',expanded);
-  if(!expanded){ $('#q').value=''; }
-  render(expanded?$('#q').value:'');
-  if(expanded) $('#q').focus();
-};
 const TK='hub.theme';
 function applyTheme(){ document.documentElement.setAttribute('data-theme',localStorage.getItem(TK)||'dark'); }
 $('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
 applyTheme();
-render('');
+render();
 
 /* ---------- ⚡ Study engine (v1) — see STUDY-ENGINE-SPEC.md ----------
    Apps bid CARDS onto the shared-origin bus (studybus.pulse.*, v2); the
@@ -1346,27 +1519,43 @@ render('');
      stopped being the first thing you read. Same honesty rules apply to this
      row as to the sheet: the bar is share-not-due of the questions IN PLAY, the
      count is printed beside it, and no deck means no bar. */
+  /* v3: the hero. The nearest sitting as ONE big number, wearing the hue of
+     the paper that owns it — so a glance gives you both how soon and which
+     paper. The other fourteen stay in the 🗓 sheet behind a tap; the readiness
+     bar moved there too, because a percentage needs its question count beside
+     it to be honest and neither fits at 62px. */
   function renderNext(){
     const host=$('#nextDl'); if(!host) return;
     const rows=dlRows();
     if(!rows.length){ host.innerHTML=''; return; }
-    const roll=rollup(), row=rows[0], a=row.a, p=row.p;
-    const d=daysTo(p), tone=toneOf(d);
+    const row=rows[0], a=row.a, p=row.p, d=daysTo(p);
     const paper=(D.papers[a.paper]&&D.papers[a.paper].name)||a.paper;
-    const worth=a.hurdle?'must pass':(a.weight?a.weight+'%':(a.pts?a.pts+' pts':''));
-    const r=roll[a.id];
-    let right='', bar='';
-    if(a.kind!=='assignment'&&a.kind!=='signoff'&&r&&r.total>0){
-      const pct=Math.round((1-r.due/r.total)*100);
-      const cls=pct>=80?'ok':pct>=50?'mid':'low';
-      right=`<span class="nxr">${pct}% of ${r.total}</span>`;
-      bar=`<span class="nxbar"><i class="${cls}" style="width:${pct}%"></i></span>`;
-    }
-    host.innerHTML=`<button class="nx" data-a="cal" title="See every test and exam left this semester">
-      <span class="nxd ${tone}">${d}<span>d</span></span>
-      <span class="nxt"><b>${esc(a.name)}</b><i>${esc(paper)}${worth?' · '+worth:''} · ${whenLabel(a,p)}</i></span>
-      ${right}<span class="nxall">All ${rows.length} →</span>${bar}</button>`;
+    const HUE={hs2:'--hs', inp:'--inp', pharm:'--ph'}[a.paper];
+    const ch=[];
+    if(a.pts)    ch.push(`<span class="chip num">${a.pts} points</span>`);
+    if(a.weight) ch.push(`<span class="chip num">${a.weight}% of paper</span>`);
+    if(a.hurdle) ch.push(`<span class="chip must">Must pass</span>`);
+    if(a.timeUnconf) ch.push(`<span class="chip">Time unconfirmed</span>`);
+    host.innerHTML=`<button class="hero" data-a="cal" style="${HUE?`--hue:var(${HUE})`:''}"
+        title="See every test and exam left this semester">
+      <span class="cd"><b class="num" id="cdN">${d}</b><i>${d===0?'today':(d===1?'day':'days')}</i></span>
+      <span class="hm"><b>${esc(a.name)}</b>
+        <i><span class="pn">${esc(paper)}</span> · ${whenLabel(a,p)}</i>
+        ${ch.length?`<span class="chips">${ch.join('')}</span>`:''}
+        <i style="color:var(--tx3);margin-top:7px">All ${rows.length} on the calendar →</i>
+      </span></button>`;
     host.querySelector('[data-a]').onclick=showCalendar;
+    countUp($('#cdN'),d);
+  }
+  /* the one animated moment on the page: the number that matters, on arrival */
+  function countUp(el,to){
+    if(!el||to>200||matchMedia('(prefers-reduced-motion:reduce)').matches){return;}
+    const t0=performance.now();
+    (function step(t){
+      const q=Math.min(1,(t-t0)/520), e=1-Math.pow(1-q,5);   // easeOutQuint, Giga's curve
+      el.textContent=Math.round(e*to);
+      if(q<1) requestAnimationFrame(step); else el.textContent=to;
+    })(t0);
   }
   function showCalendar(){
     const roll=rollup(), rows=dlRows();
@@ -2183,7 +2372,7 @@ render('');
       btn.title='Signed in — click to sign out';
       note.innerHTML=`<span>☁️ <b>Synced.</b> Your progress in every app follows you to any device you sign in on.</span>`;
     } else {
-      btn.innerHTML=`☁️ Sign in`;
+      btn.innerHTML=`<svg class="ic"><use href="#i-cloud"/></svg>Sign in`;
       btn.title='Sign in to sync your progress across devices';
       note.innerHTML=`<span>☁️ <b>Cloud sync available.</b> Sign in once here and your progress syncs across devices. Optional — everything works offline without it.</span>`;
     }
