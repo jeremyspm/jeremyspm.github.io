@@ -859,6 +859,27 @@ render('');
     let f=Math.min(2,Math.exp(age/7)); if(age>7) f*=1.25;
     return { score:(o.evPerMin||0.2)*best*f, paper:bestA.paper };
   }
+  /* ---- retired apps (the cull list) ---------------------------------------
+     A pulse is a localStorage key with no expiry, so an app that has been
+     superseded keeps bidding its cards forever — the hub has no way to know
+     the tile went away. Naming the app id here is the off switch: its pulse
+     is deleted (not just skipped) on every hub load, along with its grade log
+     and any recent-play entries, so it can't feed the ⚡ queue, the readiness
+     bars or the tile chips. Re-enrolling = delete the id from this set.
+       · pharmhub — old Pharmacology Hub, retired 2026-07-27 */
+  const RETIRED=new Set(['pharmhub']);
+  function purgeRetired(){
+    RETIRED.forEach(app=>{
+      try{
+        localStorage.removeItem('studybus.pulse.'+app);
+        localStorage.removeItem('studybus.grades.'+app);
+      }catch(e){}
+    });
+    const h=jget(HP,{}); let ch=false;
+    for(const k in h){ if(RETIRED.has(k.split(':')[0])){ delete h[k]; ch=true; } }
+    if(ch) jset(HP,h);
+  }
+  purgeRetired();
   function pulses(){
     const out=[];
     for(let i=0;i<localStorage.length;i++){
@@ -866,7 +887,7 @@ render('');
       if(k&&k.indexOf('studybus.pulse.')===0){
         const p=jget(k,null);
         // v2 only — v1 pulses described URL legs (the retired handoff model)
-        if(p&&p.v===2&&p.app&&p.url&&Array.isArray(p.offers)) out.push(p);
+        if(p&&p.v===2&&p.app&&p.url&&Array.isArray(p.offers)&&!RETIRED.has(p.app)) out.push(p);
       }
     }
     return out;
