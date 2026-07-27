@@ -417,6 +417,19 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 /* ---- the page-flip between cards (DrillView.jsx:66 flipCardOut) ---- */
 .stFlipIn{animation:stFlipIn .3s cubic-bezier(0,0,.2,1) both}
 @keyframes stFlipIn{from{opacity:0;transform:perspective(1200px) rotateY(9deg) translateY(4px)}to{opacity:1;transform:none}}
+/* A repaint that shows the SAME face (reveal → reward: the card is already
+   turned over, we're only adding the dials underneath) must not re-flip and
+   must not re-run the power-on. paint() rebuilds innerHTML, so every one-shot
+   would restart from zero — these pin them to their end state instead. The
+   reward dials are deliberately NOT listed: they are the one thing that IS
+   new, so they still rise in. */
+.stSettled .stChain.lit .fill{animation:none;transform:scaleY(1)}
+.stSettled .stChain.lit .stBead::before{animation:none;border-color:var(--dot);background:var(--dot);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--dot) 22%,transparent),0 0 16px var(--dot)}
+.stSettled .stChain.lit .stLink::before{animation:none;border-color:var(--dot);background:var(--dot);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--dot) 18%,transparent),0 0 9px var(--dot)}
+.stSettled .stChain.lit .stBead.solved,.stSettled .stChain.lit .stLink.solved,
+.stSettled .stReveal>*{animation:none;opacity:1;transform:none}
 .stGhost{position:fixed;z-index:71;pointer-events:none;backface-visibility:hidden}
 
 /* ---- the honest done screen (DrillView.jsx:623) ---- */
@@ -1865,6 +1878,9 @@ render();
     const tally={done:0,correct:0,missed:0,mins:0,byLabel:{},
                  hasSR:false,strengthened:0,boxUps:0,levelUps:0,maxDays:0};
     let i=0, phase='produce', typed={}, picked=null, gained=null;
+    // which card FACE the panel is currently showing, as `index:shown`. The
+    // flip is a content change, not a repaint — see paint().
+    let painted='';
     const scrim=document.createElement('div'); scrim.className='sbScrim';
     const panel=document.createElement('div'); panel.className='sbPanel';
     scrim.appendChild(panel);
@@ -2004,6 +2020,13 @@ render();
       const leg=q[i], c=leg.card, shown=phase!=='produce';
       const isChain=c.type==='chain';
       const lvl=Math.max(1,Math.min(4,+c.level||1));
+      // The flip belongs to a change of FACE, not to every paint: a new card
+      // flips in, and produce → reveal turns this one over. reveal → reward
+      // repaints the same face (only the dials below it are new), so it sits
+      // still — otherwise the answer, and the whole chain power-on under it,
+      // replay a second time just to show the two dials.
+      const face=i+':'+(shown?1:0), flipCls=face===painted?'stSettled':'stFlipIn';
+      painted=face;
       let prompt, body, acts='';
 
       if(isChain){
@@ -2058,7 +2081,7 @@ render();
         <div class="stHead"><span class="stSubj">${esc(leg.label)}${leg.repeat?' · <b class="stRe">round 2</b>':''}</span>
           ${isChain?ladderHtml(lvl):`<span class="stWho">${esc(leg.appName)}</span>`}</div>
         <div class="stPrompt">${prompt}</div>
-        <div class="stFlipIn">${body}${rewardHtml()}</div>
+        <div class="${flipCls}">${body}${rewardHtml()}</div>
         <div class="stActs">${acts}</div>`;
       bind();
     }
