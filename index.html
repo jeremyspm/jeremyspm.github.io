@@ -82,11 +82,26 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
   min-height:38px;padding:0 6px}   /* matches #btnSugg — the hub's tap-target floor */
 .privnote button:hover{color:var(--tx2)}
 .privnote.off{color:var(--good);opacity:1}
-/* Owner-only traffic readout. */
+/* Account status line. Lives in the footer with the rest of the small print —
+   it is a status, not a control, so it reads as a footnote to the Sign in button. */
+#cloudNote:empty{display:none}
+#cloudNote{max-width:520px;margin:0 auto 14px;font-size:12px;line-height:1.6;
+  color:var(--tx3);text-align:center}
+#cloudNote b{color:var(--tx2)}
+/* Owner-only traffic readout. Collapsed on every load — it is a thing you go
+   look at, never a thing that greets you. <details> gives that for free: no
+   stored state, so a refresh always closes it again. */
 #statsBox:empty{display:none}
 .stats{margin:20px auto 0;max-width:560px;text-align:left;background:var(--card);
-  border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:12px;color:var(--tx2)}
-.stats h3{margin:0 0 10px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}
+  border:1px solid var(--line);border-radius:12px;padding:0;font-size:12px;color:var(--tx2);overflow:hidden}
+.stats>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+  padding:12px 16px;min-height:44px;box-sizing:border-box;
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}
+.stats>summary::-webkit-details-marker{display:none}
+.stats>summary:hover{color:var(--tx2)}
+.stats>summary::after{content:'▾';margin-left:auto;font-size:11px;letter-spacing:0;transition:transform .15s}
+.stats[open]>summary::after{transform:rotate(180deg)}
+.stats .body{padding:0 16px 14px}
 .stats .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:10px;margin-bottom:12px}
 .stats .n{background:var(--card2);border-radius:9px;padding:9px 10px;min-width:0}
 .stats .n b{display:block;font-size:19px;color:var(--tx);line-height:1.15;font-variant-numeric:tabular-nums}
@@ -580,8 +595,10 @@ html[data-theme="light"]{
   </div>
   <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
-  <div id="cloudNote"></div>
   <div class="foot">
+    <!-- Account status: a footnote to the Sign in button, not a banner wedged
+         between the last tool card and the footer. -->
+    <div id="cloudNote"></div>
     Made by a BN student, for BN students. Check answers against your own course material — it always wins.<br/>
     <button id="btnSugg" style="color:var(--acc-tx);font-weight:700;font-size:12px;margin-top:8px;min-height:38px" title="Tell me what to build next — no account needed">💡 Suggest something to build</button>
     <!-- The visible privacy note was removed by request. The counter is unchanged
@@ -1708,16 +1725,16 @@ render('');
     : `<div style="color:var(--tx3);font-style:italic">${empty}</div>`;
 
   async function load(){
-    host.innerHTML=`<div class="stats"><h3>Traffic</h3><div style="color:var(--tx3)">Loading…</div></div>`;
+    host.innerHTML=`<details class="stats"><summary>Traffic</summary><div class="body" style="color:var(--tx3)">Loading…</div></details>`;
     const since=new Date(Date.now()-30*864e5).toISOString();
     const {data,error}=await Cloud.client
       .from('pageviews').select('at,site,path,ref,visitor,session,user_id,device,tz')
       .gte('at',since).order('at',{ascending:false}).limit(20000);
-    if(error){ host.innerHTML=`<div class="stats"><h3>Traffic</h3><div class="warn">Couldn't load: ${esc(error.message)}</div></div>`; return; }
+    if(error){ host.innerHTML=`<details class="stats"><summary>Traffic</summary><div class="body warn">Couldn't load: ${esc(error.message)}</div></details>`; return; }
     const rows=data||[];
     if(!rows.length){
-      host.innerHTML=`<div class="stats"><h3>Traffic · last 30 days</h3>
-        <div style="color:var(--tx3)">No visits recorded yet. The counter went live 27/07/2026 — this stays empty until someone opens the hub.</div></div>`;
+      host.innerHTML=`<details class="stats"><summary>Traffic · last 30 days</summary>
+        <div class="body" style="color:var(--tx3)">No visits recorded yet. The counter went live 27/07/2026 — this stays empty until someone opens the hub.</div></details>`;
       return;
     }
     const day=t=>new Date(t).toISOString().slice(0,10);
@@ -1729,8 +1746,12 @@ render('');
     const days=[...new Set(rows.map(r=>day(r.at)))].sort().slice(-14).reverse();
     const perDay=new Map(); rows.forEach(r=>{ const d=day(r.at); perDay.set(d,(perDay.get(d)||0)+1); });
 
-    host.innerHTML=`<div class="stats">
-      <h3>Traffic · last 30 days</h3>
+    // Collapsed by default (no `open`), and re-rendered on every load, so a
+    // refresh always closes it again. The summary carries the headline number
+    // so the box is worth glancing at without opening it.
+    host.innerHTML=`<details class="stats">
+      <summary>Traffic · last 30 days · ${rows.length} views</summary>
+      <div class="body">
       <div class="nums">
         <div class="n"><b>${rows.length}</b><span>page views</span></div>
         <div class="n"><b>${uniq(rows.map(r=>r.session))}</b><span>visits</span></div>
@@ -1750,7 +1771,8 @@ render('');
         above is a real identity; the rest is anonymous on purpose. Anyone using
         Global Privacy Control, or who pressed “Don't count me”, isn't in these numbers.
       </div>
-    </div>`;
+      </div>
+    </details>`;
   }
   Cloud.onChange(user=>{
     if(user && OWNERS.includes((user.email||'').toLowerCase())) load();
