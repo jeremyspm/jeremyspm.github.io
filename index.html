@@ -883,8 +883,16 @@ render('');
      is deleted (not just skipped) on every hub load, along with its grade log
      and any recent-play entries, so it can't feed the ⚡ queue, the readiness
      bars or the tile chips. Re-enrolling = delete the id from this set.
-       · pharmhub — old Pharmacology Hub, retired 2026-07-27 */
-  const RETIRED=new Set(['pharmhub']);
+       · pharmhub — old Pharmacology Hub, retired 2026-07-27
+       · module1  — old Module 1 Pre-Class Deep Dive, retired 2026-07-27. Its
+         tile was commented out that day but the pulse kept bidding: it offers
+         the SAME assessments as the rebuilt hs2m1 (hs2-t1, hs2-final), so it
+         was taking 5 of every 15 ⚡ cards, adding a duplicate 74 to the hs2-t1
+         and hs2-final readiness bars, and swallowing grades into its own
+         `m1_srs` boxes — reps hs2m1's scheduler never saw. Note a stale pulse
+         is BOOSTED, not decayed (see scoreOffer), so an abandoned app sits at
+         max boost forever; un-advertising alone is never enough. */
+  const RETIRED=new Set(['pharmhub','module1']);
   function purgeRetired(){
     RETIRED.forEach(app=>{
       try{
