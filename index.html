@@ -584,13 +584,12 @@ html[data-theme="light"]{
   <div class="foot">
     Made by a BN student, for BN students. Check answers against your own course material — it always wins.<br/>
     <button id="btnSugg" style="color:var(--acc-tx);font-weight:700;font-size:12px;margin-top:8px;min-height:38px" title="Tell me what to build next — no account needed">💡 Suggest something to build</button>
-    <!-- Estate self-explaining-UI rule: if the site counts you, the site says so,
-         in plain words, without a consent wall nobody reads. -->
-    <div class="privnote">
-      This page counts visits — page, referrer, device type and timezone, nothing more.
-      No cookies, no ad networks, no IP addresses, and nothing shared with anyone.
-      <button id="btnPrivOff" type="button">Don't count me</button>
-    </div>
+    <!-- The visible privacy note was removed by request. The counter is unchanged
+         and still first-party (page, referrer, device type, timezone — no cookies,
+         no IP, nothing shared); the opt-out also still works, now only via
+         localStorage.setItem('hub.nocount','1'). The .privnote CSS and the
+         #btnPrivOff handler below are left in place (both no-op without this
+         markup) so the note can be restored by pasting this block back. -->
     <!-- Owner-only: appears when Jeremy is signed in. Everyone else never sees it,
          and the row-level policy means they couldn't read the data anyway. -->
     <div id="statsBox"></div>
@@ -1648,25 +1647,33 @@ render('');
    are the only "who" that is real, and they are shown separately for that
    reason — the rest of the traffic is genuinely anonymous, by design. */
 (function(){
+  // ── the opt-out toggle ─────────────────────────────────────────────────
+  // Only runs when the privacy note is on the page. The note was removed, so
+  // this is dormant — but the readout below must NOT be gated on it.
   const OFF='hub.nocount';
-  const el=$('#btnPrivOff'); if(!el) return;
-  const box=el.parentElement;
-  const paint=()=>{
-    let off=false; try{ off=localStorage.getItem(OFF)==='1'; }catch(e){}
-    box.classList.toggle('off',off);
-    el.textContent = off ? 'Not counting you — turn back on' : "Don't count me";
-  };
-  el.onclick=()=>{
-    try{
-      if(localStorage.getItem(OFF)==='1') localStorage.removeItem(OFF);
-      else localStorage.setItem(OFF,'1');
-    }catch(e){}
+  const el=$('#btnPrivOff');
+  if(el){
+    const box=el.parentElement;
+    const paint=()=>{
+      let off=false; try{ off=localStorage.getItem(OFF)==='1'; }catch(e){}
+      box.classList.toggle('off',off);
+      el.textContent = off ? 'Not counting you — turn back on' : "Don't count me";
+    };
+    el.onclick=()=>{
+      try{
+        if(localStorage.getItem(OFF)==='1') localStorage.removeItem(OFF);
+        else localStorage.setItem(OFF,'1');
+      }catch(e){}
+      paint();
+    };
     paint();
-  };
-  paint();
+  }
 
   // ── owner readout ──────────────────────────────────────────────────────
-  const OWNER='jeremyspm1999@gmail.com';
+  // Both of Jeremy's accounts. Must stay in step with the "owner reads stats"
+  // row-level policy in cloud/schema.sql — this list only hides the box; the
+  // database is what actually refuses the rows.
+  const OWNERS=['jeremyspm1999@gmail.com','masa64@manukaumail.com'];
   const host=$('#statsBox');
   if(!host || !window.Cloud || !Cloud.enabled) return;
 
@@ -1725,7 +1732,7 @@ render('');
     </div>`;
   }
   Cloud.onChange(user=>{
-    if(user && (user.email||'').toLowerCase()===OWNER) load();
+    if(user && OWNERS.includes((user.email||'').toLowerCase())) load();
     else host.innerHTML='';
   });
 })();

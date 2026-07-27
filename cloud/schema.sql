@@ -102,6 +102,9 @@ create policy "anyone may record a visit" on public.pageviews
 
 -- Only the owner can read it back, and only signed in. No update/delete policy,
 -- so rows are append-only from the browser.
+-- Both of Jeremy's accounts (personal + Manukau student), added 27/07/2026 —
+-- migration "pageview_stats_second_owner". Keep this list in step with OWNERS
+-- in hub/index.html.
 create policy "owner reads stats" on public.pageviews
   for select to authenticated
-  using (auth.jwt() ->> 'email' = 'jeremyspm1999@gmail.com');
+  using (auth.jwt() ->> 'email' in ('jeremyspm1999@gmail.com','masa64@manukaumail.com'));
