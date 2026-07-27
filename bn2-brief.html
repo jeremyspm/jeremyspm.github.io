@@ -1,60 +1,79 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"></head><body>
 <title>Semester 2 2026 — BN2 Master Schedule &amp; Guide</title>
 <style>
-  /* ── Palette matched to the BN Hub house look (dark default, flat, blue) ──
-     Per-paper colour-coding: HS = blue · INP = green · Pharm = violet. */
+  /* ── HOUSE PALETTE — copied by value from hub/index.html:16-38. Do not fork. ──
+     This document's own token names (--ground/--surface/--ink/--accent…) are kept as
+     ALIASES onto the house tokens, so ~900 lines of existing CSS need no edits.
+     Per-paper colour-coding survives: HS = blue · INP = green · Pharm = violet. */
   :root {
-    --ground: #0e1420; --surface: #182133; --surface-2: #1e2941;
-    --ink: #e8eef7; --ink-soft: #9fb0c8; --ink-faint: #6d7f9c;
-    --line: #27324a; --line-strong: #33405c;
-    --accent: #4f9dff; --accent-deep: #7ab6ff; --accent-wash: rgba(79,157,255,0.12);
-    --warn: #ffce54; --warn-wash: rgba(255,206,84,0.12);
-    --crit: #e5534b; --crit-wash: rgba(229,83,75,0.13);
-    --hs: #4f9dff;  --hs-wash: rgba(79,157,255,0.15);
-    --inp: #39d98a; --inp-wash: rgba(57,217,138,0.15);
-    --ph: #9d8bff;  --ph-wash: rgba(157,139,255,0.15);
+    --bg:#161719; --card:#1c1c1f; --card2:#242427;
+    --tx:#f2f2f6; --tx2:rgba(255,255,255,.56); --tx3:rgba(255,255,255,.34);
+    --acc:#6366F1; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
+    --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
+    /* aliases */
+    --ground:var(--bg); --surface:var(--card); --surface-2:var(--card2);
+    --ink:var(--tx); --ink-soft:var(--tx2); --ink-faint:var(--tx3);
+    --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.15);
+    --accent:var(--acc); --accent-deep:var(--acc-tx); --accent-wash:var(--acc-soft);
+    --warn:var(--hard); --warn-wash:color-mix(in srgb,var(--hard) 15%,transparent);
+    --crit:var(--bad); --crit-wash:color-mix(in srgb,var(--bad) 15%,transparent);
+    --hs:#60A5FA; --hs-wash:color-mix(in srgb,#60A5FA 16%,transparent);
+    --inp:var(--good); --inp-wash:color-mix(in srgb,var(--good) 16%,transparent);
+    --ph:#C084FC; --ph-wash:color-mix(in srgb,#C084FC 16%,transparent);
     --serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
     --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
     --mono: ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Consolas,monospace;
-    --shadow: 0 2px 10px rgba(0,0,0,.35);
+    --shadow:0 14px 36px rgba(0,0,0,.16);
   }
   @media (prefers-color-scheme: light) {
     :root:not([data-theme]) {
-      --ground: #eef2f8; --surface: #ffffff; --surface-2: #f4f7fc;
-      --ink: #16202f; --ink-soft: #4a5a72; --ink-faint: #6d7f9c;
-      --line: #dbe3ef; --line-strong: #c7d3e6;
-      --accent: #1f6fe0; --accent-deep: #1657b8; --accent-wash: rgba(31,111,224,0.10);
-      --warn: #a9791a; --warn-wash: rgba(169,121,26,0.12);
-      --crit: #c5302a; --crit-wash: rgba(197,48,42,0.10);
-      --hs: #1f6fe0; --hs-wash: rgba(31,111,224,0.12);
-      --inp: #128a55; --inp-wash: rgba(18,138,85,0.12);
-      --ph: #6d40e0; --ph-wash: rgba(109,64,224,0.12);
-      --shadow: 0 2px 12px rgba(30,50,90,.10);
+      --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+      --tx:#16161a; --tx2:rgba(0,0,0,.52); --tx3:rgba(0,0,0,.34);
+      --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.12);
+      --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+      --ground:var(--bg); --surface:var(--card); --surface-2:var(--card2);
+      --ink:var(--tx); --ink-soft:var(--tx2); --ink-faint:var(--tx3);
+      --line:rgba(0,0,0,.10); --line-strong:rgba(0,0,0,.14);
+      --accent:var(--acc); --accent-deep:var(--acc-tx); --accent-wash:var(--acc-soft);
+      --warn:var(--hard); --warn-wash:color-mix(in srgb,var(--hard) 12%,transparent);
+      --crit:var(--bad); --crit-wash:color-mix(in srgb,var(--bad) 12%,transparent);
+      --hs:#1D4ED8; --hs-wash:color-mix(in srgb,#1D4ED8 12%,transparent);
+      --inp:var(--good); --inp-wash:color-mix(in srgb,var(--good) 12%,transparent);
+      --ph:#7E22CE; --ph-wash:color-mix(in srgb,#7E22CE 12%,transparent);
+      --shadow:0 14px 36px rgba(20,24,40,.10);
     }
   }
   :root[data-theme="light"] {
-    --ground: #eef2f8; --surface: #ffffff; --surface-2: #f4f7fc;
-    --ink: #16202f; --ink-soft: #4a5a72; --ink-faint: #6d7f9c;
-    --line: #dbe3ef; --line-strong: #c7d3e6;
-    --accent: #1f6fe0; --accent-deep: #1657b8; --accent-wash: rgba(31,111,224,0.10);
-    --warn: #a9791a; --warn-wash: rgba(169,121,26,0.12);
-    --crit: #c5302a; --crit-wash: rgba(197,48,42,0.10);
-    --hs: #1f6fe0; --hs-wash: rgba(31,111,224,0.12);
-    --inp: #128a55; --inp-wash: rgba(18,138,85,0.12);
-    --ph: #6d40e0; --ph-wash: rgba(109,64,224,0.12);
-    --shadow: 0 2px 12px rgba(30,50,90,.10);
+    --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+    --tx:#16161a; --tx2:rgba(0,0,0,.52); --tx3:rgba(0,0,0,.34);
+    --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.12);
+    --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+    --ground:var(--bg); --surface:var(--card); --surface-2:var(--card2);
+    --ink:var(--tx); --ink-soft:var(--tx2); --ink-faint:var(--tx3);
+    --line:rgba(0,0,0,.10); --line-strong:rgba(0,0,0,.14);
+    --accent:var(--acc); --accent-deep:var(--acc-tx); --accent-wash:var(--acc-soft);
+    --warn:var(--hard); --warn-wash:color-mix(in srgb,var(--hard) 12%,transparent);
+    --crit:var(--bad); --crit-wash:color-mix(in srgb,var(--bad) 12%,transparent);
+    --hs:#1D4ED8; --hs-wash:color-mix(in srgb,#1D4ED8 12%,transparent);
+    --inp:var(--good); --inp-wash:color-mix(in srgb,var(--good) 12%,transparent);
+    --ph:#7E22CE; --ph-wash:color-mix(in srgb,#7E22CE 12%,transparent);
+    --shadow:0 14px 36px rgba(20,24,40,.10);
   }
   :root[data-theme="dark"] {
-    --ground: #0e1420; --surface: #182133; --surface-2: #1e2941;
-    --ink: #e8eef7; --ink-soft: #9fb0c8; --ink-faint: #6d7f9c;
-    --line: #27324a; --line-strong: #33405c;
-    --accent: #4f9dff; --accent-deep: #7ab6ff; --accent-wash: rgba(79,157,255,0.12);
-    --warn: #ffce54; --warn-wash: rgba(255,206,84,0.12);
-    --crit: #e5534b; --crit-wash: rgba(229,83,75,0.13);
-    --hs: #4f9dff; --hs-wash: rgba(79,157,255,0.15);
-    --inp: #39d98a; --inp-wash: rgba(57,217,138,0.15);
-    --ph: #9d8bff; --ph-wash: rgba(157,139,255,0.15);
-    --shadow: 0 2px 10px rgba(0,0,0,.35);
+    --bg:#161719; --card:#1c1c1f; --card2:#242427;
+    --tx:#f2f2f6; --tx2:rgba(255,255,255,.56); --tx3:rgba(255,255,255,.34);
+    --acc:#6366F1; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
+    --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
+    --ground:var(--bg); --surface:var(--card); --surface-2:var(--card2);
+    --ink:var(--tx); --ink-soft:var(--tx2); --ink-faint:var(--tx3);
+    --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.15);
+    --accent:var(--acc); --accent-deep:var(--acc-tx); --accent-wash:var(--acc-soft);
+    --warn:var(--hard); --warn-wash:color-mix(in srgb,var(--hard) 15%,transparent);
+    --crit:var(--bad); --crit-wash:color-mix(in srgb,var(--bad) 15%,transparent);
+    --hs:#60A5FA; --hs-wash:color-mix(in srgb,#60A5FA 16%,transparent);
+    --inp:var(--good); --inp-wash:color-mix(in srgb,var(--good) 16%,transparent);
+    --ph:#C084FC; --ph-wash:color-mix(in srgb,#C084FC 16%,transparent);
+    --shadow:0 14px 36px rgba(0,0,0,.16);
   }
 
   * { box-sizing: border-box; }
