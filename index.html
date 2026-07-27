@@ -162,6 +162,9 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .due{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 7px;border-radius:7px;
   background:var(--hue-wash,var(--acc-soft));color:var(--hue,var(--acc-tx));
   border:1px solid color-mix(in srgb,var(--hue,var(--acc)) 32%,transparent);white-space:nowrap}
+/* "N to learn" is an invitation, not a count against you — drop the paper hue's
+   urgency and sit it back at label weight. */
+.due.fresh{background:transparent;color:var(--tx3);border-color:var(--line2)}
 /* honest empty — states the absence, offers the next step, claims nothing */
 .none{border:1px dashed var(--line2);border-radius:12px;padding:12px 13px;font-size:12px;
   color:var(--tx2);line-height:1.5}
@@ -506,6 +509,9 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .dlBar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
 .dlBar i{display:block;height:100%;border-radius:3px;transition:width .3s ease}
 .dlBar i.ok{background:var(--good)} .dlBar i.mid{background:var(--hard)} .dlBar i.low{background:var(--bad)}
+/* Cold start: an empty track, not an alarm. A red 0% bar is the same pixel
+   count as "you are failing", and the student has simply not begun. */
+.dlBar.fresh{background:repeating-linear-gradient(90deg,var(--line) 0 5px,transparent 5px 10px)}
 .dlPct{grid-column:1/-1;font-size:11.5px;color:var(--tx3);line-height:1.5;margin-top:4px;overflow-wrap:anywhere}
 .dlPct b.ok{color:var(--good)} .dlPct b.mid{color:var(--hard)} .dlPct b.low{color:var(--bad)}
 .dlNote{grid-column:1/-1;font-size:11.5px;color:var(--tx3);line-height:1.5;margin-top:5px;overflow-wrap:anywhere}
@@ -959,6 +965,14 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
    an app has been opened once on this device — and then the chip simply
    doesn't appear, rather than showing a confident zero. */
 let DUE={};
+/* The cold-start test, in one place so the tile chip, the paper summary and the
+   readiness bar can never disagree: the app reports that every question it holds
+   has never been graded once (`counts.nw`). An app that doesn't send `nw` can
+   never be "fresh" here, so it keeps today's rendering exactly. Why it matters:
+   due===total on a first visit is arithmetically true and reads as a backlog the
+   student never ran up — "579 due · 0% in good standing" before they've tapped
+   anything. Same numbers, honest noun. */
+const isFresh=r=>!!r&&r.total>0&&r.nw!=null&&r.nw>=r.total;
 /* match on PATH, not the whole URL: a tile's href is the absolute production
    URL while a pulse records wherever the app actually ran, so comparing origins
    would break the chip on any other host (and while testing locally). */
@@ -996,7 +1010,8 @@ const dTo=d=>Math.round((midn(d)-midn(new Date()))/86400000);
 
 function toolHtml(p){
   const d=DUE[key(p.url)];
-  const tag=(d&&d.due>0)?`<span class="due num">${d.due} due</span>`
+  const tag=isFresh(d)?`<span class="due num fresh">${d.total} to learn</span>`
+           :(d&&d.due>0)?`<span class="due num">${d.due} due</span>`
            :(p.badge?`<span class="chip ${p.badge}">${p.badge}</span>`:'');
   return `<a class="tool" href="${p.url}">
     <span class="sq"><svg class="ic"><use href="#${p.ic}"/></svg></span>
@@ -1012,11 +1027,17 @@ function render(){
   const papers=Object.keys(D.papers||{}).map(k=>{
     const p=D.papers[k];
     const tools=PROJECTS.filter(t=>paperOf(t)===k);
+    // A paper is "fresh" only if EVERY enrolled tool is — one tool part-way
+    // through means the due count is real and gets stated as a due count.
+    const withCounts=tools.map(t=>DUE[key(t.url)]).filter(Boolean);
+    const fresh=withCounts.length>0&&withCounts.every(isFresh);
     const due=tools.reduce((s,t)=>{const d=DUE[key(t.url)];return s+((d&&d.due)||0);},0);
+    const tot=withCounts.reduce((s,r)=>s+r.total,0);
     // the collapsed summary states real counts only — no tool, it says so.
     // Deadlines are deliberately absent: they live at the top of the page.
     const sum=[tools.length?tools.length+(tools.length===1?' tool':' tools'):'No tools yet'];
-    if(due) sum.push(`<em>${due} due</em>`);
+    if(fresh) sum.push(`<em>${tot} to learn</em>`);
+    else if(due) sum.push(`<em>${due} due</em>`);
 
     let i=0;
     const body=`<div class="pad">
@@ -1430,7 +1451,7 @@ render();
   }
   // assessment id → { total, due, offers[], links[] } across every fresh pulse
   function rollup(){
-    const m={}, get=id=>m[id]||(m[id]={total:0,due:0,offers:[],links:[]});
+    const m={}, get=id=>m[id]||(m[id]={total:0,due:0,nw:0,anyNw:false,offers:[],links:[]});
     pulses().forEach(p=>(p.offers||[]).forEach(o=>{
       (o.assess||[]).forEach(id=>{
         const r=get(id);
@@ -1441,6 +1462,7 @@ render();
         if(!total) return;
         const due=Math.max(0,Math.min(Number(c.due)||0,total));
         r.total+=total; r.due+=due;
+        if(c.nw!=null){ r.anyNw=true; r.nw+=Math.max(0,Math.min(Number(c.nw)||0,total)); }
         r.offers.push({label:o.label||p.name||p.app,total,due});
       });
     }));
@@ -1462,15 +1484,18 @@ render();
   function dueByApp(){
     const m={};
     pulses().forEach(p=>{
-      let due=0,total=0,any=false;
+      let due=0,total=0,nw=0,anyNw=false,any=false;
       (p.offers||[]).forEach(o=>{
         if(o.kind==='link') return;
         const c=o.counts||{};
         const t=Number(c.total)||(Array.isArray(o.cards)?o.cards.length:0);
         if(!t) return;
         any=true; total+=t; due+=Math.max(0,Math.min(Number(c.due)||0,t));
+        // `nw` (never graded once) is optional. An app that doesn't send it is
+        // simply never called fresh — old rendering, unchanged. No inferring.
+        if(c.nw!=null){ anyNw=true; nw+=Math.max(0,Math.min(Number(c.nw)||0,t)); }
       });
-      if(any) m[key(p.url)]={due:due,total:total};
+      if(any) m[key(p.url)]={due:due,total:total,nw:anyNw?nw:null};
     });
     return m;
   }
@@ -1488,6 +1513,14 @@ render();
     let body;
     if(a.kind==='assignment'||a.kind==='signoff'){
       body=`<div class="dlNote">${a.kind==='assignment'?'Written work':'Sign-offs'} — no recall deck behind this one, so ⚡ leaves it to you.</div>`;
+    } else if(isFresh(r)){
+      /* 0% is the correct arithmetic and the wrong sentence — a bar pinned at
+         red-zero next to a countdown reads as "you are already failing" to a
+         student who has simply never opened the app. State the size of the deck
+         and what one session would do instead; the bar returns the moment
+         anything is graded. */
+      body=`<div class="dlBar fresh"><i style="width:0%"></i></div>
+        <div class="dlPct"><b>Not started</b> — ${r.total} question${r.total===1?'':'s'} are enrolled for this and ready when you are.</div>`;
     } else if(r&&r.total>0){
       const pct=Math.round((1-r.due/r.total)*100);
       const cls=pct>=80?'ok':pct>=50?'mid':'low';
@@ -1583,6 +1616,7 @@ render();
       <h3>🗓 What these numbers mean</h3>
       <p class="lead">Every test and exam left this semester, nearest first, with how many days you have. The bar underneath is the only honest readiness signal this page can give — and it's narrower than it looks.</p>
       <div class="hRow"><b>What the bar IS</b><span>Your study apps each know how many questions they hold for a given test, and how many are due for review. The bar is the share <i>not</i> due — what you currently have in good standing.</span></div>
+      <div class="hRow"><b>Before you start</b><span>A deck you've never opened says <b>Not started</b> instead of 0%. Nothing is overdue until you've seen it once — a bar pinned at zero would be telling you you're behind on work you were never given.</span></div>
       <div class="hRow"><b>What the bar is NOT</b><span>It is <b>not</b> how much of the course you've covered. It only knows questions that exist in an app. A row can read 100% off twelve cards for a twelve-week paper — that's exactly why the count is printed next to every bar. Read them together, never the percentage alone.</span></div>
       <div class="hRow"><b>Why the question count moves</b><span>Each app offers up to five decks at a time, so on a day when one topic sits out its questions aren't counted. That's why it says “in play” rather than a fixed total — the denominator is today's offer, not the size of the course.</span></div>
       <div class="hRow"><b>Why a row has no bar</b><span>Essays and sign-offs have nothing to recall. Live drills like MedCalc generate questions on the fly and keep score in the app. And a paper with no study app opened yet has nothing to measure — it says so instead of showing an empty track.</span></div>
