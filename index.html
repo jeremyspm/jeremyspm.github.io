@@ -523,9 +523,14 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .acctbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex:0 0 auto}
 .cloudnote{font-size:12px;color:var(--tx3);margin:0 0 14px;padding:9px 13px;border:1px dashed var(--line2);border-radius:10px;background:var(--card)}
 .cloudnote b{color:var(--acc-tx)}
-.modal{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 62%,transparent);display:flex;align-items:center;justify-content:center;z-index:60;padding:18px;animation:fade .16s ease}
+/* align-items:center + no scroll clipped any sheet taller than the viewport
+   at BOTH ends — the help sheet is ~1180px, so on a phone the × sat above
+   the top of the screen and nothing could scroll to it. margin:auto centres
+   it while it fits, and flexbox zeroes an auto margin once free space goes
+   negative, so a tall sheet pins to the top and the overlay scrolls instead. */
+.modal{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 62%,transparent);display:flex;align-items:flex-start;justify-content:center;z-index:60;padding:18px;overflow-y:auto;overscroll-behavior:contain;animation:fade .16s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.sheet{background:var(--card);border:1px solid var(--line2);border-radius:16px;max-width:400px;width:100%;padding:22px;box-shadow:var(--shadow)}
+.sheet{background:var(--card);border:1px solid var(--line2);border-radius:16px;max-width:400px;width:100%;padding:22px;box-shadow:var(--shadow);margin:auto}
 .sheet h3{margin:0 0 4px;font-size:18px}
 .sheet .lead{margin:0 0 16px;font-size:13px;color:var(--tx2);line-height:1.5}
 .sheet label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);margin:0 0 5px}
@@ -538,7 +543,12 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .sheet .msg{font-size:13px;border-radius:9px;padding:9px 12px;margin-bottom:12px;line-height:1.45}
 .sheet .msg.err{background:color-mix(in srgb,var(--bad) 13%,transparent);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent);color:var(--bad)}
 .sheet .msg.ok{background:color-mix(in srgb,var(--good) 12%,transparent);border:1px solid color-mix(in srgb,var(--good) 40%,transparent);color:var(--good)}
-.sheet .x{float:right;font-size:19px;color:var(--tx3);padding:0 4px;margin:-4px -4px 0 0}
+/* The × is a float, so the <h3> that follows it lays out UNDERNEATH it —
+   and .sheet>* below gives every sibling z-index:3, so the heading painted
+   on top of the close button and swallowed the click. Keep it above them. */
+.sheet .x{float:right;font-size:19px;color:var(--tx3);padding:0 4px;margin:-4px -4px 0 0;
+  position:relative;z-index:6;cursor:pointer}
+.sheet .x:hover{color:var(--tx)}
 /* ── ⚡ MODE CHOOSER + FOCUSED PICKER ──────────────────────────────────
    Tapping ⚡ used to deal a session immediately. It now asks one question
    first, because the two things a student wants from a study button are
@@ -566,7 +576,7 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 /* .sheet.wide is a flex column, and a float has no meaning on a flex item — the
    × ended up above the title instead of beside it. Pin it instead. */
 .sheet.wide{position:relative}
-.sheet.wide>.x{position:absolute;right:16px;top:14px;float:none;margin:0;z-index:2}
+.sheet.wide>.x{position:absolute;right:16px;top:14px;float:none;margin:0;z-index:6}
 .sheet.wide>h3{padding-right:26px}
 .stPickGrp{margin:0 0 15px}
 .stPickGrp>label{display:flex;align-items:baseline;gap:8px;font-size:10.5px;font-weight:800;
