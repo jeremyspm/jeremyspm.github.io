@@ -143,13 +143,9 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .pbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s var(--eze)}
 .paper.open .pbody{grid-template-rows:1fr}
 .pinner{overflow:hidden;contain:layout;min-height:0}
-.pinner>.pad{padding:2px 16px 16px}
+.pinner>.pad{padding:8px 16px 16px}
 .paper.open .pinner .stg{animation:rise .42s var(--ezo) both;animation-delay:calc(var(--i,0)*45ms)}
 @keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.plab{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);
-  margin:10px 0 7px;display:flex;align-items:center;gap:8px}
-.plab::after{content:"";flex:1;height:1px;background:var(--line)}
-
 .tool{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border-radius:12px;
   background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;
   transition:border-color .16s var(--ez),transform .12s var(--ez)}
@@ -172,18 +168,8 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .none b{color:var(--tx);font-weight:650;display:block;margin-bottom:3px;font-size:12.5px}
 .none .go{color:var(--acc-tx);font-weight:700;font-size:12px;display:inline-flex;align-items:center;
   gap:4px;margin-top:4px;min-height:38px}
-.as{display:flex;align-items:flex-start;gap:12px;width:100%;padding:9px 2px}
-.as+.as{border-top:1px solid var(--line)}
-.as .d{flex:0 0 auto;width:52px;padding-top:1px}
-.as .d b{display:block;font-size:12.5px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}
-.as .d span{display:block;font-size:10px;color:var(--tx2);margin-top:2px;font-variant-numeric:tabular-nums}
-.as .t{flex:1;min-width:0}
-.as .t b{display:block;font-size:13px;font-weight:600;line-height:1.35}
-.as .t .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
-.as .t .rel{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--acc-tx);
-  font-weight:650;margin-top:4px;min-height:38px;text-decoration:none}
-.as .t .rel svg{width:13px;height:13px}
-.as.soon .d b{color:var(--hue,var(--acc-tx))}
+/* (the per-paper assessment rows lived here — dates now belong to the hero
+   countdown and the 🗓 sheet only, so a paper body is nothing but its tools) */
 .kit{display:flex;flex-direction:column;gap:8px}
 .kit .tool{padding:13px 14px;border-radius:18px}
 .kit .tool+.tool{margin-top:0}
@@ -867,6 +853,9 @@ html[data-theme="light"]{
    ║          past three lines is clamped away and simply never read.   ║
    ║   url  — full https URL of the live app                            ║
    ║   badge (optional) — 'new' | 'beta'                                ║
+   ║   paper (optional) — a deadlines.js paper key (hs2/inp/pharm).      ║
+   ║          Files the tool under that paper instead of the Toolkit,    ║
+   ║          for a cross-semester tool that one paper actually sits.    ║
    ║ Then commit + push this repo. That's the whole integration.        ║
    ╚════════════════════════════════════════════════════════════════════╝ */
 /* ===== PROJECTS START ===== */
@@ -907,9 +896,10 @@ const PROJECTS=[
   // links do not 404, but is no longer advertised anywhere in the hub.
   // {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
   // --- clinical skills (not tied to one semester) ---
-  // `practises` links a tool to the sitting it prepares you for — that link is
-  // how MedCalc reaches Pharmacology, a paper with no tool of its own.
-  {cat:'skills', ic:'i-calc', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta', practises:'pharm-medcalc'},
+  // `practises` still links a tool to the sitting it prepares you for (the ⚡
+  // engine reads it); `paper` is what puts MedCalc under Introduction to
+  // Pharmacology on the page — the paper it sits for — instead of the Toolkit.
+  {cat:'skills', paper:'pharm', ic:'i-calc', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta', practises:'pharm-medcalc'},
   // --- career ---
   {cat:'career', ic:'i-flag', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
   {cat:'career', ic:'i-clip', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
@@ -956,6 +946,12 @@ function setDue(map){ DUE=map||{}; render(); }
    deadlines, so a paper with no tool yet (two of the three) is still worth
    opening. Hue per paper is bn2-brief's, so the two apps agree on colour. ── */
 const CAT_PAPER={'sem2-hs2':'hs2','sem2-nursing':'inp','sem2-pharm':'pharm'};
+/* A tool sits under a paper by its category — or by an explicit `paper` field,
+   which is how a cross-semester tool (MedCalc, a clinical skill that isn't
+   owned by one paper) is filed under the paper that actually sits it. An
+   explicit paper wins, and takes the tool out of the Toolkit so it appears
+   exactly once on the page. */
+const paperOf=t=>t.paper||CAT_PAPER[t.cat]||'';
 const PAPER_HUE={hs2:'--hs', inp:'--inp', pharm:'--ph'};
 const PAPER_IC ={hs2:'i-pulse', inp:'i-book', pharm:'i-flask'};
 const hueVars=k=>PAPER_HUE[k]?`--hue:var(${PAPER_HUE[k]});--hue-wash:var(${PAPER_HUE[k]}-wash)`:'';
@@ -972,7 +968,6 @@ function effDate(a){
 }
 const midn=d=>{const x=new Date(d);x.setHours(0,0,0,0);return x;};
 const dTo=d=>Math.round((midn(d)-midn(new Date()))/86400000);
-const fmtDay=d=>d.getDate()+' '+MONn[d.getMonth()];
 
 function toolHtml(p){
   const d=DUE[key(p.url)];
@@ -983,23 +978,6 @@ function toolHtml(p){
     <span class="t"><b>${esc(p.nm)}</b><span>${esc(p.ds)}</span></span>
     ${tag}<svg class="ic cv"><use href="#i-chev"/></svg></a>`;
 }
-function asHtml(a){
-  const n=dTo(a._d), ch=[];
-  if(a.pts)    ch.push(`<span class="chip num">${a.pts} pts</span>`);
-  if(a.weight) ch.push(`<span class="chip num">${a.weight}%</span>`);
-  if(a.hurdle) ch.push(`<span class="chip must">Must pass</span>`);
-  if(a.window) ch.push(`<span class="chip">Window opens</span>`);
-  if(a.streamDates) ch.push(`<span class="chip">Stream date</span>`);
-  // the tool that directly prepares you for THIS sitting, surfaced in place —
-  // this is how MedCalc reaches Pharmacology, a paper with no tool of its own
-  const rel=PROJECTS.find(t=>t.practises===a.id);
-  return `<div class="as${n<=7?' soon':''}">
-    <span class="d"><b>${esc(fmtDay(a._d))}</b><span>${n===0?'today':n+'d'}</span></span>
-    <span class="t"><b>${esc(a.name)}</b>
-      ${ch.length?`<span class="chips">${ch.join('')}</span>`:''}
-      ${rel?`<a class="rel" href="${rel.url}"><svg class="ic"><use href="#i-arr"/></svg>${esc(rel.nm)} practises this</a>`:''}
-    </span></div>`;
-}
 function render(){
   const D=window.DEADLINES||{papers:{},assessments:[]};
   const live=(D.assessments||[]).filter(a=>!a.done&&effDate(a))
@@ -1008,27 +986,20 @@ function render(){
 
   const papers=Object.keys(D.papers||{}).map(k=>{
     const p=D.papers[k];
-    const tools=PROJECTS.filter(t=>CAT_PAPER[t.cat]===k);
-    const as=live.filter(a=>a.paper===k);
+    const tools=PROJECTS.filter(t=>paperOf(t)===k);
     const due=tools.reduce((s,t)=>{const d=DUE[key(t.url)];return s+((d&&d.due)||0);},0);
-    // the collapsed summary states real counts only — no tool, it says so
+    // the collapsed summary states real counts only — no tool, it says so.
+    // Deadlines are deliberately absent: they live at the top of the page.
     const sum=[tools.length?tools.length+(tools.length===1?' tool':' tools'):'No tools yet'];
     if(due) sum.push(`<em>${due} due</em>`);
-    if(as.length) sum.push(as.length+(as.length===1?' deadline':' deadlines'));
 
     let i=0;
     const body=`<div class="pad">
-      <div class="plab stg" style="--i:${i++}">Tools</div>
       ${tools.length
         ? tools.map(t=>`<div class="stg" style="--i:${i++}">${toolHtml(t)}</div>`).join('')
         : `<div class="none stg" style="--i:${i++}"><b>No tool for this paper yet</b>
              Nothing is being tracked here, so this paper contributes nothing to your ⚡ sessions.
              <button class="go" data-sugg="1">Suggest one →</button></div>`}
-      <div class="plab stg" style="--i:${i++}">Coming up</div>
-      ${as.length
-        ? as.slice(0,4).map(a=>`<div class="stg" style="--i:${i++}">${asHtml(a)}</div>`).join('')
-          +(as.length>4?`<div class="stg" style="--i:${i++}"><span style="display:block;padding:9px 2px;font-size:12px;color:var(--tx2)">${as.length-4} more in this paper</span></div>`:'')
-        : `<div class="none stg" style="--i:${i++}">Nothing left on the calendar for this paper.</div>`}
     </div>`;
 
     return `<section class="paper" data-k="${k}" style="${hueVars(k)}">
@@ -1042,7 +1013,7 @@ function render(){
   }).join('');
 
   // anything not owned by a single paper: the semester schedule, clinical skills, career
-  const kit=PROJECTS.filter(t=>!CAT_PAPER[t.cat]);
+  const kit=PROJECTS.filter(t=>!paperOf(t));
 
   $('#sections').innerHTML=`
     <div class="sechead"><h2>Semester 2</h2><a class="lk" href="bn2-brief.html">Full schedule →</a></div>
