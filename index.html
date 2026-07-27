@@ -116,7 +116,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
    the whole top of the page instead of one control among many. */
 .sbGo{width:100%;display:none;align-items:center;gap:13px;text-align:left;background:var(--acc);color:#fff;
   border-radius:16px;padding:18px 18px;min-height:82px;margin:18px 0 0;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 24px -8px color-mix(in srgb,var(--acc) 55%,transparent);transition:.15s}
+  box-shadow:0 8px 24px -8px color-mix(in srgb,var(--acc) 55%,transparent);transition:.15s}
 .sbGo.on{display:flex}
 .sbGo:hover{filter:brightness(1.06)}
 .sbGo:active{transform:scale(.995)}
@@ -214,7 +214,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 /* ---- the sheet of paper ---- */
 .stCard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;
   min-height:170px;display:flex;flex-direction:column;justify-content:center;
-  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 14px 36px rgba(0,0,0,.16)}
+  box-shadow:0 14px 36px rgba(0,0,0,.16)}
 .stCard.tap{cursor:pointer}
 .stQ{font-size:17.5px;font-weight:700;line-height:1.45;letter-spacing:-.2px}
 .stHint{margin:14px 0 0;font-size:12.5px;color:var(--tx3);line-height:1.5}
@@ -313,7 +313,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 /* ---- the action bar ---- */
 .stActs{margin-top:14px;display:flex;flex-direction:column;gap:9px}
 .stGo{width:100%;background:var(--acc);color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;
-  min-height:52px;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 3px rgba(0,0,0,.22);transition:.13s}
+  min-height:52px;box-shadow:0 1px 3px rgba(0,0,0,.22);transition:.13s}
 .stGo:hover{filter:brightness(1.06)}
 .stGrades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
 .stGrades button{border-radius:12px;padding:11px 3px;min-height:56px;font-weight:800;font-size:12.5px;
@@ -447,9 +447,96 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sheet .msg.err{background:color-mix(in srgb,var(--bad) 13%,transparent);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent);color:var(--bad)}
 .sheet .msg.ok{background:color-mix(in srgb,var(--good) 12%,transparent);border:1px solid color-mix(in srgb,var(--good) 40%,transparent);color:var(--good)}
 .sheet .x{float:right;font-size:19px;color:var(--tx3);padding:0 4px;margin:-4px -4px 0 0}
+/* ── ⚡ MODE CHOOSER + FOCUSED PICKER ──────────────────────────────────
+   Tapping ⚡ used to deal a session immediately. It now asks one question
+   first, because the two things a student wants from a study button are
+   genuinely different jobs: "decide for me" and "I know what I need".
+   Guided is the old behaviour, unchanged and still one tap from here.
+
+   Everything below is opaque (house rule: only surfaces that float over
+   moving content get glass — the .sheet they sit in is the floater). */
+.stMode{display:flex;flex-direction:column;gap:10px;margin:2px 0 4px}
+.stModeB{display:block;width:100%;text-align:left;background:var(--card2);
+  border:1.5px solid var(--line2);border-radius:14px;padding:15px 16px;transition:.14s}
+.stModeB:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.stModeB:disabled{opacity:.5;cursor:default}
+.stModeB .t{display:flex;align-items:center;gap:9px;font-size:15.5px;font-weight:800;letter-spacing:-.2px}
+.stModeB .t .em{font-size:17px}
+.stModeB .why{margin:5px 0 0;font-size:12.5px;color:var(--tx2);line-height:1.5}
+.stModeB .meta{margin:8px 0 0;font-size:11.5px;font-weight:700;color:var(--acc-tx);
+  letter-spacing:.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stModeB.dim .meta{color:var(--tx3);font-weight:600}
+
+/* the focused picker — one scrolling panel, every filter visible at once and a
+   live count at the foot, so each choice shows its consequence immediately */
+.stPick{display:flex;flex-direction:column;gap:0;min-height:0;flex:1;overflow-y:auto;
+  margin:0 -4px;padding:0 4px 2px}
+/* .sheet.wide is a flex column, and a float has no meaning on a flex item — the
+   × ended up above the title instead of beside it. Pin it instead. */
+.sheet.wide{position:relative}
+.sheet.wide>.x{position:absolute;right:16px;top:14px;float:none;margin:0;z-index:2}
+.sheet.wide>h3{padding-right:26px}
+.stPickGrp{margin:0 0 15px}
+.stPickGrp>label{display:flex;align-items:baseline;gap:8px;font-size:10.5px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);margin:0 0 7px}
+.stPickGrp>label .all{margin-left:auto;text-transform:none;letter-spacing:0;font-size:11.5px;
+  font-weight:700;color:var(--acc-tx);padding:2px 0}
+.stPickGrp>label .all:hover{text-decoration:underline}
+/* fm* not st*: the PLAYER already owns `.stChips` (the SAQ "how many points did
+   you get?" number pad) and its `.stChips button{flex:1}` is more specific than a
+   bare `.stChip`, so a picker chip silently inherited flex:1 and got squeezed to
+   94px with its label spilling out. Same prefix, different component = a bug you
+   only find at 375px. */
+.fmChips{display:flex;flex-wrap:wrap;gap:6px}
+/* flex:0 0 auto — chips must never shrink. Without it a long label squeezes its
+   neighbours into unreadable slivers and the row overflows sideways. */
+.fmChip{flex:0 0 auto;max-width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:999px;
+  padding:7px 13px;font-size:12.5px;font-weight:650;color:var(--tx2);transition:.12s;
+  min-height:34px;display:inline-flex;align-items:center;gap:6px}
+.fmChip:hover{border-color:var(--acc);color:var(--tx)}
+.fmChip.on{background:var(--acc-soft);border-color:var(--acc);color:var(--acc-tx);font-weight:750}
+.fmChip .n{font-size:11px;font-weight:700;opacity:.72;font-variant-numeric:tabular-nums}
+.fmChip:disabled{opacity:.38;cursor:default}
+.fmChip:disabled:hover{border-color:var(--line2);color:var(--tx2)}
+/* Topic names are SENTENCES ("Cardiac Physiology — conduction, ECG & output"),
+   not tags. As pills they squashed each other into slivers; as full-width rows
+   they wrap honestly, sort down the page, and give a phone a 44px tap target. */
+.stList{display:flex;flex-direction:column;gap:6px}
+.stRow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;min-height:44px;
+  background:var(--card2);border:1px solid var(--line2);border-radius:11px;padding:9px 12px;transition:.12s}
+.stRow:hover{border-color:var(--acc)}
+.stRow.on{background:var(--acc-soft);border-color:var(--acc)}
+.stRow .box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;line-height:1}
+.stRow.on .box{background:var(--acc);border-color:var(--acc)}
+.stRow .nm{flex:1;min-width:0;font-size:13px;font-weight:650;color:var(--tx);line-height:1.35;overflow-wrap:anywhere}
+.stRow .n{flex:none;font-size:11px;font-weight:700;color:var(--tx3);font-variant-numeric:tabular-nums}
+.stRow.on .n{color:var(--acc-tx)}
+.stPickNote{font-size:11.5px;color:var(--tx3);line-height:1.5;margin:7px 0 0}
+/* the foot: the live count, and the one button that acts on it */
+.stPickFoot{flex:0 0 auto;border-top:1px solid var(--line);padding-top:13px;margin-top:2px}
+.stTally{font-size:12.5px;color:var(--tx2);line-height:1.5;margin:0 0 10px;text-align:center}
+.stTally b{color:var(--tx);font-weight:800}
+.stTally.none{color:var(--hard)}
+/* scope banner — an app telling you its pool is deliberately reduced.
+   Never inferred by the hub: shown only when the app publishes `scope`. */
+.stScope{background:color-mix(in srgb,var(--hard) 11%,transparent);
+  border:1px solid color-mix(in srgb,var(--hard) 34%,transparent);
+  border-radius:10px;padding:9px 12px;margin:0 0 13px;font-size:12px;line-height:1.5;color:var(--tx2)}
+.stScope b{color:var(--tx);display:block;margin-bottom:1px;font-size:12.5px}
+@media(max-width:520px){
+  .stModeB{padding:14px}
+  .stModeB .t{font-size:15px}
+}
+/* A 34px pill is fine under a mouse and too small under a thumb. Rows are
+   already 44px; bring the chips up to match wherever the pointer is coarse. */
+@media (pointer:coarse){
+  .fmChip{min-height:44px;padding:9px 15px}
+}
+
 /* suggestions box (public — works signed out) */
 .acct{margin-left:auto}
-.suggbtn{border:0;background:var(--acc);color:#fff;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:700;letter-spacing:.2px;display:inline-flex;align-items:center;gap:6px;transition:.15s;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 3px rgba(0,0,0,.22);flex:0 0 auto}
+.suggbtn{border:0;background:var(--acc);color:#fff;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:700;letter-spacing:.2px;display:inline-flex;align-items:center;gap:6px;transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.22);flex:0 0 auto}
 .suggbtn:hover{filter:brightness(1.06)}
 .sheet.wide{max-width:560px;display:flex;flex-direction:column;max-height:min(84vh,700px)}
 .sugg-form textarea{width:100%;background:var(--card2);border:1.5px solid var(--line2);border-radius:10px;padding:11px 13px;color:var(--tx);font:inherit;font-size:14px;outline:none;resize:vertical;min-height:62px;margin-bottom:9px}
@@ -488,24 +575,36 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
    material, and an in-flow panel is not glass.
    Delete this block to return to the flat hub.               */
 
+/* ── NO WHITE LIGHT (2026-07-27, Jeremy's call) ───────────────────────
+   Giga's glass ships a SPECULAR RIM (a white/blue/amber gradient painted
+   around the border) and a SHEEN (a white wash down the top third + a
+   diagonal streak). Both are removed here, in BOTH themes, along with
+   every `inset 0 1px … rgba(255,255,255,…)` top-edge highlight elsewhere
+   in this file. They simulate a light source the page does not have, and
+   on the dark ground they read as a grey-white smear across the top of
+   whatever they touch — most visibly the modal sheet.
+
+   What survives is the part of the material that is actually doing work:
+   the blur, the tint, the drop shadow and a flat hairline. A modal still
+   reads as floating because the page genuinely blurs behind it — not
+   because it has been painted to look wet.
+
+   DO NOT reintroduce these by porting a fresh copy of studio.css. If a
+   surface needs to separate from its background, give it --gl-sep (a
+   flat hairline) or more shadow — never a white gradient. */
+
 :root{
   --gl-tint:rgba(40,40,46,.64); --gl-tint-strong:rgba(38,38,42,.88);
   --gl-blur:14px; --gl-sat:200%; --gl-bright:1.06; --gl-contrast:1.02;
-  --gl-specular:linear-gradient(135deg,rgba(255,255,255,.44) 0%,rgba(160,195,255,.21) 8%,rgba(255,255,255,.11) 19%,rgba(255,255,255,0) 46%,rgba(255,255,255,.05) 66%,rgba(255,214,168,.13) 89%,rgba(255,255,255,.23) 100%);
-  --gl-sheen:linear-gradient(180deg,rgba(255,255,255,.09),transparent 38%),linear-gradient(118deg,transparent 34%,rgba(255,255,255,.06) 45%,transparent 54%);
-  --gl-shadow:0 20px 46px -12px rgba(0,0,0,.58),0 4px 14px rgba(0,0,0,.4),inset 0 1px 1px rgba(255,255,255,.13),inset 0 -12px 26px rgba(0,0,0,.16);
+  --gl-shadow:0 20px 46px -12px rgba(0,0,0,.58),0 4px 14px rgba(0,0,0,.4),inset 0 -12px 26px rgba(0,0,0,.16);
   --gl-sep:rgba(255,255,255,.1);
-  /* cut-down rim for controls that can't carry the ::before/::after pair
-     (form fields, and buttons whose label is a bare text node) */
-  --gl-lite-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 1px 3px rgba(0,0,0,.35);
+  --gl-lite-shadow:0 1px 3px rgba(0,0,0,.35);
 }
 html[data-theme="light"]{
   --gl-tint:rgba(246,247,250,.58); --gl-tint-strong:rgba(248,248,250,.88);
-  --gl-specular:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(194,216,255,.42) 8%,rgba(255,255,255,.3) 19%,rgba(255,255,255,0) 46%,rgba(255,255,255,.1) 66%,rgba(255,228,196,.3) 89%,rgba(255,255,255,.7) 100%);
-  --gl-sheen:linear-gradient(180deg,rgba(255,255,255,.5),transparent 38%),linear-gradient(118deg,transparent 33%,rgba(255,255,255,.17) 45%,transparent 54%);
-  --gl-shadow:0 16px 40px -12px rgba(20,24,40,.38),0 4px 12px rgba(20,24,40,.14),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -12px 26px rgba(20,24,40,.06);
+  --gl-shadow:0 16px 40px -12px rgba(20,24,40,.38),0 4px 12px rgba(20,24,40,.14),inset 0 -12px 26px rgba(20,24,40,.06);
   --gl-sep:rgba(0,0,0,.1);
-  --gl-lite-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 1px 3px rgba(20,24,40,.1);
+  --gl-lite-shadow:0 1px 3px rgba(20,24,40,.1);
 }
 
 /* ── OPAQUE CONTENT SURFACES ─────────────────────────────────────────
@@ -517,13 +616,19 @@ html[data-theme="light"]{
   padding:18px 20px;box-shadow:none;transition:.15s}
 .tile:hover{transform:translateY(-2px);border-color:var(--line2);box-shadow:none}
 .tile .nm{font-size:16px;font-weight:750;letter-spacing:-.01em;line-height:1.28}
-.tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.5}
+/* A tile advertises; it does not brief. `ds` is ONE short sentence — the
+   clamp is a structural backstop so a future paragraph can never blow a
+   tile out to 400px again (which is what made the grid look ragged). If a
+   description needs three lines to make sense, the app needs a better
+   one-liner, not a taller tile. */
+.tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .tile .tiledate{font-size:10.5px;color:var(--tx3)}
 
 /* The 🗓 calendar is a reading surface, so it is a sheet of paper, not
    glass — this is what kills the white rim/sheen that was fighting it. */
 .dl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,var(--shadow)}
+  box-shadow:var(--shadow)}
 .dlBar{background:color-mix(in srgb,var(--tx) 12%,transparent)}
 .dlQ{background:var(--card2);border:1px solid var(--line2)}
 .dlQ:hover{border-color:var(--acc);color:var(--tx)}
@@ -547,15 +652,12 @@ html[data-theme="light"]{
 /* ── THE GLASS ───────────────────────────────────────────────────────
    What is left after the rule at the top of this block: the two surfaces
    that genuinely float over live, moving content. */
-.sheet{position:relative;isolation:isolate;border:0;background:var(--gl-tint-strong);
+/* A flat hairline where the specular rim used to be. No ::before/::after —
+   the two pseudo-elements that carried the rim and the sheen are gone. */
+.sheet{position:relative;isolation:isolate;border:1px solid var(--gl-sep);background:var(--gl-tint-strong);
   backdrop-filter:blur(var(--gl-blur)) saturate(var(--gl-sat)) brightness(var(--gl-bright)) contrast(var(--gl-contrast));
   -webkit-backdrop-filter:blur(var(--gl-blur)) saturate(var(--gl-sat)) brightness(var(--gl-bright)) contrast(var(--gl-contrast));
   box-shadow:var(--gl-shadow)}
-.sheet::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:2;
-  background:var(--gl-specular);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
-  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
-.sheet::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;background:var(--gl-sheen)}
 .sheet>*{position:relative;z-index:3}
 /* Chromatic refraction (studio.css:60-63) — the page really is sliding
    behind this one, so there is something to bend. Chromium only. */
@@ -655,7 +757,9 @@ html[data-theme="light"]{
    ║ ADDING A PROJECT = add ONE object to PROJECTS below. Fields:       ║
    ║   cat  — must match a CATEGORIES id                                ║
    ║   ic   — emoji icon      nm — display name                        ║
-   ║   ds   — one-line description (what it is + what it's for)         ║
+   ║   ds   — ONE short sentence. Not a feature list, not a paragraph.  ║
+   ║          The tile sells the app; the app explains itself. Anything ║
+   ║          past three lines is clamped away and simply never read.   ║
    ║   url  — full https URL of the live app                            ║
    ║   badge (optional) — 'new' | 'beta'                                ║
    ║ Then commit + push this repo. That's the whole integration.        ║
@@ -679,7 +783,7 @@ const CATEGORIES=[
 ];
 const PROJECTS=[
   // --- Semester 2 → whole-semester overview (sits directly under Semester 2, above the papers) ---
-  {cat:'sem2', ic:'🗺️', nm:'Semester 2 · Master Schedule & Guide', ds:'The whole semester, mapped and decoded: a week-by-week timeline of every class, lab, test and exam across all three papers — with topics, collision warnings, corrected dates and tactics for tackling it wisely.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new', date:'22/07/2026'},
+  {cat:'sem2', ic:'🗺️', nm:'Semester 2 · Master Schedule & Guide', ds:'Every class, lab, test and exam across all three papers, week by week.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new', date:'22/07/2026'},
   // --- Semester 2 → Introduction to Pharmacology ---
   // LEGACY 2026-07-27 (Jeremy's call). Still live at its URL so existing links and
   // bookmarks do not 404 — just no longer advertised here, because a replacement
@@ -688,7 +792,7 @@ const PROJECTS=[
   // delete it only once the replacement ships and takes over the category.
   // {cat:'sem2-pharm', ic:'💊', nm:'Pharmacology · Pre-Class Deep Dive', ds:'Introduction to Pharmacology (61985). Orient → see it → self-test across all ten modules: concepts & sourcing, PK/PD, med calcs, the 8 Rights, lifespan, legal/ethical & drug development.', url:'https://jeremyspm.github.io/pharmacology-hub/', badge:'new', date:'22/07/2026'},
   // --- Semester 2 → Health Science 2 ---
-  {cat:'sem2-hs2', ic:'🫀', nm:'Module 1', ds:'The whole of Module 1 (722.541) rebuilt from Canvas: 10 topics across cardiovascular, respiratory & lymphatic, each with a Giga-style metro mindmap you can tap through concept by concept, 214 authored relations, 86 marked questions, 81 recognition checks and all 5 case studies. Every answer names the Canvas file it came from. Feeds ⚡ chain cards that hide more of the pathway as you earn it.', url:'https://jeremyspm.github.io/hs2-module1/', badge:'new', date:'27/07/2026'},
+  {cat:'sem2-hs2', ic:'🫀', nm:'Module 1', ds:'Cardiovascular, respiratory and lymphatic — 10 topics, each as a map you can drill.', url:'https://jeremyspm.github.io/hs2-module1/', badge:'new', date:'27/07/2026'},
   // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by the one above:
   //   • module1-study-hub (20/07) — the original pre-class deep dive, Q&A Test layer.
   //   • hs2-module1 v1 (27/07)    — first relations-first cut, 6 topics, 111 relations.
@@ -697,10 +801,10 @@ const PROJECTS=[
   // links do not 404, but is no longer advertised anywhere in the hub.
   // {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
   // --- clinical skills (not tied to one semester) ---
-  {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
+  {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
   // --- career ---
-  {cat:'career', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa: every stage, requirement, funding scheme and decision point, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
-  {cat:'career', ic:'🚑', nm:'ED Nurse Checklist', ds:'2,341-item tickable competency map from Semester 1-2 student to competent ED nurse, staged and searchable.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
+  {cat:'career', ic:'🎓', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
+  {cat:'career', ic:'🚑', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
   // ── Dev tool — kept INTERNAL, not shown on the hub (2026-07-20). Still live at its URL for building
   //    packs, but future study hubs are meant to be bespoke/polished per topic, not one-size-fits-all. ──
   // {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
@@ -1008,6 +1112,96 @@ render('');
     D.assessments.forEach(a=>{ const t=nextDate(a); if(t!=null&&(!best||t<best.t)) best={t,a}; });
     return best;
   }
+
+  /* ══════════════ FOCUSED MODE ══════════════════════════════════════════════
+     Guided answers "what should I do?". Focused answers "let me drill THIS".
+     Both play the identical player and write grades back identically — the only
+     difference is who chose the queue. That matters: a focused session must not
+     become a second, weaker SRS that quietly forgets to tell the owning app.
+
+     THE ONE HONESTY RULE HERE. Guided may silently drop an app whose deadlines
+     have passed, because it is ranking. Focused is a menu, and a menu that hides
+     items is a broken menu — so the catalogue lists everything on the bus and
+     labels what it cannot rank, rather than omitting it. */
+  const TYPE_LABEL={chain:'Pathways',saq:'Written',mcq:'Recognition'};
+  const TYPE_WHY={chain:'rebuild a pathway from memory',saq:'say the marking points aloud',
+                  mcq:'spot the right answer'};
+  // paper of an offer, ignoring dates — scoreOffer's paper is date-gated and
+  // returns null once everything it feeds is in the past.
+  function offerPaper(o){
+    for(const id of (o.assess||[])){
+      const a=D.assessments.find(x=>x.id===id);
+      if(a) return a.paper;
+    }
+    return null;
+  }
+  /* Everything currently bid, grouped paper → app → topic. Built fresh at open
+     time, never cached: an app republishes its pulse on every visit, so a cached
+     catalogue is a list of yesterday's questions. */
+  function catalog(){
+    const played=plays(), now=Date.now(), papers={};
+    pulses().forEach(p=>{
+      (p.offers||[]).forEach(o=>{
+        const pid=offerPaper(o)||'_other';
+        const P=papers[pid]||(papers[pid]={id:pid,
+          name:(D.papers[pid]&&D.papers[pid].name)||'Other', apps:{}});
+        const A=P.apps[p.app]||(P.apps[p.app]={app:p.app, name:p.name||p.app, url:p.url,
+          ladder:p.ladder||null, scope:p.scope||null, topics:[], links:[]});
+        if(o.kind==='link'&&o.deep!=null){
+          A.links.push({label:o.label||A.name, url:p.url+o.deep,
+            minutes:Math.max(3,Math.min(o.minutes||6,10))});
+          return;
+        }
+        const cs=(o.cards||[]).filter(cardOK);
+        if(!cs.length) return;
+        // "fresh" = not nailed in the last 12h. Shown, but sorted behind, so a
+        // topic never vanishes from the menu just because you did it this morning.
+        const byType={};
+        cs.forEach(c=>{ (byType[c.type]=byType[c.type]||[]).push(c); });
+        A.topics.push({ id:o.topic||o.label, label:o.label||A.name, cards:cs, byType:byType,
+          counts:o.counts||null,
+          fresh:cs.filter(c=>{ const h=played[p.app+':'+c.id]; return !(h&&h.r>=2&&now-h.ts<12*HOUR); }).length });
+      });
+    });
+    // drop papers that ended up with nothing playable
+    Object.keys(papers).forEach(k=>{
+      const P=papers[k];
+      Object.keys(P.apps).forEach(a=>{
+        if(!P.apps[a].topics.length&&!P.apps[a].links.length) delete P.apps[a];
+      });
+      if(!Object.keys(P.apps).length) delete papers[k];
+    });
+    return papers;
+  }
+  /* Pack a chosen set of cards to the budget. Deliberately NOT buildPlan: there
+     is no scoring, no paper cap and no round-robin, because the player has
+     already said what they want — imposing a 60% paper cap on a queue somebody
+     hand-picked would be the app overruling them. Order is still due-first, so a
+     short session inside a big selection is the most useful slice of it. */
+  function buildFocused(sel,budget){
+    const played=plays(), now=Date.now(), pool=[];
+    sel.topics.forEach(t=>{
+      t.cards.forEach(c=>{
+        if(!sel.types.has(c.type)) return;
+        const h=played[sel.app.app+':'+c.id];
+        pool.push({ app:sel.app.app, appName:sel.app.name, label:t.label, topic:t.id,
+          paper:sel.paperId, score:0, ladder:sel.app.ladder, card:c,
+          _miss:(h&&h.r===0)?0:1, _done:(h&&h.r>=2&&now-h.ts<12*HOUR)?1:0 });
+      });
+    });
+    // recent misses first, then everything unseen, then what you already nailed today
+    pool.sort((a,b)=>(a._miss-b._miss)||(a._done-b._done));
+    const queue=[]; let used=0;
+    for(const leg of pool){
+      const m=estMin(leg.card);
+      if(used+m>budget+0.3) break;
+      if(queue.length>=40) break;
+      used+=m; queue.push(leg);
+    }
+    return { v:2, focused:true, builtTs:Date.now(), budget, estMin:Math.round(used*10)/10,
+      nCards:queue.length, queue, outro:[], available:pool.length,
+      hub:location.origin+location.pathname };
+  }
   // plain-English "what is this?" — works for a stranger and for future-admin-me
   function showHelp(){
     const n=nearest();
@@ -1015,8 +1209,9 @@ render('');
     m.innerHTML=`<div class="sheet">
       <span class="x" id="hX">×</span>
       <h3>⚡ What the Study button does</h3>
-      <p class="lead">One tap deals a short session, right here — the highest-value questions pulled from all your study apps. You produce the answer first, then reveal and grade yourself; questions you miss come back sooner. No choosing, no browsing, no reading assignments.</p>
-      <div class="hRow"><b>How it decides</b><span>Every upcoming test &amp; exam is scored by <i>how soon it's due</i> × <i>how much it's worth</i> × <i>whether it's a must-pass</i> — then each app offers up the questions you're closest to forgetting.</span></div>
+      <p class="lead">A short session, right here — real questions pulled from your study apps. You produce the answer first, then reveal and grade yourself; questions you miss come back sooner. No browsing, no reading assignments.</p>
+      <div class="hRow"><b>Guided or Focused</b><span>Tapping ⚡ asks which you want. <b>Guided</b> chooses for you and is the right default. <b>Focused</b> lets you pick the paper, the study hub, the topics and the question type — for when you already know what you're revising. Same questions, same grading, same write-back; the only difference is who picks.</span></div>
+      <div class="hRow"><b>How Guided decides</b><span>Every upcoming test &amp; exam is scored by <i>how soon it's due</i> × <i>how much it's worth</i> × <i>whether it's a must-pass</i> — then each app offers up the questions you're closest to forgetting.</span></div>
       <div class="hRow"><b>Pathway cards get harder</b><span>Some cards are a whole pathway with pieces missing, and you type them back in. The better you know one, the more of it gets hidden next time — from a single blank, up to rebuilding the lot from the first concept alone. The <b>L1–L4</b> dots on the card show where you're at.</span></div>
       <div class="hRow"><b>What you earn</b><span>After a grade the card holds for a moment and tells you the truth: <i>when this comes back</i> and <i>whether it will hide more next time</i>. Those numbers come from the app's own review schedule — if an app hasn't published one, you'll see no dials rather than a made-up figure.</span></div>
       <div class="hRow"><b>Where your answers go</b><span>Every self-grade flows back into the app the question came from, so its own scheduling gets smarter too.</span></div>
@@ -1251,7 +1446,7 @@ render('');
     }
     btn.classList.add('on');
   }
-  function start(){
+  function startGuided(){
     plan=buildPlan(budget); jset(PK,plan);          // rebuild fresh at press time
     if(plan.queue.length){ openPlayer(plan); }
     else if(plan.outro.length){
@@ -1259,10 +1454,173 @@ render('');
       location.href=addQ(plan.outro[0].url,'sb=out');
     } else showHelp();                        // idle: explain, don't silently jump elsewhere
   }
+
+  /* ---------- the chooser: the one question ⚡ asks before it deals ---------- */
+  function showChooser(){
+    const cat=catalog(), papers=Object.values(cat);
+    const nApps=papers.reduce((s,p)=>s+Object.keys(p.apps).length,0);
+    const guided=buildPlan(budget);
+    const canGuide=guided.queue.length||guided.outro.length;
+    const m=document.createElement('div'); m.className='modal';
+    const gMeta=guided.queue.length
+      ? '~'+Math.round(guided.estMin)+' min · '+guided.nCards+' cards · '
+        +[...new Set(guided.queue.map(l=>l.label))].length+' topics'
+      : guided.outro.length ? guided.outro[0].minutes+' min drill · '+guided.outro[0].label
+      : 'nothing bid yet — tap ? to see why';
+    m.innerHTML=`<div class="sheet">
+      <span class="x" data-a="x">×</span>
+      <h3>⚡ Study</h3>
+      <p class="lead">Two ways in. Both use the same questions and both feed your grades back to the app they came from.</p>
+      <div class="stMode">
+        <button class="stModeB${canGuide?'':' dim'}" data-a="guided"${canGuide?'':' disabled'}>
+          <span class="t"><span class="em">🎯</span>Guided</span>
+          <p class="why">Don't choose — we pick what you're closest to forgetting, weighted by what's due soonest and worth most.</p>
+          <p class="meta">${esc(gMeta)}</p>
+        </button>
+        <button class="stModeB${nApps?'':' dim'}" data-a="focused"${nApps?'':' disabled'}>
+          <span class="t"><span class="em">🎚️</span>Focused</span>
+          <p class="why">You already know what you need. Pick the paper, the study hub, the topics and the kind of question.</p>
+          <p class="meta">${nApps?esc(papers.map(p=>p.name).join(' · ')):'no study apps connected yet'}</p>
+        </button>
+      </div>
+      <p class="fineprint" style="margin:14px 0 0;font-size:11px;line-height:1.5;opacity:.55;text-align:center">
+        Budget is <b>${budget}′</b> — change it on the ⚡ bar. <a data-a="help" style="color:var(--acc-tx);cursor:pointer;font-weight:700">What is all this?</a></p>
+    </div>`;
+    const close=()=>m.remove();
+    m.addEventListener('click',e=>{
+      if(e.target===m) return close();
+      const el=e.target.closest('[data-a]'); if(!el) return;
+      const a=el.dataset.a;
+      if(a==='x') close();
+      else if(a==='help'){ close(); showHelp(); }
+      else if(a==='guided'){ close(); startGuided(); }
+      else if(a==='focused'){ close(); showFocused(cat); }
+    });
+    document.body.appendChild(m);
+  }
+
+  /* ---------- the focused picker ----------------------------------------- */
+  function showFocused(cat){
+    /* Open on the paper with the most CARDS, not on whichever key landed first.
+       A paper whose only enrolled app is a live drill (MedCalc) has nothing to
+       pick, and opening there makes the picker look broken on arrival. */
+    const nCardsOf=P=>Object.values(P.apps)
+      .reduce((s,a)=>s+a.topics.reduce((n,t)=>n+t.cards.length,0),0);
+    const papers=Object.values(cat).sort((a,b)=>nCardsOf(b)-nCardsOf(a));
+    let paperId=papers[0]&&papers[0].id, appId=null, tsel=new Set(), types=new Set();
+    const m=document.createElement('div'); m.className='modal';
+    const sheet=document.createElement('div'); sheet.className='sheet wide';
+    m.appendChild(sheet); document.body.appendChild(m);
+    const close=()=>m.remove();
+
+    const curPaper=()=>cat[paperId];
+    const curApp=()=>{ const P=curPaper(); if(!P) return null;
+      const keys=Object.keys(P.apps); if(!keys.length) return null;
+      if(!appId||!P.apps[appId]) appId=keys[0];
+      return P.apps[appId]; };
+    // when the app changes, reset the selection to "everything it offers"
+    function resetSel(){
+      const A=curApp(); tsel=new Set(); types=new Set();
+      if(!A) return;
+      A.topics.forEach(t=>{ tsel.add(t.id); Object.keys(t.byType).forEach(k=>types.add(k)); });
+    }
+    resetSel();
+
+    function paint(){
+      const P=curPaper(), A=curApp();
+      const chosen=A?A.topics.filter(t=>tsel.has(t.id)):[];
+      const plan=A?buildFocused({app:A,paperId:paperId,topics:chosen,types:types},budget)
+                 :{nCards:0,estMin:0,available:0,queue:[]};
+      // per-type availability across the CHOSEN topics, so a chip can be honest
+      const avail={};
+      chosen.forEach(t=>Object.keys(t.byType).forEach(k=>{ avail[k]=(avail[k]||0)+t.byType[k].length; }));
+      const typeKeys=[...new Set(A?A.topics.flatMap(t=>Object.keys(t.byType)):[])]
+        .sort((a,b)=>['chain','saq','mcq'].indexOf(a)-['chain','saq','mcq'].indexOf(b));
+
+      sheet.innerHTML=`
+      <span class="x" data-a="x">×</span>
+      <h3>🎚️ Focused</h3>
+      <p class="lead">Drill exactly what you choose. Grades still flow back to the app the questions came from.</p>
+      <div class="stPick">
+        ${papers.length>1?`<div class="stPickGrp"><label>Paper</label><div class="fmChips">${
+          papers.map(p=>`<button class="fmChip${p.id===paperId?' on':''}" data-a="paper" data-v="${escA(p.id)}">${esc(p.name)}</button>`).join('')
+        }</div></div>`:''}
+        ${P&&Object.keys(P.apps).length>1?`<div class="stPickGrp"><label>Study hub</label><div class="fmChips">${
+          Object.values(P.apps).map(a=>`<button class="fmChip${a.app===appId?' on':''}" data-a="app" data-v="${escA(a.app)}">${esc(a.name)}</button>`).join('')
+        }</div></div>`:''}
+        ${A&&A.scope?`<div class="stScope"><b>${esc(A.scope.label)}</b>${
+          A.scope.inPlay!=null&&A.scope.total!=null
+            ? `${A.scope.inPlay} of ${A.scope.total} in play — the rest isn't bid while ${esc(A.name)} is in this mode.`
+            : 'This app is bidding a reduced pool.'}</div>`:''}
+        ${A&&A.topics.length?`<div class="stPickGrp">
+          <label>Topics — ${chosen.length} of ${A.topics.length}<button class="all" data-a="tall">${
+            chosen.length===A.topics.length?'Clear all':'Select all'}</button></label>
+          <div class="stList">${A.topics.map(t=>`
+            <button class="stRow${tsel.has(t.id)?' on':''}" data-a="topic" data-v="${escA(t.id)}">
+              <span class="box">${tsel.has(t.id)?'✓':''}</span>
+              <span class="nm">${esc(t.label)}</span>
+              <span class="n">${t.cards.length}</span>
+            </button>`).join('')}</div>
+        </div>`:''}
+        ${typeKeys.length?`<div class="stPickGrp">
+          <label>Question type</label>
+          <div class="fmChips">${typeKeys.map(k=>{
+            const n=avail[k]||0;
+            return `<button class="fmChip${types.has(k)?' on':''}" data-a="type" data-v="${k}"${n?'':' disabled'}>${
+              esc(TYPE_LABEL[k]||k)}<span class="n">${n}</span></button>`;
+          }).join('')}</div>
+          <p class="stPickNote">${typeKeys.map(k=>esc(TYPE_LABEL[k]||k)+' — '+esc(TYPE_WHY[k]||'')).join(' · ')}</p>
+        </div>`:''}
+        ${A&&A.links.length?`<div class="stPickGrp"><label>Live drills</label><div class="fmChips">${
+          A.links.map((l,i)=>`<button class="fmChip" data-a="link" data-v="${i}">${esc(l.label)} ↗<span class="n">${l.minutes}′</span></button>`).join('')
+        }</div><p class="stPickNote">These open the app itself — it keeps its own score, so nothing comes back here.</p></div>`:''}
+      </div>
+      <div class="stPickFoot">
+        <p class="stTally${plan.nCards?'':' none'}">${
+          plan.nCards
+            ? `<b>${plan.nCards} card${plan.nCards===1?'':'s'}</b> · about <b>${Math.round(plan.estMin)} min</b>`
+              +(plan.available>plan.nCards?` — ${plan.available-plan.nCards} more wait for the next round at this ${budget}′ budget`:'')
+            /* A paper can legitimately have no cards at all: its only enrolled app
+               is a live drill that keeps score in-app. Say that, rather than
+               telling someone to pick topics that do not exist. */
+            : !A||!A.topics.length ? (A&&A.links.length
+                ? `${esc(A.name)} doesn't hand questions over — pick one of its drills above.`
+                : 'Nothing bid for this paper yet.')
+            : chosen.length&&types.size ? 'Nothing matches — those topics have no questions of that type.'
+            : 'Pick at least one topic and one question type.'}</p>
+        ${(A&&!A.topics.length)?'':`<button class="go" data-a="start"${plan.nCards?'':' disabled'}>Start${plan.nCards?' · '+plan.nCards+' cards':''}</button>`}
+      </div>`;
+    }
+
+    sheet.addEventListener('click',e=>{
+      const el=e.target.closest('[data-a]'); if(!el||el.disabled) return;
+      const a=el.dataset.a, v=el.dataset.v;
+      if(a==='x') return close();
+      if(a==='paper'){ paperId=v; appId=null; resetSel(); return paint(); }
+      if(a==='app'){ appId=v; resetSel(); return paint(); }
+      if(a==='topic'){ tsel.has(v)?tsel.delete(v):tsel.add(v); return paint(); }
+      if(a==='tall'){ const A=curApp();
+        if(tsel.size===A.topics.length) tsel.clear(); else A.topics.forEach(t=>tsel.add(t.id));
+        return paint(); }
+      if(a==='type'){ types.has(v)?types.delete(v):types.add(v); return paint(); }
+      if(a==='link'){ const A=curApp(), l=A.links[+v];
+        jset(LK,{ts:Date.now(),done:0,correct:0,missed:0,mins:0,weak:null,outro:true,outroDone:false});
+        location.href=addQ(l.url,'sb=out'); return; }
+      if(a==='start'){
+        const A=curApp();
+        const p=buildFocused({app:A,paperId:paperId,topics:A.topics.filter(t=>tsel.has(t.id)),types:types},budget);
+        if(!p.nCards) return;
+        plan=p; jset(PK,p); close(); openPlayer(p);
+      }
+    });
+    m.onclick=e=>{ if(e.target===m) close(); };
+    paint();
+  }
+
   btn.onclick=e=>{
     if(e.target.closest('#sbHelp')){ showHelp(); return; }
     if(e.target.closest('#sbB')){ budget=({10:20,20:40,40:10})[budget]||20; jset(BK,budget); refresh(); return; }
-    start();
+    showChooser();
   };
 
   /* ══════════════ the player — Giga's loop, in vanilla ══════════════════════
