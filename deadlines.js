@@ -81,7 +81,7 @@ window.DEADLINES = {
     { id:'pharm-medcalc', paper:'pharm', kind:'practical', hurdle:true,
       name:'Medication Calculations Test', due:'2026-08-25', time:'0800',
       resits:['2026-09-15','2026-10-07','2026-10-21'],
-      notes:'must-pass · rooms 201 & 301', done:null },
+      notes:'15 Q · 30 min · 100% to pass · 3 resits then fail the course · rooms 201 & 301', done:null },
     { id:'pharm-medadmin', paper:'pharm', kind:'practical', hurdle:true,
       name:'Medication Administration Competence',
       window:{open:'2026-10-05', close:'2026-10-30'}, notes:'max 2 attempts', done:null },
@@ -89,6 +89,6 @@ window.DEADLINES = {
       time:'0900', weight:50, name:'Pharmacology Essay', notes:'APA 7th', done:null },
     { id:'pharm-final', paper:'pharm', kind:'exam', due:'2026-11-06',
       timeUnconf:true, weight:50, name:'Pharmacology Final Exam',
-      notes:'MCQs & SAQs · afternoon', done:null },
+      notes:'80 min · 50 pts · 30 MCQ + SAQs · all modules · afternoon', done:null },
   ],
 };
