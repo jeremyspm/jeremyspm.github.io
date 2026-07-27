@@ -64,3 +64,44 @@ create trigger app_data_touch before insert or update on public.app_data
 --    • Settings → API: copy the Project URL and the anon/public key into
 --      hub/cloud/config.js
 -- ============================================================================
+
+-- ============================================================================
+--  Visit counter (migration "pageview_counter", 2026-07-27)
+--  ALREADY APPLIED to the BN-hub project — kept here as the source of truth.
+--
+--  First-party analytics: the hub counts its own visits instead of shipping a
+--  third-party tracker. No IP, no user-agent, no full referrer, no cross-site
+--  id, no cookie. Client is hub/cloud/count.js.
+-- ============================================================================
+create table if not exists public.pageviews (
+  id      bigint generated always as identity primary key,
+  at      timestamptz not null default now(),
+  site    text not null check (char_length(site) between 1 and 40),
+  path    text not null check (char_length(path) <= 200),
+  ref     text check (ref is null or char_length(ref) <= 80),   -- HOST only, never a full URL
+  visitor text not null check (char_length(visitor) between 8 and 64),
+  session text not null check (char_length(session) between 8 and 64),
+  user_id uuid references auth.users(id) on delete set null,    -- only when signed in
+  device  text check (device in ('phone','tablet','desktop')),
+  tz      text check (tz is null or char_length(tz) <= 60),
+  lang    text check (lang is null or char_length(lang) <= 12)
+);
+
+create index if not exists pageviews_at_idx      on public.pageviews (at desc);
+create index if not exists pageviews_site_at_idx on public.pageviews (site, at desc);
+
+alter table public.pageviews enable row level security;
+
+drop policy if exists "anyone may record a visit" on public.pageviews;
+drop policy if exists "owner reads stats"         on public.pageviews;
+
+-- Anyone may add a visit, but may not attribute it to another account.
+create policy "anyone may record a visit" on public.pageviews
+  for insert to anon, authenticated
+  with check (user_id is null or auth.uid() = user_id);
+
+-- Only the owner can read it back, and only signed in. No update/delete policy,
+-- so rows are append-only from the browser.
+create policy "owner reads stats" on public.pageviews
+  for select to authenticated
+  using (auth.jwt() ->> 'email' = 'jeremyspm1999@gmail.com');

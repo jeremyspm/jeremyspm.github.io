@@ -3,32 +3,44 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="theme-color" content="#0e1420"/>
+<meta name="theme-color" content="#161719"/>
 <!-- shared by link, not meant for search engines — remove this line if you ever want indexing -->
 <meta name="robots" content="noindex"/>
 <title>BN Hub — study tools & apps</title>
 <style>
+/* ── Giga's Liquid theme, lifted whole from gigastudyapp/app/studio/studio.css
+   (:255-269, the `[data-theme="liquid"]` block + its light twin). The NAMES are
+   the house vocabulary; every VALUE is Giga's. Old navy/#4f9dff palette gone —
+   the estate look is neutral surfaces + one indigo accent, in both themes. ── */
 :root{
-  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
-  --line:#27324a; --line2:#33405c;
-  --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
-  --acc:#4f9dff; --acc2:#2f6fd0;
-  --good:#39d98a; --hard:#ffce54; --bad:#ff6b6b;
-  --shadow:0 10px 40px rgba(0,0,0,.45);
-  --r:16px; --maxw:900px;
+  --bg:#161719; --bg2:#161719; --card:#1c1c1f; --card2:#242427;
+  --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.15);
+  --tx:#f2f2f6; --tx2:rgba(255,255,255,.56); --tx3:rgba(255,255,255,.34);
+  --acc:#6366F1; --acc2:#565AE6;      /* Giga --primary / --gl-accent-press (hover = darker) */
+  --acc-tx:#818CF8;                    /* Giga --primary2: the accent as TEXT, legible on the ground */
+  --acc-soft:rgba(99,102,241,.16);
+  --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
+  --shadow:0 14px 36px rgba(0,0,0,.16);
+  --r:14px; --maxw:900px;
 }
 html[data-theme="light"]{
-  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
-  --line:#dbe3ef; --line2:#c7d3e6;
-  --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
-  --acc:#1f6fe0; --acc2:#1657b8;
-  --good:#128a55; --hard:#a9791a; --bad:#c0392b;
-  --shadow:0 8px 30px rgba(30,50,90,.14);
+  --bg:#eceef3; --bg2:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+  --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+  --tx:#16161a; --tx2:rgba(0,0,0,.52); --tx3:rgba(0,0,0,.34);
+  --acc:#4F46E5; --acc2:#4138CF;
+  --acc-tx:#4F46E5;
+  --acc-soft:rgba(79,70,229,.12);
+  /* Giga's light semantics are #28CD41/#FF9500/#FF3B30 — tuned as FILLS.
+     The hub spends them as 10-13px text (NEW/BETA chips, "MUST PASS",
+     the readiness %), where on #eceef3 they land near 2:1. Same hues,
+     deepened to clear 4.5:1; dark keeps Giga's values untouched. */
+  --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+  --shadow:0 14px 36px rgba(20,24,40,.10);
 }
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%}
 body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
-  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;   /* Giga's stack (studio.css:15) */
   -webkit-font-smoothing:antialiased;
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 80px}
@@ -55,85 +67,293 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.45}
 .tile .tiledate{align-self:flex-end;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums;margin-top:2px}
 .tile .badge{position:absolute;top:12px;right:12px;font-size:9.5px;font-weight:800;letter-spacing:.7px;padding:3px 7px;border-radius:6px;text-transform:uppercase}
-.badge.beta{background:rgba(255,206,84,.14);color:var(--hard);border:1px solid rgba(255,206,84,.35)}
-.badge.new{background:rgba(57,217,138,.13);color:var(--good);border:1px solid rgba(57,217,138,.35)}
+/* status chips, Giga's .st-due recipe: token tint + token border, no literals */
+.badge.beta{background:color-mix(in srgb,var(--hard) 14%,transparent);color:var(--hard);border:1px solid color-mix(in srgb,var(--hard) 40%,transparent)}
+.badge.new{background:color-mix(in srgb,var(--good) 13%,transparent);color:var(--good);border:1px solid color-mix(in srgb,var(--good) 40%,transparent)}
 .empty{color:var(--tx3);text-align:center;padding:50px 10px;font-size:14px}
 .soon{color:var(--tx3);font-size:12.5px;padding:11px 15px;border:1px dashed var(--line2);border-radius:12px}
 .soon-sub{padding:9px 13px;font-size:12px}
 .foot{margin-top:44px;text-align:center;font-size:12px;color:var(--tx3);line-height:1.7}
 .foot a{color:var(--tx3)}
-/* ⚡ Study engine button */
-.sbGo{width:100%;display:none;align-items:center;gap:12px;text-align:left;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-radius:14px;padding:13px 16px;min-height:62px;margin:16px 0 0;box-shadow:0 6px 22px rgba(79,157,255,.32);transition:.15s}
+/* Visit-counting disclosure — plain words, no consent wall. */
+.privnote{margin-top:18px;font-size:10.5px;line-height:1.55;color:var(--tx3);opacity:.8;
+  max-width:520px;margin-left:auto;margin-right:auto}
+.privnote button{color:var(--tx3);text-decoration:underline;font-size:10.5px;
+  min-height:38px;padding:0 6px}   /* matches #btnSugg — the hub's tap-target floor */
+.privnote button:hover{color:var(--tx2)}
+.privnote.off{color:var(--good);opacity:1}
+/* Owner-only traffic readout. */
+#statsBox:empty{display:none}
+.stats{margin:20px auto 0;max-width:560px;text-align:left;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:12px;color:var(--tx2)}
+.stats h3{margin:0 0 10px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}
+.stats .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:10px;margin-bottom:12px}
+.stats .n{background:var(--card2);border-radius:9px;padding:9px 10px;min-width:0}
+.stats .n b{display:block;font-size:19px;color:var(--tx);line-height:1.15;font-variant-numeric:tabular-nums}
+.stats .n span{font-size:10px;color:var(--tx3)}
+.stats table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+.stats td{padding:3px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.stats td:last-child{text-align:right;color:var(--tx3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stats .lbl{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--tx3);margin:12px 0 2px}
+.stats .warn{color:var(--hard)}
+/* ⚡ Study engine — THE hero. Giga's .st-cta (studio.css:503-508): ONE tinted
+   prominent action — flat accent, no gradient, no coloured glow. v2 makes it
+   the whole top of the page instead of one control among many. */
+.sbGo{width:100%;display:none;align-items:center;gap:13px;text-align:left;background:var(--acc);color:#fff;
+  border-radius:16px;padding:18px 18px;min-height:82px;margin:18px 0 0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 24px -8px color-mix(in srgb,var(--acc) 55%,transparent);transition:.15s}
 .sbGo.on{display:flex}
-.sbGo:hover{transform:translateY(-1px)}
-.sbGo .zap{font-size:24px;flex:0 0 auto}
+.sbGo:hover{filter:brightness(1.06)}
+.sbGo:active{transform:scale(.995)}
+.sbGo .zap{font-size:27px;flex:0 0 auto;line-height:1}
 .sbGo .txt{flex:1;min-width:0}
-.sbGo .txt b{display:block;font-size:15px;letter-spacing:-.2px}
-.sbGo .txt span{display:block;font-size:12px;opacity:.88;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sbGo .sbBudget{flex:0 0 auto;background:rgba(255,255,255,.18);border-radius:9px;padding:8px 11px;font-size:13px;font-weight:800;min-height:36px;display:inline-flex;align-items:center}
-.sbGo .sbHelp{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);font-size:14px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.sbGo .txt b{display:block;font-size:17px;letter-spacing:-.3px;line-height:1.3}
+.sbGo .txt span{display:block;font-size:12.5px;opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+/* Giga's .st-cta small: a dark inset chip on the accent, not a white one */
+.sbGo .sbBudget{flex:0 0 auto;background:rgba(11,11,16,.2);border-radius:8px;padding:9px 11px;font-size:13px;font-weight:800;min-height:40px;display:inline-flex;align-items:center}
+.sbGo .sbHelp{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:rgba(11,11,16,.2);font-size:14px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
 /* idle = engine has no real plan; must NOT look like a recommendation */
 .sbGo.idle{background:var(--card2);color:var(--tx2);box-shadow:none;border:1px solid var(--line2)}
 .sbGo.idle .zap{opacity:.45;filter:grayscale(1)}
 .sbGo.idle .txt b{color:var(--tx)}
 .sbGo.idle .sbHelp,.sbGo.idle .sbBudget{background:var(--line2);color:var(--tx2)}
 .sbGo.idle .sbBudget{opacity:.55}
+/* ── the ONE deadline line. The other fourteen live in the 🗓 sheet, one tap
+   away — the wall of rows was the single biggest source of arrival-overwhelm. */
+.nx{display:flex;flex-wrap:wrap;align-items:center;gap:11px;width:100%;margin:10px 0 0;padding:12px 15px;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:13px;transition:.15s}
+.nx:hover{border-color:var(--line2)}
+.nx .nxd{flex:0 0 auto;font-size:22px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;min-width:34px}
+.nx .nxd span{font-size:10.5px;font-weight:700;opacity:.7;margin-left:1px}
+.nx .nxt{flex:1;min-width:0}
+.nx .nxt b{display:block;font-size:13.5px;font-weight:700;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* the sub WRAPS rather than clipping — at 375px an ellipsis was eating the
+   date, which is the one thing on this row you actually need */
+.nx .nxt i{display:block;font-style:normal;font-size:11.5px;color:var(--tx3);line-height:1.4;margin-top:2px}
+.nx .nxr{flex:0 0 auto;font-size:11.5px;font-weight:800;color:var(--tx3);white-space:nowrap}
+.nx .nxall{flex:0 0 auto;font-size:16px;color:var(--tx3)}
+.nxbar{height:5px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:8px;width:100%}
+.nxbar i{display:block;height:100%;border-radius:3px}
+.nxbar i.ok{background:var(--good)} .nxbar i.mid{background:var(--hard)} .nxbar i.low{background:var(--bad)}
+/* ── tools: the current semester only, everything else behind one disclosure ── */
+.toolshead{display:flex;align-items:baseline;gap:10px;margin:30px 0 12px}
+.toolshead h2{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx2);margin:0;font-weight:800}
+.toolshead .more{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--acc-tx);white-space:nowrap;min-height:38px;padding:0 2px}
+.toolshead .more:hover{text-decoration:underline}
+.tile .tfoot{display:flex;align-items:center;gap:8px;margin-top:3px}
+.tile .tfoot .tiledate{margin-left:auto;align-self:auto;margin-top:0}
+/* a due-count chip, not a colour: the tile states real state instead of
+   encoding it in a hue nobody can decode (self-explaining-UI rule). */
+.tile .due{font-size:10px;font-weight:800;letter-spacing:.4px;padding:3px 7px;border-radius:6px;
+  background:var(--acc-soft);color:var(--acc-tx);border:1px solid color-mix(in srgb,var(--acc) 32%,transparent);white-space:nowrap}
+#extra{display:none} #extra.on{display:block}
+.search{margin:18px 0 6px;display:none} .search.on{display:block}
 .sheet .hRow{margin:0 0 12px;font-size:13px;line-height:1.5}
 .sheet .hRow b{display:block;color:var(--tx);font-size:13px;margin-bottom:2px}
 .sheet .hRow span{color:var(--tx2)}
 .sheet code{background:var(--card2);border-radius:5px;padding:1px 5px;font-size:11px}
-.sbDone .big{font-size:38px;font-weight:800;letter-spacing:-1px;margin:6px 0 2px;color:var(--good)}
-.sbDone .sub2{font-size:13px;color:var(--tx2);margin:0 0 14px}
-/* ⚡ in-hub card player (v1) — one card at a time, produce → reveal → grade */
-.sbPlayer{position:fixed;inset:0;z-index:70;background:linear-gradient(180deg,var(--bg),var(--bg2));display:flex;flex-direction:column;padding:calc(10px + env(safe-area-inset-top)) 16px calc(14px + env(safe-area-inset-bottom));animation:fade .16s ease;overflow-y:auto}
-.sbpTop{display:flex;align-items:center;gap:10px;max-width:560px;width:100%;margin:0 auto;flex:0 0 auto}
-.sbpX{font-size:17px;color:var(--tx3);min-width:44px;min-height:44px;margin-left:-10px}
-.sbpX:hover{color:var(--tx)}
-.sbpBar{flex:1;height:5px;border-radius:3px;background:var(--line);overflow:hidden}
-.sbpBar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .25s ease}
-.sbpN{font-size:12px;font-weight:800;color:var(--tx3);font-variant-numeric:tabular-nums}
-.sbpMeta{display:flex;align-items:center;gap:8px;max-width:560px;width:100%;margin:14px auto 8px;font-size:12px;font-weight:700;color:var(--tx2);flex:0 0 auto}
-.sbpMeta .who{margin-left:auto;color:var(--tx3);font-weight:600;white-space:nowrap}
-.sbpRe{color:var(--hard)}
-.sbpCard{max-width:560px;width:100%;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow);flex:0 0 auto}
-.sbpCard.tap{cursor:pointer}
-.sbpQ{font-size:18px;font-weight:700;line-height:1.45;letter-spacing:-.2px}
-.sbpHint{margin:14px 0 0;font-size:12.5px;color:var(--tx3)}
-.sbpA{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line2);font-size:15px;line-height:1.55}
-.sbpA ol{margin:6px 0 0;padding-left:20px}.sbpA li{margin:4px 0}
-.sbpModel{margin:10px 0 0;font-size:12.5px;color:var(--tx3);line-height:1.5}
-.sbpOpts{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.sbpOpts button{text-align:left;background:var(--card2);border:1.5px solid var(--line2);border-radius:11px;padding:12px 14px;font-size:14.5px;line-height:1.4;min-height:48px;transition:.12s}
-.sbpOpts button:hover:not(:disabled){border-color:var(--acc)}
-.sbpOpts button:disabled{cursor:default;opacity:.85}
-.sbpOpts button.right{border-color:var(--good);background:rgba(57,217,138,.12);opacity:1}
-.sbpOpts button.wrong{border-color:#ff6b6b;background:rgba(255,107,107,.1);opacity:1}
-.sbpWhy{margin-top:14px;font-size:13.5px;line-height:1.5;color:var(--tx2);border-left:3px solid var(--line2);padding-left:11px}
-.sbpMiss{color:var(--hard);font-weight:700}
-.sbpActs{max-width:560px;width:100%;margin:14px auto 0;flex:0 0 auto}
-.sbpGo{width:100%;background:var(--acc);color:#fff;border-radius:12px;padding:15px;font-size:15px;font-weight:800;min-height:52px}
-.sbpGo:hover{background:var(--acc2)}
-.sbpGrades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.sbpGrades button{border-radius:12px;padding:12px 4px;min-height:56px;font-weight:800;font-size:13px;border:1.5px solid var(--line2);background:var(--card2);display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center}
-.sbpGrades .k{font-size:10px;font-weight:700;color:var(--tx3)}
-.sbpGrades .g0{color:#ff8585;border-color:rgba(255,107,107,.5)}
-.sbpGrades .g1{color:var(--hard);border-color:rgba(255,206,84,.45)}
-.sbpGrades .g2{color:var(--good);border-color:rgba(57,217,138,.45)}
-.sbpGrades .g3{color:var(--acc);border-color:rgba(79,157,255,.5)}
-.sbpChips{display:flex;flex-wrap:wrap;gap:8px}
-.sbpChips button{min-width:48px;min-height:48px;border-radius:12px;border:1.5px solid var(--line2);background:var(--card2);font-weight:800;font-size:15px;flex:1}
-.sbpChips button:hover{border-color:var(--acc)}
-.sbpSkip{display:block;margin:12px auto 0;color:var(--tx3);font-size:12.5px;text-decoration:underline;text-underline-offset:3px}
-.sbpToast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--card2);border:1px solid var(--line2);color:var(--tx2);font-size:12.5px;font-weight:700;padding:10px 16px;border-radius:999px;box-shadow:var(--shadow);animation:sbToast 1.6s ease forwards;white-space:nowrap;z-index:75}
-@keyframes sbToast{0%{opacity:0;transform:translate(-50%,8px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
-.sbpDone{max-width:560px;width:100%;margin:8vh auto 0;text-align:center}
-.sbpDone .big{font-size:44px;font-weight:800;letter-spacing:-1.5px;color:var(--good);margin:10px 0 0}
-.sbpDone .sub2{font-size:13px;color:var(--tx2);margin:2px 0 16px}
-.sbpDone .row{display:flex;justify-content:center;gap:18px;font-size:13px;color:var(--tx2);margin:0 0 6px}
-.sbpDone .row b{color:var(--tx)}
-.sbpDone .weak{font-size:12.5px;color:var(--tx3);margin:0 0 18px;line-height:1.5}
-.sbpDone .alt{margin-top:12px;font-size:13px;color:var(--tx2)}
-.sbpDone .alt a{color:var(--acc);cursor:pointer;font-weight:700}
+/* ══════════════ HOUSE:GIGA:PLAYER:START ══════════════
+   ⚡ the study player (v2) — Giga's loop: produce → reveal → REWARD → next.
+   Ported from gigastudyapp/app/studio/studio.css (the .st-drill* / .st-chainv /
+   .st-reveal / .st-reward / .st-done runs) with Giga's token names remapped to
+   the house ones (--text→--tx, --muted→--tx2, --faint→--tx3, --primary→--acc,
+   --primary2→--acc-tx, --surface→--card, --surface2→--card2, --mint→--good).
+
+   Giga's rule holds (studio.css:715): the CARD is "the sheet of paper" — an
+   opaque content surface. Only the scrim, which genuinely floats over the
+   moving page, is glass. Delete this block to return to the flat player. */
+.sbScrim{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+  padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--bg) 74%,transparent);overflow-y:auto;animation:fade .16s ease;
+  backdrop-filter:blur(13px) saturate(180%);-webkit-backdrop-filter:blur(13px) saturate(180%)}
+@media (prefers-reduced-transparency:reduce){.sbScrim{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}}
+.sbPanel{width:100%;max-width:600px;margin:auto;display:flex;flex-direction:column}
+
+/* ---- chrome above the card: close · path · position ---- */
+.stTop{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.stX{font-size:16px;color:var(--tx3);width:44px;height:44px;margin-left:-11px;border-radius:10px}
+.stX:hover{color:var(--tx);background:color-mix(in srgb,var(--tx) 6%,transparent)}
+.stN{margin-left:auto;font-size:12px;font-weight:800;color:var(--tx3);font-variant-numeric:tabular-nums}
+/* Giga's SessionPath (DrillView.jsx:179) — where am I, what's left. No locks. */
+.stPath{display:flex;gap:4px;flex:1;min-width:0}
+.stPath i{flex:1;height:4px;border-radius:2px;background:var(--line);transition:background .25s ease}
+.stPath i.done{background:color-mix(in srgb,var(--acc) 55%,transparent)}
+.stPath i.cur{background:var(--acc);box-shadow:0 0 8px color-mix(in srgb,var(--acc) 55%,transparent)}
+
+.stHead{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.stSubj{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--acc-tx);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.stRe{color:var(--hard)}
+.stWho{margin-left:auto;font-size:11px;color:var(--tx3);font-weight:600;white-space:nowrap;flex:0 0 auto}
+/* the L1–L4 rung indicator (DrillView.jsx:194) — the scaffolding dial, visible */
+.stLadder{display:flex;align-items:center;gap:6px;margin-left:auto;flex:0 0 auto}
+.stLvl{display:flex;flex-direction:column;align-items:center;gap:3px}
+.stLvl .d{width:22px;height:5px;border-radius:3px;background:color-mix(in srgb,var(--tx) 12%,transparent);transition:.25s}
+.stLvl.on .d{background:var(--acc);box-shadow:0 0 9px color-mix(in srgb,var(--acc) 55%,transparent)}
+.stLvl.done .d{background:var(--good)}
+.stLvl span{font-size:9px;font-weight:800;color:var(--tx3)}
+.stLvl.on span{color:var(--acc-tx)}
+.stPrompt{font-size:13px;color:var(--tx2);margin:0 0 13px;line-height:1.5}
+.stPrompt b{color:var(--tx)}
+
+/* ---- the sheet of paper ---- */
+.stCard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;
+  min-height:170px;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 14px 36px rgba(0,0,0,.16)}
+.stCard.tap{cursor:pointer}
+.stQ{font-size:17.5px;font-weight:700;line-height:1.45;letter-spacing:-.2px}
+.stHint{margin:14px 0 0;font-size:12.5px;color:var(--tx3);line-height:1.5}
+.stA{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line2);font-size:15px;line-height:1.55}
+.stA ol{margin:6px 0 0;padding-left:20px}.stA li{margin:4px 0}
+.stModel{margin:10px 0 0;font-size:12.5px;color:var(--tx3);line-height:1.5}
+
+/* ---- the chain: a subway line that powers ON when revealed ---- */
+.stChain{position:relative;padding-left:29px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.stChain::before{content:"";position:absolute;left:10px;top:15px;bottom:15px;width:3px;border-radius:3px;background:var(--line2)}
+.stChain .fill{position:absolute;left:10px;top:15px;width:3px;border-radius:3px;height:calc(100% - 30px);
+  background:var(--acc);box-shadow:0 0 10px color-mix(in srgb,var(--acc) 60%,transparent);
+  transform-origin:top;transform:scaleY(0)}
+.stChain.lit .fill{animation:stFill .55s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes stFill{to{transform:scaleY(1)}}
+.stBead,.stLink{position:relative;max-width:100%;overflow-wrap:anywhere}
+.stBead{background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:11px 14px;
+  font-size:16px;font-weight:650;line-height:1.3}
+.stBead.seed{border-color:color-mix(in srgb,var(--acc) 55%,transparent);background:var(--acc-soft)}
+.stBead.solved{border-color:color-mix(in srgb,var(--good) 50%,transparent)}
+.stBead::before,.stLink::before{content:"";position:absolute;left:-24px;top:16px;
+  width:12px;height:12px;border-radius:50%;background:var(--card);border:2.5px solid var(--line2);box-sizing:border-box}
+.stLink::before{width:7px;height:7px;left:-21.5px;top:14px;border-width:2px}
+.stBead.seed::before{border-color:var(--acc)}
+.stBead.solved::before{border-color:var(--good)}
+.stLink{margin:7px 0;color:var(--tx2);font-size:12.5px;font-weight:600;font-style:italic;line-height:1.4;padding:2px 0}
+.stLink.solved{color:var(--good)}
+.stChain.lit .stBead,.stChain.lit .stLink{animation:stPop .34s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:calc(var(--i,0) * .05s + .12s)}
+@keyframes stPop{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
+/* a slot holding an input drops its own chrome — the input IS the box */
+.stBead.hole,.stLink.hole{background:transparent;border:0;padding:0}
+.stLink.hole{margin:9px 0}
+/* a typed blank. 16px font — anything smaller makes iOS zoom on focus. */
+.tin{width:100%;max-width:270px;background:var(--card2);color:var(--tx);border:1.5px dashed var(--line2);
+  border-radius:11px;padding:10px 13px;font:650 16px/1.3 inherit;outline:none;transition:.15s;min-height:44px}
+.tin::placeholder{color:var(--tx3);font-weight:500}
+.tin:focus{border-style:solid;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 22%,transparent)}
+.tin.v{font:500 italic 16px/1.3 inherit;max-width:290px}
+/* what you typed, kept on screen UNDER the truth — never replaced by it, never
+   marked wrong. (Giga captures its input then throws it away at reveal.) */
+.said{display:block;font:400 11.5px/1.45 inherit;font-style:normal;color:var(--tx3);margin-top:4px;overflow-wrap:anywhere}
+.said b{color:var(--tx2);font-weight:600}
+.said.match b{color:var(--good)}
+.said.blank{font-style:italic}
+
+/* ---- mcq ---- */
+.stOpts{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.stOpts button{text-align:left;background:var(--card2);border:1.5px solid var(--line2);border-radius:11px;
+  padding:12px 14px;font-size:14.5px;line-height:1.4;min-height:48px;transition:.12s}
+.stOpts button:hover:not(:disabled){border-color:var(--acc)}
+.stOpts button:disabled{cursor:default;opacity:.85}
+.stOpts button.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent);opacity:1}
+.stOpts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent);opacity:1}
+.stWhy{margin-top:14px;font-size:13.5px;line-height:1.5;color:var(--tx2);border-left:3px solid var(--line2);padding-left:11px}
+.stMiss{color:var(--hard);font-weight:700}
+
+/* ---- the reveal payload: answer + why, cascading in after the chain lights ---- */
+.stReveal{margin-top:13px}
+.stReveal>*{opacity:0;animation:stRise .5s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--d,0s)}
+@keyframes stRise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.stAnswer{font-size:14.5px;font-weight:650;color:var(--tx)}
+.stAnswer b{color:var(--acc-tx)}
+.stWhyBox{margin-top:9px;font-size:13px;line-height:1.6;color:var(--tx2);background:var(--card2);
+  border:1px solid var(--line2);border-left:2.5px solid var(--acc);border-radius:9px;padding:10px 13px}
+.stWhyBox .lbl{color:var(--tx);font-weight:700;margin-right:3px}
+
+/* ---- the reward beat: the earned interval, which DWELLS (not a 1.3s toast).
+   Two dials — longer rest, less scaffolding. Only ever drawn from the ladder
+   the owning app published; no ladder ⇒ no dials, never a plausible guess. ---- */
+.stReward{display:flex;gap:9px;margin-top:13px;opacity:0;animation:stRise .45s cubic-bezier(.22,1,.36,1) both}
+.stDial{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line2);border-radius:11px;padding:10px 12px}
+.stDial .l{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}
+.stDial .v{font-size:13px;font-weight:650;margin-top:5px;color:var(--tx);line-height:1.35;overflow-wrap:anywhere}
+.stDial .v.up{color:var(--good)}
+.stReward.lapse .stDial .v{color:var(--tx2)}
+
+/* ---- the action bar ---- */
+.stActs{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.stGo{width:100%;background:var(--acc);color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;
+  min-height:52px;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 3px rgba(0,0,0,.22);transition:.13s}
+.stGo:hover{filter:brightness(1.06)}
+.stGrades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.stGrades button{border-radius:12px;padding:11px 3px;min-height:56px;font-weight:800;font-size:12.5px;
+  border:1.5px solid var(--line2);background:var(--card2);display:flex;flex-direction:column;gap:2px;
+  align-items:center;justify-content:center}
+.stGrades .k{font-size:10px;font-weight:700;color:var(--tx3)}
+.stGrades .g0{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 50%,transparent)}
+.stGrades .g1{color:var(--hard);border-color:color-mix(in srgb,var(--hard) 45%,transparent)}
+.stGrades .g2{color:var(--good);border-color:color-mix(in srgb,var(--good) 45%,transparent)}
+.stGrades .g3{color:var(--acc-tx);border-color:color-mix(in srgb,var(--acc) 50%,transparent)}
+.stChips{display:flex;flex-wrap:wrap;gap:7px}
+.stChips button{min-width:48px;min-height:48px;border-radius:12px;border:1.5px solid var(--line2);
+  background:var(--card2);font-weight:800;font-size:15px;flex:1}
+.stChips button:hover{border-color:var(--acc)}
+.stSkip{align-self:center;color:var(--tx3);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;
+  min-height:44px;padding:0 12px}
+.sbpToast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  background:var(--card2);border:1px solid var(--line2);color:var(--tx2);font-size:12.5px;font-weight:700;
+  padding:10px 16px;border-radius:999px;box-shadow:var(--shadow);animation:sbToast 1.9s ease forwards;
+  max-width:calc(100vw - 32px);text-align:center;z-index:80}
+@keyframes sbToast{0%{opacity:0;transform:translate(-50%,8px)}10%,82%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+
+/* ---- the page-flip between cards (DrillView.jsx:66 flipCardOut) ---- */
+.stFlipIn{animation:stFlipIn .3s cubic-bezier(0,0,.2,1) both}
+@keyframes stFlipIn{from{opacity:0;transform:perspective(1200px) rotateY(9deg) translateY(4px)}to{opacity:1;transform:none}}
+.stGhost{position:fixed;z-index:71;pointer-events:none;backface-visibility:hidden}
+
+/* ---- the honest done screen (DrillView.jsx:623) ---- */
+.stDone{text-align:center;padding:8px 4px 4px;position:relative}
+.stRing{position:relative;width:88px;height:88px;margin:0 auto 12px}
+.stRing svg{transform:rotate(-90deg)}
+.stRing .bg{stroke:var(--line)}
+.stRing .fg{stroke:var(--good);stroke-linecap:round;stroke-dasharray:214;stroke-dashoffset:214;
+  animation:stRing 1s cubic-bezier(.22,1,.36,1) .1s forwards}
+@keyframes stRing{to{stroke-dashoffset:0}}
+.stRing .ck{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--good)}
+.stDone h3{margin:0;font-size:20px;letter-spacing:-.3px}
+.stDone .sub2{font-size:13px;color:var(--tx2);margin:5px 0 16px;line-height:1.5}
+.stStats{display:grid;grid-template-columns:1fr 1fr;gap:9px;text-align:left}
+.stStat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;min-width:0}
+.stStat .big{font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:1;font-variant-numeric:tabular-nums}
+.stStat .big.p{color:var(--acc-tx)} .stStat .big.m{color:var(--good)}
+.stStat .cap{font-size:11px;color:var(--tx2);margin-top:5px;line-height:1.35}
+.stTrend{margin-top:16px}
+.stTrendLbl{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);margin-bottom:7px}
+.stTrendBars{display:flex;align-items:flex-end;justify-content:space-between;gap:5px;height:56px}
+.stTrendBars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end}
+.stTrendBars .bar{width:100%;max-width:26px;border-radius:4px 4px 2px 2px;background:color-mix(in srgb,var(--acc) 38%,transparent);
+  height:var(--h,4px);animation:stGrow .5s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--k,0) * .05s)}
+.stTrendBars .bar.today{background:var(--acc)}
+@keyframes stGrow{from{height:2px;opacity:.4}to{height:var(--h,4px);opacity:1}}
+.stTrendBars span{font-size:10px;color:var(--tx3);font-weight:700}
+.stWeak{font-size:12.5px;color:var(--tx2);margin:16px 0 0;line-height:1.5}
+.stWeak b{color:var(--tx)}
+.stDone .alt{margin-top:11px;font-size:13px;color:var(--tx2)}
+.stDone .alt a{color:var(--acc-tx);cursor:pointer;font-weight:700}
+.stConf{position:absolute;left:0;right:0;top:20px;height:0;pointer-events:none}
+.stConf i{position:absolute;top:0;width:7px;height:11px;border-radius:1px;opacity:0;
+  animation:stConf 1.5s cubic-bezier(.2,.7,.4,1) both}
+@keyframes stConf{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx,0),190px) rotate(var(--rot,180deg))}}
+@media (prefers-reduced-motion:reduce){
+  .stChain.lit .fill,.stChain.lit .stBead,.stChain.lit .stLink,.stReveal>*,.stReward,
+  .stFlipIn,.stRing .fg,.stTrendBars .bar{animation:none;opacity:1;transform:none;stroke-dashoffset:0}
+  .stConf{display:none}
+}
+@media(max-width:400px){
+  .stCard{padding:18px 15px;border-radius:16px}
+  .stChain{padding-left:26px}
+  .stBead::before{left:-22px}.stLink::before{left:-19.5px}
+  .stStats{grid-template-columns:1fr}
+  .stGrades button{font-size:12px;padding:11px 2px}
+}
+/* ══════════════════ HOUSE:GIGA:PLAYER:END ══════════════════ */
 @media(max-width:520px){.grid{grid-template-columns:1fr}.tile{padding:14px 15px}}
 /* 🗓 What's coming — the calendar made visible + honest readiness */
 .dl{margin:16px 0 0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px 5px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
@@ -141,7 +361,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .dlHead b{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:var(--tx3);font-weight:800}
 .dlQ{width:23px;height:23px;border-radius:50%;background:var(--card2);border:1px solid var(--line2);color:var(--tx3);font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transition:.13s}
 .dlQ:hover{color:var(--tx);border-color:var(--acc)}
-.dlAll{margin-left:auto;font-size:12px;font-weight:700;color:var(--acc);text-decoration:none;white-space:nowrap}
+.dlAll{margin-left:auto;font-size:12px;font-weight:700;color:var(--acc-tx);text-decoration:none;white-space:nowrap}
 .dlAll:hover{text-decoration:underline}
 .dlRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;padding:11px 0;border-top:1px solid var(--line)}
 .dlList .dlRow:first-child{border-top:none}
@@ -149,7 +369,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .dlDays{grid-column:2;grid-row:1;align-self:start;font-size:19px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
 .dlDays span{font-size:11px;font-weight:700;opacity:.7;margin-left:1px}
 .dlSub{grid-column:1/-1;font-size:12px;color:var(--tx3);line-height:1.45}
-.dlHurdle{font-size:9px;font-weight:800;letter-spacing:.7px;padding:2px 6px;border-radius:5px;background:rgba(255,107,107,.14);color:var(--bad);border:1px solid rgba(255,107,107,.35);white-space:nowrap}
+.dlHurdle{font-size:9px;font-weight:800;letter-spacing:.7px;padding:2px 6px;border-radius:5px;background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad);border:1px solid color-mix(in srgb,var(--bad) 38%,transparent);white-space:nowrap}
 .t-hot{color:var(--bad)} .t-warm{color:var(--hard)} .t-soon{color:var(--tx)} .t-far{color:var(--tx3)}
 .dlBar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
 .dlBar i{display:block;height:100%;border-radius:3px;transition:width .3s ease}
@@ -159,7 +379,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .dlNote{grid-column:1/-1;font-size:11.5px;color:var(--tx3);line-height:1.5;margin-top:5px;overflow-wrap:anywhere}
 .dlNote.dim{opacity:.72;font-style:italic}
 .dlMore{display:block;width:100%;padding:11px 0 10px;margin-top:2px;border-top:1px solid var(--line);color:var(--tx2);font-size:12.5px;font-weight:700}
-.dlMore:hover{color:var(--acc)}
+.dlMore:hover{color:var(--acc-tx)}
 .dlEmpty{font-size:12.5px;color:var(--tx3);padding:6px 0 12px;line-height:1.5}
 @media(max-width:400px){.dl{padding:12px 13px 4px}.dlNm{font-size:13.5px}.dlDays{font-size:17px}}
 /* account button + auth modal (only shown when cloud sync is configured) */
@@ -169,8 +389,8 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .acctbtn .who{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .acctbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex:0 0 auto}
 .cloudnote{font-size:12px;color:var(--tx3);margin:0 0 14px;padding:9px 13px;border:1px dashed var(--line2);border-radius:10px;background:var(--card)}
-.cloudnote b{color:var(--acc)}
-.modal{position:fixed;inset:0;background:rgba(5,9,16,.68);display:flex;align-items:center;justify-content:center;z-index:60;padding:18px;animation:fade .16s ease}
+.cloudnote b{color:var(--acc-tx)}
+.modal{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 62%,transparent);display:flex;align-items:center;justify-content:center;z-index:60;padding:18px;animation:fade .16s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .sheet{background:var(--card);border:1px solid var(--line2);border-radius:16px;max-width:400px;width:100%;padding:22px;box-shadow:var(--shadow)}
 .sheet h3{margin:0 0 4px;font-size:18px}
@@ -181,15 +401,15 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sheet .go{width:100%;background:var(--acc);color:#fff;border-radius:11px;padding:12px;font-size:15px;font-weight:800;transition:.12s}
 .sheet .go:hover{background:var(--acc2)} .sheet .go:disabled{opacity:.55}
 .sheet .alt{margin-top:12px;text-align:center;font-size:13px;color:var(--tx2)}
-.sheet .alt a{color:var(--acc);cursor:pointer;font-weight:700}
+.sheet .alt a{color:var(--acc-tx);cursor:pointer;font-weight:700}
 .sheet .msg{font-size:13px;border-radius:9px;padding:9px 12px;margin-bottom:12px;line-height:1.45}
-.sheet .msg.err{background:rgba(255,107,107,.13);border:1px solid rgba(255,107,107,.4);color:#ff9a9a}
-.sheet .msg.ok{background:rgba(57,217,138,.12);border:1px solid rgba(57,217,138,.4);color:var(--good)}
+.sheet .msg.err{background:color-mix(in srgb,var(--bad) 13%,transparent);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent);color:var(--bad)}
+.sheet .msg.ok{background:color-mix(in srgb,var(--good) 12%,transparent);border:1px solid color-mix(in srgb,var(--good) 40%,transparent);color:var(--good)}
 .sheet .x{float:right;font-size:19px;color:var(--tx3);padding:0 4px;margin:-4px -4px 0 0}
 /* suggestions box (public — works signed out) */
 .acct{margin-left:auto}
-.suggbtn{border:1px solid var(--acc2);background:var(--acc);color:#fff;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:800;letter-spacing:.2px;display:inline-flex;align-items:center;gap:6px;transition:.15s;box-shadow:0 3px 14px rgba(79,157,255,.3);flex:0 0 auto}
-.suggbtn:hover{background:var(--acc2)}
+.suggbtn{border:0;background:var(--acc);color:#fff;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:700;letter-spacing:.2px;display:inline-flex;align-items:center;gap:6px;transition:.15s;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 3px rgba(0,0,0,.22);flex:0 0 auto}
+.suggbtn:hover{filter:brightness(1.06)}
 .sheet.wide{max-width:560px;display:flex;flex-direction:column;max-height:min(84vh,700px)}
 .sugg-form textarea{width:100%;background:var(--card2);border:1.5px solid var(--line2);border-radius:10px;padding:11px 13px;color:var(--tx);font:inherit;font-size:14px;outline:none;resize:vertical;min-height:62px;margin-bottom:9px}
 .sugg-form textarea:focus{border-color:var(--acc)}
@@ -202,7 +422,7 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sugg-item .byline{display:block;font-size:11.5px;color:var(--tx3);margin-top:3px}
 .like{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:46px;border:1px solid var(--line2);background:var(--card2);border-radius:10px;padding:7px 8px;color:var(--tx2);font-weight:800;transition:.13s;flex:0 0 auto}
 .like:hover{border-color:var(--acc);color:var(--tx)}
-.like.on{background:rgba(79,157,255,.16);border-color:var(--acc);color:var(--acc)}
+.like.on{background:var(--acc-soft);border-color:var(--acc);color:var(--acc-tx)}
 .like .thumb{font-size:15px;line-height:1;filter:grayscale(.45);transition:filter .13s}
 .like.on .thumb,.like:hover .thumb{filter:none}
 .like .n{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}
@@ -210,38 +430,180 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
 .sugg-del:hover{color:var(--hard)}
 .sugg-note{font-size:12.5px;color:var(--tx3);text-align:center;padding:18px 6px 6px}
 @media(max-width:520px){.suggbtn{padding:9px 11px;font-size:12px}}
+
+/* ══════════════════ HOUSE:GIGA:START ══════════════════
+   Giga's surface system, ported from gigastudyapp/app/studio/studio.css.
+   Values are Giga's; only the scope selectors (.studio-root → :root,
+   body.light → html[data-theme=light]) are remapped.
+
+   THE RULE (studio.css:54, :82, :713): glass is for surfaces that FLOAT
+   over moving content — never for content itself, and never stacked.
+   Giga's own floating surfaces are its rail and toolbar; the hub has no
+   chrome, so here the only genuinely floating surfaces are the modal
+   sheet and the toast. Everything you read — cards, the calendar panel,
+   fields — is an OPAQUE surface (studio.css:715, "the sheet of paper —
+   opaque content surface (glass stays on chrome)"). That is why the
+   calendar lost its white specular rim: rim + sheen are the glass
+   material, and an in-flow panel is not glass.
+   Delete this block to return to the flat hub.               */
+
+:root{
+  --gl-tint:rgba(40,40,46,.64); --gl-tint-strong:rgba(38,38,42,.88);
+  --gl-blur:14px; --gl-sat:200%; --gl-bright:1.06; --gl-contrast:1.02;
+  --gl-specular:linear-gradient(135deg,rgba(255,255,255,.44) 0%,rgba(160,195,255,.21) 8%,rgba(255,255,255,.11) 19%,rgba(255,255,255,0) 46%,rgba(255,255,255,.05) 66%,rgba(255,214,168,.13) 89%,rgba(255,255,255,.23) 100%);
+  --gl-sheen:linear-gradient(180deg,rgba(255,255,255,.09),transparent 38%),linear-gradient(118deg,transparent 34%,rgba(255,255,255,.06) 45%,transparent 54%);
+  --gl-shadow:0 20px 46px -12px rgba(0,0,0,.58),0 4px 14px rgba(0,0,0,.4),inset 0 1px 1px rgba(255,255,255,.13),inset 0 -12px 26px rgba(0,0,0,.16);
+  --gl-sep:rgba(255,255,255,.1);
+  /* cut-down rim for controls that can't carry the ::before/::after pair
+     (form fields, and buttons whose label is a bare text node) */
+  --gl-lite-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 1px 3px rgba(0,0,0,.35);
+}
+html[data-theme="light"]{
+  --gl-tint:rgba(246,247,250,.58); --gl-tint-strong:rgba(248,248,250,.88);
+  --gl-specular:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(194,216,255,.42) 8%,rgba(255,255,255,.3) 19%,rgba(255,255,255,0) 46%,rgba(255,255,255,.1) 66%,rgba(255,228,196,.3) 89%,rgba(255,255,255,.7) 100%);
+  --gl-sheen:linear-gradient(180deg,rgba(255,255,255,.5),transparent 38%),linear-gradient(118deg,transparent 33%,rgba(255,255,255,.17) 45%,transparent 54%);
+  --gl-shadow:0 16px 40px -12px rgba(20,24,40,.38),0 4px 12px rgba(20,24,40,.14),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -12px 26px rgba(20,24,40,.06);
+  --gl-sep:rgba(0,0,0,.1);
+  --gl-lite-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 1px 3px rgba(20,24,40,.1);
+}
+
+/* ── OPAQUE CONTENT SURFACES ─────────────────────────────────────────
+   Giga's .st-card (studio.css:657-659) and .st-drillcard (:715-717):
+   flat --card fill, hairline --line border, concentric radius, lift on
+   hover with the border stepping up to --line2. No accent-coloured
+   border, no coloured glow, no blur. */
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:18px 20px;box-shadow:none;transition:.15s}
+.tile:hover{transform:translateY(-2px);border-color:var(--line2);box-shadow:none}
+.tile .nm{font-size:16px;font-weight:750;letter-spacing:-.01em;line-height:1.28}
+.tile .ds{font-size:12.5px;color:var(--tx2);line-height:1.5}
+.tile .tiledate{font-size:10.5px;color:var(--tx3)}
+
+/* The 🗓 calendar is a reading surface, so it is a sheet of paper, not
+   glass — this is what kills the white rim/sheen that was fighting it. */
+.dl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,var(--shadow)}
+.dlBar{background:color-mix(in srgb,var(--tx) 12%,transparent)}
+.dlQ{background:var(--card2);border:1px solid var(--line2)}
+.dlQ:hover{border-color:var(--acc);color:var(--tx)}
+.soon{border:1px dashed var(--line2)}
+
+/* Fields + secondary buttons: Giga's .st-btn (studio.css:509-511) —
+   a 5%-white wash inside a --line2 hairline, accent border on hover. */
+.search input,.sheet input,.sugg-form textarea{background:color-mix(in srgb,var(--tx) 5%,transparent);
+  border:1px solid var(--line2);border-radius:10px}
+.search input:focus,.sheet input:focus,.sugg-form textarea:focus{border-color:var(--acc)}
+.iconbtn,.acctbtn{background:color-mix(in srgb,var(--tx) 5%,transparent);border:1px solid var(--line2);border-radius:10px}
+.iconbtn:hover,.acctbtn:hover{border-color:var(--acc);color:var(--tx)}
+
+/* Giga spends --faint on LABELS and --muted on prose. The hub had whole
+   sentences on --tx3, which at Giga's .34 alpha reads ~2.3:1 on the light
+   ground. Token values stay exactly Giga's — the prose just moves up one
+   tier. Eyebrows and stamps (h2.sec's rule aside, .dlHead b, .tiledate,
+   .sbpN) stay on --tx3 where a quiet label is the point. */
+.dlSub,.dlNote,.dlPct,.dlEmpty,.foot,.foot a,.soon,.sugg-note,.empty,h2.sec{color:var(--tx2)}
+
+/* ── THE GLASS ───────────────────────────────────────────────────────
+   What is left after the rule at the top of this block: the two surfaces
+   that genuinely float over live, moving content. */
+.sheet{position:relative;isolation:isolate;border:0;background:var(--gl-tint-strong);
+  backdrop-filter:blur(var(--gl-blur)) saturate(var(--gl-sat)) brightness(var(--gl-bright)) contrast(var(--gl-contrast));
+  -webkit-backdrop-filter:blur(var(--gl-blur)) saturate(var(--gl-sat)) brightness(var(--gl-bright)) contrast(var(--gl-contrast));
+  box-shadow:var(--gl-shadow)}
+.sheet::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:2;
+  background:var(--gl-specular);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.sheet::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;background:var(--gl-sheen)}
+.sheet>*{position:relative;z-index:3}
+/* Chromatic refraction (studio.css:60-63) — the page really is sliding
+   behind this one, so there is something to bend. Chromium only. */
+@supports (backdrop-filter:url(#x)){
+  .sheet{backdrop-filter:url(#gl-liquid) blur(7px) saturate(200%) brightness(1.05);
+    -webkit-backdrop-filter:url(#gl-liquid) blur(7px) saturate(200%) brightness(1.05)}
+}
+.sbpToast{background:var(--gl-tint-strong);border:1px solid var(--gl-sep);
+  backdrop-filter:blur(var(--gl-blur)) saturate(var(--gl-sat));
+  -webkit-backdrop-filter:blur(var(--gl-blur)) saturate(var(--gl-sat));
+  box-shadow:var(--gl-lite-shadow)}
+@media (prefers-reduced-transparency:reduce){
+  .sheet,.sbpToast{background:var(--gl-tint-strong);backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+/* ══════════════════ HOUSE:GIGA:END ══════════════════ */
 </style>
 </head>
 <body>
+<!-- HOUSE:GIGA:MARKUP:START -->
+<!-- Liquid Glass refraction filter — copied verbatim from Giga's
+     StudioShell.jsx. Referenced by .sheet via url(#gl-liquid).
+     Renders nothing itself. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0">
+  <filter id="gl-liquid" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.004 0.006" numOctaves="2" seed="14" result="noise"/>
+    <feGaussianBlur in="noise" stdDeviation="2" result="sn"/>
+    <feDisplacementMap in="SourceGraphic" in2="sn" scale="70" xChannelSelector="R" yChannelSelector="G" result="dR"/>
+    <feDisplacementMap in="SourceGraphic" in2="sn" scale="50" xChannelSelector="R" yChannelSelector="G" result="dG"/>
+    <feDisplacementMap in="SourceGraphic" in2="sn" scale="30" xChannelSelector="R" yChannelSelector="G" result="dB"/>
+    <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rr"/>
+    <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gg"/>
+    <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bb"/>
+    <feBlend in="rr" in2="gg" mode="screen" result="rg"/>
+    <feBlend in="rg" in2="bb" mode="screen" result="rgb"/>
+    <feGaussianBlur in="rgb" stdDeviation="1.2"/>
+  </filter>
+</svg>
+<!-- HOUSE:GIGA:MARKUP:END -->
 <div class="wrap">
   <header>
     <div>
       <h1>🧭 BN Hub</h1>
-      <p class="sub">Study tools &amp; apps for the BN — everything in one place. All free, all offline-capable.</p>
+      <p class="sub">Study tools &amp; apps for the BN. All free, all offline-capable.</p>
     </div>
     <div class="acct">
-      <button class="suggbtn" id="btnSugg" title="Tell me what to build next — no account needed">💡 Suggestions</button>
       <button class="acctbtn" id="btnAcct" style="display:none"></button>
       <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
     </div>
   </header>
+  <!-- v2 landing = ONE thing above the fold. The session, then the single
+       nearest deadline, then this semester's tools. Everything else (the other
+       14 calendar rows, past semesters, search) is one tap down the page. -->
   <button class="sbGo" id="sbGo" title="One press — the highest-yield session across every app, precomputed">
     <span class="zap">⚡</span>
     <span class="txt"><b id="sbT">Study</b><span id="sbS">…</span></span>
     <span class="sbHelp" id="sbHelp" title="What is this?" aria-label="What is this?">?</span>
     <span class="sbBudget" id="sbB" title="Session length — tap to change">20′</span>
   </button>
-  <div id="dlStrip"></div>
-  <div id="cloudNote"></div>
+  <div id="nextDl"></div>
+  <div class="toolshead">
+    <h2 id="toolsTitle">Your tools</h2>
+    <button class="more" id="btnMore">All tools →</button>
+  </div>
   <div class="search"><input id="q" placeholder="Filter… (e.g. cram, anatomy, med calc)" autocomplete="off"/></div>
   <div id="sections"></div>
-  <div class="foot">Made by a BN student, for BN students. Check answers against your own course material — it always wins.</div>
+  <div id="cloudNote"></div>
+  <div class="foot">
+    Made by a BN student, for BN students. Check answers against your own course material — it always wins.<br/>
+    <button id="btnSugg" style="color:var(--acc-tx);font-weight:700;font-size:12px;margin-top:8px;min-height:38px" title="Tell me what to build next — no account needed">💡 Suggest something to build</button>
+    <!-- Estate self-explaining-UI rule: if the site counts you, the site says so,
+         in plain words, without a consent wall nobody reads. -->
+    <div class="privnote">
+      This page counts visits — page, referrer, device type and timezone, nothing more.
+      No cookies, no ad networks, no IP addresses, and nothing shared with anyone.
+      <button id="btnPrivOff" type="button">Don't count me</button>
+    </div>
+    <!-- Owner-only: appears when Jeremy is signed in. Everyone else never sees it,
+         and the row-level policy means they couldn't read the data anyway. -->
+    <div id="statsBox"></div>
+  </div>
 </div>
 
 <!-- Cloud sync (optional): dormant until hub/cloud/config.js is filled in -->
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="cloud/config.js"></script>
 <script src="cloud/cloud.js"></script>
+<!-- Visit counter. First-party (writes to this hub's own Supabase), no third
+     party, no cookie, no cross-site id, fire-and-forget. See cloud/count.js. -->
+<script defer src="cloud/count.js"></script>
 <!-- ⚡ Study engine calendar — the machine-readable mirror of bn2-brief.html -->
 <script src="deadlines.js"></script>
 
@@ -257,8 +619,11 @@ h3.subsec{font-size:13px;font-weight:700;color:var(--tx2);margin:16px 0 9px 4px;
    ║ Then commit + push this repo. That's the whole integration.        ║
    ╚════════════════════════════════════════════════════════════════════╝ */
 /* ===== PROJECTS START ===== */
+/* `primary:true` = shown on arrival. Everything else waits behind "All tools →".
+   The empty future-semester scaffolding is admin structure, not something a
+   reader arriving at 4:30 AM needs to scroll past — it only renders expanded. */
 const CATEGORIES=[
-  {id:'sem2', name:'📗 Semester 2', subs:[
+  {id:'sem2', name:'📗 Semester 2', primary:true, subs:[
     {id:'sem2-pharm',   name:'Introduction to Pharmacology'},
     {id:'sem2-nursing', name:'Introduction to Nursing Practice'},
     {id:'sem2-hs2',     name:'Health Science 2'},
@@ -267,16 +632,28 @@ const CATEGORIES=[
   {id:'sem4', name:'📙 Semester 4', hidden:true},
   {id:'sem5', name:'📕 Semester 5', hidden:true},
   {id:'sem6', name:'📓 Semester 6', hidden:true},
-  {id:'skills', name:'🧮 Clinical skills'},   // cross-semester tools (e.g. med-calc gate)
+  {id:'skills', name:'🧮 Clinical skills', primary:true},   // cross-semester tools (e.g. med-calc gate)
   {id:'career', name:'🩺 Career'},
 ];
 const PROJECTS=[
   // --- Semester 2 → whole-semester overview (sits directly under Semester 2, above the papers) ---
   {cat:'sem2', ic:'🗺️', nm:'Semester 2 · Master Schedule & Guide', ds:'The whole semester, mapped and decoded: a week-by-week timeline of every class, lab, test and exam across all three papers — with topics, collision warnings, corrected dates and tactics for tackling it wisely.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new', date:'22/07/2026'},
   // --- Semester 2 → Introduction to Pharmacology ---
-  {cat:'sem2-pharm', ic:'💊', nm:'Pharmacology · Pre-Class Deep Dive', ds:'Introduction to Pharmacology (61985). Orient → see it → self-test across all ten modules: concepts & sourcing, PK/PD, med calcs, the 8 Rights, lifespan, legal/ethical & drug development.', url:'https://jeremyspm.github.io/pharmacology-hub/', badge:'new', date:'22/07/2026'},
+  // LEGACY 2026-07-27 (Jeremy's call). Still live at its URL so existing links and
+  // bookmarks do not 404 — just no longer advertised here, because a replacement
+  // Pharmacology tool is being built on the relations-first / metro-map pattern
+  // (see STUDY-HUB-BLUEPRINT.md). Un-comment this line to put it back on the hub;
+  // delete it only once the replacement ships and takes over the category.
+  // {cat:'sem2-pharm', ic:'💊', nm:'Pharmacology · Pre-Class Deep Dive', ds:'Introduction to Pharmacology (61985). Orient → see it → self-test across all ten modules: concepts & sourcing, PK/PD, med calcs, the 8 Rights, lifespan, legal/ethical & drug development.', url:'https://jeremyspm.github.io/pharmacology-hub/', badge:'new', date:'22/07/2026'},
   // --- Semester 2 → Health Science 2 ---
-  {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
+  {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Metro Maps & Chains', ds:'The whole of Module 1 (722.541) rebuilt from Canvas: 10 topics across cardiovascular, respiratory & lymphatic, each with a Giga-style metro mindmap you can tap through concept by concept, 214 authored relations, 86 marked questions, 81 recognition checks and all 5 case studies. Every answer names the Canvas file it came from. Feeds ⚡ chain cards that hide more of the pathway as you earn it.', url:'https://jeremyspm.github.io/hs2-module1/', badge:'new', date:'27/07/2026'},
+  // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by the one above:
+  //   • module1-study-hub (20/07) — the original pre-class deep dive, Q&A Test layer.
+  //   • hs2-module1 v1 (27/07)    — first relations-first cut, 6 topics, 111 relations.
+  // v1 was rebuilt IN PLACE at the same URL (so every existing link and the ⚡ engine's
+  // grade write-back keep working); module1-study-hub stays live at its own URL so old
+  // links do not 404, but is no longer advertised anywhere in the hub.
+  // {cat:'sem2-hs2', ic:'🫀', nm:'Module 1 · Pre-Class Deep Dive', ds:'Cardiovascular, respiratory & lymphatic (722.541). Orient → see it → self-test with your lecturer’s own questions.', url:'https://jeremyspm.github.io/module1-study-hub/', date:'20/07/2026'},
   // --- clinical skills (not tied to one semester) ---
   {cat:'skills', ic:'💉', nm:'MedCalc Drill', ds:'Unlimited medication-calculation practice: 8 question types, tells you exactly which slip you made, plus a pass-gate exam simulator.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta'},
   // --- career ---
@@ -306,17 +683,39 @@ const PROJECTS=[
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* Live due-counts, keyed by app URL. Filled by the ⚡ engine below (it already
+   reads every pulse's counts{due,total} for the readiness bars), so a tile can
+   state real state instead of encoding it in a decorative colour. Empty until
+   an app has been opened once on this device — and then the chip simply
+   doesn't appear, rather than showing a confident zero. */
+let DUE={}, expanded=false, lastQ='';
+/* match on PATH, not the whole URL: a tile's href is the absolute production
+   URL while a pulse records wherever the app actually ran, so comparing origins
+   would break the chip on any other host (and while testing locally). */
+const key=u=>{ let p=String(u||'');
+  try{ p=new URL(p,location.href).pathname; }catch(e){}
+  return p.replace(/index\.html$/,'').replace(/\/+$/,'')||'/'; };
+function setDue(map){ DUE=map||{}; render(lastQ); }
+
 function tileHtml(p){
+  const d=DUE[key(p.url)];
+  const chip=(d&&d.due>0)?`<span class="due">${d.due} due</span>`:'';
+  const foot=(chip||p.date)?`<span class="tfoot">${chip}${p.date?`<span class="tiledate">${esc(p.date)}</span>`:''}</span>`:'';
   return `<a class="tile" href="${p.url}" ${p.badge?`data-b="${p.badge}"`:''}>
     ${p.badge?`<span class="badge ${p.badge}">${p.badge}</span>`:''}
     <span class="top"><span class="ic">${p.ic}</span><span class="nm">${esc(p.nm)}</span></span>
     <span class="ds">${esc(p.ds)}</span>
-    ${p.date?`<span class="tiledate">${esc(p.date)}</span>`:''}
+    ${foot}
   </a>`;
 }
 function render(filter){
-  const toks=(filter||'').trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const secs=CATEGORIES.filter(cat=>!cat.hidden).map(cat=>{
+  lastQ=filter||'';
+  const toks=lastQ.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  // Searching always searches EVERYTHING — the fold is about arrival calm, not
+  // about hiding things from someone who is actively looking for them.
+  const all=expanded||toks.length>0;
+  const secs=CATEGORIES.filter(cat=>!cat.hidden&&(all||cat.primary)).map(cat=>{
     const hay=cat.name.toLowerCase();  // let a category name (e.g. "career") surface its tiles too
     const matches=p=>toks.every(t=>(p.nm+' '+p.ds+' '+hay).toLowerCase().includes(t));
 
@@ -327,23 +726,34 @@ function render(filter){
       const subHtml=cat.subs.map(sub=>{
         const items=PROJECTS.filter(p=>p.cat===sub.id&&matches(p));
         if(items.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="grid">${items.map(tileHtml).join('')}</div>`;
-        if(!toks.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="soon soon-sub">No study hubs here yet.</div>`;
+        // "nothing here yet" placeholders are scaffolding for the builder, not
+        // information for the reader — only shown once you've asked for all.
+        if(all&&!toks.length) return `<h3 class="subsec">${esc(sub.name)}</h3><div class="soon soon-sub">No study hubs here yet.</div>`;
         return '';
       }).join('');
       if(!directHtml && !subHtml) return '';
-      return `<h2 class="sec">${cat.name}</h2>${directHtml}${subHtml}`;
+      return `<h2 class="sec" id="sec-${cat.id}">${cat.name}</h2>${directHtml}${subHtml}`;
     }
 
     const items=PROJECTS.filter(p=>p.cat===cat.id&&matches(p));
-    if(items.length) return `<h2 class="sec">${cat.name}</h2><div class="grid">${items.map(tileHtml).join('')}</div>`;
-    // empty semester sections still show — the degree-long scaffolding (hidden while searching)
-    if(cat.id.startsWith('sem') && !toks.length)
-      return `<h2 class="sec">${cat.name}</h2><div class="soon">Study hubs for this semester will appear here as you build them.</div>`;
+    if(items.length) return `<h2 class="sec" id="sec-${cat.id}">${cat.name}</h2><div class="grid">${items.map(tileHtml).join('')}</div>`;
+    // the degree-long scaffolding — expanded view only
+    if(all && cat.id.startsWith('sem') && !toks.length)
+      return `<h2 class="sec" id="sec-${cat.id}">${cat.name}</h2><div class="soon">Study hubs for this semester will appear here as you build them.</div>`;
     return '';
   }).join('');
   $('#sections').innerHTML=secs||`<div class="empty">Nothing matches "${esc(toks.join(' '))}".</div>`;
 }
 $('#q').oninput=e=>render(e.target.value);
+$('#btnMore').onclick=()=>{
+  expanded=!expanded;
+  $('#btnMore').textContent=expanded?'Show less ↑':'All tools →';
+  $('#toolsTitle').textContent=expanded?'Everything':'Your tools';
+  $('.search').classList.toggle('on',expanded);
+  if(!expanded){ $('#q').value=''; }
+  render(expanded?$('#q').value:'');
+  if(expanded) $('#q').focus();
+};
 const TK='hub.theme';
 function applyTheme(){ document.documentElement.setAttribute('data-theme',localStorage.getItem(TK)||'dark'); }
 $('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
@@ -362,8 +772,53 @@ render('');
   const DAY=86400e3, HOUR=3600e3,
         PK='studybus.plan', BK='studybus.budget', SK='studybus.streak',
         HP='studybus.hubplays', LK='studybus.last';
-  const CARD_MIN={flash:0.6,mcq:0.7,saq:1.5};       // honest per-type minutes
-  const estMin=c=>CARD_MIN[c.type]||0.8;
+  /* honest per-type minutes. A chain costs more the more of it is hidden:
+     L1/L2 blank one thing inside a chain you can still see; L3/L4 are full
+     reconstructions. (Contract 2, "the playable unit".) */
+  const CARD_MIN={flash:0.6,mcq:0.7,saq:1.5,chain:1.2};
+  const estMin=c=>c.type==='chain'?((+c.level>=3)?2.0:1.2):(CARD_MIN[c.type]||0.8);
+  /* A card the player can actually render. A chain needs its beads/verbs to
+     line up (n+1 beads, n verbs) or the occlusion indexes mean nothing. */
+  const cardOK=c=>!!(c&&c.id&&(c.type==='chain'
+    ? (Array.isArray(c.beads)&&c.beads.length>=2&&Array.isArray(c.verbs)&&c.verbs.length===c.beads.length-1)
+    : (c.q&&CARD_MIN[c.type])));
+
+  /* ---- the SR-state channel (contract addition, 2026-07-27) ----------------
+     An app may publish `ladder` on its pulse (its own box→days table + the box
+     delta each grade applies) and `sr:{box,level,lapses}` on each card. That is
+     the whole cost of the reward beat: the hub can then state the rest a recall
+     just earned, using the owning app's OWN scheduler — it still never parses a
+     foreign SRS blob, it just reads numbers the app chose to publish.
+
+     No ladder or no sr ⇒ NO DIALS. We never show a plausible-looking interval
+     we can't stand behind (same rule as the readiness bars and `counts`). */
+  function earned(ladder,sr,r){
+    if(!ladder||!sr) return null;
+    const days=ladder.boxDays; if(!Array.isArray(days)||!days.length) return null;
+    const maxBox=Number.isFinite(ladder.maxBox)?ladder.maxBox:days.length-1;
+    const step=ladder.step||{};
+    const gid=['again','hard','good','easy'][r];
+    const s=step[gid];
+    let box=Math.max(0,Math.min(maxBox,+sr.box||0));
+    const from=box;
+    if(s==='reset'||r===0) box=0;
+    else if(typeof s==='number') box=Math.max(0,Math.min(maxBox,box+s));
+    else return null;                       // an app we can't read — say nothing
+    const lvlFrom=Math.max(1,Math.min(4,+sr.level||1));
+    // scaffolding climbs only on a clean recall at a box that has survived a
+    // real interval — Giga's LEVEL_UP_BOX (srs-constants.js:27), app-published.
+    const lub=Number.isFinite(ladder.levelUpBox)?ladder.levelUpBox:null;
+    const lvlTo=(lub!=null&&r>=2&&box>=lub&&lvlFrom<4)?lvlFrom+1:lvlFrom;
+    return { days:days[box]|0, boxUp:box>from, levelFrom:lvlFrom, levelTo:lvlTo,
+             levelUp:lvlTo>lvlFrom, again:r===0 };
+  }
+  // "when it comes back" → a calm human phrase (study-progress.js:83)
+  function returnLabel(d){
+    if(!(d>0)) return 'back shortly';
+    if(d===1) return 'tomorrow';
+    if(d<30) return 'in '+d+' days';
+    const m=Math.round(d/30); return m<=1?'in about a month':'in '+m+' months';
+  }
   const today=new Date().setHours(0,0,0,0);
   const parseD=s=>new Date(s+'T12:00:00').getTime();
   const jget=(k,d)=>{ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?d:v; }catch(e){ return d; } };
@@ -431,13 +886,13 @@ render('');
     pulses().forEach(p=>p.offers.forEach(o=>{
       const r=scoreOffer(o,p); if(!r) return;
       const base={ app:p.app, appName:p.name||p.app, label:o.label||p.name||p.app,
-        topic:o.topic||null, score:r.score, paper:r.paper };
+        topic:o.topic||null, score:r.score, paper:r.paper, ladder:p.ladder||null };
       if(o.kind==='link'&&o.deep!=null){
         links.push({...base, url:p.url+o.deep, minutes:Math.max(3,Math.min(o.minutes||6,10))});
       } else if(Array.isArray(o.cards)&&o.cards.length){
         // suppress cards nailed in the last 12h; recent misses jump the queue
         const cs=o.cards
-          .filter(c=>c&&c.id&&c.q&&CARD_MIN[c.type])
+          .filter(cardOK)
           .filter(c=>{ const h=played[p.app+':'+c.id]; return !(h&&h.r>=2&&now-h.ts<12*HOUR); })
           .sort((a,b)=>{
             const ha=played[p.app+':'+a.id], hb=played[p.app+':'+b.id];
@@ -468,7 +923,7 @@ render('');
           if(nPapers>1&&(per[o.paper]||0)+m>cap) break;
           cursors[i]++; used+=m; per[o.paper]=(per[o.paper]||0)+m;
           queue.push({ app:o.app, appName:o.appName, label:o.label, topic:o.topic,
-            paper:o.paper, score:o.score, card:c });
+            paper:o.paper, score:o.score, ladder:o.ladder, card:c });
           progress=true;
         }
       }
@@ -489,8 +944,10 @@ render('');
     m.innerHTML=`<div class="sheet">
       <span class="x" id="hX">×</span>
       <h3>⚡ What the Study button does</h3>
-      <p class="lead">One tap deals a short quiz, right here — the highest-value questions pulled from all your study apps. You answer card by card and grade yourself; questions you miss come back sooner. No choosing, no browsing, no reading assignments.</p>
+      <p class="lead">One tap deals a short session, right here — the highest-value questions pulled from all your study apps. You produce the answer first, then reveal and grade yourself; questions you miss come back sooner. No choosing, no browsing, no reading assignments.</p>
       <div class="hRow"><b>How it decides</b><span>Every upcoming test &amp; exam is scored by <i>how soon it's due</i> × <i>how much it's worth</i> × <i>whether it's a must-pass</i> — then each app offers up the questions you're closest to forgetting.</span></div>
+      <div class="hRow"><b>Pathway cards get harder</b><span>Some cards are a whole pathway with pieces missing, and you type them back in. The better you know one, the more of it gets hidden next time — from a single blank, up to rebuilding the lot from the first concept alone. The <b>L1–L4</b> dots on the card show where you're at.</span></div>
+      <div class="hRow"><b>What you earn</b><span>After a grade the card holds for a moment and tells you the truth: <i>when this comes back</i> and <i>whether it will hide more next time</i>. Those numbers come from the app's own review schedule — if an app hasn't published one, you'll see no dials rather than a made-up figure.</span></div>
       <div class="hRow"><b>Where your answers go</b><span>Every self-grade flows back into the app the question came from, so its own scheduling gets smarter too.</span></div>
       <div class="hRow"><b>Why it can say “not set up yet”</b><span>Apps hand over their questions <i>after you've opened them once on this device</i>. Until then the button just shows your nearest deadline as a heads-up, <b>not</b> a recommendation. That's why it looks greyed out.</span></div>
       <div class="hRow"><b>The 20′ chip</b><span>Your time budget. Tap it to cycle 10 / 20 / 40 min and the quiz is packed to fit.</span></div>
@@ -526,8 +983,6 @@ render('');
          own average — never on a cold start, where "worst" is just sort order. */
   const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const DL_SHOW=4;                      // rows before the "show all" fold
-  let dlAll=false;
   const fmtD=iso=>{ const d=new Date(iso+'T12:00:00');
     return WD[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]; };
   const fmtT=t=>String(t).length===4?String(t).slice(0,2)+':'+String(t).slice(2):String(t);
@@ -568,58 +1023,107 @@ render('');
       .sort((x,y)=>y.due/y.total-x.due/x.total)[0];
     return (c&&c.due/c.total>=0.34&&c.due/c.total-avg>=0.15)?c.label:null;
   }
-  function renderDL(){
-    const host=$('#dlStrip'); if(!host) return;
-    const roll=rollup();
-    const rows=D.assessments.map(a=>({a,p:nextPick(a)})).filter(x=>x.p)
-      .sort((x,y)=>x.p.t-y.p.t||(y.a.weight||0)-(x.a.weight||0));
-    const head=`<div class="dlHead"><b>🗓 What's coming</b>
-        <button class="dlQ" data-a="dlHelp" title="What these numbers mean" aria-label="What these numbers mean">?</button>
-        <a class="dlAll" href="bn2-brief.html">Full schedule →</a></div>`;
-    if(!rows.length){
-      host.innerHTML=`<section class="dl">${head}<div class="dlEmpty">Nothing left on the calendar — add the new semester to <code>deadlines.js</code> when it lands.</div></section>`;
-      return;
-    }
-    const rowHtml=({a,p})=>{
-      // floor, not round: dates are noon-anchored against local midnight, so
-      // a sitting 3 days out reads 3.5 — and must agree with the ⚡ button
-      const d=Math.max(0,Math.floor((p.t-today)/DAY));
-      const tone=d<=3?'t-hot':d<=10?'t-warm':d<=28?'t-soon':'t-far';
-      const paper=(D.papers[a.paper]&&D.papers[a.paper].name)||a.paper;
-      const worth=a.hurdle?null:(a.weight?a.weight+'% of the paper':(a.pts?a.pts+' pts':null));
-      const r=roll[a.id];
-      let body;
-      if(a.kind==='assignment'||a.kind==='signoff'){
-        body=`<div class="dlNote">${a.kind==='assignment'?'Written work':'Sign-offs'} — no recall deck behind this one, so ⚡ leaves it to you.</div>`;
-      } else if(r&&r.total>0){
-        const pct=Math.round((1-r.due/r.total)*100);
-        const cls=pct>=80?'ok':pct>=50?'mid':'low';
-        const w=weakest(r);
-        // A final spans the whole paper, but a deck for one module still bids
-        // into it — so this is the one row where a high % genuinely misleads.
-        // Say so on the row itself; the count alone doesn't carry it.
-        body=`<div class="dlBar"><i class="${cls}" style="width:${pct}%"></i></div>
-          <div class="dlPct"><b class="${cls}">${pct}%</b> of the ${r.total} question${r.total===1?'':'s'} in play for this are in good standing${w?` · weakest: <b>${esc(w)}</b>`:''}</div>
-          ${a.kind==='exam'?`<div class="dlNote dim">An exam spans the whole paper — this counts only the decks built so far.</div>`:''}`;
-      } else if(r&&r.links.length){
-        body=`<div class="dlNote">${esc(r.links[0].app)} is enrolled — it's a live drill, so it tracks your progress inside the app, not here.</div>`;
-      } else {
-        body=`<div class="dlNote dim">No question deck enrolled yet — ⚡ can't help with this one until an app for it is opened on this device.</div>`;
-      }
-      return `<div class="dlRow">
-        <div class="dlNm">${esc(a.name)}${a.hurdle?'<span class="dlHurdle">MUST PASS</span>':''}</div>
-        <div class="dlDays ${tone}">${d}<span>d</span></div>
-        <div class="dlSub">${esc(paper)}${worth?' · '+worth:''} · ${whenLabel(a,p)}</div>
-        ${body}</div>`;
-    };
-    const show=dlAll?rows:rows.slice(0,DL_SHOW);
-    host.innerHTML=`<section class="dl">${head}
-      <div class="dlList">${show.map(rowHtml).join('')}</div>
-      ${rows.length>DL_SHOW?`<button class="dlMore" data-a="dlMore">${dlAll?'Show less ↑':'Show all '+rows.length+' →'}</button>`:''}
-    </section>`;
-    host.querySelectorAll('[data-a]').forEach(el=>{
-      el.onclick=()=>{ if(el.dataset.a==='dlMore'){ dlAll=!dlAll; renderDL(); } else showDLHelp(); };
+  // per-app due totals, for the tile chips (same numbers as the bars — one read)
+  function dueByApp(){
+    const m={};
+    pulses().forEach(p=>{
+      let due=0,total=0,any=false;
+      (p.offers||[]).forEach(o=>{
+        if(o.kind==='link') return;
+        const c=o.counts||{};
+        const t=Number(c.total)||(Array.isArray(o.cards)?o.cards.length:0);
+        if(!t) return;
+        any=true; total+=t; due+=Math.max(0,Math.min(Number(c.due)||0,t));
+      });
+      if(any) m[key(p.url)]={due:due,total:total};
     });
+    return m;
+  }
+  const dlRows=()=>D.assessments.map(a=>({a,p:nextPick(a)})).filter(x=>x.p)
+    .sort((x,y)=>x.p.t-y.p.t||(y.a.weight||0)-(x.a.weight||0));
+  // floor, not round: dates are noon-anchored against local midnight, so
+  // a sitting 3 days out reads 3.5 — and must agree with the ⚡ button
+  const daysTo=p=>Math.max(0,Math.floor((p.t-today)/DAY));
+  const toneOf=d=>d<=3?'t-hot':d<=10?'t-warm':d<=28?'t-soon':'t-far';
+  function rowHtml({a,p},roll){
+    const d=daysTo(p), tone=toneOf(d);
+    const paper=(D.papers[a.paper]&&D.papers[a.paper].name)||a.paper;
+    const worth=a.hurdle?null:(a.weight?a.weight+'% of the paper':(a.pts?a.pts+' pts':null));
+    const r=roll[a.id];
+    let body;
+    if(a.kind==='assignment'||a.kind==='signoff'){
+      body=`<div class="dlNote">${a.kind==='assignment'?'Written work':'Sign-offs'} — no recall deck behind this one, so ⚡ leaves it to you.</div>`;
+    } else if(r&&r.total>0){
+      const pct=Math.round((1-r.due/r.total)*100);
+      const cls=pct>=80?'ok':pct>=50?'mid':'low';
+      const w=weakest(r);
+      // A final spans the whole paper, but a deck for one module still bids
+      // into it — so this is the one row where a high % genuinely misleads.
+      // Say so on the row itself; the count alone doesn't carry it.
+      body=`<div class="dlBar"><i class="${cls}" style="width:${pct}%"></i></div>
+        <div class="dlPct"><b class="${cls}">${pct}%</b> of the ${r.total} question${r.total===1?'':'s'} in play for this are in good standing${w?` · weakest: <b>${esc(w)}</b>`:''}</div>
+        ${a.kind==='exam'?`<div class="dlNote dim">An exam spans the whole paper — this counts only the decks built so far.</div>`:''}`;
+    } else if(r&&r.links.length){
+      body=`<div class="dlNote">${esc(r.links[0].app)} is enrolled — it's a live drill, so it tracks your progress inside the app, not here.</div>`;
+    } else {
+      body=`<div class="dlNote dim">No question deck enrolled yet — ⚡ can't help with this one until an app for it is opened on this device.</div>`;
+    }
+    return `<div class="dlRow">
+      <div class="dlNm">${esc(a.name)}${a.hurdle?'<span class="dlHurdle">MUST PASS</span>':''}</div>
+      <div class="dlDays ${tone}">${d}<span>d</span></div>
+      <div class="dlSub">${esc(paper)}${worth?' · '+worth:''} · ${whenLabel(a,p)}</div>
+      ${body}</div>`;
+  }
+
+  /* v2: the landing shows ONE row — the nearest sitting — and the other
+     fourteen live behind it in the 🗓 sheet. Nothing was deleted; the wall just
+     stopped being the first thing you read. Same honesty rules apply to this
+     row as to the sheet: the bar is share-not-due of the questions IN PLAY, the
+     count is printed beside it, and no deck means no bar. */
+  function renderNext(){
+    const host=$('#nextDl'); if(!host) return;
+    const rows=dlRows();
+    if(!rows.length){ host.innerHTML=''; return; }
+    const roll=rollup(), row=rows[0], a=row.a, p=row.p;
+    const d=daysTo(p), tone=toneOf(d);
+    const paper=(D.papers[a.paper]&&D.papers[a.paper].name)||a.paper;
+    const worth=a.hurdle?'must pass':(a.weight?a.weight+'%':(a.pts?a.pts+' pts':''));
+    const r=roll[a.id];
+    let right='', bar='';
+    if(a.kind!=='assignment'&&a.kind!=='signoff'&&r&&r.total>0){
+      const pct=Math.round((1-r.due/r.total)*100);
+      const cls=pct>=80?'ok':pct>=50?'mid':'low';
+      right=`<span class="nxr">${pct}% of ${r.total}</span>`;
+      bar=`<span class="nxbar"><i class="${cls}" style="width:${pct}%"></i></span>`;
+    }
+    host.innerHTML=`<button class="nx" data-a="cal" title="See every test and exam left this semester">
+      <span class="nxd ${tone}">${d}<span>d</span></span>
+      <span class="nxt"><b>${esc(a.name)}</b><i>${esc(paper)}${worth?' · '+worth:''} · ${whenLabel(a,p)}</i></span>
+      ${right}<span class="nxall">All ${rows.length} →</span>${bar}</button>`;
+    host.querySelector('[data-a]').onclick=showCalendar;
+  }
+  function showCalendar(){
+    const roll=rollup(), rows=dlRows();
+    const m=document.createElement('div'); m.className='modal';
+    m.innerHTML=`<div class="sheet wide">
+      <button class="x" data-a="x" aria-label="Close">×</button>
+      <h3>🗓 What's coming</h3>
+      <p class="lead">Every test and exam left this semester, nearest first.</p>
+      <div class="sugg-list">${rows.length
+        ? `<div class="dlList">${rows.map(r=>rowHtml(r,roll)).join('')}</div>`
+        : `<div class="dlEmpty">Nothing left on the calendar — add the new semester to <code>deadlines.js</code> when it lands.</div>`}</div>
+      <div class="dlHead" style="margin:12px 0 0">
+        <button class="dlQ" data-a="help" title="What these numbers mean" aria-label="What these numbers mean">?</button>
+        <a class="dlAll" href="bn2-brief.html">Full schedule →</a>
+      </div>
+    </div>`;
+    const close=()=>m.remove();
+    m.onclick=e=>{
+      if(e.target===m) return close();
+      const el=e.target.closest('[data-a]'); if(!el) return;
+      if(el.dataset.a==='x') close(); else if(el.dataset.a==='help'){ close(); showDLHelp(); }
+    };
+    document.body.appendChild(m);
   }
   function showDLHelp(){
     const m=document.createElement('div'); m.className='modal';
@@ -645,15 +1149,18 @@ render('');
   const btn=$('#sbGo'), tEl=$('#sbT'), sEl=$('#sbS'), bEl=$('#sbB');
   let budget=jget(BK,20), plan=null;
   function refresh(){
-    renderDL();                          // same inputs as the plan — redraw together
+    renderNext();                        // same inputs as the plan — redraw together
+    setDue(dueByApp());                  // …and the tile chips read the same numbers
     bEl.textContent=budget+'′';
     plan=buildPlan(budget);
     if(plan.queue.length){
       btn.classList.remove('idle');
-      tEl.textContent='Study · ~'+Math.round(plan.estMin)+' min · '+plan.nCards+' cards';
+      // keep the title SHORT — at 375px the chips take ~110px, and a wrapping
+      // title pushed the whole hero to three lines. Minutes live in the sub.
+      tEl.textContent='Study · '+plan.nCards+' cards';
       const names=[...new Set(plan.queue.map(l=>l.label))];
       if(plan.outro.length) names.push(plan.outro[0].label);
-      sEl.textContent=names.join('  →  ');
+      sEl.textContent='~'+Math.round(plan.estMin)+' min · '+names.join(' → ');
     } else if(plan.outro.length){
       // only a link drill enrolled (e.g. just MedCalc) — still a real session
       btn.classList.remove('idle');
@@ -677,7 +1184,7 @@ render('');
     plan=buildPlan(budget); jset(PK,plan);          // rebuild fresh at press time
     if(plan.queue.length){ openPlayer(plan); }
     else if(plan.outro.length){
-      jset(LK,{ts:Date.now(),done:0,correct:0,missed:0,marks:0,weak:null,outro:true,outroDone:false});
+      jset(LK,{ts:Date.now(),done:0,correct:0,missed:0,mins:0,weak:null,outro:true,outroDone:false});
       location.href=addQ(plan.outro[0].url,'sb=out');
     } else showHelp();                        // idle: explain, don't silently jump elsewhere
   }
@@ -687,173 +1194,434 @@ render('');
     start();
   };
 
-  /* ---- the player: one card at a time, produce → reveal → self-grade ----
-     flash = think → flip → Again/Hard/Good/Easy (keys 1–4)
-     mcq   = pick (keys 1–n) → instant right/wrong + why → Next
-     saq   = say your points → flip → "how many did you get?" (keys 0–n)   */
+  /* ══════════════ the player — Giga's loop, in vanilla ══════════════════════
+     produce → reveal → REWARD → next. The reward beat is the piece v1 was
+     missing: after a grade the SAME card stays up long enough to read the rest
+     it just earned. Ported from gigastudyapp components/studio/DrillView.jsx +
+     StudySession.jsx and lib/store/{drill,study}.js.
+
+       flash = think → flip → Again/Hard/Good/Easy (keys 1–4)
+       mcq   = pick (keys 1–n) → instant right/wrong + why → Next
+       saq   = say your points → flip → "how many did you get?" (keys 0–n)
+       chain = TYPE the missing beads/verbs → reveal the pathway → 1–4
+
+     Two rules that are not negotiable, both learned the hard way:
+       · Bind handlers PER BUTTON, never on a container. During a re-render a
+         container listener still catches the click that CAUSED the render (the
+         event is mid-bubble) — reveal falls straight through to the reward beat
+         and grading is skipped entirely.
+       · The reward beat only exists when there is something real to show. An
+         app that publishes no `ladder`/`sr` advances immediately, exactly as
+         before, rather than pausing on two empty dials. */
   const GRADES=[['Again','1','g0'],['Hard','2','g1'],['Good','3','g2'],['Easy','4','g3']];
   const saqGrade=(n,tot)=>{ const p=tot?n/tot:0; return p>=1?3:p>=0.8?2:p>=0.5?1:0; };
+  const escA=s=>esc(s).replace(/"/g,'&quot;');
+  // deliberately dumb compare, for the neutral "same" note ONLY — never a grade
+  const norm=s=>String(s||'').toLowerCase().replace(/&/g,' and ')
+    .replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+  const dayKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const reduceMotion=()=>window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
   function toast(msg){ const t=document.createElement('div'); t.className='sbpToast';
-    t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1700); }
+    t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1900); }
   function bumpStreak(){
-    const iso=d=>new Date(d).toISOString().slice(0,10), t=Date.now();
-    const st=jget(SK,{last:'',n:0});
-    if(st.last!==iso(t)){ st.n=(st.last===iso(t-DAY))?st.n+1:1; st.last=iso(t); jset(SK,st); }
+    // local day key, not toISOString — at UTC+12/13 the UTC date rolls over at
+    // lunchtime, which made the streak tick over mid-afternoon.
+    const st=jget(SK,{last:'',n:0}), now=new Date();
+    const k=dayKey(now), y=dayKey(new Date(Date.now()-DAY));
+    if(st.last!==k){ st.n=(st.last===y)?st.n+1:1; st.last=k; jset(SK,st); }
     return st.n;
+  }
+  /* a real effort history, so the weekly trend on the done screen is honest.
+     A forgiving TREND, never a streak — some days are zero and that's fine.
+     (study-progress.js:103 logReconstruction, in localStorage.) */
+  const RK='studybus.recon';
+  function logRecon(n){
+    const g=jget(RK,{}), k=dayKey(new Date());
+    g[k]=(g[k]||0)+(n||1);
+    const ks=Object.keys(g).sort(); while(ks.length>70) delete g[ks.shift()];
+    jset(RK,g);
+  }
+  function weekStats(){
+    const g=jget(RK,{}), L=['S','M','T','W','T','F','S'], t=new Date(), out=[];
+    let max=1;
+    for(let k=6;k>=0;k--){
+      const d=new Date(t); d.setDate(t.getDate()-k);
+      const c=g[dayKey(d)]||0; if(c>max) max=c;
+      out.push({day:L[d.getDay()],count:c,today:k===0});
+    }
+    return out.map(o=>({day:o.day,count:o.count,today:o.today,pct:Math.round(o.count/max*100)}));
+  }
+
+  const CHAIN_PROMPT={
+    1:['Fill the gap','One concept is missing — recall what belongs there.'],
+    2:['Name the link','How do these two connect? Put the relationship into words.'],
+    3:['Carry it on','Rebuild the rest of the path from where it breaks — from memory.'],
+    4:['Rebuild from the seed','Only the first concept is given. Reconstruct the whole path from memory.'],
+  };
+  // deterministic, NO-AI narration of a chain into a sentence — the honest
+  // "why it holds" payload for the reveal (DrillView.jsx:212 narrateChain)
+  function narrate(beads,verbs){
+    if(!beads||beads.length<2) return '';
+    let s='<b>'+esc(beads[0])+'</b>';
+    for(let k=0;k+1<beads.length;k++){
+      s+= k===0?' ':', which ';
+      s+= verbs[k]?('<i>'+esc(verbs[k])+'</i> '):'connects to ';
+      s+='<b>'+esc(beads[k+1])+'</b>';
+    }
+    return s+'.';
   }
 
   function openPlayer(plan){
     const q=plan.queue.slice(), repeated={};
-    const tally={done:0,correct:0,missed:0,marks:0,byLabel:{}};
-    let i=0, phase='produce';
-    const ov=document.createElement('div'); ov.className='sbPlayer';
-    document.body.appendChild(ov); document.body.style.overflow='hidden';
-    const teardown=()=>{ document.removeEventListener('keydown',onKey); ov.remove(); document.body.style.overflow=''; };
+    const tally={done:0,correct:0,missed:0,mins:0,byLabel:{},
+                 hasSR:false,strengthened:0,boxUps:0,levelUps:0,maxDays:0};
+    let i=0, phase='produce', typed={}, picked=null, gained=null;
+    const scrim=document.createElement('div'); scrim.className='sbScrim';
+    const panel=document.createElement('div'); panel.className='sbPanel';
+    scrim.appendChild(panel);
+    document.body.appendChild(scrim); document.body.style.overflow='hidden';
+    scrim.onclick=e=>{ if(e.target===scrim) close(); };
+    const teardown=()=>{ document.removeEventListener('keydown',onKey); scrim.remove(); document.body.style.overflow=''; };
+    const close=()=>{ tally.done?finish(true):(teardown(),refresh()); };
 
     function writeGrade(leg,r){          // crash-safe: every grade lands immediately
       const gk='studybus.grades.'+leg.app, log=jget(gk,[]);
-      log.push({card:leg.card.id,r,ts:Date.now()}); jset(gk,log);
-      const h=plays(); h[leg.app+':'+leg.card.id]={ts:Date.now(),r}; jset(HP,h);
+      log.push({card:leg.card.id,r:r,ts:Date.now()}); jset(gk,log);
+      const h=plays(); h[leg.app+':'+leg.card.id]={ts:Date.now(),r:r}; jset(HP,h);
     }
-    function record(leg,r){
+    function record(leg,r,e){
       writeGrade(leg,r);
+      logRecon(1);
+      if(e){ tally.hasSR=true;
+        if(r>0) tally.strengthened++;
+        if(e.boxUp) tally.boxUps++;
+        if(e.levelUp) tally.levelUps++;
+        if(e.days>tally.maxDays) tally.maxDays=e.days; }
       if(leg.repeat) return;                 // round 2 trains the SRS, not the tally
-      tally.done++; tally.marks+=leg.score*estMin(leg.card);
+      // minutes of actual retrieval, from the same per-type estimate the plan
+      // packed with. (v1 reported "marks defended" = score × minutes, which was
+      // priority-weighted minutes wearing a mark's clothes — a vanity number.)
+      tally.done++; tally.mins+=estMin(leg.card);
       if(r===0){
         tally.missed++; tally.byLabel[leg.label]=(tally.byLabel[leg.label]||0)+1;
         const k=leg.app+':'+leg.card.id;
-        if(!repeated[k]&&q.length<44){ repeated[k]=1; q.push({...leg,repeat:true});
+        if(!repeated[k]&&q.length<44){ repeated[k]=1; q.push(Object.assign({},leg,{repeat:true}));
           toast("Missed — it'll come back before the end ↩"); }
       } else tally.correct++;
     }
-    function advance(){ i++; draw(); }
 
-    function draw(){
-      if(i>=q.length){ finish(false); return; }
-      const leg=q[i], c=leg.card; phase='produce';
-      const head=`<div class="sbpTop">
-          <button class="sbpX" data-a="close" title="End session — answers so far are already saved">✕</button>
-          <div class="sbpBar"><i style="width:${Math.round(i/q.length*100)}%"></i></div>
-          <span class="sbpN">${i+1}/${q.length}</span></div>
-        <div class="sbpMeta">${esc(leg.label)}${leg.repeat?' · <b class="sbpRe">round 2</b>':''}<span class="who">${esc(leg.appName)}</span></div>`;
-      if(c.type==='mcq'){
-        ov.innerHTML=head+`<div class="sbpCard"><div class="sbpQ">${c.q}</div>
-            <div class="sbpOpts">${c.options.map((o,n)=>`<button data-a="opt" data-n="${n}">${esc(o)}</button>`).join('')}</div>
-            <div class="sbpWhyBox"></div></div>
-          <div class="sbpActs"><button class="sbpSkip" data-a="skip">⏭ skip this card</button></div>`;
-      } else {
-        const hint=c.type==='saq'
-          ? `${(c.points||[]).length} marking points — say yours out loud, then flip.`
-          : 'Say the answer out loud — then flip. (tap the card or press Enter)';
-        ov.innerHTML=head+`<div class="sbpCard tap" data-a="reveal"><div class="sbpQ">${c.q}</div>
-            <p class="sbpHint">${hint}</p></div>
-          <div class="sbpActs"><button class="sbpGo" data-a="reveal">Reveal ↵</button>
-          <button class="sbpSkip" data-a="skip">⏭ skip this card</button></div>`;
-      }
+    /* flip the current card away as the next flips in (DrillView.jsx:66) */
+    function flipOut(){
+      if(reduceMotion()) return;
+      const el=panel.querySelector('.stCard'); if(!el) return;
+      const r=el.getBoundingClientRect(), g=el.cloneNode(true);
+      g.className='stCard stGhost';
+      g.style.left=r.left+'px'; g.style.top=r.top+'px';
+      g.style.width=r.width+'px'; g.style.height=r.height+'px';
+      g.style.transform='perspective(1200px) rotateY(0deg)';
+      g.style.transition='transform .3s cubic-bezier(.4,0,1,1),opacity .26s ease';
+      document.body.appendChild(g);
+      requestAnimationFrame(()=>{ g.style.opacity='0';
+        g.style.transform='perspective(1200px) rotateY(-12deg) translateY(-4px)'; });
+      setTimeout(()=>g.remove(),340);
     }
+    function advance(){ flipOut(); i++; typed={}; picked=null; gained=null; phase='produce'; paint(); }
     function reveal(){
       if(phase!=='produce') return;
-      const leg=q[i], c=leg.card; if(c.type==='mcq') return;
-      phase='reveal';
-      const card=ov.querySelector('.sbpCard'); card.classList.remove('tap'); card.removeAttribute('data-a');
-      if(c.type==='flash'){
-        card.innerHTML=`<div class="sbpQ">${c.q}</div><div class="sbpA">${c.a||''}</div>`;
-        ov.querySelector('.sbpActs').innerHTML=`<div class="sbpGrades">${GRADES.map((g,r)=>
-          `<button data-a="grade" data-r="${r}" class="${g[2]}">${g[0]}<span class="k">${g[1]}</span></button>`).join('')}</div>`;
-      } else {
-        const pts=c.points||[];
-        card.innerHTML=`<div class="sbpQ">${c.q}</div>
-          <div class="sbpA"><ol>${pts.map(p=>`<li>${p}</li>`).join('')}</ol>
-          ${c.model?`<p class="sbpModel">${c.model}</p>`:''}</div>`;
-        ov.querySelector('.sbpActs').innerHTML=
-          `<p class="sbpHint" style="margin:0 0 8px;text-align:center">Honestly — how many of those did you say?</p>
-          <div class="sbpChips">${Array.from({length:pts.length+1},(_,n)=>
-            `<button data-a="saq" data-n="${n}">${n}</button>`).join('')}</div>`;
-      }
+      const c=q[i].card; if(c.type==='mcq') return;
+      panel.querySelectorAll('.tin').forEach(el=>{ typed[el.dataset.k]=el.value; });
+      phase='reveal'; paint();
+    }
+    function grade(r){
+      if(phase!=='reveal') return;         // idempotent against a stale keypress
+      const leg=q[i];
+      gained=earned(leg.ladder,leg.card.sr,r);
+      record(leg,r,gained);
+      if(gained){ phase='reward'; paint(); } else advance();
     }
     function pick(n){
       if(phase!=='produce') return;
-      const leg=q[i], c=leg.card, ok=n===c.correct; phase='reveal';
-      ov.querySelectorAll('.sbpOpts button').forEach((b,x)=>{
-        b.disabled=true;
-        if(x===c.correct) b.classList.add('right');
-        else if(x===n&&!ok) b.classList.add('wrong');
-      });
-      const why=ov.querySelector('.sbpWhyBox');
-      why.className='sbpWhy';
-      why.innerHTML=(ok?'✅ Right. ':'<span class="sbpMiss">✗ Not this one.</span> ')+(c.why||'');
-      ov.querySelector('.sbpActs').innerHTML=`<button class="sbpGo" data-a="next">Next ↵</button>`;
-      record(leg, ok?2:0);            // recognition: right = Good, never Easy
+      const leg=q[i], c=leg.card, ok=n===c.correct;
+      picked=n;
+      gained=earned(leg.ladder,c.sr,ok?2:0);
+      record(leg, ok?2:0, gained);        // recognition: right = Good, never Easy
+      phase='reward'; paint();            // the card is already graded — one beat
     }
+
+    /* ---------- rendering ---------- */
+    function pathHtml(){
+      const MAX=14, t=q.length||1, count=Math.max(1,Math.min(t,MAX)), n=i+1;
+      const step=t>MAX?Math.max(1,Math.round(n/t*count)):n;
+      let s='';
+      for(let k=1;k<=count;k++) s+=`<i class="${k<step?'done':k===step?'cur':''}"></i>`;
+      return `<div class="stPath" role="progressbar" aria-valuenow="${n}" aria-valuemin="1" aria-valuemax="${t}" aria-label="Card ${n} of ${t}">${s}</div>`;
+    }
+    const ladderHtml=lvl=>`<div class="stLadder" title="How much of this pathway is hidden — it climbs as you earn it">`+
+      [1,2,3,4].map(n=>`<div class="stLvl ${n===lvl?'on':''} ${n<lvl?'done':''}"><div class="d"></div><span>L${n}</span></div>`).join('')+`</div>`;
+    function chainHtml(c,shown){
+      const beads=c.beads, verbs=c.verbs;
+      const hb=new Set(c.hiddenBeads||[]), hl=new Set(c.hiddenLinks||[]);
+      const slot=(k,truth,isVerb,hid)=>{
+        if(!hid) return esc(truth);                 // visible scaffolding
+        if(!shown) return `<input class="tin${isVerb?' v':''}" data-k="${k}" value="${escA(typed[k]||'')}"
+          placeholder="${isVerb?'the link…':'the concept…'}" autocomplete="off" spellcheck="false" enterkeyhint="next"
+          aria-label="${isVerb?'Name the relationship':'Name the concept'}">`;
+        // what you typed stays UNDER the truth — never replaced by it, never
+        // marked wrong. The ✓ is on beads only (a free-text verb would never
+        // match) and it never touches the grade. You stay the judge.
+        const you=(typed[k]||'').trim();
+        const same=!isVerb&&you&&norm(you)===norm(truth);
+        return esc(truth)+(you
+          ? `<span class="said${same?' match':''}">you said <b>${esc(you)}</b>${same?' ✓ same':''}</span>`
+          : `<span class="said blank">you left this blank</span>`);
+      };
+      let h='<span class="fill"></span>', vi=0;
+      for(let n=0;n<beads.length;n++){
+        const hid=hb.has(n);
+        h+=`<div class="stBead${n===0?' seed':''}${hid&&!shown?' hole':''}${hid&&shown?' solved':''}" style="--i:${vi++}">${slot('b'+n,beads[n],false,hid)}</div>`;
+        if(n<verbs.length){
+          const vh=hl.has(n);
+          h+=`<div class="stLink${vh&&!shown?' hole':''}${vh&&shown?' solved':''}" style="--i:${vi++}">${slot('l'+n,verbs[n],true,vh)}</div>`;
+        }
+      }
+      return `<div class="stChain${shown?' lit':''}" aria-live="polite">${h}</div>`;
+    }
+    function chainReveal(c){
+      const hb=c.hiddenBeads||[], hl=c.hiddenLinks||[];
+      let ans='';
+      if(hb.length===1&&hl.length===0) ans=`<div class="stAnswer" style="--d:.5s">The missing concept is <b>${esc(c.beads[hb[0]])}</b>.</div>`;
+      else if(hl.length===1&&hb.length===0) ans=`<div class="stAnswer" style="--d:.5s">The link is <b>${esc(c.verbs[hl[0]])}</b>.</div>`;
+      const why=(c.why&&String(c.why).trim())||narrate(c.beads,c.verbs);
+      const w=why?`<div class="stWhyBox" style="--d:${ans?'.64s':'.5s'}"><span class="lbl">Why it holds:</span> ${why}</div>`:'';
+      return (ans||w)?`<div class="stReveal">${ans}${w}</div>`:'';
+    }
+    function rewardHtml(){
+      if(!gained) return '';
+      const e=gained;
+      return `<div class="stReward${e.again?' lapse':''}" aria-live="polite">
+        <div class="stDial"><div class="l">Spacing</div>
+          <div class="v${e.boxUp&&!e.again?' up':''}">${e.again?'Back shortly':'↻ '+returnLabel(e.days)+(e.boxUp?' ↑':'')}</div></div>
+        <div class="stDial"><div class="l">Scaffolding</div>
+          <div class="v${e.levelUp?' up':''}">${e.levelUp
+            ? `L${e.levelFrom}→L${e.levelTo} · hides more`
+            : `Level ${e.levelTo} · steady`}</div></div>
+      </div>`;
+    }
+    const gradesHtml=()=>`<div class="stGrades" role="group" aria-label="Grade your recall">${
+      GRADES.map((g,r)=>`<button data-a="grade" data-r="${r}" class="${g[2]}">${g[0]}<span class="k">${g[1]}</span></button>`).join('')}</div>`;
+
+    function paint(){
+      if(i>=q.length){ finish(false); return; }
+      const leg=q[i], c=leg.card, shown=phase!=='produce';
+      const isChain=c.type==='chain';
+      const lvl=Math.max(1,Math.min(4,+c.level||1));
+      let prompt, body, acts='';
+
+      if(isChain){
+        const p=CHAIN_PROMPT[lvl]||CHAIN_PROMPT[1];
+        prompt=shown?`<b>${esc(c.name||'The pathway')}.</b> Here it is in full — how did you do?`
+                    :`<b>${p[0]}.</b> ${p[1]}`;
+        body=`<div class="stCard">${chainHtml(c,shown)}</div>${shown?chainReveal(c):''}`;
+      } else if(c.type==='mcq'){
+        prompt=`<b>Pick one.</b> Recognition only — right still counts as Good, never Easy.`;
+        const opts=(c.options||[]).map((o,n)=>{
+          let cls='';
+          if(shown){ if(n===c.correct) cls=' class="right"'; else if(n===picked) cls=' class="wrong"'; }
+          return `<button data-a="opt" data-n="${n}"${shown?' disabled':''}${cls}>${esc(o)}</button>`;
+        }).join('');
+        const ok=picked===c.correct;
+        const why=shown?`<div class="stWhy">${ok?'✅ Right. ':'<span class="stMiss">✗ Not this one.</span> '}${c.why||''}</div>`:'';
+        body=`<div class="stCard"><div class="stQ">${c.q}</div><div class="stOpts">${opts}</div>${why}</div>`;
+      } else if(c.type==='saq'){
+        const pts=c.points||[];
+        prompt=shown?`<b>${pts.length} marking point${pts.length===1?'':'s'}.</b> Honestly — how many did you say?`
+                    :`<b>${pts.length} marking point${pts.length===1?'':'s'}.</b> Say yours out loud, then flip.`;
+        body=`<div class="stCard${shown?'':' tap'}"${shown?'':' data-a="reveal"'}><div class="stQ">${c.q}</div>${shown
+          ? `<div class="stA"><ol>${pts.map(p=>`<li>${p}</li>`).join('')}</ol>${c.model?`<p class="stModel">${c.model}</p>`:''}</div>`
+          : `<p class="stHint">Cover it, say your points aloud, then reveal. (tap the card or press Enter)</p>`}</div>`;
+      } else {
+        prompt=shown?`<b>Here it is.</b> Grade yourself honestly — a miss is information, not a failure.`
+                    :`<b>Produce it.</b> Say the answer out loud before you flip.`;
+        body=`<div class="stCard${shown?'':' tap'}"${shown?'':' data-a="reveal"'}><div class="stQ">${c.q}</div>${shown
+          ? `<div class="stA">${c.a||''}</div>`
+          : `<p class="stHint">Say the answer out loud — then flip. (tap the card or press Enter)</p>`}</div>`;
+      }
+
+      // the action bar, per phase
+      if(phase==='reward'){
+        acts=`<button class="stGo" data-a="next">Next ↵</button>`;
+      } else if(phase==='reveal'){
+        if(c.type==='saq'){
+          const n=(c.points||[]).length;
+          acts=`<div class="stChips" role="group" aria-label="How many marking points did you get?">${
+            Array.from({length:n+1},(_,k)=>`<button data-a="saq" data-n="${k}">${k}</button>`).join('')}</div>`;
+        } else acts=gradesHtml();
+      } else if(c.type!=='mcq'){
+        acts=`<button class="stGo" data-a="reveal">Reveal ↵</button>
+              <button class="stSkip" data-a="skip">⏭ skip this card</button>`;
+      } else {
+        acts=`<button class="stSkip" data-a="skip">⏭ skip this card</button>`;
+      }
+
+      panel.innerHTML=`<div class="stTop">
+          <button class="stX" data-a="close" title="End session — every answer so far is already saved" aria-label="End session">✕</button>
+          ${pathHtml()}<span class="stN">${i+1}/${q.length}</span></div>
+        <div class="stHead"><span class="stSubj">${esc(leg.label)}${leg.repeat?' · <b class="stRe">round 2</b>':''}</span>
+          ${isChain?ladderHtml(lvl):`<span class="stWho">${esc(leg.appName)}</span>`}</div>
+        <div class="stPrompt">${prompt}</div>
+        <div class="stFlipIn">${body}${rewardHtml()}</div>
+        <div class="stActs">${acts}</div>`;
+      bind();
+    }
+
+    /* PER-BUTTON binding. A delegated listener on a container catches the very
+       click that triggered the re-render — see the header note. */
+    function bind(){
+      panel.querySelectorAll('[data-a]').forEach(el=>{
+        const a=el.dataset.a;
+        el.onclick=ev=>{
+          ev.stopPropagation();
+          if(a==='close') close();
+          else if(a==='reveal') reveal();
+          else if(a==='skip') advance();
+          else if(a==='next') advance();
+          else if(a==='opt') pick(+el.dataset.n);
+          else if(a==='grade') grade(+el.dataset.r);
+          else if(a==='saq') grade(saqGrade(+el.dataset.n,(q[i].card.points||[]).length));
+          else if(a==='finishNow'){ const last=jget(LK,null)||{};
+            last.outro=false; last.outroDone=true; jset(LK,last); teardown(); showDoneOverlay(last); }
+        };
+      });
+      // Enter walks DOWN the chain; Enter on the last field reveals. Blank
+      // fields are fine and never nagged about.
+      const ins=[...panel.querySelectorAll('.tin')];
+      ins.forEach((el,n)=>{
+        el.oninput=()=>{ typed[el.dataset.k]=el.value; };
+        el.onkeydown=ev=>{
+          if(ev.key!=='Enter') return;
+          ev.preventDefault();
+          if(n+1<ins.length) ins[n+1].focus(); else reveal();
+        };
+      });
+      if(ins.length) ins[0].focus({preventScroll:true});
+      else if(phase==='reward') panel.querySelector('[data-a="next"]')?.focus({preventScroll:true});
+    }
+
     function finish(early){
       const weak=Object.keys(tally.byLabel).sort((a,b)=>tally.byLabel[b]-tally.byLabel[a])[0]||null;
       const last={ts:Date.now(),done:tally.done,correct:tally.correct,missed:tally.missed,
-        marks:Math.round(tally.marks*10)/10,weak,outro:!early&&plan.outro.length>0,outroDone:false};
+        mins:Math.max(1,Math.round(tally.mins)),weak:weak,
+        hasSR:tally.hasSR,strengthened:tally.strengthened,boxUps:tally.boxUps,
+        levelUps:tally.levelUps,maxDays:tally.maxDays,
+        outro:!early&&plan.outro.length>0,outroDone:false};
       jset(LK,last);
       if(!early&&plan.outro.length){ drawOutro(last); }
       else { last.outroDone=true; jset(LK,last); teardown(); showDoneOverlay(last); }
     }
     function drawOutro(last){
       const o=plan.outro[0];
-      ov.innerHTML=`<div class="sbpDone">
-        <h3 style="margin:0;font-size:20px">Cards done ✅</h3>
+      panel.innerHTML=`<div class="stDone">
+        <h3>Cards done ✅</h3>
         <p class="sub2">${last.done} answered · one more thing before the tally…</p>
-        <a class="sbpGo" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="${esc(addQ(o.url,'sb=out'))}">${esc(o.label)} · ${o.minutes}′ →</a>
+        <a class="stGo" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="${escA(addQ(o.url,'sb=out'))}">${esc(o.label)} · ${o.minutes}′ →</a>
         <div class="alt"><a data-a="finishNow">Skip the drill — see the tally</a></div>
       </div>`;
+      bind();
     }
+
     function onKey(e){
+      if(e.repeat) return;                            // no held-key double-grade
+      const tag=(e.target&&e.target.tagName||'').toLowerCase();
+      const typing=tag==='input'||tag==='textarea';
+      if(e.key==='Escape'){ if(typing){ e.target.blur(); return; } close(); return; }
       const leg=q[i]; if(!leg) return;
       const c=leg.card;
-      if(e.key==='Escape'){ tally.done?finish(true):(teardown(),refresh()); return; }
-      if(phase==='produce'){
-        if(e.key==='Enter') reveal();
-        else if(c.type==='mcq'&&/^[1-9]$/.test(e.key)&&+e.key<=c.options.length) pick(+e.key-1);
-      } else {
-        if(c.type==='flash'&&/^[1-4]$/.test(e.key)){ record(leg,+e.key-1); advance(); }
-        else if(c.type==='mcq'&&e.key==='Enter') advance();
-        else if(c.type==='saq'&&/^[0-9]$/.test(e.key)&&+e.key<=(c.points||[]).length){
-          record(leg,saqGrade(+e.key,(c.points||[]).length)); advance(); }
+      if(phase==='reward'){
+        if((e.key==='Enter'||e.key===' ')&&!typing){ e.preventDefault(); advance(); }
+        return;
       }
+      if(phase==='produce'){
+        if(e.key==='Enter'&&!typing&&c.type!=='mcq'){ e.preventDefault(); reveal(); return; }
+        if(c.type==='mcq'&&!typing&&/^[1-9]$/.test(e.key)&&+e.key<=(c.options||[]).length){ e.preventDefault(); pick(+e.key-1); }
+        return;
+      }
+      if(typing) return;                              // a digit must reach the field
+      if(c.type==='saq'){
+        const n=(c.points||[]).length;
+        if(/^[0-9]$/.test(e.key)&&+e.key<=n){ e.preventDefault(); grade(saqGrade(+e.key,n)); }
+        return;
+      }
+      if(/^[1-4]$/.test(e.key)){ e.preventDefault(); grade(+e.key-1); }
     }
     document.addEventListener('keydown',onKey);
-    ov.addEventListener('click',e=>{
-      const el=e.target.closest('[data-a]'); if(!el) return;
-      const a=el.dataset.a, leg=q[i];
-      if(a==='close'){ tally.done?finish(true):(teardown(),refresh()); }
-      else if(a==='reveal') reveal();
-      else if(a==='skip'){ advance(); }
-      else if(a==='opt') pick(+el.dataset.n);
-      else if(a==='next') advance();
-      else if(a==='grade'){ record(leg,+el.dataset.r); advance(); }
-      else if(a==='saq'){ record(leg,saqGrade(+el.dataset.n,(leg.card.points||[]).length)); advance(); }
-      else if(a==='finishNow'){ const last=jget(LK,null)||{};
-        last.outro=false; last.outroDone=true; jset(LK,last); teardown(); showDoneOverlay(last); }
-    });
-    draw();
+    paint();
   }
 
-  /* ---- the honest done screen: real numbers, one place, never mid-session ---- */
+  /* ---- the honest done screen: real numbers, one place, never mid-session.
+     Confetti fires ONLY when something genuinely advanced — a celebration over
+     a blank session would discredit every other signal on the page. ---- */
   function showDoneOverlay(last){
-    const n=bumpStreak();
-    const ov=document.createElement('div'); ov.className='sbPlayer';
-    document.body.appendChild(ov); document.body.style.overflow='hidden';
-    ov.innerHTML=`<div class="sbpDone">
-      <h3 style="margin:0;font-size:20px">Session done ✅</h3>
-      <div class="big">≈ ${(last.marks||0).toFixed(1)}</div>
-      <p class="sub2">marks defended · ${n}-day streak 🔥</p>
-      <div class="row"><span><b>${last.done||0}</b> cards</span><span><b>${last.correct||0}</b> right</span><span><b>${last.missed||0}</b> missed</span></div>
+    const n=bumpStreak(), week=weekStats();
+    const scrim=document.createElement('div'); scrim.className='sbScrim';
+    const panel=document.createElement('div'); panel.className='sbPanel';
+    scrim.appendChild(panel);
+    document.body.appendChild(scrim); document.body.style.overflow='hidden';
+    const advanced=(last.correct||0)>0;
+    const longest=last.maxDays||0;
+    const longestLbl=longest>=30?Math.round(longest/30)+' mo':longest>=1?longest+' d':'—';
+    // Giga's four SR stats when the apps published a ladder; the honest
+    // fallback (what we can always count) when they didn't.
+    const stats=last.hasSR
+      ? [[last.strengthened||0,'p','cards strengthened'],
+         [last.boxUps||0,'m','climbed to a longer interval'],
+         [last.levelUps||0,'p','reached a new rung (hides more)'],
+         [longestLbl,'m','longest new rest earned']]
+      : [[last.done||0,'p','cards rebuilt'],
+         [last.correct||0,'m','answered right'],
+         [last.missed||0,'p','coming back sooner'],
+         [(last.mins||0)+'′','m','of actual retrieval']];
+    panel.innerHTML=`<div class="stDone">
+      ${advanced?'<div class="stConf" id="stConf"></div>':''}
+      <div class="stRing"><svg width="88" height="88" viewBox="0 0 88 88">
+        <circle class="bg" cx="44" cy="44" r="34" fill="none" stroke-width="7"/>
+        <circle class="fg" cx="44" cy="44" r="34" fill="none" stroke-width="7"/></svg>
+        <div class="ck">✓</div></div>
+      <h3>Session complete</h3>
+      <p class="sub2">Here's what genuinely moved — straight off the schedule, not a vanity score.${
+        last.hasSR?'':' <span style="opacity:.75">(Your apps have not published their review schedule yet, so these are counts, not intervals.)</span>'}</p>
+      <div class="stStats" role="status" aria-live="polite">${stats.map(s=>
+        `<div class="stStat"><div class="big ${s[1]}">${s[0]}</div><div class="cap">${s[2]}</div></div>`).join('')}</div>
+      <div class="stTrend">
+        <div class="stTrendLbl">This week · cards rebuilt</div>
+        <div class="stTrendBars">${week.map((d,k)=>
+          `<div class="col"><div class="bar${d.today?' today':''}" style="--h:${Math.max(4,Math.round(d.pct*0.42))}px;--k:${k}"></div><span>${d.day}</span></div>`).join('')}</div>
+      </div>
       ${last.missed&&last.weak
-        ? `<p class="weak">Most missed: <b>${esc(last.weak)}</b> — those come back sooner now.</p>`
-        : `<p class="weak">Clean run — nothing missed 🎯</p>`}
-      <button class="sbpGo" data-a="again">⚡ One more session</button>
+        ? `<p class="stWeak">Most missed: <b>${esc(last.weak)}</b> — those come back sooner now. ${n}-day streak 🔥</p>`
+        : `<p class="stWeak">Clean run — nothing missed 🎯 &nbsp;${n}-day streak 🔥</p>`}
+      <div class="stActs"><button class="stGo" data-a="again">⚡ One more session</button></div>
       <div class="alt"><a data-a="close">Done for now</a></div>
     </div>`;
-    ov.addEventListener('click',e=>{
-      const el=e.target.closest('[data-a]'); if(!el) return;
-      ov.remove(); document.body.style.overflow=''; refresh();
-      if(el.dataset.a==='again') start();
+    if(advanced&&!reduceMotion()){
+      const host=panel.querySelector('#stConf');
+      const cols=[getComputedStyle(document.documentElement).getPropertyValue('--acc').trim()||'#6366F1',
+                  '#32D74B','#FF9F0A','#FF453A','#37d4e6'];
+      for(let k=0;k<40;k++){
+        const p=document.createElement('i');
+        p.style.left=(50+(Math.random()*52-26))+'%';
+        p.style.background=cols[k%cols.length];
+        p.style.setProperty('--dx',(Math.random()*240-120)+'px');
+        p.style.setProperty('--rot',(Math.random()*720-360)+'deg');
+        p.style.animationDelay=(Math.random()*0.18)+'s';
+        host.appendChild(p);
+      }
+    }
+    panel.querySelectorAll('[data-a]').forEach(el=>{
+      el.onclick=()=>{ const a=el.dataset.a;
+        scrim.remove(); document.body.style.overflow=''; refresh();
+        if(a==='again') start(); };
     });
+    scrim.onclick=e=>{ if(e.target===scrim){ scrim.remove(); document.body.style.overflow=''; refresh(); } };
   }
 
   refresh();
@@ -868,6 +1636,98 @@ render('');
     }
     history.replaceState(null,'',location.pathname);   // clean the URL so refresh ≠ re-celebrate
   }
+})();
+
+/* ---------- visit counting: the opt-out, and the owner's traffic readout ----------
+   The counter itself is cloud/count.js (fire-and-forget, first-party, no cookie).
+   This block is only the two bits of UI around it.
+
+   The readout is honest about what it cannot tell you. It reports VISITORS
+   (distinct browsers), not people: one person on a phone and a laptop is two,
+   and clearing site data makes a returning visitor look new. Signed-in accounts
+   are the only "who" that is real, and they are shown separately for that
+   reason — the rest of the traffic is genuinely anonymous, by design. */
+(function(){
+  const OFF='hub.nocount';
+  const el=$('#btnPrivOff'); if(!el) return;
+  const box=el.parentElement;
+  const paint=()=>{
+    let off=false; try{ off=localStorage.getItem(OFF)==='1'; }catch(e){}
+    box.classList.toggle('off',off);
+    el.textContent = off ? 'Not counting you — turn back on' : "Don't count me";
+  };
+  el.onclick=()=>{
+    try{
+      if(localStorage.getItem(OFF)==='1') localStorage.removeItem(OFF);
+      else localStorage.setItem(OFF,'1');
+    }catch(e){}
+    paint();
+  };
+  paint();
+
+  // ── owner readout ──────────────────────────────────────────────────────
+  const OWNER='jeremyspm1999@gmail.com';
+  const host=$('#statsBox');
+  if(!host || !window.Cloud || !Cloud.enabled) return;
+
+  const top=(rows,pick,n)=>{
+    const m=new Map();
+    rows.forEach(r=>{ const k=pick(r); if(k) m.set(k,(m.get(k)||0)+1); });
+    return [...m.entries()].sort((a,b)=>b[1]-a[1]).slice(0,n);
+  };
+  const table=(pairs,empty)=>pairs.length
+    ? `<table>${pairs.map(p=>`<tr><td>${esc(p[0])}</td><td>${p[1]}</td></tr>`).join('')}</table>`
+    : `<div style="color:var(--tx3);font-style:italic">${empty}</div>`;
+
+  async function load(){
+    host.innerHTML=`<div class="stats"><h3>Traffic</h3><div style="color:var(--tx3)">Loading…</div></div>`;
+    const since=new Date(Date.now()-30*864e5).toISOString();
+    const {data,error}=await Cloud.client
+      .from('pageviews').select('at,site,path,ref,visitor,session,user_id,device,tz')
+      .gte('at',since).order('at',{ascending:false}).limit(20000);
+    if(error){ host.innerHTML=`<div class="stats"><h3>Traffic</h3><div class="warn">Couldn't load: ${esc(error.message)}</div></div>`; return; }
+    const rows=data||[];
+    if(!rows.length){
+      host.innerHTML=`<div class="stats"><h3>Traffic · last 30 days</h3>
+        <div style="color:var(--tx3)">No visits recorded yet. The counter went live 27/07/2026 — this stays empty until someone opens the hub.</div></div>`;
+      return;
+    }
+    const day=t=>new Date(t).toISOString().slice(0,10);
+    const today=day(Date.now()), wk=new Date(Date.now()-7*864e5).toISOString();
+    const uniq=a=>new Set(a).size;
+    const week=rows.filter(r=>r.at>=wk);
+    // A visit = one browser session. Signed-in accounts are the only real "who".
+    const accounts=uniq(rows.filter(r=>r.user_id).map(r=>r.user_id));
+    const days=[...new Set(rows.map(r=>day(r.at)))].sort().slice(-14).reverse();
+    const perDay=new Map(); rows.forEach(r=>{ const d=day(r.at); perDay.set(d,(perDay.get(d)||0)+1); });
+
+    host.innerHTML=`<div class="stats">
+      <h3>Traffic · last 30 days</h3>
+      <div class="nums">
+        <div class="n"><b>${rows.length}</b><span>page views</span></div>
+        <div class="n"><b>${uniq(rows.map(r=>r.session))}</b><span>visits</span></div>
+        <div class="n"><b>${uniq(rows.map(r=>r.visitor))}</b><span>visitors</span></div>
+        <div class="n"><b>${week.length}</b><span>views this week</span></div>
+        <div class="n"><b>${rows.filter(r=>day(r.at)===today).length}</b><span>today</span></div>
+        <div class="n"><b>${accounts}</b><span>signed-in accounts</span></div>
+      </div>
+      <div class="lbl">Most-opened pages</div>${table(top(rows,r=>r.site+' '+r.path,8),'—')}
+      <div class="lbl">Came from</div>${table(top(rows,r=>r.ref,6),'No external referrers — everyone typed the link or used a bookmark.')}
+      <div class="lbl">Device</div>${table(top(rows,r=>r.device,3),'—')}
+      <div class="lbl">Timezone</div>${table(top(rows,r=>r.tz,6),'—')}
+      <div class="lbl">By day</div>${table(days.map(d=>[d,perDay.get(d)||0]),'—')}
+      <div style="margin-top:12px;font-size:10px;color:var(--tx3);line-height:1.5">
+        “Visitors” counts distinct browsers, not people — your own phone and laptop are two,
+        and clearing site data makes someone look new. Only the ${accounts} signed-in account${accounts===1?'':'s'}
+        above is a real identity; the rest is anonymous on purpose. Anyone using
+        Global Privacy Control, or who pressed “Don't count me”, isn't in these numbers.
+      </div>
+    </div>`;
+  }
+  Cloud.onChange(user=>{
+    if(user && (user.email||'').toLowerCase()===OWNER) load();
+    else host.innerHTML='';
+  });
 })();
 
 /* ---------- cloud account UI (only if Cloud is configured) ---------- */
