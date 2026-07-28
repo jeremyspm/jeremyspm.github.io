@@ -932,8 +932,12 @@ const PROJECTS=[
   // Pharmacology on the page — the paper it sits for — instead of the Toolkit.
   {cat:'skills', paper:'pharm', ic:'i-calc', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta', practises:'pharm-medcalc'},
   // --- career ---
-  {cat:'career', ic:'i-flag', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
-  {cat:'career', ic:'i-clip', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
+  /* `owner:true` — listed for the owner account only (see OWNER_ONLY below).
+     This hides the TILE. Both pages stay live and publicly reachable at their
+     URLs, and this file still names them, so treat it as "not advertised",
+     never as access control. */
+  {cat:'career', owner:true, ic:'i-flag', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
+  {cat:'career', owner:true, ic:'i-clip', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
   // ── Dev tool — kept INTERNAL, not shown on the hub (2026-07-20). Still live at its URL for building
   //    packs, but future study hubs are meant to be bespoke/polished per topic, not one-size-fits-all. ──
   // {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
@@ -973,6 +977,20 @@ let DUE={};
    student never ran up — "579 due · 0% in good standing" before they've tapped
    anything. Same numbers, honest noun. */
 const isFresh=r=>!!r&&r.total>0&&r.nw!=null&&r.nw>=r.total;
+
+/* ── owner-only tiles ─────────────────────────────────────────────────────
+   A PROJECTS item with `owner:true` is advertised to ONE signed-in account and
+   to nobody else. Read this for exactly what it is: it hides the TILE. Both
+   pages stay live and publicly reachable at their own URLs, this file still
+   contains their names and links, and anyone with the URL or view-source has
+   them. It is "not advertised", never access control — if either page must
+   actually be private it has to come off Pages, or sit behind the database's
+   row-level security the way the traffic readout does.
+   Defaults to false, so the very first paint — and every visitor, and every
+   load where Cloud is switched off — gets the public hub. */
+const OWNER_ONLY='masa64@manukaumail.com';
+let IS_OWNER=false;
+const visibleProjects=()=>PROJECTS.filter(p=>!p.owner||IS_OWNER);
 /* match on PATH, not the whole URL: a tile's href is the absolute production
    URL while a pulse records wherever the app actually ran, so comparing origins
    would break the chip on any other host (and while testing locally). */
@@ -1026,7 +1044,7 @@ function render(){
 
   const papers=Object.keys(D.papers||{}).map(k=>{
     const p=D.papers[k];
-    const tools=PROJECTS.filter(t=>paperOf(t)===k);
+    const tools=visibleProjects().filter(t=>paperOf(t)===k);
     // A paper is "fresh" only if EVERY enrolled tool is — one tool part-way
     // through means the due count is real and gets stated as a due count.
     const withCounts=tools.map(t=>DUE[key(t.url)]).filter(Boolean);
@@ -1059,7 +1077,7 @@ function render(){
   }).join('');
 
   // anything not owned by a single paper: the semester schedule, clinical skills, career
-  const kit=PROJECTS.filter(t=>!paperOf(t));
+  const kit=visibleProjects().filter(t=>!paperOf(t));
 
   $('#sections').innerHTML=`
     <div class="sechead"><h2>Semester 2</h2><a class="lk" href="bn2-brief.html">Full schedule →</a></div>
@@ -1095,6 +1113,17 @@ function applyTheme(){ document.documentElement.setAttribute('data-theme',localS
 $('#btnTheme').onclick=()=>{ localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark'); applyTheme(); };
 applyTheme();
 render();
+
+/* Re-render once we know who is signed in, so the owner's tiles appear (and
+   vanish again on sign-out). onChange fires immediately with the current user,
+   so this resolves on load rather than after a round trip. Guarded because
+   Cloud is optional: with it off the hub simply stays in its public state. */
+if(window.Cloud && Cloud.enabled && Cloud.onChange){
+  Cloud.onChange(u=>{
+    const own=!!(u && String(u.email||'').toLowerCase()===OWNER_ONLY);
+    if(own!==IS_OWNER){ IS_OWNER=own; render(); }
+  });
+}
 
 /* ---------- ⚡ Study engine (v1) — see STUDY-ENGINE-SPEC.md ----------
    Apps bid CARDS onto the shared-origin bus (studybus.pulse.*, v2); the
