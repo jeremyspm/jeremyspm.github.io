@@ -908,9 +908,9 @@ const CATEGORIES=[
 ];
 const PROJECTS=[
   // --- Semester 2 → whole-semester overview (sits directly under Semester 2, above the papers) ---
-  {cat:'sem2', ic:'i-map', nm:'Semester 2 · Master Schedule', ds:'Every class, lab, test and exam across all three papers, week by week.', url:'https://jeremyspm.github.io/bn2-brief.html', badge:'new'},
+  {cat:'sem2', ic:'i-map', nm:'Semester 2 · Master Schedule', ds:'Every class, lab, test and exam across all three papers, week by week.', url:'https://jeremyspm.github.io/bn2-brief.html'},
   // --- Semester 2 → Introduction to Pharmacology ---
-  {cat:'sem2-pharm', ic:'i-flask', nm:'Introduction to Pharmacology', ds:'The whole paper as 13 topics — every one a metro map you can drill, from the 8 Rights to the essay scenario.', url:'https://jeremyspm.github.io/intro-pharm/', badge:'new', practises:'pharm-final'},
+  {cat:'sem2-pharm', ic:'i-flask', nm:'Introduction to Pharmacology', ds:'The whole paper as 13 topics — every one a metro map you can drill, from the 8 Rights to the essay scenario.', url:'https://jeremyspm.github.io/intro-pharm/', practises:'pharm-final'},
   // RETIRED 2026-07-28 — superseded by the tile above, which is the same paper rebuilt
   // relations-first from the full INTRO PHARM Canvas export (13 topics · 290 relations ·
   // 180 chains · 189 SAQ · 100 MCQ · 9 case studies · a metro map per topic).
@@ -919,7 +919,7 @@ const PROJECTS=[
   // so the two never bid against each other. Un-comment to put it back on the hub.
   // {cat:'sem2-pharm', ic:'💊', nm:'Pharmacology · Pre-Class Deep Dive', ds:'Introduction to Pharmacology (61985). Orient → see it → self-test across all ten modules: concepts & sourcing, PK/PD, med calcs, the 8 Rights, lifespan, legal/ethical & drug development.', url:'https://jeremyspm.github.io/pharmacology-hub/', date:'22/07/2026'},
   // --- Semester 2 → Health Science 2 ---
-  {cat:'sem2-hs2', ic:'i-pulse', nm:'Module 1', ds:'Cardiovascular, respiratory and lymphatic — 10 topics, each as a map you can drill.', url:'https://jeremyspm.github.io/hs2-module1/', badge:'new', practises:'hs2-t1'},
+  {cat:'sem2-hs2', ic:'i-pulse', nm:'Module 1', ds:'Cardiovascular, respiratory and lymphatic — 10 topics, each as a map you can drill.', url:'https://jeremyspm.github.io/hs2-module1/', practises:'hs2-t1'},
   // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by the one above:
   //   • module1-study-hub (20/07) — the original pre-class deep dive, Q&A Test layer.
   //   • hs2-module1 v1 (27/07)    — first relations-first cut, 6 topics, 111 relations.
@@ -931,21 +931,21 @@ const PROJECTS=[
   // `practises` still links a tool to the sitting it prepares you for (the ⚡
   // engine reads it); `paper` is what puts MedCalc under Introduction to
   // Pharmacology on the page — the paper it sits for — instead of the Toolkit.
-  {cat:'skills', paper:'pharm', ic:'i-calc', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', badge:'beta', practises:'pharm-medcalc'},
+  {cat:'skills', paper:'pharm', ic:'i-calc', nm:'MedCalc Drill', ds:'Endless dosage practice that names the slip you made, plus a pass-gate exam.', url:'https://jeremyspm.github.io/medcalc/', practises:'pharm-medcalc'},
   // --- Toolkit (no `paper:`, and `cat` is not in CAT_PAPER, so these fall through
   //     to the Toolkit section — see paperOf() below). Ported out of Giga; both are
   //     REFERENCE surfaces, so neither carries `practises` and neither bids into the
   //     ⚡ study bus: they have no cards and no due counts, and enrolling them would
   //     put fabricated numbers in the readiness bars. Spec: github/STEAL-FROM-GIGA-SPEC.md
-  {cat:'skills', ic:'i-body', nm:'Anatomy Atlas', ds:'A 3D body you can rotate, peel apart system by system, and tap to name any structure.', url:'https://jeremyspm.github.io/anatomy-atlas/', badge:'new'},
-  {cat:'skills', ic:'i-book', nm:'Ask Your Book', ds:'Search any textbook PDF on your device — get its own words and the page, or an honest “not in the book”.', url:'https://jeremyspm.github.io/ask-your-book/', badge:'new'},
+  {cat:'skills', ic:'i-body', nm:'Anatomy Atlas', ds:'A 3D body you can rotate, peel apart system by system, and tap to name any structure.', url:'https://jeremyspm.github.io/anatomy-atlas/'},
+  {cat:'skills', ic:'i-book', nm:'Ask Your Book', ds:'Search any textbook PDF on your device — get its own words and the page, or an honest “not in the book”.', url:'https://jeremyspm.github.io/ask-your-book/'},
   // --- career ---
   /* `owner:true` — listed for the owner account only (see OWNER_ONLY below).
      This hides the TILE. Both pages stay live and publicly reachable at their
      URLs, and this file still names them, so treat it as "not advertised",
      never as access control. */
-  {cat:'career', owner:true, ic:'i-flag', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html', badge:'new'},
-  {cat:'career', owner:true, ic:'i-clip', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/', badge:'new'},
+  {cat:'career', owner:true, ic:'i-flag', nm:'The NP Roadmap', ds:'BN1 to Nurse Practitioner in Aotearoa — every stage, with sources.', url:'https://jeremyspm.github.io/np-roadmap.html'},
+  {cat:'career', owner:true, ic:'i-clip', nm:'ED Nurse Checklist', ds:'2,341 tickable competencies, from student to competent ED nurse.', url:'https://jeremyspm.github.io/ed-checklist/'},
   // ── Dev tool — kept INTERNAL, not shown on the hub (2026-07-20). Still live at its URL for building
   //    packs, but future study hubs are meant to be bespoke/polished per topic, not one-size-fits-all. ──
   // {cat:'tool', ic:'🏗️', nm:'Cram Engine (template + demo)', ds:'The reusable shell behind the cram tools — copy it, drop in a content pack, get a full study app. Demo: vital signs.', url:'https://jeremyspm.github.io/cram-engine/'},
