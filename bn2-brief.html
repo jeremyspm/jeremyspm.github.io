@@ -158,7 +158,7 @@
   .row.exam { background: var(--crit-wash); border-left-width: 4px; }
   /* unverified post-DST times: flagged, NOT yet Canvas-checked */
   .row.unconf { background: var(--warn-wash); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 55%, transparent); }
-  .row.unconf .rt::after { content: "⚠ time unverified — confirm on the live Canvas calendar"; display: block; margin-top: 5px; padding-top: 4px; border-top: 1px dashed color-mix(in srgb, var(--warn) 40%, var(--line)); color: var(--warn); font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .01em; }
+  .row.unconf .rt::after { content: "⚠ confirm this one on the live Canvas calendar"; display: block; margin-top: 5px; padding-top: 4px; border-top: 1px dashed color-mix(in srgb, var(--warn) 40%, var(--line)); color: var(--warn); font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .01em; }
   /* a session that is not in the live Canvas calendar at all: kept visible, but
      struck through and dimmed so it reads as "don't plan around this". */
   .row.dead { opacity: .72; }
@@ -190,7 +190,7 @@
   .ppill { font-family: var(--mono); font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
   .ppill.hs { color: var(--hs); background: var(--hs-wash); } .ppill.inp { color: var(--inp); background: var(--inp-wash); } .ppill.ph { color: var(--ph); background: var(--ph-wash); }
   /* SYLLABUS ONLY — dated in the syllabus / course timetable, but with NO matching
-     Canvas calendar event and no dated Canvas assignment as at the 29 Jul 2026 audit. */
+     Canvas calendar event and no dated Canvas assignment. */
   .sylb { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; color: var(--crit); background: var(--crit-wash); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--crit) 45%, transparent); white-space: nowrap; }
 
   /* ---- paper deep cards ---- */
@@ -275,7 +275,13 @@
 <header class="hero wrap">
   <p class="eyebrow">Semester 2 · 2026 · Bachelor of Nursing Year 1 · MIT</p>
   <h1>Your whole semester, mapped and decoded.</h1>
-  <p class="lede">Three papers, one timeline. This is the complete plan pulled from Canvas — <b>every class, lab, test and exam, with the topic of each session and what's actually assessed</b>. It also shows the parts that matter most: where the three papers <b>land in the same tight window</b>, and which dates you still need to confirm yourself. Much of Canvas was locked when this was built, so treat it as a working map and re-check the live calendar as content opens up.</p>
+  <p class="lede">Three papers, one timeline. <b>Every class, lab, test and exam, with the topic of each session and what's actually assessed</b> — plus the parts that matter most: where the three papers <b>land in the same tight window</b>, and which dates you need to confirm yourself.</p>
+
+  <div class="alert warn" role="note" style="margin-top:26px">
+    <span class="tag">Read this first</span>
+    <h3>Check anything you rely on against the live Canvas calendar</h3>
+    <p>This is a working map, <b>not the official course document</b>. Times, rooms and due dates move during a semester, and a page like this is only ever a snapshot. <b>Canvas and your lecturers are the source of truth — where they disagree with this page, they win.</b> Use this to see the shape of the semester and plan around the crunch points, then confirm the details before you bank on them. Rows carrying a <span class="sylb">Syllabus only</span> tag or a <b style="color:var(--warn)">⚠</b> need that check most.</p>
+  </div>
 
   <div class="paper-strip">
     <a class="paper-chip" href="#hs" style="--hue:var(--hs)">
@@ -394,13 +400,8 @@
       <div><b>Short forms used below:</b> <b>Q</b> = questions · <b>MCQ</b> = multiple-choice question · <b>SAQ</b> = short-answer (written) question · <b>hurdle</b> / <b>Met&nbsp;/&nbsp;Not&nbsp;Met</b> = a task you must pass, but that earns no marks · <b>ProctorU</b> = online exam supervision · <b>stream</b> = your class group (1A, 1B, 2A or 2B) · <b>CLS</b> = Clinical Learning Suite.</div>
       <div><b>Heads-up on week numbers:</b> the two papers count weeks differently — HS2 doesn't number the break, so the same calendar week is "HS2 Week 9" but "INP Week 11". To avoid confusion, this map is anchored to <b>real dates</b>, not week numbers.</div>
       <div><b>HS2 lab groups</b> rotate fortnightly: <b>Blue &amp; Green</b> in the first lab week, <b>Red &amp; Yellow</b> in the second. Times below are the group start times. <b>Stream (1A/1B/2A/2B)</b> sets your personal times for INP sims, case-study briefings and the October practicals — always check your roster.</div>
-      <div><b style="color:var(--warn)">⚠ time unverified</b> on a row means that session's exact clock time is still being double-checked after the daylight-saving fix and has <b>not</b> been confirmed against the live Canvas calendar — check it yourself before relying on it. The day and date are reliable; only the start–end time is provisional.</div>
-    </div>
-
-    <div class="alert warn" role="note" style="margin:0 0 18px">
-      <span class="tag">Audit · 29 Jul 2026</span>
-      <h3>The daylight-saving fix holds — but five real time errors turned up</h3>
-      <p>Checked against the <b>live Canvas calendar</b> on <b>29 Jul 2026</b>. The daylight-saving correction (New Zealand moves to daylight time <b>Sun 27 Sep 2026</b>) is sound — there is <b>no residual one-hour drift</b> anywhere on this page. But the audit surfaced <b>five genuine time discrepancies</b>, now corrected or flagged below: the <b>4 Sep and 18 Sep Community Profile presentations run 1000–1600</b>, not "from 0800"; <b>four October practical days start 0800</b>, not 0730; the <b>Tue 4 Aug Pharmacology lecture ends 0945</b>, not 1000; the <b>Tue 4 Aug INP briefing</b> conflicts with Canvas and is flagged rather than changed; and the <b>Tue 27 Oct HS2 lecture is absent from the live Canvas calendar entirely</b>.</p>
+      <div><b style="color:var(--warn)">⚠</b> on a row means something about that session doesn't line up — Canvas and the timetable disagree, or the session isn't in Canvas at all. The row says which. Treat the day as reliable and the time as provisional, and confirm before you rely on it.</div>
+      <div><span class="sylb">Syllabus only</span> means the date comes from the course syllabus but has <b>no matching entry in Canvas</b> — no calendar event, no dated assignment. The assessment is real; the date is the one to check.</div>
     </div>
 
     <div class="wk-controls">
@@ -415,7 +416,7 @@
         <div class="row gen"><span class="rd">Mon 27</span><span class="rt"><span class="p">ALL</span> <b>Week 1 starts today.</b> Teaching doesn't begin until Wed 29, but Canvas's own <em>BN2 WEEK 1</em> marker begins Monday — and the first HS2 deadline is tonight, before you've sat in a single class.</span></div>
         <div class="row assess hs"><span class="rd">Mon 27</span><span class="rt"><span class="p">HS2</span> <b>Quiz: Blood Vessels (intro) — due 2359</b> · Canvas assignment · 0 pts, but dated</span></div>
         <div class="row gen"><span class="rd">Wed 29</span><span class="rt"><span class="p">ALL</span> <b>Orientation day</b> — joint (0800), then INP, Pharmacology &amp; HS2 orientations through the morning <em>· room 201</em></span></div>
-        <div class="row hs"><span class="rd">Wed 29</span><span class="rt"><span class="p">HS2</span> Orientation 1015–1100: <b>workbooks handed out, lab groups assigned, assessment overview</b>; then first class 1130–1300 · CVS learning page 1: blood vessels <em>· 201</em> (Canvas shows one 1015–1500 block; split taken from the timetable)</span></div>
+        <div class="row hs"><span class="rd">Wed 29</span><span class="rt"><span class="p">HS2</span> Orientation 1015–1100: <b>workbooks handed out, lab groups assigned, assessment overview</b>; then first class 1130–1300 · CVS learning page 1: blood vessels <em>· 201</em></span></div>
         <div class="row assess hs"><span class="rd">Wed 29</span><span class="rt"><span class="p">HS2</span> <b>Quiz: CVS1 Blood Vessels — due 1600</b> · 10 marks</span></div>
         <div class="row ph"><span class="rd">Wed 29</span><span class="rt"><span class="p">PHARM</span> Lecture: Pharmacology Concepts (1) · 1315–1445 <em>· 201</em></span></div>
         <div class="row inp"><span class="rd">Wed 29</span><span class="rt"><span class="p">INP</span> Lecture: Social Determinants of Health · 1500–1630 <em>· 201</em></span></div>
@@ -425,7 +426,7 @@
         <div class="row hs"><span class="rd">Fri 31</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430: cardiac physiology &amp; blood-pressure regulation <em>· 110</em></span></div>
         <div class="row inp"><span class="rd">Fri 31</span><span class="rt"><span class="p">INP</span> Lecture: Personal vs Population Health · 1000–1200 <em>· 110</em></span></div>
         <div class="row assess hs"><span class="rd">Fri 31</span><span class="rt"><span class="p">HS2</span> <b>Quiz: CVS4 Blood Pressure — due 2359</b> · 10 marks</span></div>
-        <div class="row assess gen"><span class="rd">Fri 31</span><span class="rt"><span class="p">ADMIN</span> <b>Lab-group swap deadline — 2359</b> (email the lecturer) &nbsp;<span class="sylb">Syllabus only</span> — no Canvas event or dated assignment for this as at 29 Jul 2026. Also do the compulsory Lab H&amp;S quiz (100% needed to enter labs) this week — it <b>exists as a Canvas assignment but has no due date set</b>, so this Week-1 gate is the syllabus's timing, not Canvas's.</span></div>
+        <div class="row assess gen"><span class="rd">Fri 31</span><span class="rt"><span class="p">ADMIN</span> <b>Lab-group swap deadline — 2359</b> (email the lecturer) &nbsp;<span class="sylb">Syllabus only</span>. Also do the compulsory Lab H&amp;S quiz (100% needed to enter labs) this week — it has <b>no due date set in Canvas</b>, so Week 1 is the syllabus's timing, not a Canvas deadline.</span></div>
       </div>
     </div>
 
@@ -434,8 +435,8 @@
       <div class="wk-h"><span class="wk-n">Week 2</span><span class="wk-d">Mon 3 – Fri 7 Aug</span></div>
       <div class="wk-body">
         <div class="row inp"><span class="rd">Mon 3</span><span class="rt"><span class="p">INP</span> Lecture: Demography &amp; Epidemiology · 1000–1200 <em>· online</em></span></div>
-        <div class="row inp unconf"><span class="rd">Tue 4</span><span class="rt"><span class="p">INP</span> Community Needs Assessment + <b>Community Profile assessment briefing</b> · 1030–1230 <em>· 110</em> — ⚠ Canvas says 0800–1230, which double-books room 110 against the 0800 Pharm lecture; 1030 assumed correct, confirm with lecturer</span></div>
-        <div class="row ph"><span class="rd">Tue 4</span><span class="rt"><span class="p">PHARM</span> Lecture: Pharmacology Concepts (2) · 0800–0945 <em>· 110</em> — Canvas titles this "Pharmacology Concepts (1)", same as 29 Jul; numbering unconfirmed</span></div>
+        <div class="row inp unconf"><span class="rd">Tue 4</span><span class="rt"><span class="p">INP</span> Community Needs Assessment + <b>Community Profile assessment briefing</b> · 1030–1230 <em>· 110</em> — ⚠ Canvas says 0800–1230, but that double-books room 110 against the 0800 Pharm lecture, so 1030 is the likelier start. Confirm with the lecturer.</span></div>
+        <div class="row ph"><span class="rd">Tue 4</span><span class="rt"><span class="p">PHARM</span> Lecture: Pharmacology Concepts (2) · 0800–0945 <em>· 110</em> — Canvas titles this "Pharmacology Concepts (1)", same as 29 Jul; the numbering is unclear</span></div>
         <div class="row hs"><span class="rd">Wed 5</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 · Module 1 (Cardiovascular) <em>· 110</em></span></div>
         <div class="row assess hs"><span class="rd">Wed 5</span><span class="rt"><span class="p">HS2</span> <b>Quiz: Module 1.2 RESP Basic Anatomy — due 2359</b> · 10 marks</span></div>
         <div class="row ph"><span class="rd">Wed 5</span><span class="rt"><span class="p">PHARM</span> Lecture: Medication Calculations (1) · 1430–1730 <em>· 110</em></span></div>
@@ -505,7 +506,7 @@
         <div class="row hs"><span class="rd">Thu 3</span><span class="rt"><span class="p">HS2</span> <b>Musculoskeletal labs</b> (Red 0800, Yellow 1100) + lecture 1330–1530 <em>· 110</em></span></div>
         <div class="row ph"><span class="rd">Thu 3</span><span class="rt"><span class="p">PHARM</span> CLS Medication Administration <b>practice</b> · 0730–1230 (check your stream) <em>· CLS</em></span></div>
         <div class="row hs"><span class="rd">Fri 4</span><span class="rt"><span class="p">HS2</span> Lecture 0800–1000 <em>· 201</em></span></div>
-        <div class="row assess inp"><span class="rd">Fri 4</span><span class="rt"><span class="p">INP</span> <b>Community Profile Presentations — Streams 1A &amp; 1B</b> · 1000–1600 · group presentation · <b>20%</b> <em>· 201</em> &nbsp;<span class="sylb">Syllabus only</span> — the <em>session</em> verifies against Canvas, but the <b>20% graded assessment does not</b>: there is no dated Canvas assignment for the Community Profile (checked 29 Jul 2026).</span></div>
+        <div class="row assess inp"><span class="rd">Fri 4</span><span class="rt"><span class="p">INP</span> <b>Community Profile Presentations — Streams 1A &amp; 1B</b> · 1000–1600 · group presentation · <b>20%</b> <em>· 201</em> &nbsp;<span class="sylb">Syllabus only</span> — the presentation session is in Canvas; the graded assessment behind it isn't dated anywhere.</span></div>
       </div>
     </div>
 
@@ -527,7 +528,7 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">Week 8</span><span class="wk-d">Mon 14 – Fri 18 Sep</span><span class="wk-tag warn">Case Study · Test 2 · Presentation</span></div>
       <div class="wk-body">
-        <div class="row assess inp"><span class="rd">Mon 14</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 2A · 0900</b> · written, APA 7th, Turnitin · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span> — no Canvas assignment or event for any Case Study <em>due date</em> as at 29 Jul 2026. The <b>briefing</b> sessions all verify perfectly (2A Mon 24 Aug, 2B Mon 31 Aug, 1A Mon 7 Sep, 1B Mon 14 Sep, all 1000, online) — it is only the due dates that are unverified.</span></div>
+        <div class="row assess inp"><span class="rd">Mon 14</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 2A · 0900</b> · written, APA 7th, Turnitin · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span> — the briefings are in Canvas; the due dates aren't. Confirm yours.</span></div>
         <div class="row inp"><span class="rd">Mon 14</span><span class="rt"><span class="p">INP</span> Case Study briefing (Stream 1B, 1000, online) · CLS Inpatient Prep — 1A 1300, 1B 1600 <em>· CLS</em></span></div>
         <div class="row ph"><span class="rd">Tue 15</span><span class="rt"><span class="p">PHARM</span> Lecture: Rongoā Māori (tbc) · 0800–1000 <em>· 110</em> · <b>Med Calc Resit 1</b> 0915–1000</span></div>
         <div class="row hs"><span class="rd">Wed 16</span><span class="rt"><span class="p">HS2</span> Lecture 0800–1000 · Nervous System / Endocrine <em>· 110</em></span></div>
@@ -535,7 +536,7 @@
         <div class="row ph"><span class="rd">Wed 16</span><span class="rt"><span class="p">PHARM</span> Legal &amp; Ethical Issues + Drug Development &amp; Advertising · 1430–1730 <em>· 110</em></span></div>
         <div class="row hs"><span class="rd">Thu 17</span><span class="rt"><span class="p">HS2</span> <b>Nervous System labs</b> (Red 0800, Yellow 1100) + lecture 1330–1530 <em>· 110</em></span></div>
         <div class="row hs"><span class="rd">Fri 18</span><span class="rt"><span class="p">HS2</span> Lecture 0800–0930 <em>· 301/127</em></span></div>
-        <div class="row assess inp"><span class="rd">Fri 18</span><span class="rt"><span class="p">INP</span> <b>Community Profile Presentations — Streams 2A &amp; 2B</b> · 1000–1600 · <b>20%</b> <em>· 201</em> &nbsp;<span class="sylb">Syllabus only</span> — session verified in Canvas; the <b>20% graded assessment is not</b> — no dated Canvas assignment exists (checked 29 Jul 2026).</span></div>
+        <div class="row assess inp"><span class="rd">Fri 18</span><span class="rt"><span class="p">INP</span> <b>Community Profile Presentations — Streams 2A &amp; 2B</b> · 1000–1600 · <b>20%</b> <em>· 201</em> &nbsp;<span class="sylb">Syllabus only</span> — the presentation session is in Canvas; the graded assessment behind it isn't dated anywhere.</span></div>
       </div>
     </div>
 
@@ -544,8 +545,8 @@
       <div class="wk-h"><span class="wk-n">Mid-semester break</span><span class="wk-d">Mon 21 Sep – Fri 2 Oct</span><span class="wk-tag warn">Not fully off</span></div>
       <div class="wk-body">
         <div class="row assess hs"><span class="rd">Mon 21</span><span class="rt"><span class="p">HS2</span> <b>Test 2 closes — Module 2 (MS, NS, Endocrine)</b> · 42 Q · 22% SAQ · covers Wk 5–8 + Car Accident case · <b>16.6%</b></span></div>
-        <div class="row assess inp"><span class="rd">Mon 21</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 2B · 0900</b> (falls inside the break) · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span> — due date not in Canvas (the 2B briefing, Mon 31 Aug 1000 online, does verify).</span></div>
-        <div class="row assess inp"><span class="rd">Mon 28</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 1A · 0900</b> (falls inside the break) · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span> — due date not in Canvas (the 1A briefing, Mon 7 Sep 1000 online, does verify).</span></div>
+        <div class="row assess inp"><span class="rd">Mon 21</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 2B · 0900</b> (falls inside the break) · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span></span></div>
+        <div class="row assess inp"><span class="rd">Mon 28</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 1A · 0900</b> (falls inside the break) · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span></span></div>
       </div>
     </div>
 
@@ -553,7 +554,7 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">HS2 Wk 9 · INP Wk 11</span><span class="wk-d">Mon 5 – Fri 9 Oct</span><span class="wk-tag warn">Practical window opens</span></div>
       <div class="wk-body">
-        <div class="row assess inp"><span class="rd">Mon 5</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 1B · 0900</b> · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span> — due date not in Canvas (the 1B briefing, Mon 14 Sep 1000 online, does verify).</span></div>
+        <div class="row assess inp"><span class="rd">Mon 5</span><span class="rt"><span class="p">INP</span> <b>Case Study due — Stream 1B · 0900</b> · <b>30%</b> &nbsp;<span class="sylb">Syllabus only</span></span></div>
         <div class="row inp"><span class="rd">Mon 5</span><span class="rt"><span class="p">INP</span> CLS Inpatient Prep — 2B 0730, 2A 1030 · <b>Vital Signs &amp; Med-Admin assessments begin</b> 1300–1800 (roster) <em>· CLS</em></span></div>
         <div class="row assess inp"><span class="rd">Tue 6</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0800–1800 (see roster) · <b>Met / Not Met</b></span></div>
         <div class="row hs"><span class="rd">Wed 7</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 · Module 3 (Reproduction) <em>· 110</em></span></div>
@@ -570,7 +571,7 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">HS2 Wk 10 · INP Wk 12</span><span class="wk-d">Mon 12 – Fri 16 Oct</span><span class="wk-tag warn">Essay · practicals</span></div>
       <div class="wk-body">
-        <div class="row assess ph"><span class="rd">Mon 12</span><span class="rt"><span class="p">PHARM</span> <b>Essay due 0900</b> · Mon 12 Oct — Canvas calendar and syllabus agree · APA 7th · <b>50%</b></span></div>
+        <div class="row assess ph"><span class="rd">Mon 12</span><span class="rt"><span class="p">PHARM</span> <b>Essay due 0900</b> · APA 7th · Turnitin · <b>50%</b></span></div>
         <div class="row assess inp"><span class="rd">Mon 12</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0800–1800 (roster) · <b>Met / Not Met</b></span></div>
         <div class="row assess inp"><span class="rd">Tue 13</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0800–1800 (roster)</span></div>
         <div class="row hs"><span class="rd">Wed 14</span><span class="rt"><span class="p">HS2</span> Lectures 0800–1000 &amp; 1230–1430 · Special Senses <em>· 110</em></span></div>
@@ -592,7 +593,7 @@
         <div class="row hs"><span class="rd">Wed 21</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 · Special Senses / Genetics <em>· 110</em></span></div>
         <div class="row inp"><span class="rd">Wed 21</span><span class="rt"><span class="p">INP</span> Vital Signs &amp; Med-Admin assessments · 0800–1200 (roster) <em>· Sim suite</em></span></div>
         <div class="row ph"><span class="rd">Wed 21</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 1 · 1430–1730 <em>· 110</em> · <b>Med Calc Resit 3</b> 1645</span></div>
-        <div class="row hs"><span class="rd">Thu 22</span><span class="rt"><span class="p">HS2</span> <b>Special Senses labs</b> (Red 0800, Yellow 1100) + lecture 1330–1530 <em>· 110 / 201 — <b style="color:var(--warn)">⚠ Canvas still flags both, unresolved</b></em></span></div>
+        <div class="row hs"><span class="rd">Thu 22</span><span class="rt"><span class="p">HS2</span> <b>Special Senses labs</b> (Red 0800, Yellow 1100) + lecture 1330–1530 <em>· 110 / 201 — <b style="color:var(--warn)">⚠ Canvas lists both; confirm on the day</b></em></span></div>
         <div class="row hs"><span class="rd">Fri 23</span><span class="rt"><span class="p">HS2</span> Lecture 0900–1100 <em>· 201/301</em></span></div>
         <div class="row inp"><span class="rd">Fri 23</span><span class="rt"><span class="p">INP</span> Lecture: Revision One (1130–1330, 301) · Vital Signs &amp; Med-Admin 1400–1800 (roster)</span></div>
       </div>
@@ -603,7 +604,7 @@
       <div class="wk-h"><span class="wk-n">HS2 Wk 12 · INP Wk 14</span><span class="wk-d">Mon 26 – Fri 30 Oct</span><span class="wk-tag warn">Test 3 closes · revision</span></div>
       <div class="wk-body">
         <div class="row assess hs"><span class="rd">Mon 26</span><span class="rt"><span class="p">HS2</span> <b>Test 3 closes — Module 3 (Repro, Genetics, Special Senses)</b> · 37 Q · 30% SAQ · covers Wk 9–11 + Deafness &amp; Lactation cases · <b>16.6%</b> &nbsp;·&nbsp; <em>Labour Day public holiday</em></span></div>
-        <div class="row hs unconf dead"><span class="rd">Tue 27</span><span class="rt"><span class="p">HS2</span> <s>Lecture 1230–1430 <em>· 110</em></s> — not on the HS2 timetable <b>and absent from the live Canvas calendar</b> (checked 29 Jul 2026); treat as not running unless a lecturer confirms</span></div>
+        <div class="row hs unconf dead"><span class="rd">Tue 27</span><span class="rt"><span class="p">HS2</span> <s>Lecture 1230–1430 <em>· 110</em></s> — not on the HS2 timetable and not in the Canvas calendar; treat as not running unless a lecturer says otherwise</span></div>
         <div class="row inp"><span class="rd">Tue 27</span><span class="rt"><span class="p">INP</span> Lecture: Revision Two (1030–1230, 110) · Vital Signs &amp; Med-Admin 1300–1800 (roster)</span></div>
         <div class="row ph"><span class="rd">Tue 27</span><span class="rt"><span class="p">PHARM</span> Lecture: Exam revision 2 · 0800–1000 <em>· 110</em></span></div>
         <div class="row hs"><span class="rd">Wed 28</span><span class="rt"><span class="p">HS2</span> Lecture 1230–1430 <em>· 110</em></span></div>
@@ -622,9 +623,9 @@
     <div class="wk">
       <div class="wk-h"><span class="wk-n">Exam week</span><span class="wk-d">Mon 2 – Fri 6 Nov</span><span class="wk-tag crit">Three finals</span></div>
       <div class="wk-body">
-        <div class="row exam inp"><span class="rd">Wed 4</span><span class="rt"><span class="p">INP</span> <b>Final Exam · 1300–1540</b> · 60 MCQ + 10 SAQ · <b>50%</b> <em>· venue TBA</em> — official timetable labels the exam 1300–1540; the Canvas block opens 1230, so be seated by then</span></div>
+        <div class="row exam inp"><span class="rd">Wed 4</span><span class="rt"><span class="p">INP</span> <b>Final Exam · 1300–1540</b> · 60 MCQ + 10 SAQ · <b>50%</b> <em>· venue TBA</em> — the room opens 1230, so be seated by then</span></div>
         <div class="row exam hs"><span class="rd">Thu 5</span><span class="rt"><span class="p">HS2</span> <b>Final Exam · 1230–1640</b> · 32 Q · 37% SAQ · on campus · starred* Booklet A cases (Wk 1–12) · <b>50%</b> <em>· rooms 301/312</em></span></div>
-        <div class="row exam ph"><span class="rd">Fri 6</span><span class="rt"><span class="p">PHARM</span> <b>Final Exam (afternoon)</b> · MCQs &amp; SAQs · <b>50%</b> — Canvas calendar and syllabus agree; no clash with HS2 (Thu 5 Nov).</span></div>
+        <div class="row exam ph"><span class="rd">Fri 6</span><span class="rt"><span class="p">PHARM</span> <b>Final Exam (afternoon)</b> · MCQs &amp; SAQs · <b>50%</b></span></div>
       </div>
     </div>
 
@@ -633,14 +634,14 @@
       <div class="wk-h"><span class="wk-n">Placement</span><span class="wk-d">Mon 9 Nov – Fri 18 Dec</span><span class="wk-tag">INP · clinical</span></div>
       <div class="wk-body">
         <div class="row inp"><span class="rd">Mon 9</span><span class="rt"><span class="p">INP</span> <b>Inpatient placement begins</b></span></div>
-        <div class="row gen"><span class="rd">9 Nov –<br>4 Dec</span><span class="rt"><span class="p">INP</span> <b>Wellness Clinic — a four-week window, of which you do one week.</b> Canvas repeats the identical Mon–Fri pattern for the weeks beginning <b>9, 16, 23 and 30 Nov</b>, and labels every event <em>"1/3"</em> — which reads as <b>three rotation groups, each student rostered for a single week</b>. <b style="color:var(--warn)">⚠ Find out which rotation group you are in</b> before you plan these four weeks as four weeks of work.</span></div>
+        <div class="row gen"><span class="rd">9 Nov –<br>4 Dec</span><span class="rt"><span class="p">INP</span> <b>Wellness Clinic — a four-week window, of which you do one week.</b> The same Mon–Fri pattern repeats for the weeks beginning <b>9, 16, 23 and 30 Nov</b>, split across <b>three rotation groups</b>. <b style="color:var(--warn)">⚠ Find out which group you are in</b> — this is one week of work, not four.</span></div>
         <div class="row inp"><span class="rd">Mon</span><span class="rt"><span class="p">INP</span> <b>CLS Wellness Prep · 0730–1600</b> + <b>Nurse Leader Briefing · 0900–1200</b> <em>· online</em></span></div>
         <div class="row inp"><span class="rd">Tue–Thu</span><span class="rt"><span class="p">INP</span> <b>Wellness Clinic · 0800–1630</b></span></div>
         <div class="row inp"><span class="rd">Fri</span><span class="rt"><span class="p">INP</span> <b>Wellness Debriefing</b> &amp; <b>Nurse Leader Presentations · 0900–1200</b> <em>· online</em></span></div>
-        <div class="row inp"><span class="rd">7–18 Dec</span><span class="rt"><span class="p">INP</span> <b>Inpatient placement only</b> — Canvas shows no Wellness Clinic in the final fortnight. Placement ends <b>Fri 18 Dec</b>.</span></div>
-        <div class="row assess inp"><span class="rd">Fri 20 Nov</span><span class="rt"><span class="p">INP</span> <b>Standards of Competence — sign-off 1</b> · <b>Met / Not Met</b> &nbsp;<span class="sylb">Syllabus only</span> — not in Canvas as at 29 Jul 2026; that Friday actually holds Wellness Debriefing &amp; Nurse Leader Presentations.</span></div>
-        <div class="row assess inp"><span class="rd">Fri 4 Dec</span><span class="rt"><span class="p">INP</span> <b>Standards of Competence — sign-off 2</b> &nbsp;<span class="sylb">Syllabus only</span> — not in Canvas; that Friday holds Wellness Debriefing &amp; Nurse Leader Presentations.</span></div>
-        <div class="row assess inp"><span class="rd">Fri 18 Dec</span><span class="rt"><span class="p">INP</span> <b>Standards of Competence — sign-off 3</b> · placement ends &nbsp;<span class="sylb">Syllabus only</span> — the sign-off is not in Canvas; the <b>18 Dec placement end date is correct</b>.</span></div>
+        <div class="row inp"><span class="rd">7–18 Dec</span><span class="rt"><span class="p">INP</span> <b>Inpatient placement only</b> — no Wellness Clinic in the final fortnight. Placement ends <b>Fri 18 Dec</b>.</span></div>
+        <div class="row assess inp"><span class="rd">Fri 20 Nov</span><span class="rt"><span class="p">INP</span> <b>Standards of Competence — sign-off 1</b> · <b>Met / Not Met</b> &nbsp;<span class="sylb">Syllabus only</span> — that Friday holds Wellness Debriefing &amp; Nurse Leader Presentations in Canvas.</span></div>
+        <div class="row assess inp"><span class="rd">Fri 4 Dec</span><span class="rt"><span class="p">INP</span> <b>Standards of Competence — sign-off 2</b> &nbsp;<span class="sylb">Syllabus only</span> — that Friday holds Wellness Debriefing &amp; Nurse Leader Presentations in Canvas.</span></div>
+        <div class="row assess inp"><span class="rd">Fri 18 Dec</span><span class="rt"><span class="p">INP</span> <b>Standards of Competence — sign-off 3</b> · placement ends &nbsp;<span class="sylb">Syllabus only</span> — the 18 Dec placement end date itself is solid.</span></div>
       </div>
     </div>
   </section>
@@ -648,41 +649,41 @@
   <!-- ============ 03 · MASTER CHECKPOINT LIST ============ -->
   <section id="master">
     <div class="sec-head"><span class="sec-num">03</span><h2>Every graded checkpoint, in date order</h2></div>
-    <p class="sec-sub">The quick-reference version: strip out the lectures and you're left with what actually earns (or gates) your marks. A few of these dates still need confirming yourself — see <a href="#verify" style="color:var(--accent-deep);text-decoration:none">§08</a>. Rows tagged <span class="sylb">Syllabus only</span> are dated in the course syllabus but have <b>no Canvas calendar event and no dated Canvas assignment</b> as at the 29 Jul 2026 audit. For contrast, only <b>two</b> dated assessments reconcile exactly: the <b>Pharmacology essay</b> (Canvas assignment, due Mon 12 Oct 0900) and the <b>HS2 Orientation Quiz</b> (due Wed 29 Jul 1100).</p>
+    <p class="sec-sub">The quick-reference version: strip out the lectures and you're left with what actually earns (or gates) your marks. Rows tagged <span class="sylb">Syllabus only</span> come from the course syllabus but have <b>no matching entry in Canvas</b> — confirm those dates before you plan around them. See <a href="#verify" style="color:var(--accent-deep);text-decoration:none">§08</a> for the rest.</p>
     <div class="tscroll">
     <table>
       <thead><tr><th>Date</th><th>Paper</th><th>Checkpoint</th><th>Weight</th></tr></thead>
       <tbody>
         <tr><td><span class="when">Mon 27 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Quiz: Blood Vessels (intro) — due 2359</td><td class="pct">0 pts</td></tr>
-        <tr><td><span class="when">Wed 29 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Orientation Quiz (due 1100) — ✓ verified in Canvas</td><td class="pct">10 pts</td></tr>
+        <tr><td><span class="when">Wed 29 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Orientation Quiz (due 1100)</td><td class="pct">10 pts</td></tr>
         <tr><td><span class="when">Wed 29 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Quiz: CVS1 Blood Vessels — due 1600</td><td class="pct">10 pts</td></tr>
         <tr><td><span class="when">Thu 30 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Quiz: CVS3 Cardiac Conduction &amp; ECG — due 1600</td><td class="pct">10 pts</td></tr>
         <tr><td><span class="when">Thu 30 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Quiz: CVS2 Mix &amp; Match Heart &amp; Valves — due 2359</td><td class="pct">10 pts</td></tr>
         <tr><td><span class="when">Fri 31 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Quiz: CVS4 Blood Pressure — due 2359</td><td class="pct">10 pts</td></tr>
-        <tr><td><span class="when">Fri 31 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Lab-group swap deadline (2359) <span class="sylb">Syllabus only</span><br><em>Not in Canvas (29 Jul 2026). The compulsory Lab H&amp;S quiz does exist as a Canvas assignment but has <b>no due date set</b>.</em></td><td><span class="mnm">admin gate</span></td></tr>
+        <tr><td><span class="when">Fri 31 Jul</span></td><td><span class="ppill hs">HS2</span></td><td>Lab-group swap deadline (2359) <span class="sylb">Syllabus only</span><br><em>The compulsory Lab H&amp;S quiz has no due date set in Canvas.</em></td><td><span class="mnm">admin gate</span></td></tr>
         <tr><td><span class="when">Wed 5 Aug</span></td><td><span class="ppill hs">HS2</span></td><td>Quiz: Module 1.2 RESP Basic Anatomy — due 2359</td><td class="pct">10 pts</td></tr>
         <tr><td><span class="when">Sat 8 Aug</span></td><td><span class="ppill hs">HS2</span></td><td>Lab 1 — online participation due 2359 <em>(feeds the lab hurdle)</em></td><td class="pct">45 pts</td></tr>
         <tr><td><span class="when">Sun 23 Aug</span></td><td><span class="ppill hs">HS2</span></td><td>Test 1 closes — Module 1 <em>(ProctorU window Mon–Sun)</em></td><td class="pct">16.6%</td></tr>
         <tr><td><span class="when">Tue 25 Aug</span></td><td><span class="ppill ph">Pharm</span></td><td>Medication Calculations Test</td><td><span class="mnm">Met / Not Met</span></td></tr>
         <tr><td><span class="when">Fri 28 Aug</span></td><td><span class="ppill hs">HS2</span></td><td>Lab 2 — online participation due 2359 <em>(feeds the lab hurdle)</em></td><td class="pct">40 pts</td></tr>
-        <tr><td><span class="when">Fri 4 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Community Profile — Streams 1A &amp; 1B · 1000–1600 <span class="sylb">Syllabus only</span><br><em>The presentation <b>sessions</b> verify in Canvas; the 20% graded assessment does not — no dated Canvas assignment exists (29 Jul 2026).</em></td><td class="pct">20%</td></tr>
-        <tr><td><span class="when">Mon 14 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Case Study due — Stream 2A <span class="sylb">Syllabus only</span><br><em>No Canvas assignment or event for any Case Study due date (29 Jul 2026). The <b>briefings</b> all verify: 2A Mon 24 Aug · 2B Mon 31 Aug · 1A Mon 7 Sep · 1B Mon 14 Sep, all 1000, online.</em></td><td class="pct">30%</td></tr>
+        <tr><td><span class="when">Fri 4 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Community Profile — Streams 1A &amp; 1B · 1000–1600 <span class="sylb">Syllabus only</span><br><em>The session is in Canvas; the graded assessment isn't dated.</em></td><td class="pct">20%</td></tr>
+        <tr><td><span class="when">Mon 14 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Case Study due — Stream 2A <span class="sylb">Syllabus only</span><br><em>Briefings are in Canvas (2A 24 Aug · 2B 31 Aug · 1A 7 Sep · 1B 14 Sep, all 1000, online); the due dates aren't.</em></td><td class="pct">30%</td></tr>
         <tr><td><span class="when">Tue 15 Sep</span></td><td><span class="ppill ph">Pharm</span></td><td>Med Calc Resit 1</td><td><span class="mnm">re-sit</span></td></tr>
-        <tr><td><span class="when">Fri 18 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Community Profile — Streams 2A &amp; 2B · 1000–1600 <span class="sylb">Syllabus only</span><br><em>Session verified; the 20% assessment is not dated anywhere in Canvas (29 Jul 2026).</em></td><td class="pct">20%</td></tr>
+        <tr><td><span class="when">Fri 18 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Community Profile — Streams 2A &amp; 2B · 1000–1600 <span class="sylb">Syllabus only</span><br><em>The session is in Canvas; the graded assessment isn't dated.</em></td><td class="pct">20%</td></tr>
         <tr><td><span class="when">Mon 21 Sep</span></td><td><span class="ppill hs">HS2</span></td><td>Test 2 closes — Module 2 <em>(ProctorU window Mon–Sun)</em></td><td class="pct">16.6%</td></tr>
         <tr><td><span class="when">Mon 21 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Case Study due — Stream 2B <em>(in break)</em> <span class="sylb">Syllabus only</span></td><td class="pct">30%</td></tr>
         <tr><td><span class="when">Mon 28 Sep</span></td><td><span class="ppill inp">INP</span></td><td>Case Study due — Stream 1A <em>(in break)</em> <span class="sylb">Syllabus only</span></td><td class="pct">30%</td></tr>
         <tr><td><span class="when">Mon 5 Oct</span></td><td><span class="ppill inp">INP</span></td><td>Case Study due — Stream 1B <span class="sylb">Syllabus only</span></td><td class="pct">30%</td></tr>
         <tr><td><span class="when">5–30 Oct</span></td><td><span class="ppill inp">INP</span> <span class="ppill ph">Pharm</span></td><td>Vital Signs + Med-Admin practicals (roster)</td><td><span class="mnm">Met / Not Met</span></td></tr>
         <tr><td><span class="when">Wed 7 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Med Calc Resit 2</td><td><span class="mnm">re-sit</span></td></tr>
-        <tr><td><span class="when">Mon 12 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Essay due 0900 — ✓ verified in Canvas (exact match)</td><td class="pct">50%</td></tr>
+        <tr><td><span class="when">Mon 12 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Essay due 0900</td><td class="pct">50%</td></tr>
         <tr><td><span class="when">Wed 21 Oct</span></td><td><span class="ppill ph">Pharm</span></td><td>Med Calc Resit 3</td><td><span class="mnm">re-sit</span></td></tr>
         <tr><td><span class="when">Mon 26 Oct</span></td><td><span class="ppill hs">HS2</span></td><td>Test 3 closes — Module 3 <em>(Labour Day · ProctorU window Mon–Sun)</em></td><td class="pct">16.6%</td></tr>
         <tr><td><span class="when">Wed 28 Oct</span></td><td><span class="ppill hs">HS2</span></td><td>Module 1 Exam Case 4: *Panic Attack Discussion — due 2359 <em>(unlocks 2 Oct, locks 6 Nov)</em></td><td class="pct">exam prep</td></tr>
         <tr><td><span class="when">Wed 4 Nov</span></td><td><span class="ppill inp">INP</span></td><td>Final Exam · 1300–1540</td><td class="pct">50%</td></tr>
         <tr><td><span class="when">Thu 5 Nov</span></td><td><span class="ppill hs">HS2</span></td><td>Final Exam · 1230–1640 · rooms 301/312</td><td class="pct">50%</td></tr>
         <tr><td><span class="when">Fri 6 Nov</span></td><td><span class="ppill ph">Pharm</span></td><td>Final Exam · afternoon</td><td class="pct">50%</td></tr>
-        <tr><td><span class="when">20 Nov · 4 Dec · 18 Dec</span></td><td><span class="ppill inp">INP</span></td><td>Standards of Competence sign-offs <span class="sylb">Syllabus only</span><br><em>Not in Canvas (29 Jul 2026) — those three Fridays actually hold Wellness Debriefing &amp; Nurse Leader Presentations.</em></td><td><span class="mnm">Met / Not Met</span></td></tr>
+        <tr><td><span class="when">20 Nov · 4 Dec · 18 Dec</span></td><td><span class="ppill inp">INP</span></td><td>Standards of Competence sign-offs <span class="sylb">Syllabus only</span><br><em>Those three Fridays hold Wellness Debriefing &amp; Nurse Leader Presentations in Canvas.</em></td><td><span class="mnm">Met / Not Met</span></td></tr>
       </tbody>
     </table>
     </div>
@@ -849,7 +850,7 @@
       <div class="paper-body">
         <div class="blk full">
           <h4>The shape of it</h4>
-          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">Two graded pieces (essay + exam, 50/50) sitting on top of <b>two must-pass practical hurdles</b>. The theory is drug classes — mechanisms, therapeutic uses and side effects — plus safe administration and patient medication education. <b>Coordinator was still listed as TBA</b> in the export, so watch for that appointment. Its two dated pieces — the essay (Mon 12 Oct) and the exam (Fri 6 Nov) — match between the syllabus and the live Canvas calendar.</p>
+          <p style="margin:0;color:var(--ink-soft);font-size:14.5px">Two graded pieces (essay + exam, 50/50) sitting on top of <b>two must-pass practical hurdles</b>. The theory is drug classes — mechanisms, therapeutic uses and side effects — plus safe administration and patient medication education. <b>Coordinator was still listed as TBA</b>, so watch for that appointment.</p>
         </div>
 
         <div class="blk">
@@ -882,8 +883,8 @@
             <tbody>
               <tr><td class="a">Medication Calculations Test</td><td><span class="when">Tue 25 Aug</span></td><td>Drug-maths hurdle · re-sits 15 Sep, 7 Oct, 21 Oct · LO1–3</td><td><span class="mnm">Met / Not Met</span></td></tr>
               <tr><td class="a">Medication Administration Competence</td><td><span class="when">from 5 Oct</span></td><td>With INP Vital Signs · max 2 attempts · LO1</td><td><span class="mnm">Met / Not Met</span></td></tr>
-              <tr><td class="a">Pharmacology Essay</td><td><span class="when">Mon 12 Oct · 0900</span></td><td>APA 7th · calendar and syllabus agree · LO1 &amp; 4</td><td class="pct">50%</td></tr>
-              <tr><td class="a">Exam</td><td><span class="when">Fri 6 Nov</span></td><td>MCQs &amp; SAQs · calendar and syllabus agree · LO1, 3 &amp; 4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Pharmacology Essay</td><td><span class="when">Mon 12 Oct · 0900</span></td><td>APA 7th · Turnitin · LO1 &amp; 4</td><td class="pct">50%</td></tr>
+              <tr><td class="a">Exam</td><td><span class="when">Fri 6 Nov</span></td><td>MCQs &amp; SAQs · LO1, 3 &amp; 4</td><td class="pct">50%</td></tr>
             </tbody>
           </table>
           </div>
@@ -937,24 +938,18 @@
   <!-- ============ 08 · VERIFY DATES ============ -->
   <section id="verify">
     <div class="sec-head"><span class="sec-num">08</span><h2>Dates to confirm for yourself</h2></div>
-    <p class="sec-sub">This map is built from a partial Canvas export, and a daylight-saving fix shifted some times, so a few dates need a second look from you. Here is exactly which ones — and why — so you know where to trust the map and where to check the live calendar first.</p>
-    <div class="callout" style="margin:0 0 20px">
-      <b>Audit — 29 July 2026.</b> Every date on this page was verified against the <b>live Canvas calendar and the Canvas API</b> for all three papers — Health Science 2 (61986), Introduction to Nursing Practice (61987) and Introduction to Pharmacology (61985) — covering <b>287 calendar entries and 28 dated assignments</b> across July–December 2026. All Canvas times are Pacific/Auckland local, so daylight saving is already accounted for. The rows below record what that audit found.
-    </div>
+    <p class="sec-sub">Most of this page is solid. These are the specific things worth checking yourself before you plan around them.</p>
     <div class="refs" style="counter-reset:none">
-      <div class="vrow"><span class="vbadge check">Confirm</span><span class="vt"><b>The early-November exam dates.</b> The three finals are shown as <b>INP Wed 4 Nov · HS2 Thu 5 Nov · Pharmacology Fri 6 Nov</b>, taken from Canvas's calendar and class schedule. Exam timetables are often finalised late, so re-confirm all three on the live calendar once the school publishes the official exam schedule — these are the dates everything else is planned around. (One small thing: the HS2 exam <em>end</em> reads 1640 on Canvas but 1630 on the official exam timetable — a 10-minute difference that doesn't affect planning.)</span></div>
-      <div class="vrow"><span class="vbadge check">Corrected</span><span class="vt"><b>The daylight-saving fix is sound — but five real time errors were found.</b> The 29 Jul 2026 audit against the live Canvas calendar confirms there is <b>no residual one-hour drift</b> anywhere on this page (NZ moves to daylight time Sun 27 Sep 2026). It did, however, surface <b>five genuine time discrepancies</b>, all now fixed or flagged: <b>(1)</b> the <b>Fri 4 Sep</b> and <b>(2)</b> <b>Fri 18 Sep</b> Community Profile presentations run <b>1000–1600</b>, not "from 0800" — the old "from 0800" was impossible, since HS2 holds room 201 from 0800–1000 on 4 Sep; <b>(3)</b> four October practical days (<b>Tue 6, Mon 12, Tue 13, Mon 19 Oct</b>) start <b>0800</b>, not 0730; <b>(4)</b> the <b>Tue 4 Aug</b> Pharmacology lecture ends <b>0945</b>, not 1000; and <b>(5)</b> the <b>Tue 27 Oct HS2 lecture is absent from the live Canvas calendar entirely</b>. Plus a sixth, unresolved: the <b>Tue 4 Aug INP briefing</b> conflict, below.</span></div>
-      <div class="vrow"><span class="vbadge conflict">Conflict</span><span class="vt"><b>Tue 4 Aug INP briefing — this page overrides Canvas.</b> Canvas says the Community Needs Assessment + Community Profile briefing runs <b>0800–1230 in room 110</b>. That double-books room 110 against the Pharmacology lecture running <b>0800–0945</b> in the same room, so Canvas looks like the broken record here. The page keeps <b>1030–1230</b> as the likely-correct time and flags the row. <b>This is the one place on the whole page where Canvas is not treated as the winner</b> — confirm it with the lecturer.</span></div>
-      <div class="vrow"><span class="vbadge conflict">Not in Canvas</span><span class="vt"><b>Several dated assessments exist only in the syllabus.</b> Tagged <span class="sylb">Syllabus only</span> throughout §02 and §03, because the audit found <b>no Canvas calendar event and no dated Canvas assignment</b> for them: the <b>INP Case Study</b> stream due dates (14 Sep, 21 Sep, 28 Sep, 5 Oct — 30%), though every <em>briefing</em> session verifies perfectly; the <b>INP Community Profile</b> as a 20% graded assessment (only the two presentation sessions exist); the three <b>Standards of Competence sign-offs</b> (20 Nov, 4 Dec, 18 Dec), where those Fridays actually hold Wellness Debriefing &amp; Nurse Leader Presentations; and the <b>lab-group swap deadline</b> (Fri 31 Jul 2359). The compulsory <b>Lab H&amp;S quiz</b> exists as a Canvas assignment but has <b>no due date set</b>, despite being treated here as a Week-1 gate.</span></div>
-      <div class="vrow"><span class="vbadge fix">Verified</span><span class="vt"><b>The two dated assessments that reconcile exactly.</b> Only two graded pieces match Canvas item-for-item: the <b>Pharmacology essay</b> (Canvas assignment, due <b>Mon 12 Oct 0900</b>) and the <b>HS2 Orientation Quiz</b> (due <b>Wed 29 Jul 1100</b>). Everything else dated on this page is either a calendar event without a graded assignment behind it, or syllabus-only.</span></div>
-      <div class="vrow"><span class="vbadge check">Roster</span><span class="vt"><b>Stream- and roster-based dates.</b> Every CLS simulation, case-study briefing, and the October Vital Signs / Med-Admin practicals depend on your stream (1A/1B/2A/2B) and the published roster. The times shown are the whole-class ranges, not your personal slot — check the roster as soon as it is posted.</span></div>
-      <div class="vrow"><span class="vbadge check">Topics</span><span class="vt"><b>HS2 lecture topics after Week 1.</b> Canvas only listed the exact learning pages for the first week. Later HS2 lectures are labelled here by <em>module / body system</em> (which is accurate) rather than an exact daily topic, because Canvas had not published that detail yet.</span></div>
-      <div class="vrow"><span class="vbadge conflict">Rooms</span><span class="vt"><b>The 22 Oct room clash is still unresolved.</b> An earlier version of this page called it settled in favour of room 201. That was wrong: as at 29 Jul 2026 the live Canvas entry still literally reads <em>"110 also booked in 201 - will have to get clarification"</em>. The Thu 22 Oct HS2 row now shows <b>110 / 201</b> with that flag intact. A few other entries also list two options — check the day's own calendar entry, and confirm 22 Oct with the lecturer.</span></div>
-      <div class="vrow"><span class="vbadge fix">Resolved</span><span class="vt"><b>INP final exam — the 1230 vs 1300 question is settled.</b> Canvas's calendar block runs 1230–1540, but the official INP timetable labels the <b>exam itself 1300–1540</b> (stated twice), so 1230 is just when the room opens. The page now shows the exam as <b>1300–1540</b> — plan to be seated by 1230.</span></div>
-      <div class="vrow"><span class="vbadge conflict">Canvas error</span><span class="vt"><b>HS2 lecture Fri 9 Oct is broken in Canvas.</b> It is saved with the same start and end time (1430–1430, zero length), so no real time can be read from it. The official HS2 timetable gives the real time — <b>1230–1430, room 110</b>, matching every other Friday — so that is what's shown now, but the Canvas calendar entry itself still needs fixing by the school.</span></div>
+      <div class="vrow"><span class="vbadge check">Exams</span><span class="vt"><b>The early-November exam dates.</b> The three finals sit on <b>INP Wed 4 Nov · HS2 Thu 5 Nov · Pharmacology Fri 6 Nov</b>. Exam timetables are often finalised late, so re-confirm all three once the school publishes the official schedule — everything else is planned backwards from them. (The HS2 exam <em>end</em> reads 1640 in Canvas and 1630 on the exam timetable; a 10-minute difference that changes nothing.)</span></div>
+      <div class="vrow"><span class="vbadge conflict">Syllabus only</span><span class="vt"><b>Some dates exist in the syllabus but nowhere in Canvas.</b> They carry a <span class="sylb">Syllabus only</span> tag: the <b>INP Case Study</b> stream due dates (14 Sep, 21 Sep, 28 Sep, 5 Oct — 30%); the <b>Community Profile</b> as a graded 20% assessment (the two presentation sessions do exist, the assessment isn't dated); the three <b>Standards of Competence sign-offs</b> (20 Nov, 4 Dec, 18 Dec — those Fridays hold Wellness Debriefing &amp; Nurse Leader Presentations in Canvas); and the <b>lab-group swap deadline</b> (Fri 31 Jul 2359). The compulsory <b>Lab H&amp;S quiz</b> has <b>no due date set</b> at all, so treat Week 1 as your own deadline. These are the dates to confirm first.</span></div>
+      <div class="vrow"><span class="vbadge conflict">Conflict</span><span class="vt"><b>Tue 4 Aug INP briefing — the one place this page doesn't follow Canvas.</b> Canvas puts the Community Needs Assessment + Community Profile briefing at <b>0800–1230 in room 110</b>, which double-books that room against the Pharmacology lecture running <b>0800–0945</b> in it. This page shows <b>1030–1230</b> as the likelier time and flags the row. Everywhere else, Canvas wins. Confirm this one with the lecturer.</span></div>
+      <div class="vrow"><span class="vbadge check">Roster</span><span class="vt"><b>Stream- and roster-based dates.</b> Every CLS simulation, case-study briefing, and the October Vital Signs / Med-Admin practicals depend on your stream (1A/1B/2A/2B) and the published roster. The times shown are whole-class ranges, not your personal slot — check the roster as soon as it is posted. The same goes for your <b>Wellness Clinic rotation group</b> in November.</span></div>
+      <div class="vrow"><span class="vbadge conflict">Rooms</span><span class="vt"><b>The Thu 22 Oct room is unsettled.</b> The Canvas entry itself reads <em>"110 also booked in 201 - will have to get clarification"</em>, so the row shows <b>110 / 201</b>. A few other entries also list two options — check the day's own calendar entry, and confirm 22 Oct with the lecturer.</span></div>
+      <div class="vrow"><span class="vbadge conflict">Canvas error</span><span class="vt"><b>The Fri 9 Oct HS2 lecture is broken in Canvas.</b> It's saved with the same start and end time (1430–1430, zero length), so no real time can be read from it. The timetable gives <b>1230–1430, room 110</b>, matching every other Friday, and that's what's shown here — but the Canvas entry still needs fixing by the school.</span></div>
+      <div class="vrow"><span class="vbadge check">Topics</span><span class="vt"><b>HS2 lecture topics after Week 1.</b> Canvas lists exact learning pages only for the first week. Later HS2 lectures are labelled here by <em>module / body system</em>, which is accurate but less specific than a daily topic.</span></div>
     </div>
     <div class="callout">
-      <b>The one rule for all of the above:</b> this page is a working map, not the official course document. When a date here disagrees with your live Canvas calendar or a lecturer's announcement, <b>the school's own calendar wins</b> — check it as content opens up, and re-confirm the early-November exam dates in particular once they are final. <b>There is exactly one documented exception:</b> the <b>Tue 4 Aug</b> INP briefing, where Canvas's own 0800–1230 entry double-books room 110 against the 0800 Pharmacology lecture. There, this page keeps <b>1030–1230</b> and flags the conflict rather than following Canvas — and even that is worth confirming with the lecturer.
+      <b>The one rule:</b> this page is a working map, not the official course document. When something here disagrees with your live Canvas calendar or a lecturer's announcement, <b>the school wins</b> — with the single exception of the Tue 4 Aug room-110 clash above, which is flagged rather than followed.
     </div>
   </section>
 
@@ -983,8 +978,8 @@
 </div>
 
 <footer class="wrap">
-  <p><b>Sources.</b> Synthesised from the Canvas export of all three Semester 2 2026 papers (Health Science 2 · 722.541, Introduction to Nursing Practice · 722.556, Introduction to Pharmacology). Weightings, formats and dates are quoted from the syllabus, assessment-overview, calendar and timetable pages; weekdays were cross-checked against the 2026 calendar.</p>
-  <p class="disclaim">Much of Canvas was still gated at export time. Dates — especially stream-specific practicals, roster times, and the early-November exams — may shift; confirm against the live Canvas calendar as content unlocks. This is a study aid, not the official course document.</p>
+  <p><b>Sources.</b> Built from the Canvas material for all three Semester 2 2026 papers — Health Science 2 (722.541), Introduction to Nursing Practice (722.556) and Introduction to Pharmacology (722.544). Weightings, formats and dates come from the syllabus, assessment-overview, calendar and timetable pages.</p>
+  <p class="disclaim">Dates move — especially stream-specific practicals, roster times and the early-November exams. Confirm anything you rely on against the live Canvas calendar. This is a study aid, not the official course document.</p>
 </footer>
 
 <script>
