@@ -931,19 +931,25 @@ const PROJECTS=[
   // grows is a marketing number; this one is meant to be the opposite, so when it falls,
   // it falls. Re-read `node build.mjs`'s output before editing this string.
   {cat:'sem2-hs2', ic:'i-zap', nm:'Test 1 Cram', ds:'345 cards across all 38 published focus points — 241 of them questions the lecturer has actually set before.', url:'https://jeremyspm.github.io/hs2-test1/', practises:'hs2-t1', badge:'new'},
-  // Lives IN THIS REPO (hs2-terms.html), not its own — same as bn2-brief and np-roadmap.
-  // Built from cram-engine + the 63 terms Module 1's own focus points name; the generator
-  // is hs2-terms.build.mjs, which needs cram-engine and hs2-test1 checked out beside it.
+  // RETIRED 2026-08-10 — "Module 1 Terminology" (hs2-terms.html), a 63-card drill on the
+  // terms cvs-15 / resp-17 / lymph-4 name. It was never a tool anybody asked for: it was
+  // a patch for coverage that turned out not to be missing. The three terminology focus
+  // points hold 28, 7 and 2 cards in Test 1 Cram once `alsoCrit` is counted, which is how
+  // the build counts them — only lymph-4 is thin, and it is declared thin.
   //
-  // NO `practises:` ON PURPOSE, and no studybus block inside the pack. Test 1 Cram
-  // already bids for hs2-t1, and these 63 terms are a SUBSET of its 345 cards — the
-  // definitions are carried across from its glossary. Enrolling both would do exactly
-  // what the retired Module 1 hub did in July: double-count the same ground in the
-  // hs2-t1 readiness bar and split the ⚡ engine's card budget between two tools
-  // teaching it. This is a focused side door onto content Test 1 Cram already owns,
-  // so it stays off the bus and out of the readiness maths.
-  {cat:'sem2-hs2', ic:'i-clip', nm:'Module 1 Terminology', ds:'The 63 terms the course names in its own focus points — typed from memory, not picked off a list.', url:'https://jeremyspm.github.io/hs2-terms.html', badge:'new'},
-  // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by the one above:
+  // Its own tile comment already conceded the rest: the 63 terms are a SUBSET of Test 1
+  // Cram's 345, the definitions were read out of that pack's glossary, and it stayed off
+  // the study bus so it would not double-count ground another tool owns. A side door onto
+  // content you already have, whose one differentiator — "typed from memory" — was a Cram
+  // mechanic firing every third card while the Study tab it opened on dealt multichoice.
+  //
+  // Every card was tier:'textbook'. hs2-test1's 64278d2 retired a terminology TOPIC four
+  // days earlier for exactly that reason: 35 of its 36 cards were manufactured to clear an
+  // authoring floor, and the course does not teach terminology as a separate area anyway.
+  // This rebuilt the same thing one repo over. The terms remain searchable in Test 1
+  // Cram's glossary; the generator and pack are gone with the page.
+  //
+  // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by Test 1 Cram above:
   //   • module1-study-hub (20/07) — the original pre-class deep dive, Q&A Test layer.
   //   • hs2-module1 v1 (27/07)    — first relations-first cut, 6 topics, 111 relations.
   // v1 was rebuilt IN PLACE at the same URL (so every existing link and the ⚡ engine's
