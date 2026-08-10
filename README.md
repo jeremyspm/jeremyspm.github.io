@@ -25,6 +25,22 @@ One link to share instead of a dozen: everything else is reachable from here.
 Unpublished projects are parked as commented-out stubs at the bottom of the
 PROJECTS array — flip them in when they go live.
 
+### Tools that live in THIS repo
+
+Step 1 assumes its own repo, and most tools have one. A few live here instead and
+are served straight off the root — `bn2-brief.html`, `np-roadmap.html` and
+`hs2-terms.html`. That is the right call when a tool is small, single-file and
+unlikely to grow its own release cycle; give it its own repo the moment it needs
+issues, a build pipeline, or a version history separate from the hub's.
+
+`hs2-terms.html` is generated, not hand-written: **`node hs2-terms.build.mjs`**
+splices a pack of Module 1's terminology into `cram-engine/template.html`. It needs
+`cram-engine` and `hs2-test1` checked out beside this repo — it reads the engine for
+the shell and `hs2-test1`'s glossary for the definitions, so nothing is duplicated by
+hand. `hs2-terms.pack.js` is the pack on its own, so
+`cram-engine/audit-typed.mjs` can be run against it. Regenerate rather than editing
+the HTML.
+
 ## Notes
 
 - `<meta name="robots" content="noindex">` keeps the hub out of search

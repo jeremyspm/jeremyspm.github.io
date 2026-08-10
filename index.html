@@ -931,6 +931,18 @@ const PROJECTS=[
   // grows is a marketing number; this one is meant to be the opposite, so when it falls,
   // it falls. Re-read `node build.mjs`'s output before editing this string.
   {cat:'sem2-hs2', ic:'i-zap', nm:'Test 1 Cram', ds:'345 cards across all 38 published focus points — 241 of them questions the lecturer has actually set before.', url:'https://jeremyspm.github.io/hs2-test1/', practises:'hs2-t1', badge:'new'},
+  // Lives IN THIS REPO (hs2-terms.html), not its own — same as bn2-brief and np-roadmap.
+  // Built from cram-engine + the 63 terms Module 1's own focus points name; the generator
+  // is hs2-terms.build.mjs, which needs cram-engine and hs2-test1 checked out beside it.
+  //
+  // NO `practises:` ON PURPOSE, and no studybus block inside the pack. Test 1 Cram
+  // already bids for hs2-t1, and these 63 terms are a SUBSET of its 345 cards — the
+  // definitions are carried across from its glossary. Enrolling both would do exactly
+  // what the retired Module 1 hub did in July: double-count the same ground in the
+  // hs2-t1 readiness bar and split the ⚡ engine's card budget between two tools
+  // teaching it. This is a focused side door onto content Test 1 Cram already owns,
+  // so it stays off the bus and out of the readiness maths.
+  {cat:'sem2-hs2', ic:'i-clip', nm:'Module 1 Terminology', ds:'The 63 terms the course names in its own focus points — typed from memory, not picked off a list.', url:'https://jeremyspm.github.io/hs2-terms.html', badge:'new'},
   // RETIRED 2026-07-27. Both earlier Module 1 hubs are superseded by the one above:
   //   • module1-study-hub (20/07) — the original pre-class deep dive, Q&A Test layer.
   //   • hs2-module1 v1 (27/07)    — first relations-first cut, 6 topics, 111 relations.
