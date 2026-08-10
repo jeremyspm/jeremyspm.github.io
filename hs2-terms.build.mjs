@@ -8,13 +8,41 @@
  * cross-checked against the module hub, so nothing here is newly invented.
  */
 import fs from 'fs';
-const SRC = '/tmp/claude-0/-home-user-jeremyspm-github-io/f222785a-8dfb-5c91-8c55-36ccb56d7389/scratchpad/pack.json';
-const TPL = '/workspace/cram-engine/template.html';
-const OUT = '/home/user/jeremyspm.github.io/hs2-terms.html';
+import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
 
-const P = JSON.parse(fs.readFileSync(SRC, 'utf8'));
+/* Every path is resolved from THIS FILE, never from the working directory and never
+   absolute. The first cut of this script hardcoded three absolute paths — one of them
+   into a scratch directory that does not outlive the session that wrote it — so it
+   "worked" exactly once, on one machine, and silently wrote its output into a different
+   checkout from the one it was run in. A generator that cannot be re-run is a generator
+   that has to be reverse-engineered from its output the next time the pack changes.
+   Default layout is three siblings; override with CRAM_ENGINE / HS2_TEST1 if yours
+   differs. */
+const HERE = dirname(fileURLToPath(import.meta.url));
+const ENGINE = resolve(process.env.CRAM_ENGINE || join(HERE, '..', 'cram-engine'));
+const TEST1 = resolve(process.env.HS2_TEST1 || join(HERE, '..', 'hs2-test1'));
+const TPL = join(ENGINE, 'template.html');
+const PACK1 = join(TEST1, 'pack.js');
+const OUT = join(HERE, 'hs2-terms.html');
+
+for (const [what, p, hint] of [['cram-engine template', TPL, 'CRAM_ENGINE'], ['hs2-test1 pack', PACK1, 'HS2_TEST1']]) {
+  if (!fs.existsSync(p)) {
+    console.error(`✗ ${what} not found at ${p}\n  Check it out beside this repo, or set ${hint}=<path to the repo>.`);
+    process.exit(2);
+  }
+}
+
+/* hs2-test1's pack.js is a JS file that calls F()/FC() for figures, so it is read the
+   way the audit script reads it: slice the object literal out and neutralise the helper
+   calls. Reading the real pack.js — rather than a hand-made JSON copy — is what keeps
+   the definitions here honestly identical to the ones that ship there. */
+const raw1 = fs.readFileSync(PACK1, 'utf8');
+const P = JSON.parse(raw1.slice(raw1.indexOf('{', raw1.indexOf('const PACK')), raw1.lastIndexOf('};') + 1)
+  .replace(/[A-Za-z_$][\w$]*\((['"])(?:(?!\1).)*\1\)/g, 'null'));
 const gloss = {};
 (P.glossary || []).forEach(g => gloss[g.term.toLowerCase().trim()] = g.def);
+if (Object.keys(gloss).length < 50) { console.error(`✗ only ${Object.keys(gloss).length} glossary terms read from ${PACK1}`); process.exit(2); }
 
 /* course spelling → the glossary key that defines it. `alt` holds spellings the
    matcher should also accept, which is where the course's own two misspellings live:

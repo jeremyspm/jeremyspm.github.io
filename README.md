@@ -34,12 +34,22 @@ unlikely to grow its own release cycle; give it its own repo the moment it needs
 issues, a build pipeline, or a version history separate from the hub's.
 
 `hs2-terms.html` is generated, not hand-written: **`node hs2-terms.build.mjs`**
-splices a pack of Module 1's terminology into `cram-engine/template.html`. It needs
-`cram-engine` and `hs2-test1` checked out beside this repo — it reads the engine for
-the shell and `hs2-test1`'s glossary for the definitions, so nothing is duplicated by
-hand. `hs2-terms.pack.js` is the pack on its own, so
-`cram-engine/audit-typed.mjs` can be run against it. Regenerate rather than editing
-the HTML.
+splices a pack of Module 1's terminology into `cram-engine/template.html`. It reads the
+engine for the shell and `hs2-test1/pack.js` for the definitions, so nothing is
+duplicated by hand, and it is deterministic — regenerating with the same inputs gives a
+byte-identical file. **Regenerate rather than editing the HTML.**
+
+It expects the three repos as siblings:
+
+```
+…/jeremyspm.github.io/   ← this repo
+…/cram-engine/
+…/hs2-test1/
+```
+
+Override with `CRAM_ENGINE=` / `HS2_TEST1=` if your layout differs; it exits 2 with the
+path it wanted if either is missing. `hs2-terms.pack.js` is written alongside — the pack
+on its own, so `cram-engine/audit-typed.mjs` can be run against it.
 
 ## Notes
 
