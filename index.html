@@ -217,6 +217,19 @@ header{display:flex;align-items:center;gap:8px;height:56px;margin-bottom:0}
 .stats td:last-child{text-align:right;color:var(--tx3);font-variant-numeric:tabular-nums;white-space:nowrap}
 .stats .lbl{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--tx3);margin:12px 0 2px}
 .stats .warn{color:var(--hard)}
+/* ── per-tool rows. One card per `site`, stacked, so the whole readout still
+   works at 375px: three equal tracks, each `minmax(0,1fr)` with `min-width:0`
+   on the cell, or a long number blows the grid out sideways (mobile-first
+   policy, the grid gotcha). */
+.stats .site{background:var(--card2);border-radius:9px;padding:9px 10px;margin-top:6px}
+.stats .sh{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.stats .sh b{font-size:12px;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.stats .sh svg{margin-left:auto;flex:0 0 auto;display:block}
+.stats .sg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stats .sg>div{min-width:0}
+.stats .sg span{display:block;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tx3)}
+.stats .sg b{display:block;font-size:15px;color:var(--tx);line-height:1.2;font-variant-numeric:tabular-nums}
+.stats .sg i{display:block;font-style:normal;font-size:10px;color:var(--tx3);font-variant-numeric:tabular-nums}
 /* ⚡ Study engine — THE hero. Giga's .st-cta (studio.css:503-508): ONE tinted
    prominent action — flat accent, no gradient, no coloured glow. v2 makes it
    the whole top of the page instead of one control among many. */
@@ -920,7 +933,7 @@ const PROJECTS=[
   // {cat:'sem2-pharm', ic:'💊', nm:'Pharmacology · Pre-Class Deep Dive', ds:'Introduction to Pharmacology (61985). Orient → see it → self-test across all ten modules: concepts & sourcing, PK/PD, med calcs, the 8 Rights, lifespan, legal/ethical & drug development.', url:'https://jeremyspm.github.io/pharmacology-hub/', date:'22/07/2026'},
   // --- Semester 2 → Health Science 2 ---
   {cat:'sem2-hs2', ic:'i-pulse', nm:'Module 1', ds:'Cardiovascular, respiratory and lymphatic — 10 topics, each as a map you can drill.', url:'https://jeremyspm.github.io/hs2-module1/', practises:'hs2-t1'},
-  // Counts are checked against hs2-test1/pack.js — 414 cards, 321 of them Hannetjie's own
+  // Counts are checked against hs2-test1/pack.js — 424 cards, 333 of them Hannetjie's own
   // questions, 38 focus points, 3 of them marked never-practised.
   //
   // THIS LINE HAS NOW BEEN WRONG TWICE, both times in the same direction: it claimed 382,
@@ -930,7 +943,13 @@ const PROJECTS=[
   // the number of her real questions went UP from 190 to 241. A card count that only ever
   // grows is a marketing number; this one is meant to be the opposite, so when it falls,
   // it falls. Re-read `node build.mjs`'s output before editing this string.
-  {cat:'sem2-hs2', ic:'i-zap', nm:'Test 1 Cram', ds:'414 cards across all 38 published focus points — 321 of them questions the lecturer has actually set before.', url:'https://jeremyspm.github.io/hs2-test1/', practises:'hs2-t1', badge:'new'},
+  //
+  // 11/08: 345 → 414 → 424, and the last step is the only one where the rise means what a
+  // rising card count usually pretends to mean. An alias in audit/migrate.mjs named a
+  // registry id that does not exist, so thirteen cards citing her BN2 Formative Test model
+  // answers were never searched, were demoted to `textbook`, and ten of them were then
+  // culled as manufactured padding. They are HER questions. Fixing the alias put them back.
+  {cat:'sem2-hs2', ic:'i-zap', nm:'Test 1 Cram', ds:'424 cards across all 38 published focus points — 333 of them questions the lecturer has actually set before.', url:'https://jeremyspm.github.io/hs2-test1/', practises:'hs2-t1', badge:'new'},
   // RETIRED 2026-08-10 — "Module 1 Terminology" (hs2-terms.html), a 63-card drill on the
   // terms cvs-15 / resp-17 / lymph-4 name. It was never a tool anybody asked for: it was
   // a patch for coverage that turned out not to be missing. The three terminology focus
@@ -2411,16 +2430,54 @@ if(window.Cloud && Cloud.enabled && Cloud.onChange){
     ? `<table>${pairs.map(p=>`<tr><td>${esc(p[0])}</td><td>${p[1]}</td></tr>`).join('')}</table>`
     : `<div style="color:var(--tx3);font-style:italic">${empty}</div>`;
 
+  /* ── the `site` dimension ───────────────────────────────────────────────
+     Every tool writes its own `site` into this one table, so ONE readout can
+     report all of them and every future cram tool appears here for free — no
+     second panel, and no sign-in inside a study tool that needs no account.
+
+     Rows written by a throwaway endpoint probe are excluded rather than
+     counted: a `site` ending in `-probe` is reserved for exactly that. How many
+     were dropped is SHOWN, because a number that quietly disagrees with the
+     database is worse than a slightly noisier panel. */
+  const isProbe=s=>/-probe$/.test(String(s||''));
+  const CAP=50000;      // one query, no paging — see the truncation notice below
+  const DAYS=14;
+
+  /* A sparkline is drawn from a FIXED calendar axis, never from the days that
+     happen to be present in the data: a tool with a quiet Tuesday must draw a
+     dip, not close the gap up and draw a straight line through it. */
+  function spark(counts){
+    const W=90,H=18,n=counts.length,max=Math.max(1,...counts);
+    const px=i=>(n<2?W:(i/(n-1))*W).toFixed(1);
+    const py=v=>(H-1.5-(v/max)*(H-3)).toFixed(1);
+    const pts=counts.map((v,i)=>px(i)+','+py(v)).join(' ');
+    return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true" focusable="false">`
+      +`<polyline fill="none" stroke="var(--acc-tx)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" points="${pts}"/></svg>`;
+  }
+
   async function load(){
     host.innerHTML=`<details class="stats"><summary>Traffic</summary><div class="body" style="color:var(--tx3)">Loading…</div></details>`;
-    const since=new Date(Date.now()-30*864e5).toISOString();
-    const {data,error}=await Cloud.client
-      .from('pageviews').select('at,site,path,ref,visitor,session,user_id,device,tz')
-      .gte('at',since).order('at',{ascending:false}).limit(20000);
+    /* No date filter any more: "all time" was asked for, and the only honest way
+       to report it is to read every row. `at desc` + CAP means an overflow drops
+       the OLDEST rows, so today and 7 days stay exact and only the all-time
+       column degrades — and it says so when it does.
+
+       TRUNCATION IS DETECTED FROM `count`, NEVER FROM `rows.length >= CAP`.
+       PostgREST enforces its own `max-rows` server-side, and a project set to
+       1000 would hand back 1000 rows to a request for 50000 — the naive test
+       compares against the wrong number, never fires, and the panel reports a
+       silently clipped "all time" as if it were the whole history. `count`
+       comes from the database and is the only figure that knows the truth. */
+    const {data,error,count}=await Cloud.client
+      .from('pageviews').select('at,site,path,ref,visitor,session,user_id,device,tz',{count:'exact'})
+      .order('at',{ascending:false}).limit(CAP);
     if(error){ host.innerHTML=`<details class="stats"><summary>Traffic</summary><div class="body warn">Couldn't load: ${esc(error.message)}</div></details>`; return; }
-    const rows=data||[];
+    const all=data||[];
+    const capped=typeof count==='number' && count>all.length;
+    const probes=all.filter(r=>isProbe(r.site)).length;
+    const rows=all.filter(r=>!isProbe(r.site));
     if(!rows.length){
-      host.innerHTML=`<details class="stats"><summary>Traffic · last 30 days</summary>
+      host.innerHTML=`<details class="stats"><summary>Traffic</summary>
         <div class="body" style="color:var(--tx3)">No visits recorded yet. The counter went live 27/07/2026 — this stays empty until someone opens the hub.</div></details>`;
       return;
     }
@@ -2430,14 +2487,32 @@ if(window.Cloud && Cloud.enabled && Cloud.onChange){
     const week=rows.filter(r=>r.at>=wk);
     // A visit = one browser session. Signed-in accounts are the only real "who".
     const accounts=uniq(rows.filter(r=>r.user_id).map(r=>r.user_id));
-    const days=[...new Set(rows.map(r=>day(r.at)))].sort().slice(-14).reverse();
+    const days=[...new Set(rows.map(r=>day(r.at)))].sort().slice(-DAYS).reverse();
     const perDay=new Map(); rows.forEach(r=>{ const d=day(r.at); perDay.set(d,(perDay.get(d)||0)+1); });
+
+    // The last DAYS calendar days ending today, oldest first — the sparkline axis.
+    const axis=[]; for(let i=DAYS-1;i>=0;i--) axis.push(day(Date.now()-i*864e5));
+
+    /* Per tool: page views and DISTINCT VISITORS for today / 7 days / all time.
+       Visitors is `count(distinct visitor)` done client-side, which is the same
+       number the database would give — the whole row set is already here. */
+    const bySite=new Map();
+    rows.forEach(r=>{ const k=r.site||'(unset)'; if(!bySite.has(k)) bySite.set(k,[]); bySite.get(k).push(r); });
+    const siteCards=[...bySite.entries()]
+      .sort((a,b)=>b[1].length-a[1].length)
+      .map(([name,rs])=>{
+        const perD=new Map(); rs.forEach(r=>{ const d=day(r.at); perD.set(d,(perD.get(d)||0)+1); });
+        const cell=(lab,set)=>{ const v=uniq(set.map(r=>r.visitor));
+          return `<div><span>${lab}</span><b>${set.length}</b><i>${v} visitor${v===1?'':'s'}</i></div>`; };
+        return `<div class="site"><div class="sh"><b>${esc(name)}</b>${spark(axis.map(d=>perD.get(d)||0))}</div>`
+          +`<div class="sg">${cell('today',rs.filter(r=>day(r.at)===today))}${cell('7 days',rs.filter(r=>r.at>=wk))}${cell('all time',rs)}</div></div>`;
+      }).join('');
 
     // Collapsed by default (no `open`), and re-rendered on every load, so a
     // refresh always closes it again. The summary carries the headline number
     // so the box is worth glancing at without opening it.
     host.innerHTML=`<details class="stats">
-      <summary>Traffic · last 30 days · ${rows.length} views</summary>
+      <summary>Traffic · ${bySite.size} tool${bySite.size===1?'':'s'} · ${rows.length} views</summary>
       <div class="body">
       <div class="nums">
         <div class="n"><b>${rows.length}</b><span>page views</span></div>
@@ -2447,16 +2522,20 @@ if(window.Cloud && Cloud.enabled && Cloud.onChange){
         <div class="n"><b>${rows.filter(r=>day(r.at)===today).length}</b><span>today</span></div>
         <div class="n"><b>${accounts}</b><span>signed-in accounts</span></div>
       </div>
+      <div class="lbl">By tool · sparkline is the last ${DAYS} days</div>${siteCards}
       <div class="lbl">Most-opened pages</div>${table(top(rows,r=>r.site+' '+r.path,8),'—')}
       <div class="lbl">Came from</div>${table(top(rows,r=>r.ref,6),'No external referrers — everyone typed the link or used a bookmark.')}
       <div class="lbl">Device</div>${table(top(rows,r=>r.device,3),'—')}
       <div class="lbl">Timezone</div>${table(top(rows,r=>r.tz,6),'—')}
       <div class="lbl">By day</div>${table(days.map(d=>[d,perDay.get(d)||0]),'—')}
+      ${capped?`<div class="warn" style="margin-top:12px;font-size:10px;line-height:1.5">The database holds ${count} rows but only the most recent ${all.length} came back, so “all time” below is really “the most recent ${all.length} views”. Today and 7 days are still exact.</div>`:''}
       <div style="margin-top:12px;font-size:10px;color:var(--tx3);line-height:1.5">
         “Visitors” counts distinct browsers, not people — your own phone and laptop are two,
         and clearing site data makes someone look new. Only the ${accounts} signed-in account${accounts===1?'':'s'}
         above is a real identity; the rest is anonymous on purpose. Anyone using
         Global Privacy Control, or who pressed “Don't count me”, isn't in these numbers.
+        “All time” for a tool starts when that tool's counter went live, not when the tool shipped.${
+        probes?` ${probes} endpoint-probe row${probes===1?'':'s'} excluded.`:''}
       </div>
       </div>
     </details>`;
