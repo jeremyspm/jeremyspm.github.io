@@ -78,7 +78,37 @@ Then once, early in the app's own script:
 Cloud.sync(['medcalcdrill.v1']);   // whatever localStorage key(s) this app owns
 ```
 That's it. Signed out or offline, the app is unchanged; signed in, that key
-syncs across devices, newest-write-wins.
+syncs across devices.
+
+### Give it a merge function if the key holds records
+
+Strongly recommended for anything keyed per item — progress, a log, flags:
+
+```js
+Cloud.sync(['cramengine.hs2-test1'], { merge: (mine, theirs) => combined });
+```
+
+`merge` is called whenever the two copies have diverged, and its answer replaces
+both. Return `null` to say "these can't be combined", which keeps the local copy
+and sends it up. **Without a merge function, a genuine two-device conflict has to
+pick a side, and the losing side's work is gone** — an evening on a phone, opened
+on a laptop the next day. `cram-engine`'s `mergeState` is the worked example: union
+the record maps, take the more-advanced record per item, never add counters, and
+leave view state (theme, filters, which tab) on the device you are sitting at.
+
+### Who wins, and why it is not a clock comparison
+
+A device that has nothing unpushed always takes the cloud's copy — decided from
+`synced` (the server's own `updated_at` for the revision we last pushed or adopted)
+and `dirty`, never from comparing a device clock against a server one. Both are read
+from a snapshot of the meta taken **before the page loaded**, because apps write
+during their own startup — a rolled-over session date, a one-off migration, a
+`?topic=` deep link — and the first version counted those as "this device has newer
+work" and threw the other device's day away. Before adopting anything, the copy being
+replaced is kept: `Cloud.backup(key)` returns it, `Cloud.rollback(key)` puts it back.
+
+`Cloud.state()` reports `off` / `out` / `pending` / `synced` so an app can say which
+it is, out loud. An app that silently isn't syncing looks exactly like one that is.
 
 ## Notes / lessons from the retired Japan tracker
 
