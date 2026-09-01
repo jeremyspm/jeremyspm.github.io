@@ -28,10 +28,10 @@ PROJECTS array — flip them in when they go live.
 ### Tools that live in THIS repo
 
 Step 1 assumes its own repo, and most tools have one. A few live here instead and
-are served straight off the root — `bn2-brief.html`, `np-roadmap.html` and
-`hs2-terms.html`. That is the right call when a tool is small, single-file and
-unlikely to grow its own release cycle; give it its own repo the moment it needs
-issues, a build pipeline, or a version history separate from the hub's.
+are served straight off the root — `bn2-brief.html`, `np-roadmap.html`,
+`hs2-terms.html` and `hs2-videos.html`. That is the right call when a tool is small,
+single-file and unlikely to grow its own release cycle; give it its own repo the moment
+it needs issues, a build pipeline, or a version history separate from the hub's.
 
 `hs2-terms.html` is generated, not hand-written: **`node hs2-terms.build.mjs`**
 splices a pack of Module 1's terminology into `cram-engine/template.html`. It reads the
@@ -50,6 +50,23 @@ It expects the three repos as siblings:
 Override with `CRAM_ENGINE=` / `HS2_TEST1=` if your layout differs; it exits 2 with the
 path it wanted if either is missing. `hs2-terms.pack.js` is written alongside — the pack
 on its own, so `cram-engine/audit-typed.mjs` can be run against it.
+
+`hs2-videos.html` is generated too: **`node hs2-videos.build.mjs`** reads hs2-test2's
+`content/dmdm-all.json` for the video list and its **built** `index.html` for the
+per-video "explains N questions" counts, then writes the playlist page. It expects
+hs2-test2 as a sibling (`HS2_TEST2=` overrides), and exits 2 with the path it wanted if
+it is missing. **Regenerate rather than editing the HTML.**
+
+The one thing the generator authors is the `TOPICS` table inside it — which video ids
+sit under which of the 20 topics. That table is gated in both directions: a video in no
+topic, a video in two, or a topic naming an id `dmdm-all.json` no longer has all fail
+the build. So the page cannot quietly stop being *every* video, which is the only thing
+it promises. Adding a video to hs2-test2 means adding its id to a topic here.
+
+Why the page exists at all: inside hs2-test2, `content/explain.mjs` attaches a video to
+a question at build time, and the page only shows it once you have answered wrong. 100
+of the 148 videos match no question, so they are unreachable from in there however
+badly you do. This is the orientation door — watch first, sit the mock papers after.
 
 ## Notes
 
