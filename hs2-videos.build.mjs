@@ -5,18 +5,23 @@
  * `content/explain.mjs` retrieves one at build time per question, and the page
  * shows it in the explain row or the weak-spots box. That is the right shape
  * for remediation and the wrong shape for orientation — you cannot watch the
- * set before a mock test without first failing your way to it, and 100 of the
- * 148 videos are matched to no question at all, so they are unreachable from
- * inside the tool no matter how many questions you miss.
+ * set before a mock test without first failing your way to it, and the videos
+ * no captured question needs are unreachable from inside the tool no matter
+ * how many questions you miss.
  *
  * This page is the other door: every video, grouped by topic, in the open.
  *
  * NOTHING here is authored content. The video list, its titles and durations are
  * hs2-test2's `content/dmdm-all.json` verbatim; the "explains N questions" counts
  * are read back out of its BUILT index.html, so they are the matches the tool
- * actually ships rather than a re-run of the matcher. The one thing added is the
- * TOPICS table below — a hand-made grouping of ids into topics, gated in both
- * directions so it can never silently drift from the video list.
+ * actually ships. Since 2026-09-06 those matches come from hs2-test2's
+ * `content/video-matches.json` — each one found in the video's own caption
+ * track, judged by a model reading that text, quote-gated and then put through
+ * an adversarial second review — not from the title matcher that shipped on
+ * 1 Sept and attached the Anterior Pituitary video to bone-growth questions.
+ * The one thing added here is the TOPICS table below — a hand-made grouping of
+ * ids into topics, gated in both directions so it can never silently drift from
+ * the video list.
  */
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -48,8 +53,14 @@ const built = fs.readFileSync(BUILT, 'utf8');
 const s = built.indexOf('const DATA = ');
 if (s < 0) { console.error(`✗ no DATA object in ${BUILT}`); process.exit(2); }
 const DATA = JSON.parse(built.slice(s + 13, built.indexOf('\n', s) - 1));
+/* `vid` is the best caption-verified video for the question and `vid.alt` the
+   runner-up when a second one also survived verification; both count — a video
+   that is the second door into five questions is still in the question bank. */
 const explains = {};
-for (const q of DATA.questions) if (q.vid) explains[q.vid.id] = (explains[q.vid.id] || 0) + 1;
+for (const q of DATA.questions) if (q.vid) {
+  explains[q.vid.id] = (explains[q.vid.id] || 0) + 1;
+  if (q.vid.alt) explains[q.vid.alt.id] = (explains[q.vid.alt.id] || 0) + 1;
+}
 
 /* ── topics ─────────────────────────────────────────────────────────────
    Module 2 is MS / NS / Endocrine; these are the topics inside them, named the
@@ -280,7 +291,7 @@ p.sysblurb{font-size:13px;color:var(--tx3);margin:0 0 12px}
   </div>
   <h1>▶ Module 2 Video Playlist</h1>
   <p class="sub">Every Dr Matt &amp; Dr Mike video the HS2 Paper Sim knows about — ${total.n} of them, ${total.topics} topics, ${hhmm(total.s)} end to end. Watch first, sit the mock papers after.</p>
-  <div class="why">📺 <b>Why this exists:</b> inside the Paper Sim a video only appears once you have already got something wrong. That is good remediation and useless for orientation — and ${total.n - total.reach} of these ${total.n} videos are matched to no question at all, so no amount of failing ever surfaces them. Here they are all in the open, grouped by topic. Tap a title to play it on this page.</div>
+  <div class="why">📺 <b>Why this exists:</b> inside the Paper Sim a video only appears once you have already got something wrong. That is good remediation and useless for orientation — and ${total.n - total.reach} of these ${total.n} videos teach nothing a captured quiz question tests, so no amount of failing ever surfaces them. Here they are all in the open, grouped by topic. Tap a title to play it on this page.</div>
 
   <div class="controls">
     <div class="searchrow">
@@ -300,9 +311,9 @@ ${SYS.map(([id, name]) => `      <button class="chip" data-sys="${id}" aria-pres
 
   <div id="list"></div>
 
-  <div class="note"><b>Read this before you trust a number.</b> The “<i>explains N</i>” tag counts questions in the Paper Sim that the tool's own title-matcher attached this video to. That matcher is a hypothesis, not a promise, and it is why ${total.n - total.reach} videos here carry no tag at all — a video with no tag is not off-topic, it is just one no question happened to match. And these are Dr Matt &amp; Dr Mike, not Hannetjie: where a video and her material disagree, <b>she is the one being marked</b>.</div>
+  <div class="note"><b>What the numbers mean.</b> The “<i>explains N</i>” tag counts Paper Sim questions whose tested fact this video actually states — matched from the video's own captions, not its title, then checked by two separate reviews and a verbatim quote gate, so every tag is a claim that was read, not guessed. The ${total.n - total.reach} videos with no tag are still good videos; they just cover ground none of the captured quizzes ask about. And these are Dr Matt &amp; Dr Mike, not Hannetjie: where a video and her material disagree, <b>she is the one being marked</b>.</div>
 
-  <div class="foot">Videos and durations come straight from hs2-test2's <code>content/dmdm-all.json</code>. Topics are this page's own grouping. Watched ticks are stored in this browser only.</div>
+  <div class="foot">Videos and durations come straight from hs2-test2's <code>content/dmdm-all.json</code>; the question counts from its <code>content/video-matches.json</code>. Topics are this page's own grouping. Watched ticks are stored in this browser only.</div>
 </div>
 <script>
 'use strict';

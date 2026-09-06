@@ -46,7 +46,11 @@ in `index.html` where its tile used to be; before rebuilding anything like it, r
 `content/dmdm-all.json` for the video list and its **built** `index.html` for the
 per-video "explains N questions" counts, then writes the playlist page. It expects
 hs2-test2 as a sibling (`HS2_TEST2=` overrides), and exits 2 with the path it wanted if
-it is missing. **Regenerate rather than editing the HTML.**
+it is missing. **Regenerate rather than editing the HTML.** Since 2026-09-06 those
+counts come from hs2-test2's `content/video-matches.json`, where every question→video
+pair was found in the video's own caption track, judged from that text, quote-gated
+and re-checked — see that repo's README. 84 of the 148 videos now carry a count; the
+title matcher that shipped on 1 Sept had reached 48, about a third of them wrongly.
 
 The one thing the generator authors is the `TOPICS` table inside it — which video ids
 sit under which of the 20 topics. That table is gated in both directions: a video in no
@@ -55,18 +59,19 @@ the build. So the page cannot quietly stop being *every* video, which is the onl
 it promises. Adding a video to hs2-test2 means adding its id to a topic here.
 
 Why the page exists at all: inside hs2-test2, `content/explain.mjs` attaches a video to
-a question at build time, and the page only shows it once you have answered wrong. 100
-of the 148 videos match no question, so they are unreachable from in there however
-badly you do. This is the orientation door — watch first, sit the mock papers after.
+a question at build time, and the page only shows it once you have answered wrong. 64
+of the 148 videos teach nothing a captured quiz question tests, so they are unreachable
+from in there however badly you do. This is the orientation door — watch first, sit the
+mock papers after.
 
 It is worth saying why this is not the `hs2-terms.html` mistake one paragraph up, since
 it looks like it from a distance. That tool drilled content Test 1 Cram **already
 covered** — the coverage it filled was not missing. This page carries content the Paper
-Sim **ships and cannot reach**: 100 videos behind a door that only opens on a wrong
+Sim **ships and cannot reach**: 64 videos behind a door that only opens on a wrong
 answer they are not attached to. Nothing is duplicated and nothing is drilled; it is a
 reference surface, which is also why it carries no `practises` and bids into no
-readiness bar. If a future version of `explain.mjs` ever matches all 148, that argument
-weakens and this page should be re-examined.
+readiness bar. If a future version of `video-matches.json` ever reaches all 148, that
+argument weakens and this page should be re-examined.
 
 **The hub tile for it is not in `index.html`.** `index.html` is the offline placeholder
 right now, so the merge that brought this page in deliberately kept the placeholder
