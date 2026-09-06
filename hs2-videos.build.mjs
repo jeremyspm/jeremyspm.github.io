@@ -70,16 +70,20 @@ for (const q of DATA.questions) if (q.vid) {
    To add a video: add its id to a topic here and re-run. The build fails if a
    video is in no topic, in two, or names an id the list does not have. */
 const TOPICS = [
-  ['ms', 'ms-bone', 'Bone & cartilage tissue', 'What bone and cartilage are made of, and how bone is remodelled.', [
-    '5OA9AcaBcUo', 'S5b4NvdT1ds', 'Chmwd4BD21Q', 'JYQL7JEsF_4', 'b-9NtC5YC84']],
+  /* 2026-09-06: five more from the channel that the 31 Aug list missed — bone
+     healing, osteoporosis (the long one), the energy systems, and the scapula
+     movers. Found by grepping the whole channel for the quiz topics no listed
+     video covered; caption-verified like the rest. */
+  ['ms', 'ms-bone', 'Bone & cartilage tissue', 'What bone and cartilage are made of, how bone is remodelled, and how it heals.', [
+    '5OA9AcaBcUo', 'S5b4NvdT1ds', 'Chmwd4BD21Q', 'JYQL7JEsF_4', 'b-9NtC5YC84', 'N391iuWbM0s', 'iAdF1vvgMmM']],
   ['ms', 'ms-joint', 'Joints & movement', 'How joints are classified, and the names for the movements they make.', [
     'JO_N1apvidE', 'uhYTgob4ESg', 'LqCkvj0fTj0', '7G_4O04IET0', 'tAJjXvumL7E']],
-  ['ms', 'ms-muscle', 'Muscle tissue & contraction', 'The three muscle types, the sliding filament theory, and what happens at the NMJ.', [
+  ['ms', 'ms-muscle', 'Muscle tissue & contraction', 'The three muscle types, the sliding filament theory, what happens at the NMJ, and where the ATP comes from.', [
     'jpnNc03cqU0', 'RVl1dni2LDQ', 'K2kHnb1x7cE', '7_LZFmfeCuk', 'ApaPlKPb4ek', 'MZLADPduKWw',
-    '0WPaacgMqjw', 'Uz4ZrvFY6b4', 'XBNm4-BHoXo', '0FID5qRGXGg']],
+    '0WPaacgMqjw', 'Uz4ZrvFY6b4', 'XBNm4-BHoXo', '0FID5qRGXGg', 'OWz8x2l5NEE', '_pfRkc7SOH0']],
   ['ms', 'ms-named', 'Named muscles & regional anatomy', 'One video per structure — for the labelling questions.', [
     'fNkGwZ8FRRk', 'kFvVOaEmfCo', 'PPKlGlwxr5s', 'EuS3kZ-ZBQU', 'QJVqTf_rNtk', 'dzVssRini0o',
-    'qencTWCfK_4', 'pStOYPRacMY', 'ahD_1vXIU1w', '23X5bX2yobw', 'gbedi92HL6U', 'POaUxh05naU']],
+    'qencTWCfK_4', 'pStOYPRacMY', 'ahD_1vXIU1w', '23X5bX2yobw', 'gbedi92HL6U', 'POaUxh05naU', '9wWq05HOxnI']],
   ['ms', 'ms-clin', 'Musculoskeletal injury', 'The applied end — what goes wrong and why it hurts.', [
     'cFveuuBxwWY', 'WFDGo2_6WcI']],
 
