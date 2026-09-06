@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0e1420"/>
+<meta name="robots" content="noindex"/>
+<title>Module 1 Video Playlist — Dr Matt &amp; Dr Mike</title>
+<style>
+:root{
+  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
+  --line:#27324a; --line2:#33405c;
+  --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
+  --acc:#9b8cff; --acc2:#7a63e8;
+  --good:#39d98a; --hard:#ffce54;
+  --r:16px; --maxw:900px;
+}
+html[data-theme="light"]{
+  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
+  --line:#dbe3ef; --line2:#c7d3e6;
+  --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
+  --acc:#6a52e8; --acc2:#5540c2;
+  --good:#128a55; --hard:#a9791a;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+a{color:var(--acc)}
+button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.top a.back{font-size:13px;text-decoration:none;color:var(--tx3);border:1px solid var(--line);border-radius:9px;padding:7px 12px;background:var(--card)}
+.top a.back:hover{color:var(--tx);border-color:var(--line2)}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.4px}
+.sub{color:var(--tx2);font-size:14px;margin:0 0 10px}
+.why{background:linear-gradient(160deg,rgba(155,140,255,.16),rgba(155,140,255,.04));border:1px solid rgba(155,140,255,.45);border-radius:var(--r);padding:15px 18px;margin-bottom:18px;font-size:14.5px}
+.why b{color:var(--acc)}
+/* controls */
+.controls{position:sticky;top:0;z-index:20;background:var(--bg);margin:0 -18px 16px;padding:12px 18px 12px;border-bottom:1px solid var(--line)}
+.searchrow{display:flex;gap:8px;align-items:center}
+#q{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:11px;color:var(--tx);
+  font:15px/1.4 inherit;padding:11px 13px;outline:none}
+#q:focus{border-color:var(--acc)}
+#q::placeholder{color:var(--tx3)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.chip{font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--tx2);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+html[data-theme="light"] .chip[aria-pressed="true"]{color:#fff}
+.count{font-size:12px;color:var(--tx3);margin-top:9px}
+/* progress */
+.bar{height:7px;border-radius:5px;background:var(--line);overflow:hidden;margin:9px 0 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc2),var(--acc));width:0;transition:width .25s}
+/* sections */
+h2.sys{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin:32px 0 4px}
+p.sysblurb{font-size:13px;color:var(--tx3);margin:0 0 12px}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.thead{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;cursor:pointer}
+.thead:hover{background:var(--card2)}
+.tw{flex:1;min-width:0}
+.thead h3{font-size:16px;margin:0 0 2px;letter-spacing:-.2px}
+.thead p{margin:0;font-size:13px;color:var(--tx2)}
+.tmeta{font-size:11.5px;color:var(--tx3);margin-top:5px}
+.tmeta .done{color:var(--good);font-weight:700}
+.caret{color:var(--tx3);font-size:13px;padding-top:3px;transition:transform .18s}
+.topic.open .caret{transform:rotate(90deg)}
+.tbody{display:none;border-top:1px solid var(--line);padding:4px 0 8px}
+.topic.open .tbody{display:block}
+.playall{display:block;margin:6px 16px 8px;font-size:12.5px;color:var(--tx3);text-decoration:none;border:1px dashed var(--line2);border-radius:9px;padding:7px 11px;text-align:center}
+.playall:hover{color:var(--acc);border-color:var(--acc)}
+/* rows */
+.v{display:flex;gap:11px;align-items:flex-start;padding:9px 16px}
+.v+.v{border-top:1px solid rgba(128,140,170,.13)}
+.v.hide{display:none}
+.tick{flex:none;width:24px;height:24px;margin-top:2px;border-radius:7px;border:1px solid var(--line2);background:var(--card2);
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent}
+.v.seen .tick{background:var(--good);border-color:var(--good);color:#0b1a12}
+.v.seen .vt{color:var(--tx3);text-decoration:line-through;text-decoration-color:var(--line2)}
+.vmain{flex:1;min-width:0}
+.vt{display:block;font-size:14.5px;line-height:1.45;background:none;border:none;padding:0;text-align:left;color:var(--tx);width:100%}
+.vt:hover{color:var(--acc)}
+.vmeta{font-size:11.5px;color:var(--tx3);margin-top:2px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:1px 6px;border-radius:5px;border:1px solid}
+.tag.q{color:var(--acc);border-color:rgba(155,140,255,.4);background:rgba(155,140,255,.1)}
+.tag.deep{color:var(--hard);border-color:rgba(255,206,84,.35);background:rgba(255,206,84,.1)}
+.vmeta a{color:var(--tx3);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.vmeta a:hover{color:var(--acc)}
+.player{margin:8px 16px 12px;border-radius:12px;overflow:hidden;border:1px solid var(--line2);background:#000}
+.player iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
+.empty{padding:26px 16px;text-align:center;color:var(--tx3);font-size:14px}
+.note{background:var(--card2);border:1px solid var(--line);border-left:3px solid var(--hard);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--tx2);margin:26px 0 0}
+.note b{color:var(--tx)}
+.foot{margin-top:26px;text-align:center;font-size:12px;color:var(--tx3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="./">← Hub</a>
+    <a class="back" href="https://jeremyspm.github.io/hs2-paper-m1/">Paper Sim →</a>
+    <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+  </div>
+  <h1>▶ Module 1 Video Playlist</h1>
+  <p class="sub">Every Dr Matt &amp; Dr Mike video the HS2 Paper Sim knows about — 158 of them, 15 topics, 46 h 45 min end to end. Watch first, sit the mock papers after.</p>
+  <div class="why">📺 <b>Why this exists:</b> inside the Paper Sim a video only appears once you have already got something wrong. That is good remediation and useless for orientation — and 73 of these 158 videos teach nothing a captured quiz question tests, so no amount of failing ever surfaces them. Here they are all in the open, grouped by topic. Tap a title to play it on this page.</div>
+
+  <div class="controls">
+    <div class="searchrow">
+      <input id="q" type="search" placeholder="Search 158 videos — try “capillary”, “ECG”, “lymph”" autocomplete="off" spellcheck="false"/>
+    </div>
+    <div class="chips">
+      <button class="chip" id="c-all" aria-pressed="true">All</button>
+      <button class="chip" data-sys="cvs" aria-pressed="false">Cardiovascular</button>
+      <button class="chip" data-sys="resp" aria-pressed="false">Respiratory</button>
+      <button class="chip" data-sys="lymph" aria-pressed="false">Lymphatic</button>
+      <button class="chip" data-max="600" aria-pressed="false">Under 10 min</button>
+      <button class="chip" data-unseen="1" aria-pressed="false">Not watched</button>
+      <button class="chip" data-bank="1" aria-pressed="false">In the question bank</button>
+      <button class="chip" id="c-open" aria-pressed="false">Expand all</button>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="bar"><i id="prog"></i></div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="note"><b>What the numbers mean.</b> The “<i>explains N</i>” tag counts Paper Sim questions whose tested fact this video actually states — matched from the video's own captions, not its title, judged from that text, gated on a verbatim quote re-found in the track, and the doubtful cases read again by hand — so every tag is a claim that was read, not guessed. The 73 videos with no tag are still good videos; they just cover ground none of the captured quizzes ask about. And these are Dr Matt &amp; Dr Mike, not Hannetjie: where a video and her material disagree, <b>she is the one being marked</b>.</div>
+
+  <div class="foot">Videos and durations come straight from hs2-paper-m1's <code>content/dmdm-all.json</code> (the hs2-module1 shelf, flattened); the question counts from its <code>content/video-matches.json</code>. Topics are this page's own grouping. Watched ticks are stored in this browser only.</div>
+</div>
+<script>
+'use strict';
+const PACK=[{"id":"cvs","name":"Cardiovascular","blurb":"The heart, the vessels and blood pressure — more than half of Module 1.","topics":[{"id":"cvs-vessels","name":"Blood vessels & capillary exchange","blurb":"Artery, vein and capillary; filtration and reabsorption; why oedema forms.","vids":[{"i":"LK3LLPMWmCU","t":"Why do we need stretchy arteries?","d":"0:56","s":56,"n":0},{"i":"QriePxRM1ls","t":"Circulatory System | Overview","d":"2:17","s":137,"n":0},{"i":"VToE_p_tcPc","t":"Edema (Oedema) | In 2 minutes!","d":"2:20","s":140,"n":0},{"i":"6mfqH1wmJBw","t":"Blood Vessels | Cardiology","d":"5:27","s":327,"n":0},{"i":"1z9oAe6nn3o","t":"Parts of the Cardiovascular System","d":"6:05","s":365,"n":2},{"i":"cl1B9lwoJTE","t":"Swelling and Oedema (Capillary Exchange)","d":"7:46","s":466,"n":0},{"i":"VMJfiDsOgc8","t":"Systemic Vascular Resistance (Total Peripheral Resistance) | Cardiology","d":"8:19","s":499,"n":0},{"i":"S8IMBEYhtUU","t":"Understanding Circulation and Blood Vessels","d":"13:36","s":816,"n":1},{"i":"GnriknE4YRY","t":"Capillary Exchange","d":"14:45","s":885,"n":1},{"i":"yKbyCYAY6fU","t":"Peripheral Vascular Disease","d":"15:18","s":918,"n":1},{"i":"dFRa2ECm5pY","t":"Capillary exchange","d":"21:24","s":1284,"n":0},{"i":"nJ44wZ5_TvA","t":"Oedema (Edema) | Capillary Exchange, Causes, and Pathophysiology","d":"24:29","s":1469,"n":1},{"i":"3hb_80XwS7Q","t":"Capillary Types & Capillary Exchange","d":"24:58","s":1498,"n":0},{"i":"oJ6ebQclqHI","t":"Lecture 3 - Blood vessels, circulation, and lymphatics","d":"59:28","s":3568,"n":2}]},{"id":"cvs-heart","name":"The heart: chambers, flow, valves & sounds","blurb":"The pump itself — what is where, the order blood takes through it, and the cardiac cycle.","vids":[{"i":"i1yC6rcRPeU","t":"Draw a Heart in under 2 mins!","d":"1:47","s":107,"n":4},{"i":"fg8JQmivIzs","t":"Introduction to the Cardiac System","d":"2:11","s":131,"n":0},{"i":"eB9dQJaKpTM","t":"Myocardial Thickness | Cardiology","d":"2:43","s":163,"n":0},{"i":"xFukt4Yndgw","t":"Fetal circulation in 2 mins!","d":"2:49","s":169,"n":3},{"i":"AtsTfVpXDpY","t":"Blood Flow Through The Heart | In 2 mins!","d":"2:59","s":179,"n":3},{"i":"XyxuzHX1Grg","t":"Heart Sounds & Surface Anatomy | Cardiology","d":"6:04","s":364,"n":8},{"i":"uKrgEv7-rVM","t":"Parts of the Cardiac System (Heart Anatomy)","d":"7:57","s":477,"n":2},{"i":"UPOxrE79uCE","t":"Best way to draw and label the heart! | Heart Anatomy","d":"10:37","s":637,"n":2},{"i":"uqWQDVSsbE4","t":"Blood flow of the Heart","d":"11:39","s":699,"n":3},{"i":"PzVKE2AkatM","t":"Cardiac Cycle","d":"19:57","s":1197,"n":1},{"i":"5NRVOCBoDyc","t":"Lecture 1 - Introduction to the Cardiovascular System","d":"37:53","s":2273,"n":5},{"i":"lS_9GIEpCe0","t":"Cardiac Cycle | Podcast","d":"92:24","s":5544,"n":2}]},{"id":"cvs-coronary","name":"Coronary circulation & ischaemic heart disease","blurb":"How the myocardium is fed, and what a blocked coronary artery does to it and to the ECG.","vids":[{"i":"DAuQ3eQrbPE","t":"Coronary Arteries - in 2mins","d":"2:45","s":165,"n":3},{"i":"F51Tg_KNrKY","t":"Coronary Arteries | Cardiology","d":"6:34","s":394,"n":2},{"i":"KEfwq5A48kw","t":"Heart Circulation | Cardiology","d":"6:38","s":398,"n":1},{"i":"mtKVUC-Gpdg","t":"Coronary arteries","d":"8:15","s":495,"n":0},{"i":"O7W8jegLokE","t":"ST Elevation vs ST Depression","d":"15:52","s":952,"n":2},{"i":"2BcaALrQ3PU","t":"Ischemic Heart Disease (Coronary Artery Disease) | Pathophysiology","d":"36:04","s":2164,"n":3}]},{"id":"cvs-conduction","name":"Conduction, the ECG & arrhythmias","blurb":"SA node to Purkinje fibres, what each wave means, and the rhythms that go wrong.","vids":[{"i":"47PLh3UgpPs","t":"ECG (EKG) in under 2 mins!","d":"1:56","s":116,"n":0},{"i":"zK2RIOqcuIU","t":"How to read an ECG / EKG","d":"3:29","s":209,"n":1},{"i":"uXo62h96zgM","t":"ECGs (EKGs) Made Easy!","d":"3:56","s":236,"n":1},{"i":"NR8GvLBfABw","t":"Cardiac Conduction System | Cardiology","d":"5:58","s":358,"n":1},{"i":"pXvhTFpMOTw","t":"Pacemaker Cells of the Heart | Cardiology","d":"9:10","s":550,"n":0},{"i":"NijiLTONHxg","t":"Heart Conduction & ECG (EKG) Interpretation","d":"9:28","s":568,"n":1},{"i":"WmGn7BlVQkU","t":"Bradyarrhythmia | Conduction Blocks & Escape Rhythms","d":"11:47","s":707,"n":1},{"i":"YNDqDqd2WkY","t":"Cardiac Conduction System","d":"16:05","s":965,"n":0},{"i":"32vOiSDfvAE","t":"Heart Muscle (myocardium) Action Potential | Cardiology","d":"17:28","s":1048,"n":0},{"i":"o_mWbClDVzI","t":"Sinus Bradycardia & Sick Sinus Syndrome Explained | Bradyarrhythmia","d":"18:23","s":1103,"n":4},{"i":"elVAkFENfxI","t":"ECG measurement and interpretation","d":"18:34","s":1114,"n":1},{"i":"1OEwneDW6A0","t":"Cardiac Arrhythmias Explained Impulse Formation vs Impulse Conduction mechanisms","d":"19:17","s":1157,"n":3},{"i":"xqmyODnxVhU","t":"Cardiac Action Potentials","d":"20:35","s":1235,"n":0},{"i":"M_soKG-Tzh0","t":"Understanding ECGs | From Placement to Interpretation","d":"30:10","s":1810,"n":0},{"i":"FkGF-at5WtM","t":"Dysrhythmias","d":"31:54","s":1914,"n":1}]},{"id":"cvs-output","name":"Cardiac output: preload, afterload & neural control","blurb":"Stroke volume × heart rate, the Frank–Starling law, and how the medulla turns the dials.","vids":[{"i":"zffzKo4Ew04","t":"What is the Frank-Starling Mechanism? #medschool #heart #medicine #physiology","d":"0:54","s":54,"n":0},{"i":"RkQq23fSRcA","t":"An Athletes Heart (Part 1)","d":"3:01","s":181,"n":2},{"i":"IVSDvEEWgxE","t":"Preload | Cardiology","d":"3:49","s":229,"n":0},{"i":"pzEgjaDPVb8","t":"Afterload | Cardiology","d":"4:36","s":276,"n":0},{"i":"PfR8epq6Yac","t":"Neural Control of the Heart | Cardiology","d":"8:23","s":503,"n":0},{"i":"WuGMqezV3eo","t":"Cardiac Output | Preload and Afterload EXPLAINED!","d":"14:20","s":860,"n":3},{"i":"RVl1dni2LDQ","t":"Muscle Tissue | Skeletal, Cardiac, and Smooth","d":"17:38","s":1058,"n":1},{"i":"0FID5qRGXGg","t":"An Athletes Heart | Blood Flow During Exercise","d":"30:36","s":1836,"n":2},{"i":"h2QAey56-Ms","t":"Lecture 2 - Cardiovascular System: Activity of the Heart","d":"1:08:37","s":4117,"n":5}]},{"id":"cvs-bp","name":"Blood pressure & its regulation","blurb":"Baroreflex, RAAS, ADH, the kidney — short-term and long-term control, and the drugs that act on it.","vids":[{"i":"lXWFLDkl2tM","t":"Question. Why are your kidneys responsible for controlling your blood pressure long term?","d":"0:17","s":17,"n":0},{"i":"dlLuYmWtaKM","t":"Q. If the diastolic value represents the pressure when the heart is relaxed, why is it not 0mmHg?","d":"0:41","s":41,"n":0},{"i":"TrU0VenTmIk","t":"Here’s the answer to why the kidneys control blood pressure long term…","d":"0:46","s":46,"n":0},{"i":"dTqadSSWsZk","t":"Renin Angiotensin Aldosterone System in under 2 mins!","d":"2:03","s":123,"n":2},{"i":"oiGwAXp0CPo","t":"Blood pressure","d":"4:08","s":248,"n":0},{"i":"R_MW9AHYqys","t":"Why measure blood pressure in millimetres of mercury (mmHg)?","d":"6:43","s":403,"n":0},{"i":"CWBNzX3d_y8","t":"Dehydration (ADH release)","d":"9:49","s":589,"n":0},{"i":"0k-YBNQwm7k","t":"Exercise & Blood Pressure","d":"10:16","s":616,"n":2},{"i":"k-BWyBePu8Q","t":"Blood Pressure","d":"11:09","s":669,"n":7},{"i":"HV-k31vCYvg","t":"Introduction to Antihypertensives","d":"15:02","s":902,"n":2},{"i":"ibjodC7Ft7U","t":"Renin Angiotensin Aldosterone system","d":"16:38","s":998,"n":1},{"i":"d8SmtGCyqOE","t":"Valsalva Maneuver | Physiology, Benefits, Dangers","d":"18:05","s":1085,"n":0},{"i":"K27ipbateKY","t":"Renin Angiotensin Aldosterone System & Blood Pressure Drugs","d":"23:43","s":1423,"n":0},{"i":"nh08D29jepg","t":"Hypertension & Anti-Hypertensive Drugs","d":"24:58","s":1498,"n":2},{"i":"6NJ0L4RNQ-8","t":"Changing Blood Pressure | Chemicals, Hormones, and Neurotransmitters","d":"31:52","s":1912,"n":0}]},{"id":"cvs-shock","name":"Circulatory shock","blurb":"Pressure too low to perfuse — the causes, the types, and the stages.","vids":[{"i":"EvGgtY_NCDk","t":"What is #anaphylaxis ?","d":"1:02","s":62,"n":0},{"i":"JBUA1NcRchs","t":"Dehydration","d":"9:44","s":584,"n":0},{"i":"OKppt74Vr10","t":"Causes of Shock","d":"12:30","s":750,"n":2},{"i":"xKIpZ3bGUro","t":"Beta Blockers | Mechanism of Action, categories, clinical indications & adverse effects","d":"13:23","s":803,"n":1},{"i":"3wa8jGDyhS8","t":"Types of Shock","d":"14:06","s":846,"n":1},{"i":"bFKxnsVimls","t":"Anaphylaxis","d":"17:50","s":1070,"n":0}]},{"id":"cvs-aside","name":"Answered in passing — other systems, one Module 1 fact","blurb":"Videos about something else whose captions state a fact a CVS quiz tests. Watch for the tag, not the title.","vids":[{"i":"r9n_LtrXctY","t":"Resting Membrane Potential | Nervous System","d":"4:59","s":299,"n":0},{"i":"BB0qVcp7FOQ","t":"Action Potential | Neuron","d":"7:52","s":472,"n":0},{"i":"RhBS9ANCVL8","t":"Male Reproductive System","d":"8:59","s":539,"n":1},{"i":"XlqKNaebMJc","t":"Thyroid - anatomy","d":"13:16","s":796,"n":1},{"i":"hlctwXB5ihw","t":"Liver gross anatomy","d":"13:28","s":808,"n":1},{"i":"n2yXVKa1b_Y","t":"Urine formation","d":"15:33","s":933,"n":1},{"i":"xSGWUrAgTLI","t":"Jugular venous pressure","d":"16:36","s":996,"n":1},{"i":"J5av5Tw5rpk","t":"Acute Kidney Injury AKI","d":"22:39","s":1359,"n":1},{"i":"HM1z1dl-Rxs","t":"Pharmacodynamics - An overview","d":"26:13","s":1573,"n":1},{"i":"sjdO6grmvVw","t":"Temperature & Fever Physiology | Podcast","d":"59:28","s":3568,"n":0},{"i":"IivVcea01xI","t":"Epithelia | Podcast","d":"82:29","s":4949,"n":1},{"i":"4SeDddlLT3w","t":"The Pitt | S1 Ep1 - Rhabdo, Alcoholism, Brain injury, V-Tachy, Cannabis OD, and more!","d":"121:01","s":7261,"n":1}]}]},{"id":"resp","name":"Respiratory","blurb":"Breathing, gas exchange and the acid–base link that runs into the exam cases.","topics":[{"id":"resp-anat","name":"Respiratory anatomy & the airway","blurb":"Nose to alveolus: the tree, its lining, the larynx, the reflexes that guard it, and what emphysema and pneumonia do to it.","vids":[{"i":"difIQ4Jwi9o","t":"The 4 Stages of #Respiration","d":"1:35","s":95,"n":0},{"i":"_x8QJr9rkPo","t":"Emphysema | Respiratory System","d":"4:06","s":246,"n":1},{"i":"ZEi-LcsLCvY","t":"Hiccups | Respiratory System","d":"4:31","s":271,"n":1},{"i":"Yc2yVIAif9g","t":"Parts of the Respiratory System | Overview","d":"7:03","s":423,"n":0},{"i":"_vsKkLTnJCU","t":"Epithelial Tissue","d":"7:11","s":431,"n":0},{"i":"IXbVwm5vVnA","t":"Swallowing | Science of Swallowing","d":"8:09","s":489,"n":0},{"i":"D2t7aHAMxIU","t":"Respiratory Tree | Airways, Branches, and Cross-sectional Area","d":"8:50","s":530,"n":3},{"i":"zf7mPgRCZf8","t":"Cough | Mechanism, causes & classification","d":"18:56","s":1136,"n":0},{"i":"wZTWURpP_As","t":"Lung inflammatory diseases","d":"19:27","s":1167,"n":1},{"i":"4wjCLiCCS6w","t":"Larynx and Phonation (part 1of 2) - Introduction and Cartilage framework","d":"22:16","s":1336,"n":0},{"i":"8nu66_5j6T8","t":"Larynx and Phonation (part 2of 2) - Muscles and Folds","d":"23:51","s":1431,"n":0},{"i":"t7DXH8cvYUc","t":"Prone Positioning in Severe ARDS","d":"24:13","s":1453,"n":1},{"i":"CFHUYTPc7So","t":"Respiratory Tract","d":"24:54","s":1494,"n":3},{"i":"GYZ8ivcBGDw","t":"Respiratory Physiology | The Respiratory System","d":"38:17","s":2297,"n":4},{"i":"RbgVg-kbJ3Q","t":"Lecture 4 - Structure and Function of the Respiratory System","d":"1:07:11","s":4031,"n":6}]},{"id":"resp-vent","name":"Ventilation: pressures, muscles & volumes","blurb":"Boyle's law, the muscles of quiet and forced breathing, and the lung volumes and capacities.","vids":[{"i":"WoIzGOyX4F8","t":"Muscles of Breathing in 2 minutes!","d":"2:20","s":140,"n":0},{"i":"eV5efVFaxLU","t":"Breathing Mechanics","d":"2:43","s":163,"n":0},{"i":"HbweHVLv9FE","t":"Muscles of respiration (expiration)","d":"4:55","s":295,"n":0},{"i":"59knV9PJ3Rs","t":"Basic Breathing Mechanics","d":"5:24","s":324,"n":1},{"i":"RcLnzU6Pk_Q","t":"Boyle's Law | Respiratory System","d":"8:53","s":533,"n":0},{"i":"VX2Biw_qRoU","t":"Lung Volumes and Capacities","d":"10:42","s":642,"n":2},{"i":"YpllpAAeir4","t":"Muscles of Breathing | Inspiration/Inhalation","d":"10:49","s":649,"n":0},{"i":"pA7QZUkmErg","t":"Muscles of respiration (inspiratory muscles)","d":"15:46","s":946,"n":4},{"i":"Y9k0K999dlM","t":"Restrictive Pulmonary Disease | Causes and Spirometry","d":"24:45","s":1485,"n":2},{"i":"J49cgFC1uXQ","t":"Pulmonary Function Tests (PFTs)","d":"29:19","s":1759,"n":0},{"i":"TrUaRX-Fd80","t":"Lecture 5 - Lung volumes, capacity, and gas exchange","d":"1:19:03","s":4743,"n":4}]},{"id":"resp-exchange","name":"Gas laws, exchange & V/Q matching","blurb":"Dalton and Henry, the respiratory membrane, and why ventilation and perfusion have to agree.","vids":[{"i":"BHbl-ws5deg","t":"Ventilation Perfusion (VQ) Coupling explained in 2 minutes!","d":"2:13","s":133,"n":0},{"i":"nBfqDvNJ3LA","t":"Gas Exchange","d":"2:43","s":163,"n":1},{"i":"CQo_if4NEb4","t":"Dalton's Law and Henry's Law","d":"6:36","s":396,"n":1},{"i":"7z9coEwzn2s","t":"Daltons Law | Partial Pressures","d":"7:05","s":425,"n":1},{"i":"iWCyi_uosUo","t":"Henrys Law | Gas Exchange","d":"7:35","s":455,"n":0},{"i":"4OetlK7YQOY","t":"Ventilation (V) Perfusion (Q) Coupling","d":"8:40","s":520,"n":0},{"i":"xLtLY9qaQks","t":"Gas Exchange","d":"11:25","s":685,"n":2},{"i":"uah-1eXBjmQ","t":"Gas Exchange","d":"11:46","s":706,"n":0},{"i":"dDBX-z07n9I","t":"Ventilation Perfusion (V/Q) coupling","d":"21:00","s":1260,"n":0}]},{"id":"resp-transport","name":"Gas transport & acid–base balance","blurb":"Oxygen and carbon dioxide in the blood, the bicarbonate buffer, and the four acid–base disturbances.","vids":[{"i":"21oV1MD0G8k","t":"Respiratory Acidosis & Alkalosis","d":"1:18","s":78,"n":0},{"i":"aTor6siCllY","t":"#Acid #Base Balance and the bicarbonate #buffer system","d":"1:53","s":113,"n":1},{"i":"Y95u-wCfZMs","t":"Respiratory Failure - type 1 vs type 2 | in 2mins!","d":"2:58","s":178,"n":0},{"i":"w3nsxx6AcdA","t":"Acidosis and Alkalosis MADE EASY","d":"5:28","s":328,"n":0},{"i":"tC9EfkOe8IQ","t":"Bicarbonate Buffer System","d":"6:28","s":388,"n":0},{"i":"pFQVq6ArdSw","t":"Gas Transport","d":"13:28","s":808,"n":1},{"i":"7vPRetkeDjI","t":"Acid Base Balance | Respiratory Regulation","d":"16:02","s":962,"n":3},{"i":"s5UQ_JpvFqc","t":"Cyanosis","d":"17:06","s":1026,"n":0},{"i":"HiFZQ-pOtmw","t":"Anion Gap Explained","d":"18:55","s":1135,"n":1},{"i":"rcvRiglLLL0","t":"Acid Base Balance | Renal Regulation","d":"21:24","s":1284,"n":0},{"i":"K1qReVoragU","t":"Arterial Blood Gases (ABGs)| Interpretation","d":"21:39","s":1299,"n":0},{"i":"kpwiuBfXCbo","t":"Buffers of the Body | Clinical Relevance","d":"24:25","s":1465,"n":0},{"i":"6cb0eDBO19k","t":"Respiratory Acidosis & Alkalosis","d":"24:54","s":1494,"n":1},{"i":"uk0WpLoD8SE","t":"Metabolic Acidosis & Alkalosis","d":"25:49","s":1549,"n":1},{"i":"8cOyDn2Myy8","t":"Buffers of the Body | Podcast","d":"95:59","s":5759,"n":2},{"i":"zsPa6oFZcdU","t":"Blood Gases (Arterial Blood Gases)","d":"109:54","s":6594,"n":1}]},{"id":"resp-control","name":"Regulation of breathing","blurb":"The medullary centres, the chemoreceptors, and the breathing patterns that show up at the bedside.","vids":[{"i":"uAnnFscr4LQ","t":"Kussmaul breathing in under 2 mins!","d":"1:58","s":118,"n":1},{"i":"GqkMzds77f8","t":"Neural Control of Breathing | Respiratory System","d":"6:53","s":413,"n":2},{"i":"AG7Ev2hJGFk","t":"Types of Sensory Receptors","d":"8:28","s":508,"n":0},{"i":"9IZGNzj9S0w","t":"Diving Physiology | Respiratory System","d":"9:09","s":549,"n":1},{"i":"6FugDyys-9A","t":"Dyspnoea | Respiratory System","d":"15:37","s":937,"n":1},{"i":"vLSwWBRWekY","t":"AMA | RAAS & Blood Pressure, Bone Cells, GFR, Mechanism of SSRIs, Adaptive Immune System, and more!","d":"91:48","s":5508,"n":2}]}]},{"id":"lymph","name":"Lymphatic","blurb":"The drain and the guard — small block, two exam cases lean on it.","topics":[{"id":"lymph-sys","name":"The lymphatic system & oedema","blurb":"Where lymph comes from and goes, lacteals, and what happens when the drain is blocked or overwhelmed.","vids":[{"i":"ENR669jLTL4","t":"What is #lymphoma ?","d":"1:01","s":61,"n":0},{"i":"SOZhlKj7nZ0","t":"Heart Failure in under 2 mins!","d":"1:38","s":98,"n":1},{"i":"ik9xIeOjHyw","t":"Lymphatic System | A quick overview","d":"3:37","s":217,"n":0},{"i":"mAfw4yHtr1k","t":"Osmosis | Membrane Transport","d":"6:02","s":362,"n":1},{"i":"aMhNvS1yYqY","t":"Leukaemia vs Lymphoma | An introduction","d":"9:11","s":551,"n":0},{"i":"I8fVKz1nupo","t":"Fat Digestion and Absorption","d":"14:34","s":874,"n":0},{"i":"C7PR3oEMIy4","t":"Oedema","d":"34:51","s":2091,"n":0}]},{"id":"lymph-imm","name":"Immunity","blurb":"The cells and the four types of immunity — the lymphatic system’s other job.","vids":[{"i":"yvKENnMUxLA","t":"Four Types of Immunity","d":"4:13","s":253,"n":0},{"i":"Q8YeuicRNxc","t":"Immune cells | Introduction","d":"13:28","s":808,"n":0},{"i":"lbfywanF2Bc","t":"Innate Immunity | Immune System","d":"30:34","s":1834,"n":0},{"i":"UsZ_zHfFeR0","t":"The Immune System: Overview","d":"33:58","s":2038,"n":0},{"i":"kD8YJvwp9-8","t":"Immune System","d":"1:06:45","s":4005,"n":0}]}]}];
+const TK='hub.theme', WK='hs2m1vid.seen';
+function applyTheme(){document.documentElement.setAttribute('data-theme',localStorage.getItem(TK)||'dark');}
+document.querySelector('#btnTheme').onclick=()=>{localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark');applyTheme();};
+applyTheme();
+
+/* watched set — this browser only, never posted anywhere */
+let seen=new Set();
+try{seen=new Set(JSON.parse(localStorage.getItem(WK)||'[]'));}catch(e){}
+const save=()=>{try{localStorage.setItem(WK,JSON.stringify([...seen]));}catch(e){}};
+
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const ALL=[];PACK.forEach(s=>s.topics.forEach(t=>t.vids.forEach(v=>ALL.push(Object.assign({sys:s.id,topic:t.id},v)))));
+
+/* watch_videos builds a real YouTube playlist from ids — capped at 50 there, and
+   every topic here is well under that, which is why play-all is per topic only. */
+const playAll=ids=>'https://www.youtube.com/watch_videos?video_ids='+ids.join(',');
+const mins=s=>s>=3600?Math.floor(s/3600)+' h '+Math.round(s%3600/60)+' min':Math.round(s/60)+' min';
+
+document.querySelector('#list').innerHTML=PACK.map(s=>`
+  <div class="sysblock" data-sysblock="${s.id}">
+  <h2 class="sys">${esc(s.name)}</h2>
+  <p class="sysblurb">${esc(s.blurb)}</p>
+  ${s.topics.map(t=>`<section class="topic" id="t-${t.id}" data-topic="${t.id}">
+    <div class="thead" role="button" tabindex="0" aria-expanded="false">
+      <div class="tw">
+        <h3>${esc(t.name)}</h3>
+        <p>${esc(t.blurb)}</p>
+        <div class="tmeta" data-meta="${t.id}"></div>
+      </div>
+      <span class="caret">▶</span>
+    </div>
+    <div class="tbody">
+      <a class="playall" href="${playAll(t.vids.map(v=>v.i))}" target="_blank" rel="noopener">▶ Play all ${t.vids.length} on YouTube</a>
+      ${t.vids.map(v=>`<div class="v" data-id="${v.i}" data-sys="${s.id}" data-s="${v.s}" data-n="${v.n}">
+        <button class="tick" title="Mark watched" aria-label="Mark watched">✓</button>
+        <div class="vmain">
+          <button class="vt">${esc(v.t)}</button>
+          <div class="vmeta">
+            <span>${esc(v.d)}</span>
+            ${v.n?`<span class="tag q">explains ${v.n}</span>`:''}
+            ${v.s>1500?'<span class="tag deep">deep dive</span>':''}
+            <a href="https://www.youtube.com/watch?v=${v.i}" target="_blank" rel="noopener">YouTube ↗</a>
+          </div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </section>`).join('')}
+  </div>`).join('')+'<div class="empty" id="empty" hidden>No video matches that. Clear the filters, or try a shorter word — titles are Dr Matt &amp; Dr Mike\u2019s own.</div>';
+
+/* ── filters ─────────────────────────────────────────────────────────── */
+const F={q:'',sys:null,max:0,unseen:false,bank:false};
+const $$=s=>[...document.querySelectorAll(s)];
+function playing(el){return el.nextElementSibling&&el.nextElementSibling.classList.contains('player');}
+function matches(el,v){
+  if(F.sys&&el.dataset.sys!==F.sys)return false;
+  if(F.max&&+el.dataset.s>F.max)return false;
+  /* playing a video ticks it watched, so "Not watched" would otherwise yank the row
+     out from under the player mid-sentence — that one filter spares the open row.
+     Every other filter still applies, and render() closes the player when it hides. */
+  if(F.unseen&&seen.has(el.dataset.id)&&!playing(el))return false;
+  if(F.bank&&+el.dataset.n===0)return false;
+  if(F.q&&!v.includes(F.q))return false;
+  return true;
+}
+const TXT=new Map();
+$$('.v').forEach(el=>TXT.set(el,(el.querySelector('.vt').textContent+' '+(el.closest('.topic').querySelector('h3').textContent)).toLowerCase()));
+function render(){
+  const filtering=!!(F.q||F.sys||F.max||F.unseen||F.bank);
+  let shown=0;
+  $$('.v').forEach(el=>{const ok=matches(el,TXT.get(el));el.classList.toggle('hide',!ok);if(ok)shown++;
+    if(!ok&&playing(el))el.nextElementSibling.remove();
+    el.classList.toggle('seen',seen.has(el.dataset.id));});
+  $$('.topic').forEach(sec=>{
+    const vs=[...sec.querySelectorAll('.v')],vis=vs.filter(v=>!v.classList.contains('hide'));
+    sec.hidden=!vis.length;
+    const done=vs.filter(v=>seen.has(v.dataset.id)).length;
+    sec.querySelector('[data-meta]').innerHTML=vs.length+' videos · '
+      +mins(vs.reduce((a,v)=>a+ +v.dataset.s,0))
+      +(done?' · <span class="done">'+done+' watched</span>':'');
+    /* a search that hits should open the topic it hit in, not make you tap twice —
+       and clearing the filter puts those topics back the way it found them */
+    if(filtering&&vis.length){if(!sec.classList.contains('open')){sec.classList.add('open');sec.dataset.auto='1';}}
+    else if(sec.dataset.auto){sec.classList.remove('open');delete sec.dataset.auto;}
+    sec.querySelector('.thead').setAttribute('aria-expanded',String(sec.classList.contains('open')));
+  });
+  $$('.sysblock').forEach(b=>{b.hidden=![...b.querySelectorAll('.topic')].some(t=>!t.hidden);});
+  document.querySelector('#empty').hidden=shown>0;
+  document.querySelector('#count').textContent=filtering
+    ? shown+' of '+ALL.length+' videos'
+    : ALL.length+' videos · '+seen.size+' watched · '
+      +mins(ALL.filter(v=>!seen.has(v.i)).reduce((a,v)=>a+v.s,0))+' still to watch';
+  document.querySelector('#prog').style.width=(100*seen.size/ALL.length).toFixed(1)+'%';
+}
+
+function setChips(){
+  document.querySelector('#c-all').setAttribute('aria-pressed',String(!F.sys&&!F.max&&!F.unseen&&!F.bank));
+  $$('.chip[data-sys]').forEach(c=>c.setAttribute('aria-pressed',String(F.sys===c.dataset.sys)));
+  $$('.chip[data-max]').forEach(c=>c.setAttribute('aria-pressed',String(F.max>0)));
+  $$('.chip[data-unseen]').forEach(c=>c.setAttribute('aria-pressed',String(F.unseen)));
+  $$('.chip[data-bank]').forEach(c=>c.setAttribute('aria-pressed',String(F.bank)));
+}
+document.querySelector('#c-open').onclick=e=>{
+  const open=e.target.getAttribute('aria-pressed')!=='true';
+  $$('.topic').forEach(sec=>{sec.classList.toggle('open',open);delete sec.dataset.auto;});
+  e.target.setAttribute('aria-pressed',String(open));e.target.textContent=open?'Collapse all':'Expand all';render();};
+document.querySelector('#q').oninput=e=>{F.q=e.target.value.trim().toLowerCase();render();};
+document.querySelector('#c-all').onclick=()=>{F.sys=null;F.max=0;F.unseen=false;F.bank=false;setChips();render();};
+$$('.chip[data-sys]').forEach(c=>c.onclick=()=>{F.sys=F.sys===c.dataset.sys?null:c.dataset.sys;setChips();render();});
+$$('.chip[data-max]').forEach(c=>c.onclick=()=>{F.max=F.max?0:+c.dataset.max;setChips();render();});
+$$('.chip[data-unseen]').forEach(c=>c.onclick=()=>{F.unseen=!F.unseen;setChips();render();});
+$$('.chip[data-bank]').forEach(c=>c.onclick=()=>{F.bank=!F.bank;setChips();render();});
+
+/* ── open / play / tick ──────────────────────────────────────────────── */
+document.querySelector('#list').addEventListener('click',e=>{
+  const head=e.target.closest('.thead');
+  if(head){head.closest('.topic').classList.toggle('open');
+    head.setAttribute('aria-expanded',String(head.closest('.topic').classList.contains('open')));return;}
+  const row=e.target.closest('.v');if(!row)return;
+  if(e.target.closest('.tick')){
+    const id=row.dataset.id;seen.has(id)?seen.delete(id):seen.add(id);save();render();return;}
+  if(e.target.closest('.vt')){
+    const open=row.nextElementSibling&&row.nextElementSibling.classList.contains('player');
+    document.querySelectorAll('.player').forEach(p=>p.remove());
+    if(open)return;
+    const d=document.createElement('div');d.className='player';
+    /* nocookie + no autoplay-on-load elsewhere: one player at a time, by construction */
+    d.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+row.dataset.id+
+      '?autoplay=1&rel=0" allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture"'+
+      ' allowfullscreen title="'+row.querySelector('.vt').textContent.replace(/"/g,'&quot;')+'"></iframe>';
+    row.after(d);
+    /* watching it is the tick — no second tap */
+    if(!seen.has(row.dataset.id)){seen.add(row.dataset.id);save();render();}
+    d.scrollIntoView({block:'nearest',behavior:'smooth'});}
+});
+document.querySelector('#list').addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('thead')){e.preventDefault();e.target.click();}});
+
+setChips();render();
+</script>
+</body>
+</html>
