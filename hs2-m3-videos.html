@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0e1420"/>
+<meta name="robots" content="noindex"/>
+<title>Module 3 Video Playlist — Dr Matt &amp; Dr Mike</title>
+<style>
+:root{
+  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
+  --line:#27324a; --line2:#33405c;
+  --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
+  --acc:#9b8cff; --acc2:#7a63e8;
+  --good:#39d98a; --hard:#ffce54;
+  --r:16px; --maxw:900px;
+}
+html[data-theme="light"]{
+  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
+  --line:#dbe3ef; --line2:#c7d3e6;
+  --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
+  --acc:#6a52e8; --acc2:#5540c2;
+  --good:#128a55; --hard:#a9791a;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+a{color:var(--acc)}
+button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.top a.back{font-size:13px;text-decoration:none;color:var(--tx3);border:1px solid var(--line);border-radius:9px;padding:7px 12px;background:var(--card)}
+.top a.back:hover{color:var(--tx);border-color:var(--line2)}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.4px}
+.sub{color:var(--tx2);font-size:14px;margin:0 0 10px}
+.why{background:linear-gradient(160deg,rgba(155,140,255,.16),rgba(155,140,255,.04));border:1px solid rgba(155,140,255,.45);border-radius:var(--r);padding:15px 18px;margin-bottom:18px;font-size:14.5px}
+.why b{color:var(--acc)}
+/* controls */
+.controls{position:sticky;top:0;z-index:20;background:var(--bg);margin:0 -18px 16px;padding:12px 18px 12px;border-bottom:1px solid var(--line)}
+.searchrow{display:flex;gap:8px;align-items:center}
+#q{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:11px;color:var(--tx);
+  font:15px/1.4 inherit;padding:11px 13px;outline:none}
+#q:focus{border-color:var(--acc)}
+#q::placeholder{color:var(--tx3)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.chip{font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--tx2);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+html[data-theme="light"] .chip[aria-pressed="true"]{color:#fff}
+.count{font-size:12px;color:var(--tx3);margin-top:9px}
+/* progress */
+.bar{height:7px;border-radius:5px;background:var(--line);overflow:hidden;margin:9px 0 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc2),var(--acc));width:0;transition:width .25s}
+/* sections */
+h2.sys{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin:32px 0 4px}
+p.sysblurb{font-size:13px;color:var(--tx3);margin:0 0 12px}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.thead{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;cursor:pointer}
+.thead:hover{background:var(--card2)}
+.tw{flex:1;min-width:0}
+.thead h3{font-size:16px;margin:0 0 2px;letter-spacing:-.2px}
+.thead p{margin:0;font-size:13px;color:var(--tx2)}
+.tmeta{font-size:11.5px;color:var(--tx3);margin-top:5px}
+.tmeta .done{color:var(--good);font-weight:700}
+.caret{color:var(--tx3);font-size:13px;padding-top:3px;transition:transform .18s}
+.topic.open .caret{transform:rotate(90deg)}
+.tbody{display:none;border-top:1px solid var(--line);padding:4px 0 8px}
+.topic.open .tbody{display:block}
+.playall{display:block;margin:6px 16px 8px;font-size:12.5px;color:var(--tx3);text-decoration:none;border:1px dashed var(--line2);border-radius:9px;padding:7px 11px;text-align:center}
+.playall:hover{color:var(--acc);border-color:var(--acc)}
+/* rows */
+.v{display:flex;gap:11px;align-items:flex-start;padding:9px 16px}
+.v+.v{border-top:1px solid rgba(128,140,170,.13)}
+.v.hide{display:none}
+.tick{flex:none;width:24px;height:24px;margin-top:2px;border-radius:7px;border:1px solid var(--line2);background:var(--card2);
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent}
+.v.seen .tick{background:var(--good);border-color:var(--good);color:#0b1a12}
+.v.seen .vt{color:var(--tx3);text-decoration:line-through;text-decoration-color:var(--line2)}
+.vmain{flex:1;min-width:0}
+.vt{display:block;font-size:14.5px;line-height:1.45;background:none;border:none;padding:0;text-align:left;color:var(--tx);width:100%}
+.vt:hover{color:var(--acc)}
+.vmeta{font-size:11.5px;color:var(--tx3);margin-top:2px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:1px 6px;border-radius:5px;border:1px solid}
+.tag.q{color:var(--acc);border-color:rgba(155,140,255,.4);background:rgba(155,140,255,.1)}
+.tag.deep{color:var(--hard);border-color:rgba(255,206,84,.35);background:rgba(255,206,84,.1)}
+.tag.ch{color:var(--tx2);border-color:var(--line2);background:transparent}
+.vmeta a{color:var(--tx3);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.vmeta a:hover{color:var(--acc)}
+.player{margin:8px 16px 12px;border-radius:12px;overflow:hidden;border:1px solid var(--line2);background:#000}
+.player iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
+.empty{padding:26px 16px;text-align:center;color:var(--tx3);font-size:14px}
+.note{background:var(--card2);border:1px solid var(--line);border-left:3px solid var(--hard);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--tx2);margin:26px 0 0}
+.note b{color:var(--tx)}
+.foot{margin-top:26px;text-align:center;font-size:12px;color:var(--tx3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="./">← Hub</a>
+    <a class="back" href="https://jeremyspm.github.io/hs2-test3/">Paper Sim →</a>
+    <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
+  </div>
+  <h1>▶ Module 3 Video Playlist</h1>
+  <p class="sub">Every Dr Matt &amp; Dr Mike video the Module 3 Paper Sim knows about, plus the other channels’ videos it matched — 67 of them, 13 topics, 31 h 44 min end to end. Watch first, sit the mock papers after.</p>
+  <div class="why">📺 <b>Why this exists:</b> inside the Paper Sim a video only appears once you have already got something wrong. That is good remediation and useless for orientation — and 16 of these 67 videos teach nothing a captured quiz question tests, so no amount of failing ever surfaces them. Here they are all in the open, grouped by topic. Tap a title to play it on this page.</div>
+
+  <div class="controls">
+    <div class="searchrow">
+      <input id="q" type="search" placeholder="Search 67 videos — try “sperm”, “pedigree”, “cochlea”" autocomplete="off" spellcheck="false"/>
+    </div>
+    <div class="chips">
+      <button class="chip" id="c-all" aria-pressed="true">All</button>
+      <button class="chip" data-sys="repro" aria-pressed="false">Reproduction</button>
+      <button class="chip" data-sys="gen" aria-pressed="false">Genetics</button>
+      <button class="chip" data-sys="senses" aria-pressed="false">Special senses</button>
+      <button class="chip" data-max="600" aria-pressed="false">Under 10 min</button>
+      <button class="chip" data-unseen="1" aria-pressed="false">Not watched</button>
+      <button class="chip" data-bank="1" aria-pressed="false">In the question bank</button>
+      <button class="chip" id="c-open" aria-pressed="false">Expand all</button>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="bar"><i id="prog"></i></div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="note"><b>What the numbers mean.</b> The “<i>explains N</i>” tag counts Paper Sim questions whose tested fact this video actually states — matched from the video's own captions, not its title, judged from that text, gated on a verbatim quote re-found in the track, and every match then read again by hand — so every tag is a claim that was read, not guessed. The 16 videos with no tag are still good videos; they just cover ground none of the captured quizzes ask about. And these are Dr Matt &amp; Dr Mike, not Hannetjie: where a video and her material disagree, <b>she is the one being marked</b>.</div>
+
+  <div class="foot">Videos and durations come straight from hs2-test3's <code>content/dmdm-all.json</code> (the Module 3 shelf); the question counts from its <code>content/video-matches.json</code>. Topics are this page's own grouping. Watched ticks are stored in this browser only.</div>
+</div>
+<script>
+'use strict';
+const PACK=[{"id":"repro","name":"Reproduction","blurb":"Male and female anatomy, the hormones that run them, and how gametes are made and meet.","topics":[{"id":"repro-male","name":"Male anatomy & sperm production","blurb":"Testes to urethra, the glands that make semen, erection and ejaculation — and the two cancers of the region.","vids":[{"i":"B-Ih_jhyI90","t":"Testicular cancer in under 2 mins!","d":"1:33","s":93,"n":0},{"i":"RhBS9ANCVL8","t":"Male Reproductive System","d":"8:59","s":539,"n":5},{"i":"Nmq0U5D_Jn4","t":"Testes and sperm production","d":"16:01","s":961,"n":6},{"i":"DrPw3EZW5ow","t":"Male Reproductive Tract and Glands","d":"21:22","s":1282,"n":8},{"i":"mjROZrxBdv4","t":"Male Reproductive System | Spermatogenesis","d":"22:40","s":1360,"n":5,"c":"Ninja Nerd"},{"i":"33m9pN_vAI4","t":"Male Reproductive System | Erection & Ejaculation","d":"23:07","s":1387,"n":3,"c":"Ninja Nerd"},{"i":"K88DwDMwjJE","t":"Benign Prostatic Hyperplasia vs Prostate Cancer","d":"25:32","s":1532,"n":0}]},{"id":"repro-female","name":"Female anatomy, the cycles & menopause","blurb":"Ovaries, tubes and uterus; the ovarian and uterine cycles; the pill, lactation and what changes at menopause.","vids":[{"i":"Lzlt1Gk7Riw","t":"Female Reproductive Cycle (Menstrual Cycle)","d":"2:25","s":145,"n":0},{"i":"LPvqphgIYXE","t":"Female Reproductive System","d":"7:52","s":472,"n":2},{"i":"CwgaFwHJM4g","t":"Female Reproductive Cycle | Ovulation & Menstrual Cycle: Overview","d":"11:05","s":665,"n":3,"c":"Ninja Nerd"},{"i":"n166xsnl7kY","t":"The breast and physiology of lactation","d":"21:02","s":1262,"n":0},{"i":"EfexbuyIqCY","t":"Female Reproductive Cycle | Menstrual Cycle","d":"21:45","s":1305,"n":2,"c":"Ninja Nerd"},{"i":"E1toz8WDyds","t":"Oral Contraceptives | How Does the Pill Work?","d":"22:07","s":1327,"n":0},{"i":"ta4wAINBqio","t":"Female Reproductive Cycles Made Easy!","d":"22:22","s":1342,"n":3},{"i":"L4adODFmmtI","t":"Female Reproductive Cycle (Menstruation)","d":"24:58","s":1498,"n":0},{"i":"ZC0_uGeKmb0","t":"Menopause Physiology | Pre, Peri, and Post-Menopause","d":"33:25","s":2005,"n":2},{"i":"pzgUbyD6mCM","t":"Female Reproductive Cycle | Ovulation","d":"33:59","s":2039,"n":2,"c":"Ninja Nerd"}]},{"id":"repro-hormones","name":"The hormones that drive it: GnRH, FSH & LH","blurb":"The hypothalamic–pituitary–gonadal axis — which cell each hormone acts on, in each sex.","vids":[{"i":"YE-a7XiEYB4","t":"Gonadotropins | Follicle Stimulating Hormone (FSH) and Luteinizing Hormone (LH)","d":"10:58","s":658,"n":3},{"i":"AWyJw69OZt4","t":"Hypothalamic Pituitary Ovarian Axis | Female Reproductive System","d":"14:06","s":846,"n":0},{"i":"9Rnd1KWxGKU","t":"Follicle Stimulating Hormone (FSH) and Luteinizing Hormone (LH)","d":"26:33","s":1593,"n":3}]},{"id":"repro-gametes","name":"Gametes, fertilisation & the embryo","blurb":"Spermatogenesis and oogenesis side by side, the acrosome reaction, implantation and the first weeks.","vids":[{"i":"vonVty4kTuc","t":"Spermatogenesis and Oogenesis in 2 minutes!","d":"2:26","s":146,"n":3},{"i":"y_TR2UDnxqg","t":"Oogenesis and Spermatogenesis | Reproductive","d":"6:49","s":409,"n":0},{"i":"rRRL2yKPPfQ","t":"Prostate Development | Genital duct embryology","d":"9:57","s":597,"n":0},{"i":"UAScTbIt1Dc","t":"Fertilisation and implantation","d":"11:37","s":697,"n":0},{"i":"dqiDf7Xm8nU","t":"Oogenesis | Embryology","d":"14:08","s":848,"n":1},{"i":"7w0DUGUrq5o","t":"Spermatogenesis | Embryology","d":"20:29","s":1229,"n":2},{"i":"PS7bdl_PF3M","t":"Capacitation & Acrosome Reaction | Fertilisation","d":"25:41","s":1541,"n":1},{"i":"Wjvl8zEIGaA","t":"Embryogenesis | Embryology","d":"31:07","s":1867,"n":1},{"i":"6WOrF6gXEzo","t":"Oogenesis, Folliculogenesis, and Spermatogenesis","d":"35:49","s":2149,"n":1}]},{"id":"repro-long","name":"The whole system in one sitting","blurb":"Two podcasts and a university lecture, one to two hours each — for a long walk, not a quick check.","vids":[{"i":"bqZAYZTeMbk","t":"Lecture 10 - Reproductive System","d":"69:09","s":4149,"n":4},{"i":"vnjPCmQ5H2o","t":"Female Reproductive System | Podcast","d":"120:14","s":7214,"n":3},{"i":"F_RA9hItWN8","t":"Male Reproductive System | Podcast","d":"134:59","s":8099,"n":5}]},{"id":"repro-aside","name":"Answered in passing — other topics, one Module 3 fact","blurb":"Videos about something else whose captions state a fact a reproduction quiz tests. Watch for the tag, not the title.","vids":[{"i":"vLCg_kyuyw4","t":"Overview of the Endocrine System","d":"17:39","s":1059,"n":5},{"i":"FTa23HWhVwc","t":"Carcinogenesis","d":"29:48","s":1788,"n":1},{"i":"hgoa_ZxX5Sg","t":"Neurology | Hypothalamus Anatomy & Function","d":"56:38","s":3398,"n":3,"c":"Ninja Nerd"},{"i":"jkFfuSV5jNQ","t":"Endocrine System | Overview","d":"159:27","s":9567,"n":2}]}]},{"id":"gen","name":"Genetics","blurb":"More than half of her Module 3 questions — inheritance, Punnett squares and pedigrees above all.","topics":[{"id":"gen-dna","name":"DNA, genes & the cell","blurb":"What DNA is made of, how a gene becomes a protein, and where the cell keeps it.","vids":[{"i":"R7e9k0ypRZ0","t":"Eukaryotic vs. Prokaryotic Cells","d":"4:40","s":280,"n":2},{"i":"yLsIvVs5ZWI","t":"DNA and Nucleotides | Biochemistry","d":"5:32","s":332,"n":0},{"i":"nqlNcm_mMcI","t":"DNA Transcription and Translation | DNA to Protein","d":"14:22","s":862,"n":2},{"i":"I6NhO-YJhZ8","t":"The Cell | Dr Matt & Dr Mike's Medical Podcast","d":"141:24","s":8484,"n":3}]},{"id":"gen-inherit","name":"Inheritance, Punnett squares & pedigrees","blurb":"Dominant and recessive, carriers, X-linked traits, sex determination and the disorders her pedigrees use.","vids":[{"i":"iywe4jIrfDo","t":"Why Are There Different Eye Colours? | in 2 mins!","d":"2:20","s":140,"n":0},{"i":"BcXQJoFMWN0","t":"X-linked Inheritance and Punnett Squares","d":"5:16","s":316,"n":11},{"i":"tltFH-kRMoc","t":"Inheritance and Punnett squares","d":"6:29","s":389,"n":3},{"i":"jcxx1Uwfnv4","t":"DNA Inheritance | Recessive and Dominant Inheritance","d":"7:30","s":450,"n":3},{"i":"I-U6l7diAqE","t":"Biological Sex Determination | Embryology","d":"19:48","s":1188,"n":1},{"i":"CbSg-DXNWFE","t":"Genetic inheritance of disease","d":"23:50","s":1430,"n":22}]},{"id":"gen-aside","name":"Answered in passing — other topics, one Module 3 fact","blurb":"Gene editing, an antibiotics episode, muscular dystrophy: captions that state a genetics fact her quizzes test.","vids":[{"i":"o1uhhpjmzkw","t":"Muscular Dystrophy - Duchenne, Becker and Mytonic","d":"9:51","s":591,"n":1,"c":"Armando Hasudungan"},{"i":"4FBD3qxS-j4","t":"CRISPR-Cas 9 | How does it work?","d":"19:24","s":1164,"n":2},{"i":"bXz3LCXsyXc","t":"Antibiotic Classes - Episode 58","d":"80:52","s":4852,"n":4},{"i":"7-zG1BqckTk","t":"CRISPR | Gene Editing Technology","d":"88:37","s":5317,"n":7}]}]},{"id":"senses","name":"Special senses","blurb":"The eye and the ear, with light and sound physics she tests alongside them.","topics":[{"id":"sen-eye","name":"The eye: anatomy, focusing & the light reflexes","blurb":"Cornea to retina, the visual pathway, accommodation, the pupil and corneal reflexes, and tears.","vids":[{"i":"CCqUkTvI1NI","t":"Crocodile tears in 2 Mins!","d":"2:16","s":136,"n":1},{"i":"6tjfY-SwWaY","t":"Pupil light reflex in 2 minutes!","d":"2:37","s":157,"n":1},{"i":"YQ_kU7ZF-qA","t":"The corneal reflex in 2 minutes!","d":"2:43","s":163,"n":0},{"i":"RBJnclxslmQ","t":"Light reflex","d":"11:56","s":716,"n":3,"c":"Armando Hasudungan"},{"i":"j9pwDAcb-U0","t":"Pupillary light reflex and Accommodation reflex","d":"14:49","s":889,"n":0},{"i":"D-kVWke0CD0","t":"Basic Eye Anatomy and Physiology","d":"17:05","s":1025,"n":3},{"i":"gBdJbWiun8c","t":"Visual Pathway","d":"20:59","s":1259,"n":0}]},{"id":"sen-ear","name":"The ear: hearing & balance","blurb":"Outer, middle and inner ear, how sound becomes a nerve signal, and the vestibular system.","vids":[{"i":"A2Ee9VrDHh4","t":"Hearing - Anatomy & Physiology of the Auditory System","d":"15:49","s":949,"n":8},{"i":"eLkIoG6hU_Y","t":"Development of the Ear | Embryology","d":"19:25","s":1165,"n":2},{"i":"pxga9ci2ets","t":"Neurology | Vestibulocochlear Nerve | Cranial Nerve VIII: Vestibular Pathway","d":"28:24","s":1704,"n":1,"c":"Ninja Nerd"},{"i":"V8AZ6QygeYs","t":"Neurology | Vestibulocochlear Nerve | Cranial Nerve VIII: Auditory Pathway","d":"43:36","s":2616,"n":7,"c":"Ninja Nerd"}]},{"id":"sen-smell","name":"Smell","blurb":"One short video on the olfactory pathway (through why COVID-19 took it away). Nothing on the channel covers taste.","vids":[{"i":"h1kDzqpDlY0","t":"COVID-19 and Loss of Smell Explained","d":"5:31","s":331,"n":0}]},{"id":"sen-aside","name":"Answered in passing — other topics, one Module 3 fact","blurb":"The autonomic system, the cranial nerves, diabetes: captions that state an eye or ear fact her quizzes test.","vids":[{"i":"eeQ6c5nu-ck","t":"Autonomic Nervous System Introduction","d":"11:08","s":668,"n":1,"c":"AnatomyZone"},{"i":"ZnnVUq1P5Yo","t":"Diabetes Complication and Pathophysiology","d":"17:55","s":1075,"n":1,"c":"Armando Hasudungan"},{"i":"F3U9pB5w0XM","t":"Neurology | Parasympathetic Nervous System","d":"36:45","s":2205,"n":3,"c":"Ninja Nerd"},{"i":"ITlKlDnyKfU","t":"Neurology | Sympathetic Nervous System","d":"47:55","s":2875,"n":1,"c":"Ninja Nerd"},{"i":"gpIDVyM8V4U","t":"Neurology | Cranial Nerves: Overview","d":"57:31","s":3451,"n":2,"c":"Ninja Nerd"}]}]}];
+const TK='hub.theme', WK='hs2m3vid.seen';
+function applyTheme(){document.documentElement.setAttribute('data-theme',localStorage.getItem(TK)||'dark');}
+document.querySelector('#btnTheme').onclick=()=>{localStorage.setItem(TK,(localStorage.getItem(TK)||'dark')==='dark'?'light':'dark');applyTheme();};
+applyTheme();
+
+/* watched set — this browser only, never posted anywhere */
+let seen=new Set();
+try{seen=new Set(JSON.parse(localStorage.getItem(WK)||'[]'));}catch(e){}
+const save=()=>{try{localStorage.setItem(WK,JSON.stringify([...seen]));}catch(e){}};
+
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const ALL=[];PACK.forEach(s=>s.topics.forEach(t=>t.vids.forEach(v=>ALL.push(Object.assign({sys:s.id,topic:t.id},v)))));
+
+/* watch_videos builds a real YouTube playlist from ids — capped at 50 there, and
+   every topic here is well under that, which is why play-all is per topic only. */
+const playAll=ids=>'https://www.youtube.com/watch_videos?video_ids='+ids.join(',');
+const mins=s=>s>=3600?Math.floor(s/3600)+' h '+Math.round(s%3600/60)+' min':Math.round(s/60)+' min';
+
+document.querySelector('#list').innerHTML=PACK.map(s=>`
+  <div class="sysblock" data-sysblock="${s.id}">
+  <h2 class="sys">${esc(s.name)}</h2>
+  <p class="sysblurb">${esc(s.blurb)}</p>
+  ${s.topics.map(t=>`<section class="topic" id="t-${t.id}" data-topic="${t.id}">
+    <div class="thead" role="button" tabindex="0" aria-expanded="false">
+      <div class="tw">
+        <h3>${esc(t.name)}</h3>
+        <p>${esc(t.blurb)}</p>
+        <div class="tmeta" data-meta="${t.id}"></div>
+      </div>
+      <span class="caret">▶</span>
+    </div>
+    <div class="tbody">
+      <a class="playall" href="${playAll(t.vids.map(v=>v.i))}" target="_blank" rel="noopener">▶ Play all ${t.vids.length} on YouTube</a>
+      ${t.vids.map(v=>`<div class="v" data-id="${v.i}" data-sys="${s.id}" data-s="${v.s}" data-n="${v.n}">
+        <button class="tick" title="Mark watched" aria-label="Mark watched">✓</button>
+        <div class="vmain">
+          <button class="vt">${esc(v.t)}</button>
+          <div class="vmeta">
+            <span>${esc(v.d)}</span>
+            ${v.n?`<span class="tag q">explains ${v.n}</span>`:''}
+            ${v.s>1500?'<span class="tag deep">deep dive</span>':''}
+            ${v.c?`<span class="tag ch">${esc(v.c)}</span>`:''}
+            <a href="https://www.youtube.com/watch?v=${v.i}" target="_blank" rel="noopener">YouTube ↗</a>
+          </div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </section>`).join('')}
+  </div>`).join('')+'<div class="empty" id="empty" hidden>No video matches that. Clear the filters, or try a shorter word — titles are the channels\u2019 own.</div>';
+
+/* ── filters ─────────────────────────────────────────────────────────── */
+const F={q:'',sys:null,max:0,unseen:false,bank:false};
+const $$=s=>[...document.querySelectorAll(s)];
+function playing(el){return el.nextElementSibling&&el.nextElementSibling.classList.contains('player');}
+function matches(el,v){
+  if(F.sys&&el.dataset.sys!==F.sys)return false;
+  if(F.max&&+el.dataset.s>F.max)return false;
+  /* playing a video ticks it watched, so "Not watched" would otherwise yank the row
+     out from under the player mid-sentence — that one filter spares the open row.
+     Every other filter still applies, and render() closes the player when it hides. */
+  if(F.unseen&&seen.has(el.dataset.id)&&!playing(el))return false;
+  if(F.bank&&+el.dataset.n===0)return false;
+  if(F.q&&!v.includes(F.q))return false;
+  return true;
+}
+const TXT=new Map();
+$$('.v').forEach(el=>TXT.set(el,(el.querySelector('.vt').textContent+' '+(el.closest('.topic').querySelector('h3').textContent)).toLowerCase()));
+function render(){
+  const filtering=!!(F.q||F.sys||F.max||F.unseen||F.bank);
+  let shown=0;
+  $$('.v').forEach(el=>{const ok=matches(el,TXT.get(el));el.classList.toggle('hide',!ok);if(ok)shown++;
+    if(!ok&&playing(el))el.nextElementSibling.remove();
+    el.classList.toggle('seen',seen.has(el.dataset.id));});
+  $$('.topic').forEach(sec=>{
+    const vs=[...sec.querySelectorAll('.v')],vis=vs.filter(v=>!v.classList.contains('hide'));
+    sec.hidden=!vis.length;
+    const done=vs.filter(v=>seen.has(v.dataset.id)).length;
+    sec.querySelector('[data-meta]').innerHTML=vs.length+' videos · '
+      +mins(vs.reduce((a,v)=>a+ +v.dataset.s,0))
+      +(done?' · <span class="done">'+done+' watched</span>':'');
+    /* a search that hits should open the topic it hit in, not make you tap twice —
+       and clearing the filter puts those topics back the way it found them */
+    if(filtering&&vis.length){if(!sec.classList.contains('open')){sec.classList.add('open');sec.dataset.auto='1';}}
+    else if(sec.dataset.auto){sec.classList.remove('open');delete sec.dataset.auto;}
+    sec.querySelector('.thead').setAttribute('aria-expanded',String(sec.classList.contains('open')));
+  });
+  $$('.sysblock').forEach(b=>{b.hidden=![...b.querySelectorAll('.topic')].some(t=>!t.hidden);});
+  document.querySelector('#empty').hidden=shown>0;
+  document.querySelector('#count').textContent=filtering
+    ? shown+' of '+ALL.length+' videos'
+    : ALL.length+' videos · '+seen.size+' watched · '
+      +mins(ALL.filter(v=>!seen.has(v.i)).reduce((a,v)=>a+v.s,0))+' still to watch';
+  document.querySelector('#prog').style.width=(100*seen.size/ALL.length).toFixed(1)+'%';
+}
+
+function setChips(){
+  document.querySelector('#c-all').setAttribute('aria-pressed',String(!F.sys&&!F.max&&!F.unseen&&!F.bank));
+  $$('.chip[data-sys]').forEach(c=>c.setAttribute('aria-pressed',String(F.sys===c.dataset.sys)));
+  $$('.chip[data-max]').forEach(c=>c.setAttribute('aria-pressed',String(F.max>0)));
+  $$('.chip[data-unseen]').forEach(c=>c.setAttribute('aria-pressed',String(F.unseen)));
+  $$('.chip[data-bank]').forEach(c=>c.setAttribute('aria-pressed',String(F.bank)));
+}
+document.querySelector('#c-open').onclick=e=>{
+  const open=e.target.getAttribute('aria-pressed')!=='true';
+  $$('.topic').forEach(sec=>{sec.classList.toggle('open',open);delete sec.dataset.auto;});
+  e.target.setAttribute('aria-pressed',String(open));e.target.textContent=open?'Collapse all':'Expand all';render();};
+document.querySelector('#q').oninput=e=>{F.q=e.target.value.trim().toLowerCase();render();};
+document.querySelector('#c-all').onclick=()=>{F.sys=null;F.max=0;F.unseen=false;F.bank=false;setChips();render();};
+$$('.chip[data-sys]').forEach(c=>c.onclick=()=>{F.sys=F.sys===c.dataset.sys?null:c.dataset.sys;setChips();render();});
+$$('.chip[data-max]').forEach(c=>c.onclick=()=>{F.max=F.max?0:+c.dataset.max;setChips();render();});
+$$('.chip[data-unseen]').forEach(c=>c.onclick=()=>{F.unseen=!F.unseen;setChips();render();});
+$$('.chip[data-bank]').forEach(c=>c.onclick=()=>{F.bank=!F.bank;setChips();render();});
+
+/* ── open / play / tick ──────────────────────────────────────────────── */
+document.querySelector('#list').addEventListener('click',e=>{
+  const head=e.target.closest('.thead');
+  if(head){head.closest('.topic').classList.toggle('open');
+    head.setAttribute('aria-expanded',String(head.closest('.topic').classList.contains('open')));return;}
+  const row=e.target.closest('.v');if(!row)return;
+  if(e.target.closest('.tick')){
+    const id=row.dataset.id;seen.has(id)?seen.delete(id):seen.add(id);save();render();return;}
+  if(e.target.closest('.vt')){
+    const open=row.nextElementSibling&&row.nextElementSibling.classList.contains('player');
+    document.querySelectorAll('.player').forEach(p=>p.remove());
+    if(open)return;
+    const d=document.createElement('div');d.className='player';
+    /* nocookie + no autoplay-on-load elsewhere: one player at a time, by construction */
+    d.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+row.dataset.id+
+      '?autoplay=1&rel=0" allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture"'+
+      ' allowfullscreen title="'+row.querySelector('.vt').textContent.replace(/"/g,'&quot;')+'"></iframe>';
+    row.after(d);
+    /* watching it is the tick — no second tap */
+    if(!seen.has(row.dataset.id)){seen.add(row.dataset.id);save();render();}
+    d.scrollIntoView({block:'nearest',behavior:'smooth'});}
+});
+document.querySelector('#list').addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('thead')){e.preventDefault();e.target.click();}});
+
+setChips();render();
+</script>
+</body>
+</html>
