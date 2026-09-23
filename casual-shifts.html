@@ -279,8 +279,13 @@ mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
         <div class="field full"><label for="f-study">What your study has covered so far</label>
           <textarea id="f-study" data-me="study"></textarea>
           <span class="hint">Edit to match what you've actually done. It goes into the cover note and the experience answer.</span></div>
-        <div class="field full"><label for="f-exp">Work before nursing <span class="muted">(finishes “Before nursing, I…”; leave blank if none)</span></label>
-          <input id="f-exp" data-me="exp" placeholder="e.g. worked three years in retail, mostly weekends"/></div>
+        <div class="field full"><label for="f-exp">Work experience <span class="muted">(finishes “I've worked…”; leave blank if none)</span></label>
+          <input id="f-exp" data-me="exp" placeholder="e.g. casual jobs in fast food and retail"/></div>
+        <div class="field full"><span class="flabel">Care experience</span>
+          <div class="checks">
+            <label><input type="checkbox" id="f-firstaid" data-mebool="firstAid"/>Current first aid certificate</label>
+            <label><input type="checkbox" id="f-family" data-mebool="family"/>Helped care for a family member</label>
+          </div></div>
         <div class="field full"><label for="f-avnote">Anything you can't do <span class="muted">(optional)</span></label>
           <input id="f-avnote" data-me="availNote" placeholder="e.g. not Tuesday or Thursday daytimes (classes)"/></div>
       </div>
@@ -372,9 +377,12 @@ $('#btnTheme').onclick = () => {
 };
 
 /* ── state ────────────────────────────────────────────────────────────── */
-const DEF_ME = { name:'', phone:'', email:'', suburb:'', avail:['wkd','eve','summer'], hours:'', transport:'pt', rtw:'citizen', langs:'',
+/* PRIVATE_ME stays null in the repo: this file is public. The private artifact copy
+   is built with his details filled in (see the build note in the commit). */
+const PRIVATE_ME = null;
+const DEF_ME = Object.assign({ name:'', phone:'', email:'', suburb:'', avail:['wkd'], hours:'', transport:'pt', rtw:'citizen', langs:'',
   study:'anatomy and physiology, the foundations of nursing care, vital signs, and the Nursing Council Code of Conduct and professional boundaries',
-  exp:'', availNote:'' };
+  exp:'', availNote:'', firstAid:false, family:false }, PRIVATE_ME || {});
 function normalize(s){
   s = s && typeof s === 'object' ? s : {};
   const me = Object.assign({}, DEF_ME, s.me && typeof s.me === 'object' ? s.me : {});
@@ -443,7 +451,7 @@ $$('.tab').forEach(b => b.onclick = () => { showTab(b.dataset.tab, true); histor
 document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a){ e.preventDefault(); showTab(a.dataset.go, true); } });
 
 /* ── text builders ────────────────────────────────────────────────────── */
-const AV = [['wkd','weekends'], ['eve','weekday evenings'], ['am','weekday mornings'], ['night','night shifts'], ['short','short-notice shifts']];
+const AV = [['wkd','weekends'], ['day','weekday daytimes on non-class days'], ['eve','weekday evenings'], ['night','night shifts'], ['short','short-notice shifts']];
 const list = a => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
 const miss = label => '\u0001' + label + '\u0002';
 const v = (x, label) => (x && String(x).trim()) ? String(x).trim() : miss(label);
@@ -453,6 +461,13 @@ function availText(me, short){
   if (me.avail.includes('summer')) s += (s ? (short ? ', plus' : ', and') + ' ' : '') + (short ? 'full-time over summer' : 'close to full-time over the summer break (December to February)');
   return s || miss('your availability');
 }
+function careLine(me){
+  const a = [];
+  if (me.firstAid) a.push('I hold a current first aid certificate');
+  if (me.family) a.push(`I've helped look after a family member at home (${miss('what you helped with, e.g. meals, getting around, appointments')})`);
+  return a.length ? a.join(', and ') + '.' : '';
+}
+const workLine = me => me.exp.trim() ? `I've worked ${me.exp.trim().replace(/\.$/, '')}, so I'm used to shift work, busy environments and looking after people.` : '';
 const TRANSPORT = { car:'I have a full licence and my own car', lic:'I have a full licence but no car', pt:'I get around by public transport' };
 const first = me => (me.name || '').trim().split(/\s+/)[0] || miss('first name');
 const sign = me => v(me.name, 'your name') + '\n' + v(me.phone, 'mobile') + ' · ' + v(me.email, 'email');
@@ -464,27 +479,28 @@ function toText(s){ return s.replace(/\u0001(.*?)\u0002/g, '[$1]'); }
 const TEMPLATES = [
   { id:'cover', title:'Cover note', hint:'Paste into the cover letter box, or as the message when you email a CV. About 110 words, and that is plenty for casual care roles.',
     fn: (me, app) => {
-      const exp = me.exp.trim() ? `Before nursing, I ${me.exp.trim().replace(/\.$/, '')}, so I'm used to shift work and looking after people.\n\n` : '';
       const langs = me.langs.trim() ? ` I also speak ${me.langs.trim()}.` : '';
-      return `Kia ora,\n\nI'd like to apply for casual ${roleOr(app, miss('role'))} work with ${empOr(app, miss('employer'))}. I'm a first-year Bachelor of Nursing student at MIT in Manukau, and I'm available ${availText(me)}.\n\n${exp}So far my study has covered ${v(me.study, 'what you have studied')}. I'm reliable, calm with people, and keen to learn the practical side of care from your team.${langs}\n\nI can send my immunisation record and referees straight away, and I'm happy to be police vetted. I can come in for an interview or a trial shift at short notice.\n\nNgā mihi,\n${sign(me)}`;
+      const care = careLine(me), work = workLine(me);
+      return `Kia ora,\n\nI'd like to apply for casual ${roleOr(app, miss('role'))} work with ${empOr(app, miss('employer'))}. I'm a first-year Bachelor of Nursing student at MIT in Manukau, and I'm available ${availText(me)}.\n\nSo far my study has covered ${v(me.study, 'what you have studied')}.${care ? ' ' + care : ''}${work ? ' ' + work : ''}${langs}\n\nI'm reliable, calm with people, and keen to learn the practical side of care from your team. My referees are ready, and I'm happy to be police vetted. I can come in for an interview or a trial shift at short notice.\n\nNgā mihi,\n${sign(me)}`;
     } },
   { id:'generic', title:'Generic cover letter (for upload boxes)', hint:'No employer name in it, so make it a PDF once (Google Docs → Download → PDF) and attach the same file whenever a form insists on an upload.',
     fn: (me) => {
-      const exp = me.exp.trim() ? `Before nursing, I ${me.exp.trim().replace(/\.$/, '')}, so I'm used to shift work and looking after people. ` : '';
-      return `Kia ora,\n\nI'm applying for casual work as a caregiver or health care assistant with your team. I'm a first-year Bachelor of Nursing student at Manukau Institute of Technology, and I'm available ${availText(me)}.\n\n${exp}So far my study has covered ${v(me.study, 'what you have studied')}. I'm reliable, calm with people, and keen to learn the practical side of care.\n\nMy immunisation record and referees are ready to send, and I'm happy to be police vetted. I can come in for an interview or trial shift at short notice.\n\nNgā mihi,\n${sign(me)}`;
+      const care = careLine(me), work = workLine(me);
+      return `Kia ora,\n\nI'm applying for casual work as a caregiver or health care assistant with your team. I'm a first-year Bachelor of Nursing student at Manukau Institute of Technology, and I'm available ${availText(me)}.\n\nSo far my study has covered ${v(me.study, 'what you have studied')}.${care ? ' ' + care : ''}${work ? ' ' + work : ''}\n\nI'm reliable, calm with people, and keen to learn the practical side of care. My referees are ready, and I'm happy to be police vetted. I can come in for an interview or trial shift at short notice.\n\nNgā mihi,\n${sign(me)}`;
     } },
   { id:'cvtop', title:'Top of your CV', hint:'Recruiters skim the top third. Availability goes first, because for casual roles it decides whether they call you.',
     fn: (me) => `${v(me.name, 'your name').toUpperCase()}\n${v(me.suburb, 'suburb')}, Auckland · ${v(me.phone, 'mobile')} · ${v(me.email, 'email')}\n\nAVAILABLE: ${availText(me)}.${me.availNote.trim() ? ' ' + me.availNote.trim().replace(/^./, c => c.toUpperCase()).replace(/\.?$/, '.') : ''} ${TRANSPORT[me.transport] || ''}.\n\nFirst-year Bachelor of Nursing student, Manukau Institute of Technology (2026 to 2028), looking for casual caregiver / health care assistant work.` },
   { id:'q-why', title:'Q: Why do you want this role?', hint:'Works for “Why this organisation?” too: add one line about them.',
     fn: (me, app) => `I'm training to become a registered nurse and want hands-on care experience alongside my degree. I enjoy looking after people, and working as a ${roleOr(app, 'caregiver')} is the best way to build the practical skills and confidence that study alone can't give me.` },
   { id:'q-exp', title:'Q: What relevant experience do you have?', hint:'Honest beats inflated. Employers hiring students expect to train you.',
-    fn: (me) => `I'm a first-year nursing student at MIT, and so far my study has covered ${v(me.study, 'what you have studied')}.${me.exp.trim() ? ` Before nursing, I ${me.exp.trim().replace(/\.$/, '')}, where I learnt to work shifts, stay calm when it's busy and look after people.` : ''} I haven't worked as a caregiver yet, and I'm keen to complete your orientation and any training you provide.` },
+    fn: (me) => { const care = careLine(me), work = workLine(me);
+      return `I'm a first-year nursing student at MIT, and so far my study has covered ${v(me.study, 'what you have studied')}.${care ? ' ' + care : ''}${work ? ' ' + work : ''} I haven't worked as a paid caregiver yet, and I'm keen to complete your orientation and any training you provide.`; } },
   { id:'q-avail', title:'Q: Availability / hours', hint:'',
     fn: (me) => `I'm available ${availText(me)}.${me.availNote.trim() ? ' ' + me.availNote.trim().replace(/^./, c => c.toUpperCase()).replace(/\.?$/, '.') : ''} During semester I can work about ${v(me.hours, 'hours')} hours a week.` },
   { id:'q-rtw', title:'Q: Right to work, vetting, vaccinations, transport', hint:'Four common tick-box follow-ups in one block. Delete what the form doesn’t ask, and only keep what is true for you.',
     fn: (me) => {
       const rtw = `Yes, I'm a New Zealand ${me.rtw === 'resident' ? 'resident' : 'citizen'} and can work in New Zealand without restrictions.`;
-      return `Right to work: ${rtw}\n\nPolice vetting: I'm happy to consent to a New Zealand Police vet.\n\nVaccinations: As a nursing student I've provided immunisation evidence for clinical placement, and I can send you a copy of my record.\n\nTransport: ${TRANSPORT[me.transport] || ''}${me.suburb.trim() ? ', and I live in ' + me.suburb.trim() : ''}.`;
+      return `Right to work: ${rtw}\n\nPolice vetting: I'm happy to consent to a New Zealand Police vet.\n\nVaccinations: Yes, I can provide my immunisation record.${me.firstAid ? '\n\nFirst aid: I hold a current first aid certificate.' : ''}\n\nTransport: ${TRANSPORT[me.transport] || ''}${me.suburb.trim() ? ', and I live in ' + me.suburb.trim() : ''}.`;
     } },
   { id:'q-star', title:'Q: Tell us about a time you…', hint:'For “showed empathy”, “handled a difficult person” and the like. Use a real moment from placement, family care, sport or customer work, and fill the brackets.',
     fn: () => `When ${miss('the situation, in one line')}, I ${miss('what you did, with one specific detail')}. As a result, ${miss('what changed for the person')}. It taught me ${miss('one lesson you now use')}.` },
@@ -524,6 +540,7 @@ function renderMe(){
   $('#availChecks').innerHTML = AV.concat([['summer','full-time over summer']]).map(([k, t]) =>
     `<label><input type="checkbox" id="av-${k}" data-av="${k}" ${state.me.avail.includes(k) ? 'checked' : ''}/>${esc(t)}</label>`).join('');
   $$('[data-me]').forEach(el => { if (document.activeElement !== el) el.value = state.me[el.dataset.me] ?? ''; });
+  $$('[data-mebool]').forEach(el => { el.checked = !!state.me[el.dataset.mebool]; });
   $$('[data-app]').forEach(el => { if (document.activeElement !== el) el.value = state.app[el.dataset.app] ?? ''; });
   const done = !!(state.me.name && state.me.phone && state.me.email);
   $('#meState').textContent = done ? 'Filled in' : 'Fill in once';
@@ -536,6 +553,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const el = e.target;
+  if (el.dataset.mebool){ state.me[el.dataset.mebool] = el.checked; renderTemplates(); persist(); return; }
   if (el.dataset.av){
     const k = el.dataset.av, a = new Set(state.me.avail);
     el.checked ? a.add(k) : a.delete(k);
