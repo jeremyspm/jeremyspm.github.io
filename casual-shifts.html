@@ -46,6 +46,7 @@
   --mark:rgba(255,196,0,.30);
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
 body{background:var(--bg) linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--tx);
   font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -79,7 +80,7 @@ p{margin:0 0 10px}
 .tab{flex:1;border:0;background:none;border-radius:10px;padding:9px 6px;font-size:14px;font-weight:600;color:var(--tx2);white-space:nowrap}
 .tab[aria-selected="true"]{background:var(--accbg);color:var(--tx);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc) 45%,transparent)}
 .tab .n{font-size:11px;font-weight:800;color:var(--acc);margin-left:4px;font-variant-numeric:tabular-nums}
-.panel{display:grid;gap:14px}
+.panel{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
 
 /* blocks */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
@@ -159,7 +160,7 @@ select.st{padding:6px 8px;font-size:13px}
 .field .hint{font-size:12px;color:var(--tx3)}
 .checks{display:flex;flex-wrap:wrap;gap:6px}
 .checks label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card2);border-radius:999px;padding:5px 11px;font-size:13px;color:var(--tx2);cursor:pointer}
-.checks input{accent-color:var(--acc);margin:0}
+.checks input,.field .checks input{accent-color:var(--acc);margin:0;width:auto;flex:none}
 .checks label:has(input:checked){border-color:color-mix(in srgb,var(--acc) 50%,transparent);color:var(--tx);background:var(--accbg)}
 details.box>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
 details.box>summary::-webkit-details-marker{display:none}
@@ -227,22 +228,57 @@ mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
   <p class="sub">Casual care work around a full-time BN at MIT Manukau: fewer applications, each in about three minutes.</p>
 
   <nav class="tabs" role="tablist" aria-label="Sections">
-    <button class="tab" role="tab" id="t-plan" aria-controls="plan" data-tab="plan">Plan</button>
-    <button class="tab" role="tab" id="t-targets" aria-controls="targets" data-tab="targets">Targets<span class="n" id="nTargets"></span></button>
-    <button class="tab" role="tab" id="t-kit" aria-controls="kit" data-tab="kit">Paste kit</button>
-    <button class="tab" role="tab" id="t-track" aria-controls="track" data-tab="track">Tracker<span class="n" id="nTrack"></span></button>
+    <button class="tab" role="tab" id="t-plan" aria-controls="sec-plan" data-tab="plan">Plan</button>
+    <button class="tab" role="tab" id="t-targets" aria-controls="sec-targets" data-tab="targets">Targets<span class="n" id="nTargets"></span></button>
+    <button class="tab" role="tab" id="t-kit" aria-controls="sec-kit" data-tab="kit">Paste kit</button>
+    <button class="tab" role="tab" id="t-track" aria-controls="sec-track" data-tab="track">Tracker<span class="n" id="nTrack"></span></button>
   </nav>
 
   <!-- ═════════ PLAN ═════════ -->
-  <section class="panel" id="plan" role="tabpanel" aria-labelledby="t-plan">
-    <!--PLAN-->
-    <div class="card lead"><p>The plan is being researched. Check back shortly.</p></div>
-    <div class="card"><div class="runway" id="runway"></div></div>
-    <!--/PLAN-->
+  <section class="panel" id="sec-plan" role="tabpanel" aria-labelledby="t-plan">
+    <div class="card lead">
+      <p><b>The short version:</b> stop sending 20-minute applications to random ads. Aim at about ten employers near Hillpark that hire casual caregivers all the time. Apply to each in about three minutes with the Paste kit, phone a few small rest homes, and let alerts bring you the rest.</p>
+      <p style="margin:0">Your weekends-and-weekday-daytimes availability, your car and your first aid certificate are exactly what aged care and home support are short of. The job is to say so at the top of every application.</p>
+    </div>
+
+    <div class="card">
+      <h2>Why 100 applications got nothing</h2>
+      <ul class="tight why">
+        <li><b>The CV never said “care”.</b> No target role, no availability, no dates, and referees with no roles listed. That’s fixed in the new CV.</li>
+        <li><b>Hospitals are the hardest door right now.</b> Health NZ has run tight hiring controls since 2024 (RNZ, Aug 2026). Counties Manukau’s HCA ads asked for a Level 3–4 HCA qualification or experience, and the one Auckland pool for nursing students wants Year 2+ with an acute placement.</li>
+        <li><b>Casual care work mostly isn’t filled through one-off ads.</b> Aged care hires through casual pools, facility managers and job alerts, and ads close as soon as someone good applies. Speed and a direct line beat a polished letter.</li>
+      </ul>
+    </div>
+
+    <div class="sec">The plan</div>
+    <div class="card steps">
+      <div class="step"><h3>Build the kit once</h3><p>New CV, your details, one generic cover-letter PDF, and ask Leigh to be your referee. The checklist is on the Tracker tab.</p><span class="time">≈ 45 MIN, ONCE</span></div>
+      <div class="step"><h3>Apply to the five “Do first” aged-care targets</h3><p>CHT, Bupa, Oceania, Metlifecare and Summerset: every one is within a short drive of Hillpark. Open a target, tap <i>Fill paste kit</i>, copy, paste, submit.</p><span class="time">≈ 3 MIN EACH</span></div>
+      <div class="step"><h3>Phone three small homes</h3><p>Weekdays 10–11:30am or 1:30–2:30pm, using the Phone script. Ask for the clinical or facility manager and offer to email your CV.</p><span class="time">≈ 20 MIN</span></div>
+      <div class="step"><h3>Set alerts, then apply within a day</h3><p>SEEK saved searches plus each provider’s alerts. When one lands, the paste kit makes it a three-minute job. Skip ads that want a Level 3–4 qualification unless they also say training is provided.</p><span class="time">≈ 10 MIN A WEEK</span></div>
+      <div class="step"><h3>Follow up once, at five days</h3><p>The Tracker flags anything that’s gone quiet and copies the follow-up for you. One follow-up, then move on.</p><span class="time">≈ 2 MIN EACH</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Why now, not December</h2>
+      <p class="small" style="color:var(--tx2)">Between applying and your first paid shift come the interview, police vetting, reference checks and orientation or buddy shifts, which often adds up to several weeks. Applications sent in October turn into summer shifts. Applications sent in December often start in February.</p>
+      <div class="runway" id="runway"></div>
+      <div class="legend"><span><i style="background:var(--accbg)"></i>Apply</span><span><i style="background:var(--hardbg)"></i>Interviews, vetting, orientation</span><span><i style="background:var(--badbg)"></i>Exams (check your timetable)</span><span><i style="background:var(--goodbg)"></i>Summer: work full-time</span><span><i style="outline:2px solid var(--tx);outline-offset:-2px"></i>This week</span></div>
+    </div>
+
+    <div class="card">
+      <h2>While you’re studying</h2>
+      <ul class="tight">
+        <li><b>You’re hired as a caregiver, not a student nurse.</b> Do what that job description covers, even when your degree has taught you more.</li>
+        <li><b>Block exam weeks early.</b> Tell your roster person your exam dates when you’re hired, not the week before.</li>
+        <li><b>Casual means you can say no.</b> Take the weekend shifts that fit, and don’t let offered hours eat your study days.</li>
+      </ul>
+    </div>
+    <p class="src">Researched <span id="asOf"></span> from search results. The job sites themselves were blocked from where this page was built, so check each ad is live and read its form before you apply. Hiring-controls source: RNZ, “Documents reveal Health NZ hiring crackdown”, Aug 2026.</p>
   </section>
 
   <!-- ═════════ TARGETS ═════════ -->
-  <section class="panel" id="targets" role="tabpanel" aria-labelledby="t-targets" hidden>
+  <section class="panel" id="sec-targets" role="tabpanel" aria-labelledby="t-targets" hidden>
     <div class="card lead">
       <p><b>Apply here first.</b> Pools and bureaus are one application for many wards, sites or shifts. Aged care is the fastest door for a nursing student. Tick each one off as you go; it lands in the Tracker.</p>
     </div>
@@ -252,7 +288,7 @@ mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
   </section>
 
   <!-- ═════════ PASTE KIT ═════════ -->
-  <section class="panel" id="kit" role="tabpanel" aria-labelledby="t-kit" hidden>
+  <section class="panel" id="sec-kit" role="tabpanel" aria-labelledby="t-kit" hidden>
     <details class="card box" id="meBox">
       <summary><h2 style="margin:0">Your details</h2><span class="small muted" id="meState"></span></summary>
       <div class="form">
@@ -317,7 +353,7 @@ mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
   </section>
 
   <!-- ═════════ TRACKER ═════════ -->
-  <section class="panel" id="track" role="tabpanel" aria-labelledby="t-track" hidden>
+  <section class="panel" id="sec-track" role="tabpanel" aria-labelledby="t-track" hidden>
     <div class="stats" id="stats"></div>
     <div class="sec">Applications</div>
     <div class="list" id="trList"></div>
@@ -346,11 +382,104 @@ mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
 'use strict';
 /* ── data ─────────────────────────────────────────────────────────────── */
 /*TARGETS*/
-const KINDS = [];
-const TARGETS = [];
+/* Researched 23 Sep 2026. The job sites themselves were blocked from the build
+   environment, so every entry comes from search-result extracts, not an opened form.
+   Hence the Search fallback on every card, and no cover-letter claims. */
+const AS_OF = '23 Sep 2026';
+const KINDS = [['aged','Aged care'], ['home','Home support'], ['hnz','Hospital'], ['board','Job boards']];
+const TARGETS = [
+  { id:'cht', kind:'aged', tier:1, name:'CHT Healthcare Trust', emp:'CHT Healthcare Trust', role:'Healthcare Assistant',
+    roles:'Healthcare Assistant – Casual (one ad per home)',
+    where:'Hayman (Trevor Hosken Dr, Wiri, next to MIT), St Christophers (Papatoetoe), Hillcrest (Māngere), Parkhaven (Māngere East), Lansdowne (Botany Downs)',
+    how:'Online through CHT’s Dayforce job portal. Apply to the casual ad at each home you can reach: same CV, same cover note.',
+    why:'The biggest cluster of homes near you: five within about 15 minutes of Hillpark. Casual HCAs cover ad-hoc shifts, weekends included, which is exactly your availability.',
+    url:'https://jobs.dayforcehcm.com/en-NZ/cht/CANDIDATEPORTAL', q:'CHT Healthcare Trust Healthcare Assistant casual careers',
+    note:'Their casual ads ask you to be flexible for weekends and ad-hoc shifts. Say “weekends plus some weekday daytimes” plainly: it is a strength, not a limitation.' },
+  { id:'bupa', kind:'aged', tier:1, name:'Bupa: Erin Park & Wattle Downs', emp:'Bupa', role:'Caregiver',
+    roles:'Caregiver (casual: as required, no guaranteed hours)',
+    where:'Erin Park Care Home (Russell Rd, Manurewa); Wattle Downs Care Home (Wattle Farm Rd, Wattle Downs)',
+    how:'Online at careers.bupa.co.nz, or email your CV to recruitment@bupa.co.nz. Their careers FAQ offers that route when no ad fits.',
+    why:'Two homes about 5–10 minutes from you. The email route is a CV plus the cover note as the email body: no form at all.',
+    url:'https://careers.bupa.co.nz/', q:'Bupa caregiver Manurewa Wattle Downs careers',
+    note:'Bupa ads say experience is “ideal”, not required. Casual shifts rotate across 7–3, 3–11 and 11–7.' },
+  { id:'oceania', kind:'aged', tier:1, name:'Oceania: Elmwood', emp:'Oceania Healthcare', role:'Healthcare Assistant',
+    roles:'Healthcare Assistant (Casual); Auckland Regional Pool HCA',
+    where:'Elmwood (Hill Rd, Manurewa, opposite the Botanic Gardens). Their regional pool mostly covers central and eastern Auckland.',
+    how:'Online only: create an account and apply. Oceania’s FAQ asks people not to drop CVs at care centres, so don’t walk in here.',
+    why:'Oceania’s own FAQ says you don’t always need experience or qualifications to be an HCA, because it trains on the job.',
+    url:'https://careers.oceaniahealthcare.co.nz/jobs', q:'Oceania Healthcare Elmwood Manurewa healthcare assistant casual',
+    note:'Their “Connect” page signs you up for alerts on new openings, so do that too.' },
+  { id:'metlife', kind:'aged', tier:1, name:'Metlifecare: MetFlex casual team', emp:'Metlifecare', role:'Casual Caregiver',
+    roles:'Casual Caregiver (MetFlex, a central casual team)',
+    where:'Papakura Oaks (Youngs Rd, Papakura), Highlands (Highland Park), Edgewater (Pakuranga), Fairway Gardens (Botany)',
+    how:'Register on careers.metlifecare.co.nz with your CV, then apply to the casual caregiver role.',
+    why:'One casual team, rostered centrally across sites. Their casual ads pitch holiday-period work and “earning and learning”, which fits your summer.',
+    url:'https://careers.metlifecare.co.nz/search', q:'Metlifecare MetFlex casual caregiver Auckland',
+    note:'A Careerforce qualification is listed as an advantage, not a requirement. No South Auckland MetFlex ad was confirmed on 23 Sep, so check what’s open.' },
+  { id:'summerset', kind:'aged', tier:1, name:'Summerset: by the Park & Karaka', emp:'Summerset', role:'Caregiver',
+    roles:'Caregiver (casual / part-time)',
+    where:'Summerset by the Park (Flat Bush School Rd, Flat Bush); Summerset at Karaka',
+    how:'Online via SmartRecruiters: CV upload plus a message box. Paste the cover note there. Use “Notify me of jobs” to get alerts.',
+    why:'Two care centres a short drive from Hillpark, on a quick one-page application.',
+    url:'https://careers.smartrecruiters.com/Summerset1', q:'Summerset caregiver Flat Bush Karaka careers',
+    note:'No Auckland casual caregiver ad was confirmed on 23 Sep. Set the alert and apply when one appears.' },
+  { id:'ryman', kind:'aged', tier:2, name:'Ryman: Bruce McLaren & Possum Bourne', emp:'Ryman Healthcare', role:'Caregiver',
+    roles:'Caregiver – Casual; Caregiver – Part Time',
+    where:'Bruce McLaren (Dannemora/Howick, ~20 min); Possum Bourne (Pukekohe, ~25 min). With your car both are reachable.',
+    how:'Create a Ryman careers account and apply. The form asks about work entitlement and may include a short online test, then a phone screen.',
+    why:'Ryman caregiver ads say aged-care experience is “not essential”.',
+    url:'https://careers.rymanhealthcare.com/our-jobs', q:'Ryman Healthcare caregiver casual Bruce McLaren Possum Bourne',
+    note:'Longer drives than the Tier 1 homes, and Ryman’s process has more steps, so do these second.' },
+  { id:'indep', kind:'aged', tier:2, name:'Independent homes near Hillpark', emp:'', role:'Caregiver',
+    roles:'Caregiver / Healthcare Assistant',
+    where:'Found in search results: Alden Manurewa (Great South Rd), Papatoetoe Residential Care, Takanini Lodge, Tui Lifecare (Takanini/Papakura)',
+    how:'No online portal found for these, so phone and ask for the clinical or facility manager (use the Phone script), then email your CV to the address they give you.',
+    why:'Small homes often hire straight through the manager. One good phone call can beat ten online forms.',
+    url:'https://www.google.com/maps/search/rest+home+near+Hillpark+Auckland', q:'rest home caregiver Manurewa Papatoetoe Takanini',
+    note:'Names and addresses come from search results only. Check each is still operating before you call. The Apply link opens a map of rest homes near Hillpark.' },
+  { id:'homesupport', kind:'home', tier:2, name:'Home & community support', emp:'', role:'Support Worker',
+    roles:'Support Worker / Community Support Worker',
+    where:'Visits in clients’ own homes around South Auckland',
+    how:'Search SEEK for “support worker” in Manukau & East Auckland. Most providers take a CV and a short online form.',
+    why:'You have a full licence and a car, which most home-support jobs need and many applicants lack. Visits are often weekends and daytimes, which matches your availability.',
+    url:'https://nz.seek.com/support-worker-jobs', q:'home support worker jobs Manukau South Auckland',
+    note:'Not researched this round: the provider sites were blocked, so no providers are named here. Ask each one about mileage and travel-time pay before you accept.' },
+  { id:'hnz-orderly', kind:'hnz', tier:2, name:'Health NZ Counties Manukau: casual orderly', emp:'Health NZ Counties Manukau', role:'Orderly',
+    roles:'Orderly (Casual), Non-Clinical Support, Middlemore',
+    where:'Middlemore Hospital, about 15 minutes away',
+    how:'Online through the northern-region careers site (one account covers every Auckland Health NZ job). Set a job alert for “Orderly” and “Health Care Assistant”, Counties Manukau.',
+    why:'The realistic hospital door for a Year 1: past orderly ads said no experience needed. Its HCA roles asked for a Level 3–4 HCA qualification or experience.',
+    url:'https://careers.countiesmanukau.health.nz/working-here/', q:'Counties Manukau orderly casual Middlemore job',
+    note:'Health NZ has had tight hiring controls since 2024 (RNZ, Aug 2026). Treat this as one alert and one application, not your main plan. The pay is reportedly below HCA rates.' },
+  { id:'hnz-student', kind:'hnz', tier:3, name:'Te Toka Tumai: HCAs for Nursing Students', emp:'Health NZ Te Toka Tumai', role:'Healthcare Assistant',
+    roles:'Healthcare Assistants for Nursing Students (Temporary Staffing Bureau)',
+    where:'Auckland City Hospital and other Te Toka Tumai sites (central Auckland)',
+    how:'Online, with a CV listing your placements and references from two clinical placements.',
+    why:'Built for nursing students, but it asks for Year 2 or 3 and at least one acute medical or surgical placement. That makes it a 2027 target, not one for now.',
+    url:'https://www.careers.adhb.govt.nz/', q:'Te Toka Tumai Healthcare Assistants for Nursing Students bureau',
+    note:'Set a reminder for after your first acute placement. Its date and status weren’t confirmed on 23 Sep.' },
+  { id:'seek', kind:'board', tier:1, name:'SEEK: profile + saved searches', emp:'', role:'Caregiver',
+    roles:'Caregiver · Health Care Assistant · Support Worker',
+    where:'Location: Manukau & East Auckland. Work type: casual and part time',
+    how:'Upload the new CV, fill in your SEEK Profile and set it so employers can find you. Save three searches (caregiver, health care assistant, support worker) with daily email alerts.',
+    why:'Alerts bring new ads to you, so you can apply within a day or two. Early applicants get read. The paste kit makes each one about three minutes.',
+    url:'https://nz.seek.com/caregiver-jobs', q:'SEEK caregiver jobs Manukau',
+    note:'Skip ads that want a Level 3–4 qualification or “1+ years’ experience” unless they also say training is provided.' },
+];
 /*/TARGETS*/
 /*KITLIST*/
-const KITLIST = [];
+const KITLIST = [
+  { id:'cv', t:'New CV on your phone', d:'The care version: role and availability at the top. Replace the old one everywhere, including SEEK.' },
+  { id:'details', t:'Your details filled in', d:'Paste kit → Your details. Every template fills from it.' },
+  { id:'generic', t:'Generic cover letter saved as a PDF', d:'Paste kit → Generic cover letter → Google Docs → Download → PDF. Use it whenever a form insists on an upload.' },
+  { id:'leigh', t:'Leigh has said yes to being your referee', d:'Use the referee message in the Paste kit, and note her phone number and email for forms.' },
+  { id:'ref2', t:'A second referee lined up', d:'Best: someone who supervised you, a tutor, or a placement preceptor. Many forms ask for two.' },
+  { id:'firstaid', t:'First aid certificate photographed', d:'Note the expiry date. Some employers ask for it.' },
+  { id:'imms', t:'Immunisation record on your phone', d:'Health employers commonly ask about measles (MMR) and whooping cough (pertussis). Your GP can print your record.' },
+  { id:'id', t:'ID ready for police vetting', d:'Passport or birth certificate, plus your driver licence. Each employer requests its own vet with your consent.' },
+  { id:'ird', t:'IRD number and bank account number handy', d:'For the new-starter forms, so an offer doesn’t stall.' },
+  { id:'alerts', t:'Alerts set', d:'SEEK saved searches, the Health NZ northern-region alert, and the Oceania, Bupa and Summerset job alerts.' },
+];
 /*/KITLIST*/
 
 /* ── plumbing ─────────────────────────────────────────────────────────── */
@@ -381,7 +510,7 @@ $('#btnTheme').onclick = () => {
    is built with his details filled in (see the build note in the commit). */
 const PRIVATE_ME = null;
 const DEF_ME = Object.assign({ name:'', phone:'', email:'', suburb:'', avail:['wkd'], hours:'', transport:'pt', rtw:'citizen', langs:'',
-  study:'anatomy and physiology, the foundations of nursing care, vital signs, and the Nursing Council Code of Conduct and professional boundaries',
+  study:'anatomy and physiology, the foundations of nursing care, pharmacology, and professional practice (the Code of Conduct and professional boundaries)',
   exp:'', availNote:'', firstAid:false, family:false }, PRIVATE_ME || {});
 function normalize(s){
   s = s && typeof s === 'object' ? s : {};
@@ -443,7 +572,7 @@ async function connectClaude(){
 const TABS = ['plan', 'targets', 'kit', 'track'];
 function showTab(id, scroll){
   if (!TABS.includes(id)) id = 'plan';
-  TABS.forEach(t => { $('#' + t).hidden = t !== id; $('#t-' + t).setAttribute('aria-selected', t === id ? 'true' : 'false'); });
+  TABS.forEach(t => { $('#sec-' + t).hidden = t !== id; $('#t-' + t).setAttribute('aria-selected', t === id ? 'true' : 'false'); });
   lsSet(TABK, id);
   if (scroll) window.scrollTo({ top: 0 });
 }
@@ -566,7 +695,7 @@ document.addEventListener('change', e => {
 const STATUS = [['', 'Not yet'], ['applied', 'Applied'], ['heard', 'Heard back'], ['interview', 'Interview'], ['offer', 'Offer / starting'], ['no', 'No / closed']];
 const statusSel = (id, cur) => `<select class="st" data-st="${esc(id)}" aria-label="Status">` +
   STATUS.map(([k, t]) => `<option value="${k}" ${k === (cur || '') ? 'selected' : ''}>${t}</option>`).join('') + `</select>`;
-const CL = { required:['Cover letter required','warn'], optional:['Cover letter optional','good'], not_asked:['No cover letter','good'], unknown:['Cover letter: check','',] };
+const CL = { required:['Cover letter required','warn'], optional:['Cover letter optional','good'], not_asked:['No cover letter','good'] };
 const CAR = { yes:['Car needed','bad'], sometimes:['Car helps','warn'], no:['No car needed','good'], unknown:null };
 let filter = 'all';
 function renderFilters(){
@@ -578,23 +707,25 @@ function renderTargets(){
   const rows = TARGETS.filter(t => filter === 'all' || t.kind === filter);
   $('#tgtList').innerHTML = rows.map(t => {
     const st = state.t[t.id] || {};
-    const cl = CL[t.cl] || CL.unknown, car = CAR[t.car];
+    const cl = CL[t.cl], car = CAR[t.car];
     const kind = (KINDS.find(k => k[0] === t.kind) || [, ''])[1];
-    return `<article class="card tgt"><div class="hd"><div><h3>${esc(t.name)}</h3><div class="roles">${esc(t.roles)}</div></div><span class="tier">${t.tier === 1 ? 'Do first' : t.tier === 2 ? 'Then' : 'If you have time'}</span></div>
-      <div class="chips"><span class="chip acc">${esc(kind)}</span><span class="chip ${cl[1]}">${cl[0]}</span>${car ? `<span class="chip ${car[1]}">${car[0]}</span>` : ''}${st.s ? `<span class="chip good">${esc((STATUS.find(x => x[0] === st.s) || [, ''])[1])}${st.d ? ' · ' + nice(st.d) : ''}</span>` : ''}</div>
+    return `<article class="card tgt"><div class="hd"><div><h3>${esc(t.name)}</h3><div class="roles">${esc(t.roles)}</div></div><span class="tier">${t.tier === 1 ? 'Do first' : t.tier === 2 ? 'Then' : '2027'}</span></div>
+      <div class="chips"><span class="chip acc">${esc(kind)}</span>${cl ? `<span class="chip ${cl[1]}">${cl[0]}</span>` : ''}${car ? `<span class="chip ${car[1]}">${car[0]}</span>` : ''}${st.s ? `<span class="chip good">${esc((STATUS.find(x => x[0] === st.s) || [, ''])[1])}${st.d ? ' · ' + nice(st.d) : ''}</span>` : ''}</div>
       <p class="why">${t.why}</p>
       <div class="meta">${t.where ? `<div><b>Where:</b> ${t.where}</div>` : ''}${t.how ? `<div><b>How:</b> ${t.how}</div>` : ''}</div>
-      <div class="act"><a class="btn pri sm" href="${esc(t.url)}" target="_blank" rel="noopener">Apply ↗</a><button class="btn sm" data-use="${esc(t.id)}">Fill paste kit</button>${statusSel(t.id, st.s)}</div>
+      <div class="act"><a class="btn pri sm" href="${esc(t.url)}" target="_blank" rel="noopener">Apply ↗</a><a class="btn sm ghost" href="https://www.google.com/search?q=${encodeURIComponent(t.q)}" target="_blank" rel="noopener" title="If the link doesn't load">Search ↗</a><button class="btn sm" data-use="${esc(t.id)}">Fill paste kit</button>${statusSel(t.id, st.s)}</div>
       ${t.note ? `<details><summary>Worth knowing</summary><p style="margin:6px 0 0">${t.note}</p></details>` : ''}
     </article>`;
   }).join('') || '<div class="empty">Nothing in this group.</div>';
   $('#nTargets').textContent = TARGETS.length;
+  $('#tgtAsOf').textContent = 'Researched ' + AS_OF + ' from search results; the employer sites couldn\u2019t be opened from where this was built. If Apply doesn\u2019t load the right page, use Search.';
+  const ao = $('#asOf'); if (ao) ao.textContent = AS_OF;
 }
 $('#tgtList').addEventListener('click', e => {
   const b = e.target.closest('[data-use]'); if (!b) return;
   const t = TARGETS.find(x => x.id === b.dataset.use); if (!t) return;
-  state.app = { emp: t.emp || t.name, role: t.role || 'Caregiver' }; persist(); renderMe(); renderTemplates(); showTab('kit', true);
-  toast('Paste kit filled for ' + (t.emp || t.name));
+  state.app = { emp: t.emp, role: t.role || 'Caregiver' }; persist(); renderMe(); renderTemplates(); showTab('kit', true);
+  toast(t.emp ? 'Paste kit filled for ' + t.emp : 'Add the employer name at the top');
 });
 document.addEventListener('change', e => {
   const el = e.target;

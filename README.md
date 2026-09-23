@@ -28,8 +28,8 @@ PROJECTS array — flip them in when they go live.
 ### Tools that live in THIS repo
 
 Step 1 assumes its own repo, and most tools have one. A few live here instead and
-are served straight off the root — `bn2-brief.html`, `np-roadmap.html` and
-`hs2-videos.html`. That is the right call when a tool is small, single-file and unlikely
+are served straight off the root — `bn2-brief.html`, `np-roadmap.html`,
+`hs2-videos.html` and `casual-shifts.html`. That is the right call when a tool is small, single-file and unlikely
 to grow its own release cycle; give it its own repo the moment it needs issues, a build
 pipeline, or a version history separate from the hub's.
 
@@ -82,6 +82,15 @@ rather than reviving the hub. The tile — `{cat:'sem2-hs2', ic:'i-play', …}` 
 `claude/study-tool-video-playlist-bd5j3x`; re-apply it whenever the hub comes back.
 The page itself is live at `/hs2-videos.html` regardless, which is what the ▶ tab and
 the "Watch first" door inside hs2-test2 link to.
+
+`casual-shifts.html` (Casual Shifts Kit) is the casual-care job kit: a target list of
+employers near Hillpark/Manukau, a paste kit that fills a cover note, screening answers
+and call scripts from details typed once, and an application tracker. **This file is
+public, so it carries no personal details** — `PRIVATE_ME` stays `null` here, and the
+details live in localStorage (`jobkit.v1`, synced by `Cloud.sync`). The target list was
+researched 23 Sep 2026 from search results only (the job sites were blocked from the
+build environment), which is why every card has a Search fallback and none claims a
+cover-letter setting. Re-check the targets before relying on them months later.
 
 ## Notes
 
