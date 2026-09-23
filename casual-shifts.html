@@ -274,7 +274,6 @@ mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
           <select id="f-rtw" data-me="rtw">
             <option value="citizen">NZ citizen</option>
             <option value="resident">NZ resident</option>
-            <option value="visa">Student visa</option>
           </select></div>
         <div class="field"><label for="f-langs">Other languages <span class="muted">(optional)</span></label><input id="f-langs" data-me="langs" placeholder="e.g. Samoan, Hindi"/></div>
         <div class="field full"><label for="f-study">What your study has covered so far</label>
@@ -484,7 +483,7 @@ const TEMPLATES = [
     fn: (me) => `I'm available ${availText(me)}.${me.availNote.trim() ? ' ' + me.availNote.trim().replace(/^./, c => c.toUpperCase()).replace(/\.?$/, '.') : ''} During semester I can work about ${v(me.hours, 'hours')} hours a week.` },
   { id:'q-rtw', title:'Q: Right to work, vetting, vaccinations, transport', hint:'Four common tick-box follow-ups in one block. Delete what the form doesn’t ask, and only keep what is true for you.',
     fn: (me) => {
-      const rtw = me.rtw === 'visa' ? `I'm on a student visa; ${VISA_LINE}` : `Yes, I'm a New Zealand ${me.rtw === 'resident' ? 'resident' : 'citizen'} and can work in New Zealand without restrictions.`;
+      const rtw = `Yes, I'm a New Zealand ${me.rtw === 'resident' ? 'resident' : 'citizen'} and can work in New Zealand without restrictions.`;
       return `Right to work: ${rtw}\n\nPolice vetting: I'm happy to consent to a New Zealand Police vet.\n\nVaccinations: As a nursing student I've provided immunisation evidence for clinical placement, and I can send you a copy of my record.\n\nTransport: ${TRANSPORT[me.transport] || ''}${me.suburb.trim() ? ', and I live in ' + me.suburb.trim() : ''}.`;
     } },
   { id:'q-star', title:'Q: Tell us about a time you…', hint:'For “showed empathy”, “handled a difficult person” and the like. Use a real moment from placement, family care, sport or customer work, and fill the brackets.',
@@ -498,9 +497,6 @@ const TEMPLATES = [
   { id:'ref', title:'Asking someone to be a referee', hint:'Ask two people once: a tutor or placement preceptor, plus anyone who has supervised you at work or as a volunteer.',
     fn: (me) => `Kia ora ${miss('their name')}, I'm applying for casual caregiver / health care assistant work alongside my nursing degree. Would you be happy to be one of my referees? Employers usually just call to ask about reliability and how I get on with people. Thanks heaps, ${first(me)}` },
 ];
-/*VISA*/
-const VISA_LINE = 'check the current work-hour limit on your visa conditions.';
-/*/VISA*/
 
 /* ── render: paste kit ───────────────────────────────────────────────── */
 function renderTemplates(){
@@ -663,7 +659,7 @@ async function connectAsk(){
       `Study: first-year Bachelor of Nursing, Manukau Institute of Technology (MIT), South Auckland. Covered so far: ${me.study || '(not given)'}`,
       `Availability: ${toText(availText(me))}${me.availNote ? '. ' + me.availNote : ''}. About ${me.hours || '(not given)'} hours a week in semester.`,
       `Work before nursing: ${me.exp || 'none given'}`, `Transport: ${TRANSPORT[me.transport] || ''}`,
-      `Right to work: ${me.rtw === 'visa' ? 'student visa' : 'NZ ' + me.rtw}`, `Other languages: ${me.langs || 'none given'}`,
+      `Right to work: NZ ${me.rtw === 'resident' ? 'resident' : 'citizen'}`, `Other languages: ${me.langs || 'none given'}`,
       `Applying to: ${state.app.emp || '(not given)'}, role: ${state.app.role || '(not given)'}`,
     ].join('\n');
     const prompt = `You help a first-year nursing student in South Auckland, New Zealand, apply for casual care work (caregiver, health care assistant, support worker).\n\nBelow is either a screening question from an application form, or a whole job ad.\n- If it is a question: write the answer he will paste. First person, plain New Zealand English, warm and direct, 2 to 4 sentences (respect any word limit in the question).\n- If it is a job ad: write a cover note of at most 120 words that names the employer and role from the ad, mentions one or two things the ad asks for that his details genuinely match, states his availability, and ends with "Ngā mihi," and his name.\n\nRules: use ONLY facts from his details. Never invent experience, qualifications, certificates or availability. Where the answer needs something his details don't include, put a short [bracketed placeholder] for him to fill. No exclamation marks, no clichés like "passionate" or "team player". Reply with only the text to paste.\n\nHIS DETAILS\n${facts}\n\nQUESTION OR AD\n"""\n${q.slice(0, 6000)}\n"""`;
