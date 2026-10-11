@@ -1,29 +1,68 @@
-# BN Hub
+# BN2 Study Tools (the root page)
 
-The landing page / directory for every study tool and app — live at
+The landing page for every study tool that is still in use, live at
 **https://jeremyspm.github.io/** (this repo must stay named
-`jeremyspm.github.io`; that's what puts it at the root URL).
+`jeremyspm.github.io`; that's what puts it at the root URL). One link to
+share with the cohort.
 
-One link to share instead of a dozen: everything else is reachable from here.
+**How it works (12 Oct 2026, replacing the "offline" placeholder that stood
+here since 5 Sep):** three screens, one question each: *which paper?* →
+*what are you struggling with?* → *the tool*, with the best tool marked
+"Start here", buttons that jump straight to the right screen inside it
+(`hs2-test3/#saq`, `cls-trainer/#bp`, …) and an "Also helps" list. A search
+box on the first screen ("bp", "pedigree", "mg to mL") skips the questions
+for people who know the word for their problem. Picked from three mockups
+(A questions / B one screen / C search): A, with C's search box.
 
-## Adding a project (the whole process)
+URLs are shareable: `/#hs2`, `/#hs2/t3`, `/#inp/bp`. The phone's back button
+walks back through the screens.
 
-1. Publish the project (its own repo under `jeremyspm`, GitHub Pages enabled
-   on `main` / root — it ends up at `https://jeremyspm.github.io/<repo>/`).
-2. In `index.html`, find the `/* ===== PROJECTS START ===== */` block and add
-   **one object**:
+## Adding a tool, or a problem (the whole process)
 
-   ```js
-   {cat:'cram', ic:'🧪', nm:'Name', ds:'One-line description.', url:'https://…', badge:'new'},
-   ```
+Everything the page shows is three lists at the top of the script in
+`index.html`, between `CONTENT` and `ENGINE`:
 
-   `cat` must be one of the CATEGORIES ids (`cram`, `sim`, `clin`, `tool`,
-   `life` — add a new category to CATEGORIES if none fits). `badge` is
-   optional: `'new'` or `'beta'`. Remove badges once a tool matures.
-3. Commit + push. Done.
+- **`TOOLS`**: `id: {nm, ic, url, ds, kw?}`. `url` is relative to the site
+  root (`medcalc/`, `pharm-final/chart.html`); `ic` is an id in the inline
+  SVG sprite; `kw` adds search words.
+- **`PAPERS`**: each paper's `needs` (the problems on screen 2). A need's
+  `tools` list is ordered, and **the first one is "Start here"**. A tool
+  entry is an id, or `{id, jump:[[hash,label,icon]], cta:[hash,label]}` to
+  add the deep-link buttons / point the main button at a screen.
+- **`date`** on a need: `{on}` or `{from,to}` (`YYYY-MM-DD`) plus `chip`,
+  `what`, `txt`, optional `verb` and `keep`. A dated need **hides itself the
+  day after its date** unless it has `keep` (then only its date goes).
 
-Unpublished projects are parked as commented-out stubs at the bottom of the
-PROJECTS array — flip them in when they go live.
+Then:
+
+1. `node index.check.mjs`, which must print `ok:`. It runs the page's own
+   script against a stub DOM and fails on: a tool no problem links to, a
+   problem naming a tool that doesn't exist, a missing icon, a bad date, a
+   script that won't parse, `color:var(--acc)`, the old navy palette, a
+   missing `noindex`, and **26 search probes** ("bp" must land on Taking a
+   blood pressure, "mg to ml" on Med calc, …). Probes whose problem has
+   hidden itself are skipped, not failed.
+2. `node index.check.mjs --live` also fetches every tool and checks every
+   jump's `#screen` exists in that tool's router. Screens a Paper Sim only
+   shows when it has content (`saq`, `focus`, `vid`) still deserve one look
+   in a browser; all of them were checked on 12 Oct.
+3. Commit + push.
+
+**Dates** came from the `sem2-finals-dates` memory (INP Mon 2 Nov, HS2 Wed 4
+Nov, Pharm Thu 5 Nov), the Test 3 ProctorU window (Tue 20 – Mon 26 Oct), the
+med calc resit (Wed 21 Oct) and placement (9 Nov – 18 Dec). `CHECKED` is
+the date printed in the footer; bump it whenever they're re-checked.
+
+**Left off on purpose (his call, 12 Oct):** finished work (HS2 Test 1 and
+Test 2 sims, the pharm essay). Also left off by default: the Module 1 sim
+(its three exam cases are inside HS2 Final), the old Module 1 hub,
+Placement Passport, the ED checklist, Ask Your Book and the BN2 brief. All
+of them are still live at their own URLs.
+
+**Copy is written for classmates**, not for Jeremy alone: no personal resit
+history, lecturers named (Hannetjie, Joan), and a footer saying it's
+student-made, not MIT material. No visit counter on this page (the old
+hub's `cloud/count.js` is still in the repo, unused here).
 
 ### Tools that live in THIS repo
 
@@ -75,28 +114,26 @@ reference surface, which is also why it carries no `practises` and bids into no
 readiness bar. If a future version of `video-matches.json` ever reaches all 148, that
 argument weakens and this page should be re-examined.
 
-**The hub tile for it is not in `index.html`.** `index.html` is the offline placeholder
-right now, so the merge that brought this page in deliberately kept the placeholder
-rather than reviving the hub. The tile — `{cat:'sem2-hs2', ic:'i-play', …}` plus an
-`i-play` sprite symbol — is written and waiting on branch
-`claude/study-tool-video-playlist-bd5j3x`; re-apply it whenever the hub comes back.
-The page itself is live at `/hs2-videos.html` regardless, which is what the ▶ tab and
-the "Watch first" door inside hs2-test2 link to.
+**Where the landing page links it (12 Oct 2026):** all three playlists
+(`hs2-m1-videos.html`, `hs2-videos.html`, `hs2-m3-videos.html`) are `TOOLS` in
+`index.html`, under HS2 → *I need it explained* (Module 3 as Start here), and
+Module 3 also under *Test 3* and *Genetics*. The old hub tile on branch
+`claude/study-tool-video-playlist-bd5j3x` belonged to the dead hub and is not needed.
 
 ## Notes
 
-- `<meta name="robots" content="noindex">` keeps the hub out of search
-  engines — it's meant to be shared by link. Remove that line if you ever
-  want it indexed.
-- The hub is a plain static page: no build step, no dependencies, offline-fine.
-- Tools live across two accounts (`jeremyspm`, `1999jeremym`); the hub links
-  to both. See `PROJECT-BACKLOG.md` in the parent working folder for the
-  consolidation to-do.
+- `<meta name="robots" content="noindex">` keeps the page out of search
+  engines — it's meant to be shared by link (the `og:` tags give it a
+  proper preview in a group chat). Remove that line if you ever want it indexed.
+- A plain static page: no build step, no dependencies, house palette by value
+  (the BN Hub uniformity contract), theme key `hub.theme` shared with the tools.
+- `v2.html` and `bn2-brief.html` here are still "offline" placeholders; the
+  brief lives on in its own repo (`jeremyspm/bn2-brief`).
 
 ## For future Claude sessions
 
 When a new tool is built for Jeremy: publish it as its own `jeremyspm` repo
-with Pages, then add its PROJECTS entry here and push. Keep names short,
-descriptions one line, and put study tools in `cram` unless they're clearly a
-simulator (`sim`), clinical/career (`clin`), a meta-tool (`tool`), or
-non-nursing (`life`).
+with Pages, add a `TOOLS` entry, name it in the right problem's `tools` (first
+= Start here), run `node index.check.mjs --live`, push, and check the live page
+at 375px. When a sitting passes, its problem hides itself; when a whole paper
+is finished, remove it from `PAPERS` (and its tools that nothing else uses).
