@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="One-page recap of 722.544 Module 10: CAM, Rongoā Māori and socioeconomic factors, with exam-format definitions and a self-check.">
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('hub.theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+<title>Pharm Module 10 Recap</title>
+<style>
+/* Layout: one reading column (max 680px), jump chips up top, opaque cards only for
+   status, warnings, tables and the self-check. Palette = BN Hub house tokens by value;
+   --ph is the Pharmacology paper hue from bn2-brief. Dark-first. */
+:root{
+  --bg:#161719; --card:#1c1c1f; --card2:#242427;
+  --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.15);
+  --tx:#f2f2f6; --tx2:rgba(255,255,255,.62); --tx3:rgba(255,255,255,.40);
+  --acc:#6366F1; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
+  --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
+  --ph:#C084FC; --ph-soft:rgba(192,132,252,.14);
+  --r:14px; --maxw:680px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+    --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+    --tx:#16161a; --tx2:rgba(0,0,0,.62); --tx3:rgba(0,0,0,.45);
+    --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.10);
+    --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+    --ph:#7E22CE; --ph-soft:rgba(126,34,206,.08);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+  --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+  --tx:#16161a; --tx2:rgba(0,0,0,.62); --tx3:rgba(0,0,0,.45);
+  --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.10);
+  --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+  --ph:#7E22CE; --ph-soft:rgba(126,34,206,.08);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+a{color:var(--acc-tx);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(28px,7vw,38px);font-weight:750;letter-spacing:-.02em}
+h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:16px;font-weight:650}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+li::marker{color:var(--tx3)}
+b,strong{font-weight:650}
+.muted{color:var(--tx2)}
+.small{font-size:14px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ph)}
+section{display:grid;gap:14px;min-width:0;scroll-margin-top:12px}
+.sec-head{display:grid;gap:4px}
+
+/* header */
+header{display:grid;gap:14px}
+.lede{color:var(--tx2);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips a{font-size:14px;color:var(--tx);text-decoration:none;padding:6px 12px;border:1px solid var(--line2);border-radius:999px;background:var(--card)}
+.chips a:hover{border-color:var(--ph)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;min-width:0}
+.status{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{display:grid;gap:2px}
+.stat .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.stat .v{font-weight:650}
+.warn{border-color:color-mix(in srgb,var(--hard) 45%,transparent);background:color-mix(in srgb,var(--hard) 8%,var(--card))}
+.warn .t{color:var(--hard);font-weight:650}
+.exam{border-color:color-mix(in srgb,var(--ph) 45%,transparent);background:var(--ph-soft)}
+.exam .t{color:var(--ph);font-weight:650}
+.btn{display:inline-block;justify-self:start;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:10px 16px;border-radius:10px}
+.btn:hover{filter:brightness(1.06)}
+
+/* the 30-second list */
+.quick{counter-reset:q;list-style:none;padding:0;gap:10px}
+.quick li{counter-increment:q;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.quick li::before{content:counter(q);font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;color:var(--ph);border:1px solid color-mix(in srgb,var(--ph) 40%,transparent);border-radius:8px;height:28px;display:grid;place-items:center}
+
+/* definitions */
+dl.defs{margin:0;display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.def{padding:14px 16px;display:grid;gap:4px;border-top:1px solid var(--line)}
+.def:first-child{border-top:0}
+.def dt{font-weight:650}
+.def dd{margin:0;color:var(--tx)}
+.def .eg{color:var(--tx2);font-size:15px}
+.def .eg b{color:var(--tx2);font-weight:650}
+
+/* tables */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-top:1px solid var(--line)}
+thead th{border-top:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600;background:var(--card2)}
+td:first-child{font-weight:600;width:36%;min-width:7.5em}
+td .sci{display:block;font-weight:400;font-style:italic;color:var(--tx3);font-size:13px;white-space:normal}
+.flag{color:var(--hard)}
+
+/* two-up */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:8px;min-width:0}
+.mini.good h3{color:var(--good)}
+.mini.bad h3{color:var(--bad)}
+
+/* self-check */
+.qs{display:grid;gap:10px}
+details.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+details.q summary{cursor:pointer;list-style:none;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;font-weight:600}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .hint{font-size:13px;font-weight:500;color:var(--acc-tx);white-space:nowrap}
+details.q[open] summary .hint::after{content:" ✓"}
+details.q[open] summary{border-bottom:1px solid var(--line)}
+details.q .a{padding:12px 16px 16px;display:grid;gap:6px}
+details.q .a p{color:var(--tx)}
+details.q .a .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+
+.src{font-size:14px;color:var(--tx2)}
+.src li{padding-left:2px}
+footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">722.544 Intro to Pharmacology · Module 10 · self-directed, Wed 14 Oct</span>
+  <h1>CAM, Rongoā and socioeconomic factors on one page</h1>
+  <p class="lede">A recap of Joan's self-directed module, so you don't have to click through it. It's written for the final, so every key term comes with a definition and an example.</p>
+
+  <div class="card">
+    <div class="status">
+      <div class="stat"><span class="k">Quiz due</span><span class="v">Thu 15 Oct, 8:00 am</span></div>
+      <div class="stat"><span class="k">Marks</span><span class="v">0 · pass/fail · not in final grade</span></div>
+      <div class="stat"><span class="k">Attempts</span><span class="v">2</span></div>
+    </div>
+    <p class="small muted">Joan's instructions: “See the PowerPoint then attempt the Quiz.” You still have to submit the quiz yourself on Canvas. This page gets you ready for it.</p>
+    <a class="btn" href="https://canvas.manukau.ac.nz/courses/61985/assignments/266591" target="_blank" rel="noopener">Open the quiz on Canvas</a>
+  </div>
+
+  <div class="card warn">
+    <p class="t">What this recap is built from, and the gap</p>
+    <p class="small">Built from the module's PowerPoint (the Rongoā lecture), the NZNO position statement linked in the module, the NZNO medicines guidelines §7.6–7.7, and Joan's own decks for the socioeconomic part. <b>The quiz is a Canvas “New Quiz”, and its contents can't be read until someone opens it.</b> If the quiz includes reading that isn't covered here, that's why.</p>
+  </div>
+
+  <nav class="chips" aria-label="Sections">
+    <a href="#quick">30 seconds</a><a href="#words">Definitions</a><a href="#rongoa">Rongoā Māori</a><a href="#cam">CAM</a><a href="#nurse">Nurse's role</a><a href="#socio">Socioeconomic</a><a href="#check">Self-check</a>
+  </nav>
+</header>
+
+<section id="quick">
+  <div class="sec-head"><span class="eyebrow">If you read nothing else</span><h2>The 30-second version</h2></div>
+  <ol class="quick">
+    <li><span><b>CAM</b> means health practices outside the mainstream biomedical system. <b>Complementary</b> means used <i>alongside</i> medicine. <b>Alternative</b> means used <i>instead of</i> it. The person decides which.</span></li>
+    <li><span><b>Rongoā Māori</b> is traditional Māori healing: plant remedies (rongoā rākau), massage (mirimiri), prayer (karakia) and water (wai). It is holistic and includes wairua. Responsibility sits with the <b>tohunga/practitioner</b>.</span></li>
+    <li><span>A nurse <b>always asks about CAM and rongoā</b> in the medication history, because they can <b>interact</b> with prescribed medicines.</span></li>
+    <li><span>A nurse <b>doesn't administer a complementary medicine</b> unless an authorised prescriber has prescribed it and it is a <b>registered</b> medicine. Otherwise the nurse can teach the person to self-administer.</span></li>
+    <li><span><b>Socioeconomic factors</b> decide whether someone can actually get, afford, understand and keep taking a medicine. Examples are cost, transport, income, health literacy and language. Nurses adjust their care for these (that's equity) and advocate.</span></li>
+  </ol>
+  <div class="card exam">
+    <p class="t">How this shows up on the final (Thu 5 Nov)</p>
+    <p class="small">Joan's short answers are <b>a definition plus an example, in 3–4 lines</b>, and she said there are <b>no specific-drug questions</b>. Learn each definition below with one example and you've covered this module.</p>
+  </div>
+</section>
+
+<section id="words">
+  <div class="sec-head"><span class="eyebrow">Exam-shaped</span><h2>Words to define</h2><p class="muted small">Definitions follow the NZNO position statement (2011) and the NZNO medicines guidelines (2024).</p></div>
+  <dl class="defs">
+    <div class="def"><dt>Complementary and alternative medicine (CAM)</dt><dd>A broad set of health care practices that are not part of the dominant (biomedical) health system. Some countries use the term interchangeably with traditional medicine.</dd><dd class="eg"><b>e.g.</b> herbal remedies, acupuncture, chiropractic, massage, reiki.</dd></div>
+    <div class="def"><dt>Complementary therapy</dt><dd>A therapy used <b>alongside</b> western biomedical treatment, supplementing it or meeting more of the person's needs. It is the term nursing uses most.</dd><dd class="eg"><b>e.g.</b> therapeutic massage for relaxation while on prescribed analgesia.</dd></div>
+    <div class="def"><dt>Alternative therapy</dt><dd>A therapy outside the biomedical paradigm, chosen as an <b>alternative</b> to biomedical care.</dd><dd class="eg"><b>e.g.</b> using naturopathy <i>instead of</i> a prescribed medicine.</dd></div>
+    <div class="def"><dt>Integrative / integrated medicine</dt><dd>Combining evidence-based complementary therapies with orthodox biomedical diagnosis and treatment. The lecture's point is that large gaps in the evidence remain.</dd><dd class="eg"><b>e.g.</b> a patient on standard diabetes care who also uses a rongoā tonic, with both shared openly with the health team.</dd></div>
+    <div class="def"><dt>Traditional medicine</dt><dd>Knowledge, skills and practices based on the theories, beliefs and experiences of indigenous cultures. It is used to maintain health and to prevent, diagnose or treat illness (WHO).</dd><dd class="eg"><b>e.g.</b> rongoā Māori, Pacific traditional healing, Ayurveda.</dd></div>
+    <div class="def"><dt>Rongoā Māori</dt><dd>Traditional Māori healing. It is a holistic system that includes <b>wairuatanga</b> (spirituality) alongside physical, mental and social health. It is locally specific, so practice varies by iwi, hapū and whānau.</dd><dd class="eg"><b>e.g.</b> kawakawa balm (rongoā rākau), mirimiri, karakia.</dd></div>
+    <div class="def"><dt>Natural health products (NHPs)</dt><dd>As defined in the Therapeutic Products Act 2023: vitamin and mineral supplements, herbal remedies, animal extracts, probiotics, enzymes and essential fatty acids.</dd><dd class="eg"><b>e.g.</b> fish oil capsules, a vitamin D supplement.</dd></div>
+    <div class="def"><dt>Placebo effect</dt><dd>A positive outcome that comes from <b>believing</b> a beneficial treatment was received. NZNO notes that placebo, and the relationship with the practitioner, are part of why people report benefit from CAM.</dd><dd class="eg"><b>e.g.</b> feeling better after an aromatherapy session that trials show has no measurable effect.</dd></div>
+    <div class="def"><dt>Health literacy</dt><dd>“The capacity to obtain, process and understand basic health information and services in order to make informed and appropriate health decisions” (Ministry of Health, 2015).</dd><dd class="eg"><b>e.g.</b> a patient who can't read the label takes the wrong dose, so the nurse teaches using plain language and teach-back.</dd></div>
+  </dl>
+</section>
+
+<section id="rongoa">
+  <div class="sec-head"><span class="eyebrow">The module's PowerPoint</span><h2>Rongoā Māori</h2><p class="muted small">From the Rongoā lecture (“Rongoā: the gifts of the god of peace, Rongomātāne”), the same deck as the 15 Sep guest lecture.</p></div>
+
+  <div class="split">
+    <div class="mini"><h3>What it involves</h3>
+      <ul>
+        <li><b>Rongoā rākau</b>: remedies from native plants (leaves, bark, berries, moss)</li>
+        <li><b>Mirimiri / romiromi</b>: body work in three parts (chiropractic, deep tissue, psychosomatic)</li>
+        <li><b>Karakia</b> and ritenga: prayer and ritual. A strong spiritual element goes into preparing the remedies</li>
+        <li><b>Wai</b>: healing with water</li>
+      </ul>
+    </div>
+    <div class="mini"><h3>Why it matters in Aotearoa</h3>
+      <ul>
+        <li>Māori life expectancy is <b>7.1 years shorter</b> than non-Māori, despite Te Tiriti guaranteeing equal rights</li>
+        <li>Health is a <b>taonga</b>, and Māori kept tino rangatiratanga over taonga</li>
+        <li>The Waitangi Tribunal (Wai 262) says rongoā could significantly improve Māori health and should get Crown support</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Two models of health (the deck's opening contrast)</h3>
+  <p><b>Biomedical</b> medicine is reductionist: it treats the part that's broken. <b>Wholistic</b> medicine, which includes rongoā, treats the whole person (body, mind, wairua, whānau and environment). Integrated medicine tries to bring the two together.</p>
+
+  <h3>The three policies on the slides</h3>
+  <ol>
+    <li><b>NZNO Guidelines for Nurses on the Administration of Medicines (2024) §7.7</b>: the tohunga/practitioner is responsible for rongoā. When whānau ask a nurse for advice, discuss it with everyone involved, <b>including the tohunga</b>.</li>
+    <li><b>NZNO position statement: Rongoā Māori and Complementary Therapies in Nursing Practice (2011)</b>: the nurse's role, covered in the “Nurse's role” section below.</li>
+    <li><b>Tikanga ā Rongoā (Ministry of Health, 2014)</b>: a <b>voluntary</b> standard for rongoā providers, setting a benchmark for safe, quality rongoā care.</li>
+  </ol>
+
+  <h3>The plants in the deck</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Plant</th><th>Traditional use (as on the slide)</th></tr></thead>
+      <tbody>
+        <tr><td>Kawakawa<span class="sci">Piper excelsum</span></td><td>Oil, balm and tonic. Studied for its effect on blood glucose and insulin after meals</td></tr>
+        <tr><td>Kūmarahou<span class="sci">Pomaderris kumeraho</span></td><td>Anti-diabetic tonic <span class="flag">⚑</span></td></tr>
+        <tr><td>Karamū<span class="sci">Coprosma</span></td><td>Anti-diabetic tonic <span class="flag">⚑</span></td></tr>
+        <tr><td>Kūmara<span class="sci">Ipomoea batatas</span></td><td>Iron. Leaves contain antioxidants</td></tr>
+        <tr><td>Koromiko<span class="sci">Hebe salicifolia</span></td><td>Dysentery (slows the gut)</td></tr>
+        <tr><td>Mapou / matipō<span class="sci">Myrsine australis</span></td><td>Coagulant tonic <span class="flag">⚑</span></td></tr>
+        <tr><td>Mānawa<span class="sci">Avicennia (mangrove)</span></td><td>Tonic to flush the body of toxins</td></tr>
+        <tr><td>Tangoio<span class="sci">Salix (willow)</span></td><td>Anti-inflammatory. Contains salicin, and the slide also lists it as an anticoagulant <span class="flag">⚑</span></td></tr>
+        <tr><td>Angiangi<span class="sci">Usnea barbata</span></td><td>Headaches, migraine, influenza</td></tr>
+        <tr><td>Tūpākihi<span class="sci">Coriaria arborea</span></td><td>Anti-inflammatory oil or balm, analgesic</td></tr>
+        <tr><td>Pukatea<span class="sci">Laurelia novae-zelandiae</span></td><td>Anti-inflammatory and antibiotic</td></tr>
+        <tr><td>Tātaramoa<span class="sci">Rubus cissoides</span></td><td>Chest congestion, coughs, sore throats</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted"><span class="flag">⚑</span> = my nursing angle, not on the slide. These plants act in the <b>same direction as common medicines</b>. An anti-diabetic tonic on top of diabetes medication could push blood glucose too low. Tangoio on top of an anticoagulant could raise bleeding risk, and mapou (a coagulant) works against one. That's why you ask.</p>
+
+  <h3>Other tools from the lecture</h3>
+  <ul>
+    <li><b>Te Maramataka</b>: the Māori lunar calendar, used to predict mood and activity levels</li>
+    <li><b>Te Whare Tapa Whā</b>: the four-walls model of hauora</li>
+    <li><b>Matakite</b>: “to see in front of the face”, a traditional way of knowing used in diagnosis</li>
+    <li><b>Narrative as therapy</b>: karakia, kōrero, pūrākau and waiata (prayer, talk, stories and song)</li>
+  </ul>
+  <p class="small muted">The lecturer's prescribing model, which matches a person's star sign and element to plants, is one he says he <b>developed himself</b>. Know that it exists, but don't present it as fact in an exam answer.</p>
+</section>
+
+<section id="cam">
+  <div class="sec-head"><span class="eyebrow">NZNO position statement</span><h2>Complementary and alternative medicine</h2></div>
+  <p>CAM use is common and rising. In 2008 the Ministry of Health found about <b>18%</b> of NZ adults had used a complementary therapy in the past year. WHO estimates <b>70–80%</b> of people in developed countries use one at some point, and a Christchurch study found <b>70% of children</b> at GP and outpatient clinics had used one.</p>
+
+  <h3>The five CAM groups (MACCAH, 2004)</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Group</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>1 · Alternative medical systems</td><td>Ayurveda, traditional Chinese medicine (acupuncture), Pacific traditional healing, homoeopathy, naturopathy</td></tr>
+        <tr><td>2 · Mind–body–spirit</td><td>Hypnotherapy, spiritual healing, Bach flower, counselling and psychotherapies</td></tr>
+        <tr><td>3 · Biological-based</td><td>Herbal medicine, Chinese herbal medicine, dietary approaches</td></tr>
+        <tr><td>4 · Manipulative and body-based</td><td>Chiropractic, osteopathy, therapeutic massage, Alexander technique, Bowen</td></tr>
+        <tr><td>5 · Energy therapies</td><td>Tai chi, qi gong, yoga, reiki, shiatsu</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted">Rongoā Māori is <b>not</b> in the MACCAH groups. It is its own system.</p>
+
+  <h3>Does it work? Some does, some doesn't</h3>
+  <div class="split">
+    <div class="mini good"><h3>Evidence of benefit</h3>
+      <ul>
+        <li>Cranberry for 12 months reduces recurrent UTIs in women</li>
+        <li>St John's wort for mild to moderate depression</li>
+        <li>Functional relaxation for irritable bowel syndrome</li>
+        <li>Honey eases cough frequency and severity in upper respiratory infections (a BMJ review in the course's “for interest” readings)</li>
+      </ul>
+    </div>
+    <div class="mini bad"><h3>No benefit found</h3>
+      <ul>
+        <li>The herbal formula CUF2 for asthma in children</li>
+        <li>Aromatherapy massage in cancer care, which made no difference to mood, quality of life or symptoms</li>
+      </ul>
+    </div>
+  </div>
+  <p><b>The catch with “evidence”:</b> randomised controlled trials suit biomedical drugs but can undersell traditional healing. NZNO says evidence should come from many sources, and <b>the most important source is the benefit the person reports</b>. Safety still comes first.</p>
+
+  <h3>Interactions: the reason it's a pharmacology topic</h3>
+  <p>A review in the course readings found <b>78 herbs, foods and supplements</b> that interact with warfarin. About <b>58% increased</b> its effect, which means a higher bleeding risk. About <b>30% reduced</b> it. Examples include cranberry, chamomile, green tea, ginkgo, ginger, St John's wort and cannabis. Most of that evidence is from case reports, so it's weak. The rule that follows: <b>people should ask a health professional before starting any new herb or supplement</b>, and nurses should ask about them.</p>
+</section>
+
+<section id="nurse">
+  <div class="sec-head"><span class="eyebrow">The most examinable part</span><h2>The nurse's role</h2></div>
+
+  <div class="card">
+    <h3>1 · Always ask</h3>
+    <p>Asking about complementary therapies is part of <b>every nursing assessment</b>, because they can interact with medicines. The medication chart should have a section for <b>complementary, alternative, Rongoā or self-prescribed</b> medicines (NZNO guidelines).</p>
+  </div>
+
+  <div class="card">
+    <h3>2 · The five responsibilities (NZNO)</h3>
+    <ul>
+      <li><b>Competence</b>: the RN is accountable under the <b>HPCA Act 2003</b> and must stay within their scope of practice</li>
+      <li><b>Information</b>: the person gets accurate, timely, evidence-based information so they can make an informed decision</li>
+      <li><b>Consent</b>: required before any intervention, CAM included</li>
+      <li><b>Authority</b>: only use a therapy you are trained and competent in, <i>and</i> that your workplace authorises</li>
+      <li><b>Outcomes and interactions</b>: know them, and <b>document</b> every intervention</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>3 · When someone asks for advice</h3>
+    <p>Hold a discussion with everyone involved: client, pharmacist, prescriber, and for rongoā, <b>the tohunga</b>. Consider four things:</p>
+    <ol>
+      <li>Is there any <b>evidence-based</b> information on it?</li>
+      <li>Is it <b>appropriate for the condition</b>?</li>
+      <li>What are the possible <b>side effects</b>?</li>
+      <li>Could it <b>interact</b> with prescribed medicines?</li>
+    </ol>
+    <p class="small muted">For rongoā, add a fifth: the practitioner's <b>knowledge and experience</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>4 · Administering</h3>
+    <p>NZNO advises nurses <b>not to administer complementary medicines unless they are prescribed by an authorised prescriber and are a registered medicine</b>. Don't give unregistered ones. Sometimes the right move is to <b>teach the person to self-administer</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>5 · Ethics and cultural safety</h3>
+    <ul>
+      <li>It is <b>the person's choice</b> whether to use CAM or rongoā as a complement or an alternative (autonomy)</li>
+      <li>The Code of Ethics principles apply: autonomy, beneficence, non-maleficence, justice, confidentiality, veracity and fidelity</li>
+      <li>Nurses hold power, so <b>endorsing</b> a particular therapy carries risk for the client and the nurse</li>
+      <li>Ethical conflict arises when the nurse's beliefs differ from the person's, or when a therapy could cause harm</li>
+      <li>For most nurses, <b>advocating for or referring to rongoā</b> is the culturally safe way to include it (NZNO)</li>
+      <li>Te Tiriti, <b>Whakamarumarutia</b> (active protection): acknowledge and respect rongoā alongside prescribed medication, and advocate for the wider team to do the same</li>
+    </ul>
+  </div>
+</section>
+
+<section id="socio">
+  <div class="sec-head"><span class="eyebrow">From Joan's own decks</span><h2>Socioeconomic factors in pharmacology</h2><p class="muted small">From Pharmacology Concepts (1), Medication Administration &amp; Patient Education (2), and Medication in the Elderly &amp; Polypharmacy.</p></div>
+  <p>A medicine only works if the person can <b>get it, afford it, understand it and keep taking it</b>. Socioeconomic factors affect every one of those steps, and they drive <b>non-adherence</b>. (“Adherence” has replaced the older word “compliance”.)</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Factor</th><th>How it affects medicines</th></tr></thead>
+      <tbody>
+        <tr><td>Cost and income</td><td>Prescription charges and unfunded medicines cost money. Older people often have <b>reduced income</b>. With polypharmacy, cost and pill burden add up</td></tr>
+        <tr><td>Funding (PHARMAC)</td><td>PHARMAC decides which medicines are <b>funded within a fixed budget</b>. Generic prescribing lets the pharmacist dispense the <b>subsidised brand</b>, which is cheaper for the person and the funder</td></tr>
+        <tr><td>Access</td><td>“Can they drive to the pharmacy? Is there a cost?” Transport, distance and getting to a prescriber all matter</td></tr>
+        <tr><td>Health literacy</td><td>Low health literacy leads to wrong doses, missed doses and poor self-management</td></tr>
+        <tr><td>Language and culture</td><td>Does the person need an <b>interpreter</b>? Do their beliefs or worldview shape how they use medicines? People with language barriers are more prone to prescribing errors</td></tr>
+        <tr><td>Disability</td><td>Sensory or cognitive impairment, and difficulty with access, storage or administration</td></tr>
+        <tr><td>Inequity</td><td>Colonisation, barriers to access and the burden of long-term conditions drive health inequities, most clearly for Māori</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>What the nurse does about it</h3>
+    <ul>
+      <li><b>Equity</b> (Te Tiriti, Mana Taurite) means unequal distribution for an equal outcome. Allow <b>more time</b> for people who need it, and adjust teaching to their life: cost, transport, literacy and pharmacy access</li>
+      <li><b>Health literacy ABC</b>: <b>A</b>sk what the person already knows, <b>B</b>uild the knowledge they need in plain language, <b>C</b>heck you were clear with teach-back. Teach-back is not a test of the patient</li>
+      <li>Ask about cost and access openly, and <b>advocate</b> through the prescriber, pharmacist or social worker</li>
+      <li>Tino rangatiratanga (self-determination): ask “How do you feel about starting this medication?” and fit it to the person's routines and beliefs</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p class="small"><b>NZ context, not on Joan's slides</b> (checked online 14 Oct 2026): a prescription item costs <b>$5</b>. It is free for children 13 and under, people 65 and over, and Community Services Card holders. After <b>20 paid items</b> a year, a family gets a Prescription Subsidy Card, and it resets on 1 February.</p>
+  </div>
+</section>
+
+<section id="check">
+  <div class="sec-head"><span class="eyebrow">Joan's format</span><h2>Self-check</h2><p class="muted small">Say your answer out loud, then tap to compare. The questions and model answers are mine, written from the sources on this page. They are not Joan's.</p></div>
+  <div class="qs">
+    <details class="q"><summary><span>Define complementary and alternative medicine (CAM) and give an example.</span><span class="hint">Show</span></summary><div class="a"><p>CAM is a broad set of health care practices outside the dominant biomedical health system. Complementary therapies are used alongside medical treatment, and alternative therapies are used instead of it.</p><p><span class="lab">Example</span><br>Using therapeutic massage alongside prescribed pain relief (complementary).</p></div></details>
+    <details class="q"><summary><span>What is Rongoā Māori? Give an example.</span><span class="hint">Show</span></summary><div class="a"><p>Rongoā Māori is traditional Māori healing, a holistic system that includes wairua alongside physical, mental and social health. It covers rongoā rākau (plant remedies), mirimiri (massage), karakia (prayer) and wai (water). The tohunga/practitioner is responsible for it.</p><p><span class="lab">Example</span><br>Kawakawa balm applied to the skin.</p></div></details>
+    <details class="q"><summary><span>A patient asks you about a herbal remedy. What do you consider?</span><span class="hint">Show</span></summary><div class="a"><p>Discuss it with the client, pharmacist and prescriber. Consider whether there is evidence-based information on it, whether it suits the condition, its side effects, and possible interactions with prescribed medicines. For rongoā, include the tohunga and consider their knowledge and experience. Document the discussion.</p></div></details>
+    <details class="q"><summary><span>A patient brings in their own herbal supplement and asks you to give it with their meds. Do you?</span><span class="hint">Show</span></summary><div class="a"><p>No, not unless an authorised prescriber has prescribed it and it is a registered medicine (NZNO). Don't administer unregistered complementary medicines. You can report it to the prescriber and pharmacist to check for interactions, and where appropriate teach the person to self-administer. Document it on the chart.</p></div></details>
+    <details class="q"><summary><span>What is integrative medicine? Give an example.</span><span class="hint">Show</span></summary><div class="a"><p>Integrative medicine combines evidence-based complementary therapies with orthodox biomedical diagnosis and treatment.</p><p><span class="lab">Example</span><br>A person with type 2 diabetes using a rongoā tonic alongside their prescribed treatment, with the health team aware and monitoring blood glucose.</p></div></details>
+    <details class="q"><summary><span>Why must a nurse ask about CAM in the medication history?</span><span class="hint">Show</span></summary><div class="a"><p>CAM can interact with prescribed medicines and make them stronger or weaker, which risks harm or treatment failure.</p><p><span class="lab">Example</span><br>Many herbs, including cranberry and ginkgo, increase the effect of warfarin, which raises bleeding risk.</p></div></details>
+    <details class="q"><summary><span>Define health literacy and give an example of how it affects medication use.</span><span class="hint">Show</span></summary><div class="a"><p>Health literacy is the capacity to obtain, process and understand basic health information and services in order to make informed and appropriate health decisions (MoH, 2015).</p><p><span class="lab">Example</span><br>A patient who misreads “twice daily” takes double doses. The nurse uses plain language and teach-back to check understanding.</p></div></details>
+    <details class="q"><summary><span>Name two socioeconomic factors that affect medication adherence, with an example.</span><span class="hint">Show</span></summary><div class="a"><p><b>Cost or income:</b> a person on a low income skips filling a prescription because of the charge. <b>Access:</b> a person with no transport can't get to the pharmacy. Both lead to non-adherence. The nurse adjusts the plan and advocates, which is equity in practice.</p></div></details>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="sec-head"><span class="eyebrow">Where this came from</span><h2>Sources</h2></div>
+  <ul class="src">
+    <li>Rongoā lecture, “Rongoā: the gifts of the god of peace” (Module 10 PowerPoint; <i>Rongoaa Maaori Lecture 2025 BN.pdf</i> / <i>Rongoa 2026.pptx</i>)</li>
+    <li>NZNO (2011). <i>Rongoā Māori and Complementary Therapies in Nursing Practice</i>, position statement (in Module 10)</li>
+    <li>NZNO (2024). <i>Guidelines for Nurses on the Administration of Medicines</i>, §7.6, §7.7 and the glossary</li>
+    <li>Joan's decks: <i>Pharmacology Concepts (1)</i> slides 34–36 and 47–50 · <i>Medication Administration &amp; Patient Education (2)</i> slides 13–15, 34–37 and 47 · <i>Medication in the Elderly &amp; Polypharmacy</i> slides 24–26 and 42</li>
+    <li>Course “for interest” readings: <i>Warfarin and complementary… interactions</i> (Pharmacy Research Review) · Abuelgasim et al. (2020), honey for URTI, BMJ EBM</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Recap made 14 Oct 2026 from the Canvas course export. It isn't official course material, and Joan's slides and Canvas win if anything here disagrees.</p>
+</footer>
+
+</div>
+</body>
+</html>
