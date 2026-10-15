@@ -34,8 +34,12 @@ Everything the page shows is three lists at the top of the script in
   day after its date** unless it has `keep` (then only its date goes).
 - **Hot problems** (15 Oct): a need whose date is still to come goes under
   "Coming up" on its paper's screen, as a glowing card with sparkles and a
-  countdown badge ("opens in 5 days"); the rest sit in an "Or pick a topic"
-  grid, so the list no longer reads as a ranking. `hot:{tag, until}` makes
+  badge with its date and countdown ("20–26 Oct · opens in 5 days"); the
+  rest are plain buttons under "Or pick a topic", so the list no longer
+  reads as a ranking. Cut back the same day ("way too much here"): the hot
+  cards show badge + title only, the paper's eyebrow and "Tap the closest
+  one" are gone, and "Every HS2 tool" is folded into one "All 8 HS2 tools"
+  line. `hot:{tag, until}` makes
   an undated need hot too (Genetics: "On Test 3 and the exam", until 4 Nov).
 - **Getting around** (15 Oct, after "it's hard to get back to the start"):
   every paper and problem screen opens with a trail, `⌂ Home › HS2 ›

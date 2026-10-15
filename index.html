@@ -129,15 +129,21 @@ body{transition:background-color .35s var(--ez)}
 .hot .t{font-size:17px;font-weight:700;letter-spacing:-.01em}
 .tag{display:inline-flex;align-items:center;gap:5px;margin:0 0 5px;padding:3px 9px 3px 7px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h);background:color-mix(in srgb,var(--h) 14%,transparent)}
 .tag svg.i{width:12px;height:12px;color:var(--spark)}
-.hot>.spk{position:absolute;top:0;right:0;width:120px;height:48px;z-index:0;pointer-events:none;color:var(--spark);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--spark) 60%,transparent))}
+.hot>.spk{position:absolute;top:0;right:46px;width:120px;height:48px;z-index:0;pointer-events:none;color:var(--spark);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--spark) 60%,transparent))}
 .spk svg.i{position:absolute;animation:tw 2.4s ease-in-out infinite}
 .spk svg:nth-child(1){width:19px;height:19px;top:8px;right:54px}
 .spk svg:nth-child(2){width:12px;height:12px;top:28px;right:32px;animation-duration:2s;animation-delay:.8s}
 .spk svg:nth-child(3){width:9px;height:9px;top:9px;right:18px;animation-duration:2.8s;animation-delay:1.5s}
 @keyframes tw{0%,100%{opacity:.9;transform:scale(1) rotate(0)}50%{opacity:.2;transform:scale(.45) rotate(30deg)}}
-.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
-.pick .row{margin:0}
-.pick>:last-child:nth-child(odd){grid-column:1/-1}
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.topics a{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:14.5px;transition:border-color .2s var(--ez)}
+.topics a:hover{border-color:color-mix(in srgb,var(--h) 55%,var(--line))}
+/* the paper's whole tool list, folded */
+.all{margin:26px 0 0}
+.all summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:3px;padding:6px 0;margin:0 0 8px;color:var(--acc-tx);font-weight:600;font-size:14px}
+.all summary::-webkit-details-marker{display:none}
+.all summary svg.i{width:16px;height:16px;transition:transform .2s var(--ez)}
+.all[open] summary svg.i{transform:rotate(90deg)}
 
 /* the Start-here tool */
 .star{padding:18px;margin:6px 0 18px;border-color:color-mix(in srgb,var(--h) 45%,var(--line))}
@@ -420,12 +426,12 @@ function nextLine(p){
     const a = diff(n.date.from || n.date.on); if (!best || a < best.a) best = {a, w}; });
   return best ? best.w.line : "";
 }
-/* the badge on a hot need ("opens in 5 days"), or "" when it isn't hot */
+/* the badge on a hot need ("20–26 Oct · opens in 5 days"), or "" when it isn't hot */
 function hotTag(n){
   if (n.hot && diff(n.hot.until) >= 0) return n.hot.tag;
   const w = when(n); if (!w || w.past) return "";
   const a = diff(n.date.from || n.date.on);
-  return a > 0 ? (n.date.verb ? n.date.verb + " " : "") + rel(a) : w.rel;
+  return a > 0 ? n.date.chip + " · " + (n.date.verb ? n.date.verb + " " : "") + rel(a) : w.rel;
 }
 
 /* ---------- pieces ---------- */
@@ -444,12 +450,17 @@ function mini(p, id){
   return `<a class="card mini lift" style="--h:${p.hue}" href="${link(id)}">
     <div class="ic sm">${ic(T.ic)}</div><div class="tx"><div class="nm">${T.nm}</div><div class="ds">${T.ds}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
 }
-function needRow(p, n, showPaper, tag){
+function needRow(p, n, showPaper){
   const w = when(n);
-  return `<a class="card row lift${tag ? " hot" : ""}" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
-    ${tag ? `<span class="spk" aria-hidden="true">${ic("i-spark").repeat(3)}</span>` : ""}
-    <div class="tx">${tag ? `<div class="tag">${ic("i-spark")}${tag}</div>` : ""}${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${n.t}</div><div class="s">${n.s}</div></div>
+  return `<a class="card row lift" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
+    <div class="tx">${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${n.t}</div><div class="s">${n.s}</div></div>
     ${w && !w.past ? `<div class="when">${w.chip}</div>` : ""}<span class="chev">${ic("i-chev")}</span></a>`;
+}
+/* a hot need: badge (its date) and title only; the blurb waits for its own screen */
+function hotRow(p, n){
+  return `<a class="card row hot lift" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
+    <span class="spk" aria-hidden="true">${ic("i-spark").repeat(3)}</span>
+    <div class="tx"><div class="tag">${ic("i-spark")}${hotTag(n)}</div><div class="t">${n.t}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
 }
 
 /* ---------- screens ---------- */
@@ -476,20 +487,20 @@ function paperScreen(p){
   document.title = p.nm + " · BN2 Study Tools";
   const ids = [...new Set(needs(p).flatMap(n => n.tools.map(t => norm(t).id)))];
   const hot = needs(p).filter(hotTag), rest = needs(p).filter(n => !hotTag(n));
+  /* kept short on purpose (15 Oct, "way too much here"): dates first, topics as plain buttons,
+     the full tool list folded away */
   return trail(p) +
-    `<div class="crumb" style="--h:${p.hue}"><span class="dot"></span><span class="eyebrow hue">${p.nm} · ${p.code}</span></div>
-    <h1 class="h1" tabindex="-1">What are you struggling with?</h1>
-    <p class="sub">Tap the closest one.</p>` +
-    (hot.length ? `<div class="eyebrow sec">${ic("i-spark")}Coming up</div><div>` + hot.map(n => needRow(p, n, false, hotTag(n))).join("") + `</div>` : "") +
-    (rest.length ? (hot.length ? `<div class="eyebrow sec">Or pick a topic</div>` : "") + `<div class="pick">` + rest.map(n => needRow(p, n)).join("") + `</div>` : "") +
-    `<div class="eyebrow sec">Every ${p.short} tool</div>` + ids.map(id => mini(p, id)).join("");
+    `<h1 class="h1" tabindex="-1">What are you struggling with?</h1>` +
+    (hot.length ? `<div class="eyebrow sec">${ic("i-spark")}Coming up</div><div>` + hot.map(n => hotRow(p, n)).join("") + `</div>` : "") +
+    (rest.length ? `<div class="eyebrow sec">${hot.length ? "Or pick a topic" : "Pick a topic"}</div><div class="topics">` +
+      rest.map(n => `<a style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>${n.t}</a>`).join("") + `</div>` : "") +
+    `<details class="all"><summary>All ${ids.length} ${p.short} tools ${ic("i-chev")}</summary>` + ids.map(id => mini(p, id)).join("") + `</details>`;
 }
 function needScreen(p, n){
   document.title = p.short + " · " + n.t + " · BN2 Study Tools";
   const w = when(n), [first, ...rest] = n.tools;
   return trail(p, n) +
-    `<div class="crumb" style="--h:${p.hue}"><span class="dot"></span><span class="eyebrow hue">${p.short} · ${p.code}</span></div>
-    <h1 class="h1" tabindex="-1">${n.t}</h1>
+    `<h1 class="h1" tabindex="-1">${n.t}</h1>
     <p class="sub" style="margin-bottom:${w && !w.past ? 10 : 18}px">${n.s}</p>` +
     (w && !w.past ? `<div class="datebox" style="--h:${p.hue}">${ic("i-cal")}<span>${w.txt} · <b>${w.rel}</b></span></div>` : "") +
     star(p, first) +
