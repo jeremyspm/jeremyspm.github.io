@@ -25,6 +25,7 @@
   --r:14px; --maxw:600px;
   --ez:cubic-bezier(.4,0,.2,1); --ezo:cubic-bezier(.22,1,.36,1);
   --hs:#60A5FA; --inp:var(--good); --ph:#C084FC;
+  --spark:#FFD24D; --sheen:rgba(255,210,77,.13);
 }
 html[data-theme="light"]{
   --bg:#eceef3; --bg2:#eceef3; --card:#ffffff; --card2:#f4f5f7;
@@ -34,6 +35,7 @@ html[data-theme="light"]{
   --good:#12833A; --hard:#A35C00; --bad:#C62A20;
   --shadow:0 14px 36px rgba(0,0,0,.08);
   --hs:#1D4ED8; --ph:#7E22CE;
+  --spark:#D18E00; --sheen:rgba(255,255,255,.8);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -91,6 +93,33 @@ svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .row .s{color:var(--tx2);font-size:13px;margin-top:1px}
 .row .pp{font-size:11px;font-weight:700;color:var(--h);text-transform:uppercase;letter-spacing:.06em}
 .when{font-size:11.5px;font-weight:700;color:var(--h);white-space:nowrap;text-align:right;line-height:1.25}
+
+/* hot problems: dated and still to come, or flagged hot. A plain list read as a ranking
+   (Anatomy sat above Genetics), so these get a glow and sparkles, and the rest go in a grid.
+   The glow's negative spread keeps it inside #app's overflow-x clip */
+.eyebrow svg.i{width:13px;height:13px;color:var(--spark);vertical-align:-2px;margin-right:5px}
+.hot{position:relative;overflow:hidden;padding:16px;margin:0 0 12px;border-color:color-mix(in srgb,var(--h) 50%,var(--line));
+  background:linear-gradient(135deg,color-mix(in srgb,var(--h) 20%,var(--card)),var(--card) 65%);
+  box-shadow:0 12px 24px -12px color-mix(in srgb,var(--h) 50%,transparent)}
+.hot:hover{border-color:color-mix(in srgb,var(--h) 75%,var(--line))}
+.hot>*{position:relative;z-index:1}
+.hot::before{content:"";position:absolute;inset:0;pointer-events:none;transform:translateX(-110%);animation:sheen 6s var(--ez) infinite;
+  background:linear-gradient(105deg,transparent 30%,var(--sheen) 50%,transparent 70%)}
+.hot:nth-child(2)::before{animation-delay:.8s}
+.hot:nth-child(3)::before{animation-delay:1.6s}
+@keyframes sheen{0%,55%{transform:translateX(-110%)}100%{transform:translateX(110%)}}
+.hot .t{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.tag{display:inline-flex;align-items:center;gap:5px;margin:0 0 5px;padding:3px 9px 3px 7px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h);background:color-mix(in srgb,var(--h) 14%,transparent)}
+.tag svg.i{width:12px;height:12px;color:var(--spark)}
+.hot>.spk{position:absolute;top:0;right:0;width:120px;height:48px;z-index:0;pointer-events:none;color:var(--spark);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--spark) 60%,transparent))}
+.spk svg.i{position:absolute;animation:tw 2.4s ease-in-out infinite}
+.spk svg:nth-child(1){width:19px;height:19px;top:8px;right:54px}
+.spk svg:nth-child(2){width:12px;height:12px;top:28px;right:32px;animation-duration:2s;animation-delay:.8s}
+.spk svg:nth-child(3){width:9px;height:9px;top:9px;right:18px;animation-duration:2.8s;animation-delay:1.5s}
+@keyframes tw{0%,100%{opacity:.9;transform:scale(1) rotate(0)}50%{opacity:.2;transform:scale(.45) rotate(30deg)}}
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.pick .row{margin:0}
+.pick>:last-child:nth-child(odd){grid-column:1/-1}
 
 /* the Start-here tool */
 .star{padding:18px;margin:6px 0 18px;border-color:color-mix(in srgb,var(--h) 45%,var(--line))}
@@ -196,6 +225,7 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <symbol id="i-open" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
   <symbol id="i-q" viewBox="0 0 24 24"><path d="M9.2 9.2a2.9 2.9 0 1 1 4 2.7c-.8.4-1.2 1-1.2 1.9v.6"/><path d="M12 17.6h.01"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2Q13 11 22 12Q13 13 12 22Q11 13 2 12Q11 11 12 2Z" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 3.6v16.8a8.4 8.4 0 0 0 0-16.8z" fill="currentColor"/></symbol>
 </svg>
 
@@ -241,7 +271,10 @@ dialog[open]{animation:pop .26s var(--ezo) both}
    PAPERS  each paper's problems ("needs"). A need's tools: the FIRST is "Start here".
            A tool entry is an id, or {id, jump:[[hash,label,icon]], cta:[hash,label], note}.
            date: {on | from+to (YYYY-MM-DD), chip, what, txt, keep?}. Without keep, the
-           need hides itself the day after its date. node index.check.mjs gates all of it. */
+           need hides itself the day after its date.
+           A need with a date still to come is "hot": it goes under "Coming up" with sparkles.
+           hot: {tag, until} makes an undated need hot too, with tag on its badge, until that day.
+           node index.check.mjs gates all of it. */
 const CHECKED = "12 Oct 2026";
 const TOOLS = {
   "hs2-test3":     {nm:"HS2 Test 3 · Paper Sim", ic:"i-target", url:"hs2-test3/", kw:"paper sim module 3 quiz quizzes saq",
@@ -291,6 +324,7 @@ const PAPERS = [
      kw:"anatomy bones bone muscles muscle skeleton skeletal muscular 3d femur pelvis skull landmarks",
      tools:["flesh-and-bone","anatomy-atlas","m2-videos"]},
     {id:"gen", t:"Genetics & pedigrees", s:"Punnett squares, pedigree charts, karyotypes",
+     hot:{tag:"On Test 3 and the exam", until:"2026-11-04"},
      kw:"genetics genetic pedigree pedigrees punnett karyotype karyotypes inheritance dominant recessive x-linked carrier alleles genotype phenotype",
      tools:["hs2-genetics","m3-videos"]},
     {id:"vid", t:"I need it explained", s:"Short videos, matched to Hannetjie's topics",
@@ -368,6 +402,13 @@ function nextLine(p){
     const a = diff(n.date.from || n.date.on); if (!best || a < best.a) best = {a, w}; });
   return best ? best.w.line : "";
 }
+/* the badge on a hot need ("opens in 5 days"), or "" when it isn't hot */
+function hotTag(n){
+  if (n.hot && diff(n.hot.until) >= 0) return n.hot.tag;
+  const w = when(n); if (!w || w.past) return "";
+  const a = diff(n.date.from || n.date.on);
+  return a > 0 ? (n.date.verb ? n.date.verb + " " : "") + rel(a) : w.rel;
+}
 
 /* ---------- pieces ---------- */
 function star(p, entry){
@@ -385,10 +426,11 @@ function mini(p, id){
   return `<a class="card mini lift" style="--h:${p.hue}" href="${link(id)}">
     <div class="ic sm">${ic(T.ic)}</div><div class="tx"><div class="nm">${T.nm}</div><div class="ds">${T.ds}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
 }
-function needRow(p, n, showPaper){
+function needRow(p, n, showPaper, tag){
   const w = when(n);
-  return `<a class="card row lift" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
-    <div class="tx">${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${n.t}</div><div class="s">${n.s}</div></div>
+  return `<a class="card row lift${tag ? " hot" : ""}" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
+    ${tag ? `<span class="spk" aria-hidden="true">${ic("i-spark").repeat(3)}</span>` : ""}
+    <div class="tx">${tag ? `<div class="tag">${ic("i-spark")}${tag}</div>` : ""}${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${n.t}</div><div class="s">${n.s}</div></div>
     ${w && !w.past ? `<div class="when">${w.chip}</div>` : ""}<span class="chev">${ic("i-chev")}</span></a>`;
 }
 
@@ -413,11 +455,13 @@ function homeScreen(){
 function paperScreen(p){
   document.title = p.nm + " · BN2 Study Tools";
   const ids = [...new Set(needs(p).flatMap(n => n.tools.map(t => norm(t).id)))];
+  const hot = needs(p).filter(hotTag), rest = needs(p).filter(n => !hotTag(n));
   return backBtn("Papers", "") +
     `<div class="crumb" style="--h:${p.hue}"><span class="dot"></span><span class="eyebrow hue">${p.nm} · ${p.code}</span></div>
     <h1 class="h1" tabindex="-1">What are you struggling with?</h1>
     <p class="sub">Tap the closest one.</p>` +
-    needs(p).map(n => needRow(p, n)).join("") +
+    (hot.length ? `<div class="eyebrow sec">${ic("i-spark")}Coming up</div><div>` + hot.map(n => needRow(p, n, false, hotTag(n))).join("") + `</div>` : "") +
+    (rest.length ? (hot.length ? `<div class="eyebrow sec">Or pick a topic</div>` : "") + `<div class="pick">` + rest.map(n => needRow(p, n)).join("") + `</div>` : "") +
     `<div class="eyebrow sec">Every ${p.short} tool</div>` + ids.map(id => mini(p, id)).join("");
 }
 function needScreen(p, n){

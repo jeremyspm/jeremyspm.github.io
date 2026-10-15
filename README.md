@@ -32,6 +32,11 @@ Everything the page shows is three lists at the top of the script in
 - **`date`** on a need: `{on}` or `{from,to}` (`YYYY-MM-DD`) plus `chip`,
   `what`, `txt`, optional `verb` and `keep`. A dated need **hides itself the
   day after its date** unless it has `keep` (then only its date goes).
+- **Hot problems** (15 Oct): a need whose date is still to come goes under
+  "Coming up" on its paper's screen, as a glowing card with sparkles and a
+  countdown badge ("opens in 5 days"); the rest sit in an "Or pick a topic"
+  grid, so the list no longer reads as a ranking. `hot:{tag, until}` makes
+  an undated need hot too (Genetics: "On Test 3 and the exam", until 4 Nov).
 
 Then:
 

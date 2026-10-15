@@ -60,8 +60,10 @@ for (const p of PAPERS) {
       }
       if (e.cta) jumps.push([e.id, e.cta[0], at]);
     }
+    const ok = s => /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(new Date(s + 'T00:00'));
+    if (n.hot && (!n.hot.tag || !ok(n.hot.until))) fail(`${at}: bad hot ${JSON.stringify(n.hot)}`);
     if (n.date) {
-      const D = n.date, ok = s => /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(new Date(s + 'T00:00'));
+      const D = n.date;
       const start = D.from || D.on;
       if (!start || !ok(start) || (D.to && !ok(D.to))) fail(`${at}: bad date ${JSON.stringify(D)}`);
       else if (D.to && D.to < D.from) fail(`${at}: date ends before it starts`);
