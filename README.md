@@ -37,6 +37,14 @@ Everything the page shows is three lists at the top of the script in
   countdown badge ("opens in 5 days"); the rest sit in an "Or pick a topic"
   grid, so the list no longer reads as a ranking. `hot:{tag, until}` makes
   an undated need hot too (Genetics: "On Test 3 and the exam", until 4 Nov).
+- **Getting around** (15 Oct, after "it's hard to get back to the start"):
+  every paper and problem screen opens with a trail, `⌂ Home › HS2 ›
+  Genetics & pedigrees`, in place of the old single ‹ back button. Each
+  paper card on the first screen lists its hot problems as chips, so they
+  are one tap from the start. And each paper's screens take on its hue
+  (`html[data-paper]`, `--paper`): HS2 blue, INP green, Pharm purple.
+  Every tool links back here top-left with **‹ All tools** (Anatomy Atlas,
+  MedCalc, the Pharmacology hub and the playlists already had "← Hub").
 
 Then:
 
