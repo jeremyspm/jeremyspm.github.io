@@ -172,18 +172,21 @@ const HTML = `<!DOCTYPE html>
 <title>Module 3 Video Playlist — Dr Matt &amp; Dr Mike</title>
 <style>
 :root{
-  --bg:#0e1420; --bg2:#141c2b; --card:#182133; --card2:#1e2941;
+  /* the paper's colour (15 Oct 2026): HS2's blue, as on jeremyspm.github.io — a soft page tint, the solid top bar,
+     the banner and the accent (it was lavender, which read as Pharm's purple) */
+  --paper:#2563eb;
+  --bg:color-mix(in srgb,var(--paper) 7%,#0e1420); --bg2:color-mix(in srgb,var(--paper) 7%,#141c2b); --card:#182133; --card2:#1e2941;
   --line:#27324a; --line2:#33405c;
   --tx:#e8eef7; --tx2:#9fb0c8; --tx3:#6d7f9c;
-  --acc:#9b8cff; --acc2:#7a63e8;
+  --acc:color-mix(in srgb,var(--paper) 70%,#fff); --acc2:var(--paper);
   --good:#39d98a; --hard:#ffce54;
   --r:16px; --maxw:900px;
 }
 html[data-theme="light"]{
-  --bg:#eef2f8; --bg2:#e3e9f3; --card:#ffffff; --card2:#f4f7fc;
+  --bg:color-mix(in srgb,var(--paper) 7%,#eef2f8); --bg2:color-mix(in srgb,var(--paper) 7%,#e3e9f3); --card:#ffffff; --card2:#f4f7fc;
   --line:#dbe3ef; --line2:#c7d3e6;
   --tx:#16202f; --tx2:#4a5a72; --tx3:#7d8ca5;
-  --acc:#6a52e8; --acc2:#5540c2;
+  --acc:color-mix(in srgb,var(--paper) 88%,#000); --acc2:color-mix(in srgb,var(--paper) 76%,#000);
   --good:#128a55; --hard:#a9791a;
 }
 *{box-sizing:border-box}
@@ -196,13 +199,27 @@ body{background:linear-gradient(180deg,var(--bg),var(--bg2)) fixed;color:var(--t
 .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
 a{color:var(--acc)}
 button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
-.top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.top a.back{font-size:13px;text-decoration:none;color:var(--tx3);border:1px solid var(--line);border-radius:9px;padding:7px 12px;background:var(--card)}
-.top a.back:hover{color:var(--tx);border-color:var(--line2)}
+/* the top bar wears the paper's colour solid; it runs to the column's edges, rounded underneath */
+.top{display:flex;align-items:center;gap:10px;margin:-26px -18px 18px;padding:10px 18px;border-radius:0 0 16px 16px;color:#fff;
+  background:linear-gradient(100deg,color-mix(in srgb,var(--paper) 72%,#000),color-mix(in srgb,var(--paper) 88%,#000));
+  box-shadow:0 4px 18px -8px color-mix(in srgb,var(--paper) 60%,transparent)}
+.top a.back{font-size:13px;font-weight:700;text-decoration:none;color:#fff;border:1px solid rgb(255 255 255 / .3);border-radius:9px;padding:7px 12px;background:rgb(255 255 255 / .1)}
+.top a.back:hover{background:rgb(255 255 255 / .2)}
+.top .iconbtn{color:#fff;background:rgb(255 255 255 / .1);border-color:rgb(255 255 255 / .3)}
 .iconbtn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx2);margin-left:auto}
 h1{font-size:25px;margin:0 0 4px;letter-spacing:-.4px}
 .sub{color:var(--tx2);font-size:14px;margin:0 0 10px}
-.why{background:linear-gradient(160deg,rgba(155,140,255,.16),rgba(155,140,255,.04));border:1px solid rgba(155,140,255,.45);border-radius:var(--r);padding:15px 18px;margin-bottom:18px;font-size:14.5px}
+/* the banner: the page's name in giant type on the paper's colour, a play-button watermark */
+.idcard{position:relative;overflow:hidden;margin:0 0 16px;padding:20px 22px;border-radius:18px;color:#fff;
+  background:radial-gradient(90% 130% at 100% 0%,rgb(255 255 255 / .2),transparent 60%),
+    linear-gradient(135deg,color-mix(in srgb,var(--paper) 94%,#fff),color-mix(in srgb,var(--paper) 72%,#000));
+  box-shadow:0 14px 34px -16px color-mix(in srgb,var(--paper) 80%,transparent)}
+.idcard .idic{position:absolute;right:6px;bottom:-34px;font-size:8rem;line-height:1;opacity:.2;transform:rotate(-14deg);pointer-events:none}
+.idcard small{position:relative;display:block;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgb(255 255 255 / .86)}
+.idcard h1{position:relative;font-size:clamp(2.3rem,7vw,3.4rem);line-height:.95;margin:6px 0 10px;font-weight:900;letter-spacing:-.03em;text-transform:uppercase}
+.idcard .sub{position:relative;color:rgb(255 255 255 / .9);margin:0}
+@media (max-width:560px){ .idcard{padding:14px 16px;border-radius:14px} .idcard .idic{font-size:5.5rem;bottom:-20px} .idcard h1{font-size:2.1rem;margin:4px 0 8px} .idcard .sub{font-size:13px} }
+.why{background:linear-gradient(160deg,color-mix(in srgb,var(--acc) 16%,transparent),color-mix(in srgb,var(--acc) 4%,transparent));border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);border-radius:var(--r);padding:15px 18px;margin-bottom:18px;font-size:14.5px}
 .why b{color:var(--acc)}
 /* controls */
 .controls{position:sticky;top:0;z-index:20;background:var(--bg);margin:0 -18px 16px;padding:12px 18px 12px;border-bottom:1px solid var(--line)}
@@ -249,7 +266,7 @@ p.sysblurb{font-size:13px;color:var(--tx3);margin:0 0 12px}
 .vt:hover{color:var(--acc)}
 .vmeta{font-size:11.5px;color:var(--tx3);margin-top:2px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .tag{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:1px 6px;border-radius:5px;border:1px solid}
-.tag.q{color:var(--acc);border-color:rgba(155,140,255,.4);background:rgba(155,140,255,.1)}
+.tag.q{color:var(--acc);border-color:color-mix(in srgb,var(--acc) 40%,transparent);background:color-mix(in srgb,var(--acc) 10%,transparent)}
 .tag.deep{color:var(--hard);border-color:rgba(255,206,84,.35);background:rgba(255,206,84,.1)}
 .tag.ch{color:var(--tx2);border-color:var(--line2);background:transparent}
 .vmeta a{color:var(--tx3);text-decoration:none;border-bottom:1px dotted var(--line2)}
@@ -265,12 +282,12 @@ p.sysblurb{font-size:13px;color:var(--tx3);margin:0 0 12px}
 <body>
 <div class="wrap">
   <div class="top">
-    <a class="back" href="./">← Hub</a>
+    <a class="back" href="./" title="All the BN2 study tools">‹ All tools</a>
     <a class="back" href="https://jeremyspm.github.io/hs2-test3/">Paper Sim →</a>
     <button class="iconbtn" id="btnTheme" title="Theme">◐</button>
   </div>
-  <h1>▶ Module 3 Video Playlist</h1>
-  <p class="sub">Every Dr Matt &amp; Dr Mike video the Module 3 Paper Sim knows about, plus the other channels’ videos it matched — ${total.n} of them, ${total.topics} topics, ${hhmm(total.s)} end to end. Watch first, sit the mock papers after.</p>
+  <div class="idcard"><span class="idic" aria-hidden="true">▶</span><small>Health Science 2 · 722.541</small><h1>Module 3 Videos</h1>
+  <p class="sub">Every Dr Matt &amp; Dr Mike video the Module 3 Paper Sim knows about, plus the other channels’ videos it matched — ${total.n} of them, ${total.topics} topics, ${hhmm(total.s)} end to end. Watch first, sit the mock papers after.</p></div>
   <div class="why">📺 <b>Why this exists:</b> inside the Paper Sim a video only appears once you have already got something wrong. That is good remediation and useless for orientation — and ${total.n - total.reach} of these ${total.n} videos teach nothing a captured quiz question tests, so no amount of failing ever surfaces them. Here they are all in the open, grouped by topic. Tap a title to play it on this page.</div>
 
   <div class="controls">
