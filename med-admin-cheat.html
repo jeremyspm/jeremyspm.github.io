@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="description" content="Med admin practical cheat sheet: paracetamol and metoprolol, the rights, Ask Build Check, the traps, and drug interactions.">
+<meta name="description" content="CLS practical cheat sheet: vital signs (normal ranges, the routine, two-step BP) and med admin (paracetamol, metoprolol, drug interactions, the rights, Ask Build Check), with the traps for both.">
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('hub.theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
-<title>Med Admin Cheat Sheet</title>
+<title>Practical Cheat Sheet</title>
 <style>
 /* Layout: one reading column (max 680px), jump chips up top, opaque cards only for
    status, warnings, tables and the self-check. Palette = BN Hub house tokens by value;
@@ -136,6 +136,7 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
 .say{border-left:3px solid var(--ph);padding:10px 14px;background:var(--ph-soft);border-radius:0 10px 10px 0;font-weight:600}
 .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:6px;vertical-align:2px;margin-left:4px}
 .tag.course{color:var(--good);border:1px solid color-mix(in srgb,var(--good) 45%,transparent)}
+.part{font-size:clamp(24px,6vw,30px);font-weight:750;letter-spacing:-.02em;padding-top:8px;border-top:2px solid var(--ph)}
 .tag.ds{color:var(--tx2);border:1px solid var(--line2)}
 </style>
 </head>
@@ -145,21 +146,127 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
 
 <header>
   <a class="back" href="./" title="All the BN2 study tools">‹ All tools</a>
-  <span class="eyebrow">722.544 Intro to Pharmacology · Med admin practical</span>
-  <h1>Med admin cheat sheet</h1>
-  <p class="lede">Everything for the practical on one screen: Mr Luke's two drugs, the drug interactions, the routine, and the traps. Read the table out loud twice and you're set.</p>
+  <span class="eyebrow">CLS practicals · vital signs and med admin</span>
+  <h1>Practical cheat sheet</h1>
+  <p class="lede">Both practicals on one page: the vital signs routine and normal ranges, Mr Luke's two drugs and their interactions, and the traps for each. Read it out loud once, top to bottom.</p>
   <nav class="chips" aria-label="Jump to">
+    <a href="#normals">Normal ranges</a>
+    <a href="#vs">VS routine</a>
+    <a href="#bp">Two-step BP</a>
+    <a href="#vstraps">VS traps</a>
     <a href="#drugs">The two drugs</a>
     <a href="#interact">Interactions</a>
     <a href="#rights">The routine</a>
     <a href="#abc">Ask, Build, Check</a>
-    <a href="#traps">Traps</a>
+    <a href="#traps">Med admin traps</a>
   </nav>
   <div class="card warn">
     <p class="t">Read the chart in front of you</p>
     <p>On the day, names, doses and times can differ from Mr Luke's practice chart. The chart on the day wins.</p>
   </div>
 </header>
+
+<h2 class="part">Vital signs</h2>
+
+<section id="normals">
+  <div class="sec-head">
+    <span class="eyebrow">Say each one with its range</span>
+    <h2>Normal adult ranges</h2>
+  </div>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Sign</th><th>Normal</th></tr></thead>
+      <tbody>
+        <tr><td>Temperature</td><td><b>36.5–37.5 °C</b><span class="sci">36.0–36.4 usually safe · 37.6–37.9 low-grade fever · over 38 pyrexia · under 35 hypothermia</span></td></tr>
+        <tr><td>Heart rate</td><td><b>60–100 bpm</b><span class="sci">under 60 bradycardia · over 100 tachycardia</span></td></tr>
+        <tr><td>Resp rate</td><td><b>12–20 /min</b><span class="sci">under 12 bradypnoea · over 20 tachypnoea</span></td></tr>
+        <tr><td>Blood pressure</td><td><b>110–140 / 60–90 mmHg</b><span class="sci">systolic = first sound · diastolic = when the sound disappears</span></td></tr>
+        <tr><td>SpO₂</td><td><b>95–100 %</b><span class="sci">not on the VS rubric, but on Janine's quiz</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="vs">
+  <div class="sec-head">
+    <span class="eyebrow">The marking sheet, in order</span>
+    <h2>The vital signs routine</h2>
+  </div>
+  <h3>Before you go in</h3>
+  <ol class="quick">
+    <li><span><b>Check the chart</b>: obs are due, and it's the right patient.</span></li>
+    <li><span><b>Say your plan and order</b> to the RN: temp, pulse, resps, BP.</span></li>
+    <li><span><b>Equipment, checked it works.</b> The right cuff size (he needs the larger one).</span></li>
+    <li><span><b>Hand hygiene.</b></span></li>
+  </ol>
+  <h3>At the bedside</h3>
+  <ol class="quick">
+    <li><span>Greet him, and <b>introduce yourself AND your preceptor</b>.</span></li>
+    <li><span><b>ID</b>: ask his full name and DOB, then check the <b>wristband: name, DOB AND NHI</b> against the chart.</span></li>
+    <li><span><b>Ask what he'd like to be called</b> (culturally safe practice).</span></li>
+    <li><span><b>Explain</b>: “I'll touch your ear, your wrist and your arm, and the cuff gets pumped up twice.”</span></li>
+    <li><span><b>Get consent.</b></span></li>
+    <li><span><b>Make the space safe</b>: curtain for privacy, brakes on, area clear, him sitting with feet flat, kit within reach.</span></li>
+  </ol>
+  <h3>The obs</h3>
+  <ol class="quick">
+    <li><span><b>Temp (tympanic)</b>: new probe cover, pull the ear <b>up and back</b>, read it, eject the cover. <b>Chart it straight away</b> (an X), never on a paper towel.</span></li>
+    <li><span><b>Pulse (radial)</b>: two or three fingers, not your thumb. <b>30 s × 2</b>. Irregular = count a <b>full minute</b>.</span></li>
+    <li><span><b>Resps</b>: <b>keep your fingers on his wrist</b> and don't announce it. 30 s × 2. Note depth and effort.</span></li>
+    <li><span><b>Chart</b>: HR as an X, RR as the number in its box.</span></li>
+    <li><span><b>BP, two-step</b> (below). Chart it as an <b>arrowhead pointing up on the systolic, one pointing down on the diastolic</b>, joined by a dotted line.</span></li>
+  </ol>
+  <h3>Report and leave him safe</h3>
+  <ol class="quick">
+    <li><span>Tell him: “I'm just going to talk to my preceptor about your results. Is that okay?”</span></li>
+    <li><span><b>Report every value WITH its normal range</b>, plus the date and 24-hour time, and that you counted for 30 s × 2.</span></li>
+    <li><span>The RN asks what you'd do if one is abnormal. Say: <b>“Recheck it, document it, and report it to the RN straight away.”</b></span></li>
+    <li><span>Close the loop (“we'll be back in half an hour”). <b>Call bell, water, comfortable.</b> Thank him.</span></li>
+    <li><span><b>Clean the equipment and put it back. Hand hygiene.</b> Check the chart is complete.</span></li>
+  </ol>
+</section>
+
+<section id="bp">
+  <div class="sec-head">
+    <span class="eyebrow">The step people get pulled up on</span>
+    <h2>Two-step blood pressure</h2>
+  </div>
+  <ol class="quick">
+    <li><span><b>Position</b>: bare arm, supported at heart level, palm up. Him sitting, feet flat, not talking.</span></li>
+    <li><span><b>Check the cuff size</b> with its range lines. Too small reads <b>falsely HIGH</b>.</span></li>
+    <li><span><b>Find the brachial artery</b> (inside of the elbow crease). Cuff fully deflated, artery marker on the artery, 2–3 cm above the crease, two fingers fit under it.</span></li>
+    <li><span><b>STEP 1</b>: feel the radial pulse, <b>pump until it disappears, then 30 more</b>. No stethoscope yet.</span></li>
+    <li><span>Let it down slowly. Where the pulse comes back = the <b>estimated systolic</b> (e.g. 110).</span></li>
+    <li><span><b>Deflate fully and wait 30 seconds.</b></span></li>
+    <li><span><b>STEP 2</b>: <b>stethoscope ON the brachial BEFORE you pump</b>. Earpieces pointing forward. Tap to check it's open. Rest it lightly below the cuff, not tucked under.</span></li>
+    <li><span>Pump to <b>estimate + 30</b> (110 → 140).</span></li>
+    <li><span>Release at <b>2–3 mmHg per second</b>. <b>First clear tap = systolic</b>. <b>Sound disappears = diastolic.</b></span></li>
+    <li><span><b>Tell him in plain words</b>: “110 over 60. That's normal, on the low side. Do you know what yours usually is?”</span></li>
+  </ol>
+</section>
+
+<section id="vstraps">
+  <div class="sec-head">
+    <span class="eyebrow">Curveballs</span>
+    <h2>Vital signs traps</h2>
+  </div>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>If…</th><th>You…</th></tr></thead>
+      <tbody>
+        <tr><td>The wristband DOB or NHI doesn't match the chart</td><td>Stop. Don't do the obs. Tell the RN. Name, DOB and NHI must all match.</td></tr>
+        <tr><td>He says “Do you have to? I'm tired.”</td><td>Respect it, explain why the obs matter, and report it to the RN. Never chart it as done.</td></tr>
+        <tr><td>His pulse is irregular</td><td>Count a full minute, and report it.</td></tr>
+        <tr><td>Temp is 38.3 °C</td><td>Over 38 is pyrexia. Recheck, document it, report it straight away.</td></tr>
+        <tr><td>The cuff is too small</td><td>Get the right size. Too small reads falsely high.</td></tr>
+        <tr><td>Step 2: you can't hear anything</td><td>Don't pump straight back up. Deflate fully, fix the stethoscope, wait 30 s, redo it.</td></tr>
+        <tr><td>BP is 168/98</td><td>Recheck, document it, report it to the RN.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<h2 class="part">Med admin</h2>
 
 <section id="drugs">
   <div class="sec-head">
@@ -262,7 +369,7 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
 <section id="traps">
   <div class="sec-head">
     <span class="eyebrow">Curveballs</span>
-    <h2>Traps they can throw at you</h2>
+    <h2>Med admin traps</h2>
   </div>
   <div class="tscroll">
     <table>
