@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Med admin practical cheat sheet: paracetamol and metoprolol, the rights, Ask Build Check, the traps, and drug interactions.">
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('hub.theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+<title>Med Admin Cheat Sheet</title>
+<style>
+/* Layout: one reading column (max 680px), jump chips up top, opaque cards only for
+   status, warnings, tables and the self-check. Palette = BN Hub house tokens by value;
+   --ph is the Pharmacology paper hue from bn2-brief. Dark-first. */
+:root{
+  --bg:#161719; --card:#1c1c1f; --card2:#242427;
+  --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.15);
+  --tx:#f2f2f6; --tx2:rgba(255,255,255,.62); --tx3:rgba(255,255,255,.40);
+  --acc:#6366F1; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
+  --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
+  --ph:#C084FC; --ph-soft:rgba(192,132,252,.14);
+  --r:14px; --maxw:680px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+    --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+    --tx:#16161a; --tx2:rgba(0,0,0,.62); --tx3:rgba(0,0,0,.45);
+    --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.10);
+    --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+    --ph:#7E22CE; --ph-soft:rgba(126,34,206,.08);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+  --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+  --tx:#16161a; --tx2:rgba(0,0,0,.62); --tx3:rgba(0,0,0,.45);
+  --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.10);
+  --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+  --ph:#7E22CE; --ph-soft:rgba(126,34,206,.08);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+a{color:var(--acc-tx);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(28px,7vw,38px);font-weight:750;letter-spacing:-.02em}
+h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:16px;font-weight:650}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+li::marker{color:var(--tx3)}
+b,strong{font-weight:650}
+.muted{color:var(--tx2)}
+.small{font-size:14px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ph)}
+section{display:grid;gap:14px;min-width:0;scroll-margin-top:12px}
+.sec-head{display:grid;gap:4px}
+
+/* header */
+header{display:grid;gap:14px}
+.lede{color:var(--tx2);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips a{font-size:14px;color:var(--tx);text-decoration:none;padding:6px 12px;border:1px solid var(--line2);border-radius:999px;background:var(--card)}
+.chips a:hover{border-color:var(--ph)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;min-width:0}
+.status{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{display:grid;gap:2px}
+.stat .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.stat .v{font-weight:650}
+.warn{border-color:color-mix(in srgb,var(--hard) 45%,transparent);background:color-mix(in srgb,var(--hard) 8%,var(--card))}
+.warn .t{color:var(--hard);font-weight:650}
+.exam{border-color:color-mix(in srgb,var(--ph) 45%,transparent);background:var(--ph-soft)}
+.exam .t{color:var(--ph);font-weight:650}
+.btn{display:inline-block;justify-self:start;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:10px 16px;border-radius:10px}
+.btn:hover{filter:brightness(1.06)}
+
+/* the 30-second list */
+.quick{counter-reset:q;list-style:none;padding:0;gap:10px}
+.quick li{counter-increment:q;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.quick li::before{content:counter(q);font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;color:var(--ph);border:1px solid color-mix(in srgb,var(--ph) 40%,transparent);border-radius:8px;height:28px;display:grid;place-items:center}
+
+/* definitions */
+dl.defs{margin:0;display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.def{padding:14px 16px;display:grid;gap:4px;border-top:1px solid var(--line)}
+.def:first-child{border-top:0}
+.def dt{font-weight:650}
+.def dd{margin:0;color:var(--tx)}
+.def .eg{color:var(--tx2);font-size:15px}
+.def .eg b{color:var(--tx2);font-weight:650}
+
+/* tables */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-top:1px solid var(--line)}
+thead th{border-top:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600;background:var(--card2)}
+td:first-child{font-weight:600;width:36%;min-width:7.5em}
+td .sci{display:block;font-weight:400;font-style:italic;color:var(--tx3);font-size:13px;white-space:normal}
+.flag{color:var(--hard)}
+
+/* two-up */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:8px;min-width:0}
+.mini.good h3{color:var(--good)}
+.mini.bad h3{color:var(--bad)}
+
+/* self-check */
+.qs{display:grid;gap:10px}
+details.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+details.q summary{cursor:pointer;list-style:none;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;font-weight:600}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .hint{font-size:13px;font-weight:500;color:var(--acc-tx);white-space:nowrap}
+details.q[open] summary .hint::after{content:" ✓"}
+details.q[open] summary{border-bottom:1px solid var(--line)}
+details.q .a{padding:12px 16px 16px;display:grid;gap:6px}
+details.q .a p{color:var(--tx)}
+details.q .a .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+
+.src{font-size:14px;color:var(--tx2)}
+.src li{padding-left:2px}
+footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* this page */
+.back{justify-self:start;font-size:13px;font-weight:700;text-decoration:none;color:var(--tx);border:1px solid var(--line2);border-radius:9px;padding:7px 12px;background:var(--card)}
+.back:hover{border-color:var(--ph)}
+.drug-h{color:var(--ph);margin-bottom:8px}
+.def dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+#abc .def dt{font-size:16px;letter-spacing:0;text-transform:none;color:var(--tx);font-weight:650}
+.say{border-left:3px solid var(--ph);padding:10px 14px;background:var(--ph-soft);border-radius:0 10px 10px 0;font-weight:600}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:6px;vertical-align:2px;margin-left:4px}
+.tag.course{color:var(--good);border:1px solid color-mix(in srgb,var(--good) 45%,transparent)}
+.tag.ds{color:var(--tx2);border:1px solid var(--line2)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <a class="back" href="./" title="All the BN2 study tools">‹ All tools</a>
+  <span class="eyebrow">722.544 Intro to Pharmacology · Med admin practical</span>
+  <h1>Med admin cheat sheet</h1>
+  <p class="lede">Everything for the practical on one screen: Mr Luke's two drugs, the drug interactions, the routine, and the traps. Read the table out loud twice and you're set.</p>
+  <nav class="chips" aria-label="Jump to">
+    <a href="#drugs">The two drugs</a>
+    <a href="#interact">Interactions</a>
+    <a href="#rights">The routine</a>
+    <a href="#abc">Ask, Build, Check</a>
+    <a href="#traps">Traps</a>
+  </nav>
+  <div class="card warn">
+    <p class="t">Read the chart in front of you</p>
+    <p>On the day, names, doses and times can differ from Mr Luke's practice chart. The chart on the day wins.</p>
+  </div>
+</header>
+
+<section id="drugs">
+  <div class="sec-head">
+    <span class="eyebrow">Marked on the rubric</span>
+    <h2>The two drugs</h2>
+  </div>
+  <p>Have three things ready for whichever drug you get: <b>the generic name, why HE is on it, and its common side effects.</b></p>
+  <div class="split">
+    <div>
+      <h3 class="drug-h">Paracetamol</h3>
+      <dl class="defs">
+      <div class="def"><dt>Pack may say</dt><dd>Pacimol / Panadol / Pamol</dd></div>
+      <div class="def"><dt>Generic + class</dt><dd>Paracetamol, an <b>analgesic</b> (it also lowers fever)</dd></div>
+      <div class="def"><dt>Order</dt><dd>1 g PO qid = <b>two 500 mg tabs</b></dd></div>
+      <div class="def"><dt>Why he's on it</dt><dd>His recurrent <b>backache</b></dd></div>
+      <div class="def"><dt>Side effects</dt><dd><b>None common</b> at the right dose. All very rare: rash or allergy, bronchospasm, low platelets, liver problems. The big risk is <b>liver damage if he has too much</b>.</dd></div>
+      <div class="def"><dt>Check first</dt><dd><b>When was his last dose?</b> At least 4 h apart, max 4 g in 24 h. 1 g qid is already 4 g, so <b>no other paracetamol at all</b>.</dd></div>
+      <div class="def"><dt>Must say</dt><dd>Ask about Panadol or cold-and-flu medicines from home.</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3 class="drug-h">Metoprolol</h3>
+      <dl class="defs">
+      <div class="def"><dt>Pack may say</dt><dd>Betaloc CR / Myloc CR</dd></div>
+      <div class="def"><dt>Generic + class</dt><dd>Metoprolol succinate CR, a <b>beta blocker</b></dd></div>
+      <div class="def"><dt>Order</dt><dd>47.5 mg PO daily (mane) = <b>one CR tab</b></dd></div>
+      <div class="def"><dt>Why he's on it</dt><dd>His <b>high BP</b> (higher than usual lately) and his <b>heart failure</b></dd></div>
+      <div class="def"><dt>Side effects</dt><dd>Very common: <b>tiredness</b>. Common: <b>slow pulse, dizzy on standing, cold hands and feet</b>, palpitations, dizziness, headache, nausea, tummy pain, diarrhoea, constipation, breathless when active.</dd></div>
+      <div class="def"><dt>Check first</dt><dd><b>Pulse and BP.</b> If either is low, <b>withhold it and tell the RN</b>.</dd></div>
+      <div class="def"><dt>Must say</dt><dd><b>Don't crush it</b> (CR; it can be halved). <b>Don't stop it suddenly</b>, because his heart failure can get worse. <b>Stand up slowly and ring the bell first</b> (falls risk; he's 79).</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="interact">
+  <div class="sec-head">
+    <span class="eyebrow">If they ask</span>
+    <h2>Drug interactions</h2>
+  </div>
+  <p>Assessors can ask this because every Medsafe data sheet has an interactions section (4.5). They want to see that you'd stop and check, not a memorised list. If you're stuck, say:</p>
+  <p class="say">“I'd check the NZF interactions checker or section 4.5 of the data sheet, and talk to the pharmacist or RN before giving it.”</p>
+
+  <div class="split">
+    <div class="mini">
+      <h3>Metoprolol</h3>
+      <ul>
+        <li><b>Salbutamol</b> (asthma): works less well, because metoprolol blocks the beta receptors salbutamol needs. <span class="tag course">Joan, slide 45</span></li>
+        <li><b>Other BP drugs</b> (e.g. cilazapril): BP drops further, so more dizziness and falls. <span class="tag ds">Data sheet</span></li>
+        <li><b>Verapamil or diltiazem</b>: can slow his heart too much. <span class="tag ds">Data sheet</span></li>
+        <li><b>Insulin or diabetes tablets</b>: metoprolol can hide hypo signs, like a fast heartbeat. <span class="tag ds">Data sheet</span></li>
+        <li><b>NSAIDs</b> (ibuprofen): can blunt its BP-lowering effect. <span class="tag ds">Data sheet</span></li>
+      </ul>
+    </div>
+    <div class="mini">
+      <h3>Paracetamol</h3>
+      <ul>
+        <li><b>Other paracetamol products</b> (Panadol, cold-and-flu): a double dose, so a liver risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Warfarin</b>: regular use can raise the INR, so more bleeding risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Heavy alcohol</b>, or enzyme-inducing drugs (some anticonvulsants): more liver risk. <span class="tag ds">Data sheet</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="small muted"><span class="tag course">Joan, slide 45</span> is from your course. <span class="tag ds">Data sheet</span> is general pharmacology from the Medsafe data sheets (section 4.5), added here and not taught in the course. Don't stress about those.</p>
+  <p class="small muted">For the final: metoprolol + salbutamol is the <b>opposing</b> example (an agonist against an antagonist at beta receptors), and warfarin + aspirin is the <b>additive</b> one (more bleeding).</p>
+</section>
+
+<section id="rights">
+  <div class="sec-head">
+    <span class="eyebrow">The marking sheet</span>
+    <h2>The routine</h2>
+  </div>
+  <ol class="quick">
+    <li><span><b>Hand hygiene</b>: before you start, at the door, and on the way out.</span></li>
+    <li><span><b>Chart</b>: name, NHI, DOB, <b>allergies box signed</b>, Special Care box.</span></li>
+    <li><span><b>Right drug</b> (say the generic name), <b>dose</b>, <b>route</b> (PO), <b>time and when the last dose was given</b>, <b>indication</b>.</span></li>
+    <li><span><b>Expiry</b>: read it out. Month only means good until the end of that month.</span></li>
+    <li><span><b>At the bedside</b>: introduce yourself as a student nurse, with your preceptor.</span></li>
+    <li><span><b>Right patient</b>: ask his name and DOB, <b>then check the wristband, NHI included</b>, against the chart.</span></li>
+    <li><span><b>Ask about allergies again out loud.</b> The chart can be out of date.</span></li>
+    <li><span><b>Consent</b>: “Are you happy to take it?” He has the <b>right to refuse</b>.</span></li>
+    <li><span>Watch him swallow it, and <b>leave the call bell</b> with him.</span></li>
+    <li><span><b>Document</b>: the right drug, date, time and dose, and <b>your initials</b>.</span></li>
+  </ol>
+</section>
+
+<section id="abc">
+  <div class="sec-head">
+    <span class="eyebrow">Patient education</span>
+    <h2>Ask, Build, Check</h2>
+  </div>
+  <dl class="defs">
+    <div class="def"><dt>ASK</dt><dd>“What have you heard about this medicine?” An open question, not yes or no.</dd></div>
+    <div class="def"><dt>BUILD</dt><dd>What it's for and its side effects, in plain words. Explain any medical term, and pause.</dd></div>
+    <div class="def"><dt>CHECK</dt><dd>“Can you tell me back in your own words what it's for, and what you'd do if…?” <b>Never ask “Do you understand?”</b></dd></div>
+  </dl>
+  <p>At the end, the RN asks you to <b>describe how you used Ask, Build, Check</b>. Name all three steps.</p>
+</section>
+
+<section id="traps">
+  <div class="sec-head">
+    <span class="eyebrow">Curveballs</span>
+    <h2>Traps they can throw at you</h2>
+  </div>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>If…</th><th>You…</th></tr></thead>
+      <tbody>
+        <tr><td>The wristband NHI doesn't match the chart</td><td>Stop. Don't give it. Tell the RN.</td></tr>
+        <tr><td>He says he took his own Panadol</td><td>Don't give it (it would go over 4 g). Tell the RN.</td></tr>
+        <tr><td>His last paracetamol was under 4 h ago</td><td>It's not due yet. Don't give it.</td></tr>
+        <tr><td>Pulse or BP is low before metoprolol (e.g. pulse 52, BP 96/58)</td><td>Withhold it. Tell the RN.</td></tr>
+        <tr><td>The pack is expired</td><td>Don't use it. Get a new one.</td></tr>
+        <tr><td>He refuses</td><td>Explain what could happen, respect his choice, tell the RN, document it, and discard the dose.</td></tr>
+        <tr><td>He mentions a new allergy</td><td>Don't give it. Tell the RN.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p>Made 18 Oct 2026 from the CLS Practical Trainer's data (the course brief, Joan's decks and the Medsafe data sheets). It isn't official course material: the chart on the day, Joan's slides and Canvas win if anything here disagrees.</p>
+</footer>
+
+</div>
+</body>
+</html>
