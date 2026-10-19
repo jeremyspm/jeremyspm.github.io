@@ -137,6 +137,7 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
 .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:6px;vertical-align:2px;margin-left:4px}
 .tag.course{color:var(--good);border:1px solid color-mix(in srgb,var(--good) 45%,transparent)}
 .part{font-size:clamp(24px,6vw,30px);font-weight:750;letter-spacing:-.02em;padding-top:8px;border-top:2px solid var(--ph)}
+.code{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:var(--tx3);white-space:nowrap}
 .tag.ds{color:var(--tx2);border:1px solid var(--line2)}
 </style>
 </head>
@@ -156,9 +157,12 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
     <a href="#vstraps">VS traps</a>
     <a href="#drugs">The two drugs</a>
     <a href="#interact">Interactions</a>
-    <a href="#rights">The routine</a>
+    <a href="#deep">Know everything</a>
+    <a href="#rights">Full run</a>
     <a href="#abc">Ask, Build, Check</a>
     <a href="#traps">Med admin traps</a>
+    <a href="#whatif">What if…</a>
+    <a href="#rubric">Marking sheets</a>
   </nav>
   <div class="card warn">
     <p class="t">Read the chart in front of you</p>
@@ -274,6 +278,10 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
     <h2>The two drugs</h2>
   </div>
   <p>Have three things ready for whichever drug you get: <b>the generic name, why HE is on it, and its common side effects.</b></p>
+  <div class="card warn">
+    <p class="t">Every drug: say anaphylaxis</p>
+    <p>Assessors treat anaphylaxis as a <b>critical</b> point for every medicine, even when it isn't a common side effect. Leaving it out can fail the assessment. When you list side effects, end with: <b>“and, rarely, an allergic reaction or anaphylaxis: rash, swelling, trouble breathing.”</b> Tell him in plain words too: “If you get a rash, swelling, or trouble breathing, ring your bell straight away.”</p>
+  </div>
   <div class="split">
     <div>
       <h3 class="drug-h">Paracetamol</h3>
@@ -284,6 +292,7 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
       <div class="def"><dt>Why he's on it</dt><dd>His recurrent <b>backache</b></dd></div>
       <div class="def"><dt>Side effects</dt><dd><b>None common</b> at the right dose. All very rare: rash or allergy, bronchospasm, low platelets, liver problems. The big risk is <b>liver damage if he has too much</b>.</dd></div>
       <div class="def"><dt>Check first</dt><dd><b>When was his last dose?</b> At least 4 h apart, max 4 g in 24 h. 1 g qid is already 4 g, so <b>no other paracetamol at all</b>.</dd></div>
+      <div class="def"><dt>Critical: anaphylaxis</dt><dd>Rare, but <b>say it</b>: rash, swelling of the face or throat, trouble breathing. Stop, call for help, and follow the emergency protocol.</dd></div>
       <div class="def"><dt>Must say</dt><dd>Ask about Panadol or cold-and-flu medicines from home.</dd></div>
       </dl>
     </div>
@@ -296,7 +305,56 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
       <div class="def"><dt>Why he's on it</dt><dd>His <b>high BP</b> (higher than usual lately) and his <b>heart failure</b></dd></div>
       <div class="def"><dt>Side effects</dt><dd>Very common: <b>tiredness</b>. Common: <b>slow pulse, dizzy on standing, cold hands and feet</b>, palpitations, dizziness, headache, nausea, tummy pain, diarrhoea, constipation, breathless when active.</dd></div>
       <div class="def"><dt>Check first</dt><dd><b>Pulse and BP.</b> If either is low, <b>withhold it and tell the RN</b>.</dd></div>
+      <div class="def"><dt>Critical: anaphylaxis</dt><dd><b>Say it, even though it's rare.</b> Watch for rash, swelling of the face or throat, wheeze, trouble breathing. Beta blockers can make an anaphylactic reaction <b>more severe</b> and <b>harder to treat with adrenaline</b> (data sheet warning). Stop, call for help, follow the emergency protocol.</dd></div>
       <div class="def"><dt>Must say</dt><dd><b>Don't crush it</b> (CR; it can be halved). <b>Don't stop it suddenly</b>, because his heart failure can get worse. <b>Stand up slowly and ring the bell first</b> (falls risk; he's 79).</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="deep">
+  <div class="sec-head">
+    <span class="eyebrow">Beyond the common list</span>
+    <h2>Know everything about your drug</h2>
+  </div>
+  <p>The rubric asks for the generic name, the indication and the common side effects. Assessors can go further, so here's the rest, with <b>the same 14 headings for both drugs</b>. Unless tagged <span class="tag course">Course</span>, it's from the Medsafe data sheets and Healthify, not from your lectures.</p>
+  <div class="split">
+    <div>
+      <h3 class="drug-h">Paracetamol</h3>
+      <dl class="defs">
+        <div class="def"><dt>How it works</dt><dd>An <b>analgesic and antipyretic</b>. It acts mainly in the brain (it blocks prostaglandin production there), so it eases pain and lowers fever but does <b>little for inflammation</b>.</dd></div>
+        <div class="def"><dt>Onset and half-life</dt><dd>Works in about <b>30–60 min</b> and lasts 4–6 h. Half-life <b>1–3 h</b>; most of a dose is out in the urine within 24 h. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>ADME</dt><dd>Absorbed rapidly (food can slow it). Distributed widely, little protein-bound. <b>Metabolised in the liver</b>: a small amount becomes a toxic metabolite that builds up in overdose. Excreted in the urine. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>Form and how to take it</dt><dd>500 mg tablets: <b>two tablets for 1 g</b>. Swallow with a glass of water, food or not. A liquid exists if he can't swallow tablets.</dd></div>
+        <div class="def"><dt>Withhold and tell the RN if</dt><dd>The last dose was <b>under 4 h ago</b>, the 24-h total would go <b>over 4 g</b>, or he's taken his <b>own paracetamol</b>. Any sign of allergy, or yellow skin or eyes (liver).</dd></div>
+        <div class="def"><dt>Don't give if</dt><dd>He's <b>allergic</b> to paracetamol, he's already had his <b>max for 24 h</b>, or he has <b>severe liver disease</b>.</dd></div>
+        <div class="def"><dt>Take care with</dt><dd><b>Liver disease, heavy alcohol use</b>, low body weight (under 50 kg) or malnutrition, dehydration, kidney problems, the frail elderly. Check with the RN: the max may need to be lower.</dd></div>
+        <div class="def"><dt>Common side effects</dt><dd><b>None are common</b> at the right dose. Say exactly that, then go on to the rare ones below.</dd></div>
+        <div class="def"><dt>Rare but serious</dt><dd><b>Anaphylaxis</b> and allergic reactions (rash, swelling, trouble breathing), bronchospasm in people sensitive to aspirin, serious skin reactions (blistering, peeling rash), low platelets or white cells (unusual bruising, infections), liver damage.</dd></div>
+        <div class="def"><dt>Stopping, or a missed dose</dt><dd>Can be stopped any time, no tapering. Missed dose: take it when he remembers, keeping 4 h between doses and no more than 4 g in 24 h. <b>Never double up.</b></dd></div>
+        <div class="def"><dt>Overdose</dt><dd>Often <b>no symptoms at first</b>, or just nausea and vomiting. Liver damage shows up <b>1–3 days later</b>. It's urgent even if he feels fine. The antidote is <b>acetylcysteine</b>.</dd></div>
+        <div class="def"><dt>Monitor</dt><dd><b>Pain score before, and again 30–60 min after</b> to check it worked. The 24-h total. Temp, if it's for fever. Rash or swelling.</dd></div>
+        <div class="def"><dt>Tell him</dt><dd>What it's for (his back). <b>Don't take any other paracetamol</b> (Panadol, cold-and-flu products): check the labels. Ring your bell if you get a rash, swelling or trouble breathing. Go easy on alcohol. Tell us if the pain isn't easing.</dd></div>
+        <div class="def"><dt>Legal class</dt><dd>A <b>general sales medicine</b> (sold anywhere). Pregnancy category A. <span class="tag course">Course</span></dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3 class="drug-h">Metoprolol succinate CR</h3>
+      <dl class="defs">
+        <div class="def"><dt>How it works</dt><dd>A <b>cardioselective (beta-1) beta blocker</b>, an antagonist: it blocks adrenaline at the heart's beta receptors. The heart beats <b>slower and less forcefully</b>, BP drops, and the heart works less hard. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>Onset and half-life</dt><dd>Half-life about <b>3–5 h</b>, but the CR tablet releases it slowly, so one dose covers <b>24 h</b>. The full BP effect builds over about a week; the heart failure benefit over weeks to months.</dd></div>
+        <div class="def"><dt>ADME</dt><dd>Well absorbed by mouth, but about half is lost on its <b>first pass through the liver</b>. Little protein-bound. <b>Metabolised in the liver</b> (the CYP2D6 enzyme, which is why fluoxetine and paroxetine raise its levels). Excreted in the urine.</dd></div>
+        <div class="def"><dt>Form and how to take it</dt><dd><b>Controlled release (CR)</b>: one 47.5 mg tablet, once a day. Swallow whole with a glass of water, food or not. It can be <b>halved, never crushed or chewed</b>: crushing dumps the whole day's dose at once.</dd></div>
+        <div class="def"><dt>Withhold and tell the RN if</dt><dd>His <b>pulse or BP is low</b>. Common ward cut-offs are a pulse under 60 or a systolic under 100, but <b>the chart or your RN sets the actual numbers</b>, so ask. Also if he's dizzy or faint, newly wheezy, or more breathless or swollen than usual.</dd></div>
+        <div class="def"><dt>Don't give if</dt><dd>He's <b>allergic</b> to it. A very slow pulse, heart block or sick sinus syndrome (no pacemaker). Very low BP or shock. <b>Unstable or worsening heart failure</b> (e.g. fluid on the lungs). Severe circulation problems in the legs.</dd></div>
+        <div class="def"><dt>Take care with</dt><dd><b>Asthma or COPD</b> (can cause bronchospasm, and blocks salbutamol). <b>Diabetes</b>: it hides hypo signs like a fast heartbeat and tremor (sweating still shows). Liver problems. The elderly (falls). Before surgery, tell the anaesthetist.</dd></div>
+        <div class="def"><dt>Common side effects</dt><dd>Very common: <b>tiredness</b>. Common: <b>slow pulse, dizzy on standing, cold hands and feet</b>, palpitations, dizziness, headache, nausea, tummy pain, diarrhoea, constipation, breathless when active.</dd></div>
+        <div class="def"><dt>Rare but serious</dt><dd><b>Anaphylaxis</b>, and beta blockers make it <b>more severe and harder to treat with adrenaline</b>. Worsening heart failure (weight gain, swollen ankles, more breathless), heart block, fainting, bronchospasm. Less common: low mood, nightmares, trouble sleeping, confusion, rash, sexual problems.</dd></div>
+        <div class="def"><dt>Stopping, or a missed dose</dt><dd><b>Never stop it suddenly</b>: rebound high BP, chest pain or a heart attack, and worse heart failure. The body has made extra beta receptors (<b>upregulation</b>), so they over-respond once it's gone. The prescriber tapers it. <span class="tag course">Course</span> Missed dose: take it when he remembers, unless the next one is nearly due. <b>Never double up.</b></dd></div>
+        <div class="def"><dt>Overdose</dt><dd>A <b>very slow pulse, very low BP</b>, heart block, shock, bronchospasm, low blood sugar, collapse. It's an emergency: call for help.</dd></div>
+        <div class="def"><dt>Monitor</dt><dd><b>Pulse and BP</b> before and after (lying and standing if he's dizzy). Dizziness and falls. <b>Weight, swelling, breathlessness</b> (heart failure). Wheeze. Blood sugar if he's diabetic. Rash or swelling.</dd></div>
+        <div class="def"><dt>Tell him</dt><dd>What it's for (his BP and his heart). <b>Stand up slowly, and ring before getting up.</b> Tiredness often settles after the first weeks. <b>Don't stop it without the doctor.</b> Ring your bell if you get a rash, swelling or trouble breathing. Tell us if you feel faint, more breathless, your ankles swell or you're wheezy. Alcohol can make the dizziness worse.</dd></div>
+        <div class="def"><dt>Legal class</dt><dd>A <b>prescription medicine</b> (prescriber only). Pregnancy category C.</dd></div>
       </dl>
     </div>
   </div>
@@ -319,6 +377,7 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
         <li><b>Verapamil or diltiazem</b>: can slow his heart too much. <span class="tag ds">Data sheet</span></li>
         <li><b>Insulin or diabetes tablets</b>: metoprolol can hide hypo signs, like a fast heartbeat. <span class="tag ds">Data sheet</span></li>
         <li><b>NSAIDs</b> (ibuprofen): can blunt its BP-lowering effect. <span class="tag ds">Data sheet</span></li>
+        <li><b>Some antidepressants</b> (fluoxetine, paroxetine): raise metoprolol levels, so a slower pulse. <b>Digoxin</b>: an even slower pulse. <span class="tag ds">Data sheet</span></li>
       </ul>
     </div>
     <div class="mini">
@@ -326,7 +385,8 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
       <ul>
         <li><b>Other paracetamol products</b> (Panadol, cold-and-flu): a double dose, so a liver risk. <span class="tag ds">Data sheet</span></li>
         <li><b>Warfarin</b>: regular use can raise the INR, so more bleeding risk. <span class="tag ds">Data sheet</span></li>
-        <li><b>Heavy alcohol</b>, or enzyme-inducing drugs (some anticonvulsants): more liver risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Heavy alcohol</b>, or enzyme-inducing drugs (carbamazepine, phenytoin, rifampicin): more liver risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Metoclopramide</b> speeds up its absorption. <b>Cholestyramine</b> slows it (give paracetamol 1 h before). <span class="tag ds">Data sheet</span></li>
       </ul>
     </div>
   </div>
@@ -336,20 +396,43 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
 
 <section id="rights">
   <div class="sec-head">
-    <span class="eyebrow">The marking sheet</span>
-    <h2>The routine</h2>
+    <span class="eyebrow">Every step, with the rubric line it scores</span>
+    <h2>The full run</h2>
   </div>
+  <h3>With your RN, before the bedside</h3>
   <ol class="quick">
-    <li><span><b>Hand hygiene</b>: before you start, at the door, and on the way out.</span></li>
-    <li><span><b>Chart</b>: name, NHI, DOB, <b>allergies box signed</b>, Special Care box.</span></li>
-    <li><span><b>Right drug</b> (say the generic name), <b>dose</b>, <b>route</b> (PO), <b>time and when the last dose was given</b>, <b>indication</b>.</span></li>
-    <li><span><b>Expiry</b>: read it out. Month only means good until the end of that month.</span></li>
-    <li><span><b>At the bedside</b>: introduce yourself as a student nurse, with your preceptor.</span></li>
-    <li><span><b>Right patient</b>: ask his name and DOB, <b>then check the wristband, NHI included</b>, against the chart.</span></li>
-    <li><span><b>Ask about allergies again out loud.</b> The chart can be out of date.</span></li>
-    <li><span><b>Consent</b>: “Are you happy to take it?” He has the <b>right to refuse</b>.</span></li>
-    <li><span>Watch him swallow it, and <b>leave the call bell</b> with him.</span></li>
-    <li><span><b>Document</b>: the right drug, date, time and dose, and <b>your initials</b>.</span></li>
+    <li><span><b>Hand hygiene</b> before you touch the chart or the meds. <span class="code">a10</span></span></li>
+    <li><span><b>Read the chart out loud, finger on it</b>: name, NHI, DOB on the sticker, and the prescriber's handwritten name. No name means no drug. <span class="code">a11</span></span></li>
+    <li><span><b>Allergies box</b>: “Ticked no, signed and dated by the prescriber. I'll still check with him at the bedside.” <span class="code">a9</span></span></li>
+    <li><span><b>Special Care box and supplementary charts</b>: say what's ticked (renal, hepatic, anticoagulation…). <span class="code">a11</span></span></li>
+    <li><span><b>Find the order</b>: date, <b>generic name</b>, dose and units, route, frequency, prescriber's signature. <span class="code">a2 a5 d1</span></span></li>
+    <li><span><b>Right time</b>: “Prescribed ___. The last dose was ___, so it's due now.” <span class="code">a4</span></span></li>
+    <li><span><b>The drug-specific check</b>. Paracetamol: <b>his pain score and the 24-h total</b>. Metoprolol: <b>his pulse and BP</b>, and whether they're OK to give. <span class="code">a11</span></span></li>
+    <li><span><b>The RN asks “Tell me about this drug.”</b> Generic name and class, why <b>he's</b> on it, <b>all</b> the common side effects, <b>then anaphylaxis</b>, then a nursing point. <span class="code">k1 k2 k3 a7</span></span></li>
+    <li><span><b>Label vs chart (check 1)</b>: “The label says ___. It's prescribed ___, so that's ___ tablet(s).” <span class="code">a2 a3</span></span></li>
+    <li><span><b>Expiry: read it AND interpret it</b>: “End of July 2027, so it's in date.” <span class="code">a8</span></span></li>
+    <li><span><b>Pop it into the cup without touching it.</b> Label vs chart again (check 2), and again as you put the pack away (check 3). Glass of water. <span class="code">a10 a3 a11</span></span></li>
+  </ol>
+  <h3>At the bedside</h3>
+  <ol class="quick">
+    <li><span><b>Knock, and hand hygiene</b> on the way in. <span class="code">a10</span></span></li>
+    <li><span><b>Introduce yourself AND your RN</b>, and say what you've brought. <span class="code">e5</span></span></li>
+    <li><span><b>ID</b>: <b>he</b> says his full name and DOB. <b>You</b> check the wristband (name, DOB, <b>NHI</b>) against the chart. <span class="code">a1</span></span></li>
+    <li><span><b>Allergies, out loud</b>: “Are you allergic to anything? Ever had a bad reaction to a medicine?” <span class="code">a9</span></span></li>
+    <li><span><b>ASK</b>: “Have you heard of ___? What do you know about it?” <span class="code">e1</span></span></li>
+    <li><span><b>BUILD</b>, in plain words: what it's for, how to take it, the side effects and what to do, <b>including “if you get a rash, swelling or trouble breathing, ring your bell straight away.”</b> Pause. <span class="code">e2 k1–k3 a7</span></span></li>
+    <li><span><b>CHECK</b>: “Can you tell me in your own words…?” Never “Do you understand?” <span class="code">e3</span></span></li>
+    <li><span><b>Consent</b>: “Are you happy to take it? Any questions?” <span class="code">a6</span></span></li>
+    <li><span><b>Give it</b>: him sitting upright, with water. <b>Stay until it's swallowed.</b> Never leave it on the table. <span class="code">a5 a11</span></span></li>
+    <li><span><b>Home tip</b>: “Same time each day, and get a repeat before you run out.” <span class="code">e2</span></span></li>
+    <li><span><b>Leave him safe</b>: call bell in reach, “ring before you get up,” thank him. <span class="code">a11 e5</span></span></li>
+    <li><span><b>Hand hygiene</b> on the way out. <span class="code">a10</span></span></li>
+  </ol>
+  <h3>Document and debrief</h3>
+  <ol class="quick">
+    <li><span><b>Sign only AFTER he's taken it</b>: date, 24-h time, <b>dose with units</b> (“47.5 mg”, never “47.5”). Your initials in <b>Giv</b>, your RN's in <b>Chck</b>. <span class="code">d1 d2 d3</span></span></li>
+    <li><span>The RN asks how you used <b>Ask, Build, Check</b>. Name all three and what you did in each. <span class="code">e4</span></span></li>
+    <li><span><b>Thank your RN.</b> <span class="code">e5</span></span></li>
   </ol>
 </section>
 
@@ -379,6 +462,9 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
         <tr><td>He says he took his own Panadol</td><td>Don't give it (it would go over 4 g). Tell the RN.</td></tr>
         <tr><td>His last paracetamol was under 4 h ago</td><td>It's not due yet. Don't give it.</td></tr>
         <tr><td>Pulse or BP is low before metoprolol (e.g. pulse 52, BP 96/58)</td><td>Withhold it. Tell the RN.</td></tr>
+        <tr><td>He's wheezy, or says he has asthma, before metoprolol</td><td>Withhold it. Tell the RN (bronchospasm risk).</td></tr>
+        <tr><td>He asks you to crush the metoprolol</td><td>No: it's CR. It can be halved, never crushed. Check with the pharmacist.</td></tr>
+        <tr><td>Before paracetamol: he drinks heavily, or has liver problems</td><td>Check with the RN before giving it: the max may need to be lower.</td></tr>
         <tr><td>The pack is expired</td><td>Don't use it. Get a new one.</td></tr>
         <tr><td>He refuses</td><td>Explain what could happen, respect his choice, tell the RN, document it, and discard the dose.</td></tr>
         <tr><td>He mentions a new allergy</td><td>Don't give it. Tell the RN.</td></tr>
@@ -387,8 +473,54 @@ footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
   </div>
 </section>
 
+<section id="whatif">
+  <div class="sec-head">
+    <span class="eyebrow">If they ask</span>
+    <h2>What if…</h2>
+  </div>
+  <dl class="defs">
+    <div class="def"><dt>…he has an anaphylactic reaction?</dt><dd><b>Stop. Stay with him and call for help</b> (emergency bell). Lie him flat with his legs up, or sitting up if he's struggling to breathe. The RN gives <b>IM adrenaline</b> by protocol, plus oxygen. Monitor his obs. Then document it, record the allergy on the chart, and report it to <b>CARM</b>.</dd></div>
+    <div class="def"><dt>…you notice a medication error?</dt><dd><b>Tell the RN straight away</b> and check on him (obs). Follow the RN's instructions, document it, and fill in an incident report. Be honest.</dd></div>
+    <div class="def"><dt>…he vomits soon after taking it?</dt><dd>Tell the RN. <b>Don't give another dose</b> unless the RN or prescriber says to. Document it.</dd></div>
+    <div class="def"><dt>…he can't swallow tablets?</dt><dd>Paracetamol: ask the RN or pharmacist about a liquid. Metoprolol CR: it can be halved, <b>never crushed</b>. Ask the pharmacist.</dd></div>
+    <div class="def"><dt>…he asks something you don't know?</dt><dd>“That's a good question. I'll check with my RN or the pharmacist and come back to you.” Never guess.</dd></div>
+    <div class="def"><dt>…you suspect a side effect later on?</dt><dd>Assess him, tell the RN, document it. A suspected adverse reaction can be reported to <b>CARM</b> (anyone can report).</dd></div>
+    <div class="def"><dt>…the order is unclear or unsigned?</dt><dd>Don't give it. Tell the RN, who gets the prescriber to clarify it.</dd></div>
+  </dl>
+</section>
+
+<section id="rubric">
+  <div class="sec-head">
+    <span class="eyebrow">Word for word</span>
+    <h2>The two marking sheets</h2>
+  </div>
+  <div class="card">
+    <h3>722.544 Medication Administration Competence</h3>
+    <p class="small muted">Met / Not Met. One attempt plus one resit. You must show every step.</p>
+    <p><b>Apply knowledge of the medication (to the RN and the patient)</b></p>
+    <ul><li><span class="code">k1</span> Generic Medication Name</li><li><span class="code">k2</span> Indication(s) for use. Must be relevant to scenario</li><li><span class="code">k3</span> Common adverse effects</li></ul>
+    <p><b>Administers under RN supervision, with these steps/checks</b></p>
+    <ul><li><span class="code">a1</span> Right patient (verbal check &amp; visual wristband ID check)</li><li><span class="code">a2</span> Right medication (generic name)</li><li><span class="code">a3</span> Right dose</li><li><span class="code">a4</span> Right time (as prescribed, frequency &amp; check when last dose given)</li><li><span class="code">a5</span> Right route</li><li><span class="code">a6</span> Right to refuse (informed consent)</li><li><span class="code">a7</span> Right indication (with relevance to scenario)</li><li><span class="code">a8</span> Check &amp; interpret medication expiry date</li><li><span class="code">a9</span> Check for patient allergies (chart &amp; verbal check)</li><li><span class="code">a10</span> Maintain infection control practices</li><li><span class="code">a11</span> Overall the process is methodical, organised, and safe for the patient and the student nurse</li></ul>
+    <p><b>Accurately documents under RN supervision</b></p>
+    <ul><li><span class="code">d1</span> Correct medication</li><li><span class="code">d2</span> Correct date, time, dose</li><li><span class="code">d3</span> Appropriate initials</li></ul>
+    <p><b>Patient education: Ask, Build, Check</b></p>
+    <ul><li><span class="code">e1</span> Ask: Patient's knowledge assessed</li><li><span class="code">e2</span> Build: Relevant information explained, appropriate terms</li><li><span class="code">e3</span> Check: Evaluation of patient's understanding assessed</li><li><span class="code">e4</span> Describe to the RN the 3 ABC steps of medication education</li><li><span class="code">e5</span> Communication with the patient throughout the assessment is respectful, clear, and patient-centred</li></ul>
+  </div>
+  <div class="card">
+    <h3>Practical Skills Assessment: Vital Signs (722.556)</h3>
+    <p class="small muted">Met / Not Met. Two attempts. You must pass to pass the course.</p>
+    <p><b>Assessment and planning</b></p>
+    <ul><li>Check patient's chart to identify the need for these observations to be taken, and recorded</li><li>Collects all appropriate equipment ensuring it is in working order</li><li>Organises safe environment</li></ul>
+    <p><b>Implementation</b></p>
+    <ul><li>Hand decontamination using hand sanitiser or washing with soap and water</li><li>Introduces self and confirm how the patient prefers to be addressed</li><li>Identifies correct patient by: checking patient's name &amp; birth date verbally against chart, and visually on patient's wristband, including NHI, against chart</li><li>Explains the procedure to the patient that it involves touching their ear and their arm</li><li>Gain consent from the patient</li><li>Assess and document vital signs on appropriate chart: temperature (using tympanic thermometer); pulse rate (count for 30 seconds); respiratory rate (count for 30 seconds); blood pressure (using two-step technique)</li><li>Adheres to infection control practices</li><li>Communicates effectively with patient</li><li>Ensures safe environment on leaving patient</li><li>Cleans and returns equipment</li><li>Hand decontamination</li></ul>
+    <p><b>Evaluation</b></p>
+    <ul><li>Accurately documents findings directly on vital signs chart</li><li>Identifies and reports normal/abnormal findings to Registered Nurse (including discussion of normal adult ranges for all vital signs)</li><li>Systematic manner of completion</li><li>Demonstrates culturally safe practices</li><li>Demonstrates therapeutic communication throughout</li></ul>
+  </div>
+  <p class="small muted">Copied from the CLS trainer, which took them from the Canvas sheets. Your marked feedback sheet is the one that counts: check it for anything else marked Not Met.</p>
+</section>
+
 <footer>
-  <p>Made 18 Oct 2026 from the CLS Practical Trainer's data (the course brief, Joan's decks and the Medsafe data sheets). It isn't official course material: the chart on the day, Joan's slides and Canvas win if anything here disagrees.</p>
+  <p>Made 18 Oct 2026, expanded 19 Oct, from the CLS Practical Trainer's data, Joan's decks, the Medsafe data sheets and Healthify. It isn't official course material: the chart on the day, Joan's slides and Canvas win if anything here disagrees.</p>
 </footer>
 
 </div>
