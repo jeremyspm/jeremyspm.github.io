@@ -1,5 +1,5 @@
 /* index.check.mjs — the gate for the landing page (index.html). Run before every push:
-     node index.check.mjs          content, links between lists, dates, icons, search, house rules
+     node index.check.mjs          content, links between lists, exam sides, dates, icons, search, house rules
      node index.check.mjs --live   also fetches every tool URL and checks each jump's #screen exists
    Exit 1 on any failure. The page's own script is run here (with a stub DOM), so what is checked
    is the code that ships, not a copy of it. */
@@ -23,9 +23,9 @@ const stub = () => new Proxy(function () {}, {
 });
 const ctx = vm.createContext({ document: stub(), history: stub(), location: stub(), window: stub(), addEventListener() {}, console });
 let L;
-try { L = vm.runInContext(main + '\n;({TOOLS, PAPERS, KINDS, SIM, CHECKED, search, live, when, nextUp})', ctx); }
+try { L = vm.runInContext(main + '\n;({TOOLS, PAPERS, KINDS, SIDES, CHECKED, search, live, when, nextUp})', ctx); }
 catch (e) { for (const f of fails) console.error('FAIL: ' + f); console.error('FAIL: script throws on load: ' + e.message); process.exit(1); }
-const { TOOLS, PAPERS, KINDS, search, live, when, nextUp } = L;
+const { TOOLS, PAPERS, KINDS, SIDES, search, live, when, nextUp } = L;
 
 /* 3. lists agree with each other */
 const sprite = new Set([...html.matchAll(/<symbol id="([^"]+)"/g)].map(m => m[1]));
@@ -50,9 +50,30 @@ for (const p of PAPERS) {
   for (const a of p.as || []) {
     const at = `${p.id}/${a.id}`;
     if (aids.has(a.id)) fail(`${at}: assessment id twice`); aids.add(a.id);
-    for (const k of ['t', 's', 'kw', 'start']) if (!a[k]) fail(`${at}: missing ${k}`);
+    for (const k of ['t', 's', 'kw']) if (!a[k]) fail(`${at}: missing ${k}`);
     if ('quiet' in a && typeof a.quiet !== 'boolean') fail(`${at}: quiet must be true or false`);
-    if (!Array.isArray(a.tools)) fail(`${at}: tools must be a list (it can be empty)`);
+    /* an exam has three sides (rep and write required, listen optional); anything else has start + tools */
+    if (a.sides) {
+      if (a.start || a.tools) fail(`${at}: has sides, so it takes no start or tools`);
+      const known = new Set(SIDES.map(x => x[0]));
+      for (const k of Object.keys(a.sides)) if (!known.has(k)) fail(`${at}: side "${k}" is not one of ${[...known].join(', ')}`);
+      for (const k of ['rep', 'write']) if (!a.sides[k]) fail(`${at}: an exam needs a ${k} side`);
+      for (const [k, S] of Object.entries(a.sides)) {
+        for (const f of ['id', 'go', 'ds']) if (!S[f]) fail(`${at}/${k}: missing ${f}`);
+        if (S.id && !TOOLS[S.id]) { fail(`${at}/${k}: tool ${S.id} does not exist`); continue; }
+        used.add(S.id); if (S.h) jumps.push([S.id, S.h, `${at}/${k}`]);
+        if ((S.more || []).length > 2) fail(`${at}/${k}: at most two quiet links under the button`);
+        for (const m of S.more || []) {
+          if (m.length !== 4 || !m[2]) { fail(`${at}/${k}: bad link ${JSON.stringify(m)}`); continue; }
+          if (!TOOLS[m[0]]) { fail(`${at}/${k}: tool ${m[0]} does not exist`); continue; }
+          if (!sprite.has(m[3])) fail(`${at}/${k}: icon ${m[3]} is not in the sprite`);
+          used.add(m[0]); if (m[1]) jumps.push([m[0], m[1], `${at}/${k}`]);
+        }
+      }
+    } else {
+      if (!a.start) fail(`${at}: missing start (or sides, for an exam)`);
+      if (!Array.isArray(a.tools)) fail(`${at}: tools must be a list (it can be empty)`);
+    }
     const seen = new Set();
     for (const t of [a.start, ...(a.tools || [])].filter(Boolean)) {
       const e = typeof t === 'string' ? { id: t } : t;
@@ -78,7 +99,9 @@ for (const p of PAPERS) {
     }
   }
 }
-for (const id of Object.keys(TOOLS)) if (!used.has(id)) fail(`tool ${id} is in TOOLS but no assessment links to it`);
+/* every tool is in the Library, so a tool no assessment names is fine; say which ones, so it's a choice */
+const libOnly = Object.keys(TOOLS).filter(id => !used.has(id));
+if (libOnly.length) note(`Library only: ${libOnly.join(', ')}`);
 for (const x of nextUp()) if (x.a.quiet) fail(`Next up shows ${x.p.id}/${x.a.id}, which is quiet`);
 
 /* 4. search: everyday words land on the right assessment or tool (an assessment that has hidden

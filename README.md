@@ -5,28 +5,32 @@ The landing page for every study tool that is still in use, live at
 `jeremyspm.github.io`; that's what puts it at the root URL). One link to
 share with the cohort.
 
-**How it works (20 Oct 2026):** everything is sorted by one thing, the
-assessments, because that's what people study for and the only part with
-dates. Three screens: *which paper?* → *which assessment?* → the tools for
-it. The first screen also has **Next up** (the nearest three assessments
-across all papers, the one place that sparkles), a search box and an
-**Every tool** page (`#tools`) for people who already know what they want.
-An assessment's screen has one tool marked "Start here" (with "Straight to"
-shortcuts into its screens), then the rest in three fixed sections, always in
-this order: **Practise**, **Learn it**, **Listen**.
+**How it works (20 Oct 2026, second pass):** two taps to studying. Home lists
+everything coming up, by date, across all three papers; **every exam
+sparkles**. Tap an exam and it is **three sides**, always in this order:
+**Rep questions** (the sim's question bank, marked as you go), **Write
+answers** (the sim's SAQ trainer, typed like on the day; the timed mock is a
+quiet link under it) and **Listen** (the podcast, only where one exists, so
+INP and Pharm have two sides for now). Each side is one big button and at
+most two quiet links. Placement and the resits keep the old layout (one
+"Start here" tool, then the rest). Everything else (videos, the 3D body, the
+Pharmacology hub, Chart Speak…) is in the **Library** (`#tools`), filed by
+paper, and still found by search.
 
-Why (20 Oct, "way too many options" once past the papers): the old second
-screen mixed assessments (Test 3), topics (Anatomy, Genetics, Abbreviations),
-a way of learning ("I need it explained") and an event (Placement), so you
-couldn't guess where anything lived, and the same tools turned up under up to
-four of them. Topics are now tools inside assessments, and their words stay
-in search ("bp", "pedigree", "abbreviations" land on the right tool). Picked
-from a mockup the same day.
+Why (20 Oct, "way too many pills"): the first pass sorted by assessment but
+still gave each exam a Start here card, three to four shortcut pills and up to
+seven more tools in three sections, so nobody knew where to start. The exam is
+three things you actually do, so the page is those three things. The Genetics
+Trainer sits under Rep for Test 3 and the final (cases 14 and 15), not as its
+own card. Picked from `mockup-three-sides.html` the same day (option B).
+The sims only take screen-level links (`#learn`, `#saq`, `#mock`,
+`#allcase`), so a side can't yet list topics or cases that open one each.
 
-URLs are shareable: `/#hs2`, `/#hs2/t3`, `/#tools`. The phone's back
-button walks back through the screens. Each paper's screens take on its hue
-(HS2 blue, INP green, Pharm purple), and every screen opens with a trail,
-`⌂ Home › HS2 › Test 3`.
+URLs are shareable: `/#hs2/t3`, `/#hs2/t3/write`, `/#tools`. Switching side
+changes the URL without adding a back step, and an exam reopens on the side
+you last had open (localStorage `hub.side.<paper>/<id>`). A bare `/#hs2` (the
+old paper screen) lands on Home. Each exam's screen takes on its paper's hue
+(HS2 blue, INP green, Pharm purple) and opens with a trail, `⌂ Home › HS2 Test 3`.
 
 ## Adding a tool, or an assessment (the whole process)
 
@@ -36,27 +40,31 @@ Everything the page shows is two lists at the top of the script in
 - **`TOOLS`**: `id: {nm, ic, url, ds, kind, pp, kw?}`. `url` is relative to
   the site root (`medcalc/`, `pharm-final/chart.html`); `ic` is an id in
   the inline SVG sprite; `kind` is `practise`, `learn` or `listen` (which
-  section it shows in); `pp` is the paper it's filed under on Every tool;
+  section it shows in); `pp` is the paper it's filed under in the Library;
   `kw` adds search words, including the everyday words for its topic.
-- **`PAPERS`**: each paper's assessments (`as`). An assessment has `t`,
-  `s`, `kw`, an optional `date`, a `start` tool and a `tools` list (can be
-  empty). `start` is an id, or `{id, jump:[[hash,label,icon]], cta:[hash,label]}`
+- **`PAPERS`**: each paper's assessments (`as`). An **exam** has `t`, `s`,
+  `kw`, a `date` and `sides`: `{rep, write, listen?}`, each
+  `{id, h, go, ds, more:[[toolId, hash, label, icon]]}` (the tool and screen
+  the big button opens, its label, one line, and at most two quiet links).
+  Anything else has `t`, `s`, `kw`, an optional `date`, a `start` tool and
+  a `tools` list (can be empty). `start` is an id, or `{id, jump:[[hash,label,icon]], cta:[hash,label]}`
   for the shortcut buttons / to point the main button at a screen. A `tools`
   entry is an id, or `{id, h, why}` to open that tool at one screen
   (`cls-trainer/#walk/ma`) with its own one-line reason.
 - **`date`**: `{on}` or `{from,to}` (`YYYY-MM-DD`) plus `chip`, `what`,
   `txt`, optional `verb` and `keep`. A dated assessment **hides itself the
   day after its date** unless it has `keep` (then only its date goes).
-  Assessments are sorted by date on their paper's screen.
+  Assessments are sorted by date on Home.
 - **`quiet: true`** (20 Oct) marks an assessment most of the cohort is past
   (Med calc test, Med admin practical): it sits under "Resits and catch-ups"
-  at the bottom of its paper and never shows in Next up.
+  at the bottom of Home and never sparkles.
 
 Then:
 
 1. `node index.check.mjs`, which must print `ok:`. It runs the page's own
-   script against a stub DOM and fails on: a tool no problem links to, a
-   problem naming a tool that doesn't exist, a missing icon, a bad date, a
+   script against a stub DOM and fails on: an assessment naming a tool
+   that doesn't exist, an exam without a rep and a write side, a side with more
+   than two quiet links, a missing icon, a bad date, a
    script that won't parse, `color:var(--acc)`, the old navy palette, a
    missing `noindex`, a tool with no `kind` or paper, a quiet assessment in
    Next up, and **27 search probes** ("bp" must land on the CLS Practical
@@ -75,7 +83,7 @@ the date printed in the footer; bump it whenever they're re-checked.
 
 **Left off on purpose (his call, 12 Oct; 20 Oct):** the Vital signs practical and
 Taking a BP (the cohort is past them; the CLS trainer and its BP Lab are still
-under Placement, Med admin and Every tool), and finished work (HS2 Test 1 and
+under Placement, Med admin and the Library), and finished work (HS2 Test 1 and
 Test 2 sims, the pharm essay). Also left off by default: the Module 1 sim
 (its three exam cases are inside HS2 Final), the old Module 1 hub,
 Placement Passport, the ED checklist, Ask Your Book and the BN2 brief. All

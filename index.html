@@ -6,9 +6,9 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#161719">
 <title>BN2 Study Tools</title>
-<meta name="description" content="Free study tools for BN2 Semester 2: pick your paper, then what you're studying for, and get the right practice tool.">
+<meta name="description" content="Free study tools for BN2 Semester 2: pick your exam, then rep the questions, write your answers or listen.">
 <meta property="og:title" content="BN2 Study Tools">
-<meta property="og:description" content="Pick your paper, then the assessment you're studying for, and get the right practice tool. HS2, INP and Pharmacology.">
+<meta property="og:description" content="Pick your exam, then rep the questions, write your answers or listen. HS2, INP and Pharmacology.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366F1'/%3E%3Cpath d='M9.5 16.5l4.5 4.5 8.5-10' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('hub.theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
@@ -110,8 +110,7 @@ html[data-theme="light"][data-paper]{--bg:color-mix(in srgb,var(--paper) 15%,#ec
 .hot>*{position:relative;z-index:1}
 .hot::before{content:"";position:absolute;inset:0;pointer-events:none;transform:translateX(-110%);animation:sheen 6s var(--ez) infinite;
   background:linear-gradient(105deg,transparent 30%,var(--sheen) 50%,transparent 70%)}
-.hot:nth-child(2)::before{animation-delay:.8s}
-.hot:nth-child(3)::before{animation-delay:1.6s}
+.hot::before{animation-delay:var(--d,0s)}
 @keyframes sheen{0%,55%{transform:translateX(-110%)}100%{transform:translateX(110%)}}
 .tag{display:inline-flex;align-items:center;gap:5px;margin:0 0 5px;padding:3px 9px 3px 7px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h);background:color-mix(in srgb,var(--h) 14%,transparent)}
 .tag svg.i{width:12px;height:12px;color:var(--spark)}
@@ -129,6 +128,19 @@ html[data-theme="light"][data-paper]{--bg:color-mix(in srgb,var(--paper) 15%,#ec
 .go a{display:inline-flex;align-items:center;gap:5px;padding:5px 10px 5px 8px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--card2);border:1px solid var(--line)}
 .go a:hover{border-color:var(--line2)}
 .go a svg.i{width:13px;height:13px;color:var(--h)}
+
+/* an exam: three sides (Rep · Write · Listen), one big button each, then at most two quiet links */
+.sides{display:grid;gap:4px;padding:4px;margin:4px 0 12px;border-radius:15px;background:var(--card2);border:1px solid var(--line)}
+.sides a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px 9px;border-radius:11px;font-size:13.5px;font-weight:650;color:var(--tx2);text-align:center;transition:background-color .2s var(--ez),color .2s var(--ez)}
+.sides a:hover{color:var(--tx)}
+.sides a[aria-selected="true"]{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sides a[aria-selected="true"] svg.i{color:var(--h)}
+.side{padding:18px;border-color:color-mix(in srgb,var(--h) 40%,var(--line))}
+.side p{margin:0 0 14px;color:var(--tx2);font-size:14.5px}
+.more{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+.more>svg.i{width:18px;height:18px;color:var(--h)}
+.more>span:not(.chev){flex:1;min-width:0}
+.more:hover>span:not(.chev){text-decoration:underline;text-underline-offset:3px}
 
 /* a tool */
 .mini{display:flex;gap:12px;align-items:center;padding:12px 14px;margin:0 0 8px}
@@ -244,16 +256,16 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <div class="sheet">
     <div class="top"><h2 id="helpT">How this page works</h2><button class="ib" id="helpX" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
     <ol>
-      <li><b>Pick your paper, then what you're studying for.</b> Each test, exam or practical has one tool marked “Start here”, then everything else that helps, sorted into Practise, Learn it and Listen.</li>
-      <li><b>Or just type.</b> The search box knows everyday words like BP, obs, mg to mL, pedigree and abbreviations, plus every tool's name. “Every tool” on the first screen lists them all.</li>
+      <li><b>Pick the exam.</b> Each one is three things: <b>Rep questions</b> (they mark themselves as you go), <b>Write answers</b> (type your answer like on the day, then see the model answer; the timed mock is here too) and <b>Listen</b> (the written answers read aloud, where there's a podcast). Placement and resits keep their own tools.</li>
+      <li><b>Or just type.</b> The search box knows everyday words like BP, obs, mg to mL, pedigree and abbreviations, plus every tool's name. The <b>Library</b> at the bottom of the first screen has every tool, including the videos and the 3D body.</li>
       <li><b>The tools are free practice</b>, built from our own course material: the lecturers' quizzes, slides, case studies and demo videos. A student made them, not MIT, so if a tool and Canvas ever disagree, Canvas wins.</li>
       <li><b>Dates</b> were last checked on <span class="checked"></span>. Each one disappears by itself once it has passed. Check Canvas for times and rooms.</li>
       <li><b>Your progress</b> is saved inside each tool, in this browser on this device.</li>
     </ol>
     <details>
       <summary>For the admin: where this page's content lives</summary>
-      <p>Everything on this page comes from two lists at the top of the script in <code>index.html</code> (repo <code>jeremyspm.github.io</code>, local <code>github/hub</code>): <code>TOOLS</code> (name, link, one line, its <code>kind</code> and the paper it's filed under) and <code>PAPERS</code> (each paper's assessments: a date, a <code>start</code> tool and the other <code>tools</code>). <code>quiet</code> moves an assessment most of the cohort is past to “Resits and catch-ups”.</p>
-      <p>To add a tool: one <code>TOOLS</code> entry, then name it in an assessment. Run <code>node index.check.mjs</code> before pushing. It fails on a tool no assessment links to, a link to a tool that doesn't exist, a bad date, a search word that lands in the wrong place, or a script that won't parse.</p>
+      <p>Everything on this page comes from two lists at the top of the script in <code>index.html</code> (repo <code>jeremyspm.github.io</code>, local <code>github/hub</code>): <code>TOOLS</code> (name, link, one line, its <code>kind</code> and the paper it's filed under) and <code>PAPERS</code> (each paper's assessments: a date, and either three <code>sides</code> for an exam or a <code>start</code> tool and other <code>tools</code>). <code>quiet</code> moves an assessment most of the cohort is past to “Resits and catch-ups”.</p>
+      <p>To add a tool: one <code>TOOLS</code> entry, then name it in an assessment. Run <code>node index.check.mjs</code> before pushing. It fails on a link to a tool that doesn't exist, a bad date, a search word that lands in the wrong place, or a script that won't parse.</p>
     </details>
   </div>
 </dialog>
@@ -265,6 +277,9 @@ dialog[open]{animation:pop .26s var(--ezo) both}
            start: the "Start here" tool (an id, or {id, jump:[[hash,label,icon]], cta:[hash,label]}).
            tools: everything else that helps; the page groups them by kind. An entry can be
            {id, h, why} to open a tool at one of its screens with a one-line reason.
+           sides: an exam has these instead of start/tools (20 Oct): {rep, write, listen?}, each
+           {id, h, go, ds, more:[[toolId, hash, label, icon]]}: one big button, then at most two
+           quiet links. Every tool is also in the Library (#tools), filed by paper.
            quiet: most of the cohort is past it (resits, catch-ups). It stays on its paper, under
            its own heading at the bottom, and never shows in Next up. */
 const CHECKED = "12 Oct 2026";
@@ -307,27 +322,40 @@ const TOOLS = {
   "intro-pharm":   {nm:"Pharmacology hub", ic:"i-book", url:"intro-pharm/", kind:"learn", pp:"ph", kw:"hub topics drug classes pharmacokinetics pharmacodynamics antibiotics analgesics opioids receptors side effects adverse",
                     ds:"All 13 topics, with the drug classes laid out and how they connect."}
 };
-const SIM = [["learn","Practise questions","i-cards"],["saq","Written answers","i-pen"],["mock","Timed mock","i-clock"],["miss","Redo my misses","i-redo"]];
+/* an exam is three sides, always in this order; one it has no tool for (no podcast yet) is left off */
+const SIDES = [["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["listen","Listen","i-pod"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
    as:[
     {id:"t3", t:"Test 3", s:"Reproduction · genetics · special senses",
      date:{from:"2026-10-20", to:"2026-10-26", chip:"20–26 Oct", what:"Test 3 window", verb:"opens", txt:"Book a ProctorU slot between Tue 20 and Mon 26 Oct"},
      kw:"test 3 three module 3 reproduction reproductive senses special eye ear hearing deafness vision smell lactation breast menstrual cycle fertility testes ovary hormones fsh lh proctoru",
-     start:{id:"hs2-test3", jump:[["saq","Written answers","i-pen"],["learn","Questions","i-cards"],["mock","Timed mock","i-clock"],["vid","Videos","i-play"]]},
-     tools:["hs2-genetics","m3-videos","pod-t3"]},
+     sides:{
+      rep:{id:"hs2-test3", h:"learn", go:"Start repping", ds:"Every Module 3 quiz question we have. Each one marks itself the moment you answer, with her answer and slide underneath.",
+           more:[["hs2-test3","miss","Redo my misses","i-redo"],["hs2-genetics","","Pedigrees, Punnett squares and karyotypes, on her own charts","i-dna"]]},
+      write:{id:"hs2-test3", h:"saq", go:"Write an answer", ds:"Her written questions. Type your answer the way you will in the test, then see her model answer and mark yourself.",
+           more:[["hs2-test3","mock","Sit the timed mock, shaped like the real test","i-clock"]]},
+      listen:{id:"pod-t3", go:"Play the Test 3 tracks", ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each. Loop the shaky ones on the bus."}}},
     {id:"exam", t:"Final exam", s:"The ten starred case studies · Modules 1–3",
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
      kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
-     start:{id:"hs2-final", jump:[["saq","Case answers","i-pen"],["allcase","Every case question","i-cards"],["mock","Timed mock","i-clock"]]},
-     tools:["hs2-genetics","flesh-and-bone","m1-videos","m2-videos","m3-videos","anatomy-atlas","pod-final"]}
+     sides:{
+      rep:{id:"hs2-final", h:"allcase", go:"Start repping", ds:"Every question to do with the ten starred cases: her written questions, her case test, her revision deck and the case quizzes. Least-seen and misses first.",
+           more:[["hs2-genetics","","Cases 14 and 15: pedigrees and Punnett squares, on her own charts","i-dna"]]},
+      write:{id:"hs2-final", h:"saq", go:"Write an answer", ds:"The ten starred cases. Type your answer the way you will on the day, then mark it against Hannetjie's model answer.",
+           more:[["hs2-final","mock","Sit the timed mock","i-clock"]]},
+      listen:{id:"pod-final", go:"Play the case tracks", ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."}}}
    ]},
   {id:"inp", code:"722.556", nm:"Intro to Nursing Practice", short:"INP", ic:"i-pulse", hue:"var(--inp)", blurb:"Clinical skills, vital signs and placement",
    as:[
     {id:"exam", t:"Final exam", s:"Every INP quiz question and a full mock",
      date:{on:"2026-11-02", chip:"Mon 2 Nov", what:"Final exam", txt:"Mon 2 Nov · on campus"},
      kw:"final exam quiz quizzes mock nursing practice",
-     start:{id:"inp-final", jump:SIM}, tools:[]},
+     sides:{
+      rep:{id:"inp-final", h:"learn", go:"Start repping", ds:"Every INP quiz question in one bank. Each one marks itself the moment you answer.",
+           more:[["inp-final","miss","Redo my misses","i-redo"]]},
+      write:{id:"inp-final", h:"saq", go:"Write an answer", ds:"Short answers across the quizzed topics. Type yours the way you will on the day, then mark it against the model answer.",
+           more:[["inp-final","mock","Sit the timed mock","i-clock"]]}}},
     {id:"place", t:"Placement", s:"Charts, abbreviations, med calc and your skills",
      date:{from:"2026-11-09", to:"2026-12-18", chip:"9 Nov", what:"Placement", verb:"starts", txt:"Placement runs Mon 9 Nov – Fri 18 Dec", keep:true},
      kw:"placement clinical ward prep ready preceptor",
@@ -348,7 +376,11 @@ const PAPERS = [
     {id:"exam", t:"Final exam", s:"Short answers: a definition and an example",
      date:{on:"2026-11-05", chip:"Thu 5 Nov", what:"Final exam", txt:"Thu 5 Nov · on campus, AM or PM group"},
      kw:"final exam short answer answers definition pharmacology mock",
-     start:{id:"pharm-final", jump:SIM}, tools:["intro-pharm","chart-speak"]}
+     sides:{
+      rep:{id:"pharm-final", h:"learn", go:"Start repping", ds:"Pharmacology questions by topic. Each one marks itself the moment you answer.",
+           more:[["pharm-final","miss","Redo my misses","i-redo"]]},
+      write:{id:"pharm-final", h:"saq", go:"Write an answer", ds:"Short answers in Joan's format, a definition and an example. Type yours, then mark it against the model answer.",
+           more:[["pharm-final","mock","Sit the timed mock","i-clock"]]}}}
    ]}
 ];
 
@@ -389,10 +421,12 @@ function aRow(p, a, showPaper){
     <div class="tx">${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${a.t}</div><div class="s">${a.s}</div></div>
     ${w && !w.past ? `<div class="when">${w.chip}<small>${w.now ? w.rel : w.rel}</small></div>` : ""}<span class="chev">${ic("i-chev")}</span></a>`;
 }
-function hotRow(p, a){
+/* every exam sparkles on Home (20 Oct), each a beat after the one above */
+function hotRow(p, a, i){
   const w = when(a);
-  return `<a class="card row hot lift" style="--h:${p.hue}" href="#${p.id}/${a.id}" data-nav>
-    <div class="tx"><div class="tag">${ic("i-spark")}${w.now ? w.rel : w.chip + " · " + w.rel}</div><div class="t">${p.short} ${a.t}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
+  return `<a class="card row hot lift" style="--h:${p.hue};--d:${(i * .8).toFixed(1)}s" href="#${p.id}/${a.id}" data-nav>
+    <div class="tx"><div class="tag">${ic("i-spark")}${!w || w.past ? "Exam" : w.now ? w.rel : w.chip + " · " + w.rel}</div>
+    <div class="t">${p.short} ${a.t}</div><div class="s">${a.s}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
 }
 function star(p, entry){
   const e = norm(entry), T = TOOLS[e.id];
@@ -410,53 +444,51 @@ function mini(entry, opts = {}){
     <div class="tx">${opts.paper ? `<div class="pp">${p.short}</div>` : ""}<div class="nm">${T.nm}</div><div class="ds">${e.why || T.ds}</div></div>
     ${opts.kind ? `<span class="kind">${KINDS.find(k => k[0] === T.kind)[1]}</span>` : `<span class="chev">${ic("i-chev")}</span>`}</a>`;
 }
-function trail(p, here){
-  const sep = ic("i-chev");
-  return `<nav class="trail" style="--h:${p ? p.hue : "var(--acc-tx)"}" aria-label="Where you are"><a class="home" href="./" data-home>${ic("i-home")}Home</a>${sep}` +
-    (p && here ? `<a href="#${p.id}" data-nav data-up>${p.short}</a>${sep}<span class="here">${here}</span>` : `<span class="here">${p ? p.nm : here}</span>`) + `</nav>`;
+function trail(here){
+  return `<nav class="trail" aria-label="Where you are"><a class="home" href="./" data-home>${ic("i-home")}Home</a>${ic("i-chev")}<span class="here">${here}</span></nav>`;
+}
+function sidesView(p, a, sid){
+  const have = SIDES.filter(([k]) => a.sides[k]), cur = have.some(s => s[0] === sid) ? sid : have[0][0], S = a.sides[cur];
+  return `<div class="sides" role="tablist" style="--h:${p.hue};grid-template-columns:repeat(${have.length},1fr)">` +
+    have.map(([k, label, icon]) => `<a role="tab" href="#${p.id}/${a.id}/${k}" data-side="${k}" aria-selected="${k === cur}">${ic(icon)}${label}</a>`).join("") +
+    `</div><div class="card side" role="tabpanel" style="--h:${p.hue}"><p>${S.ds}</p>
+    <a class="cta" href="${link(S.id, S.h)}">${S.go} ${ic("i-open")}</a>` +
+    (S.more || []).map(([id, h, label, icon]) => `<a class="more" href="${link(id, h)}">${ic(icon)}<span>${label}</span><span class="chev">${ic("i-chev")}</span></a>`).join("") + `</div>`;
 }
 
 /* ---------- screens ---------- */
 let Q = "";
 function homeScreen(){
-  const nx = nextUp();
+  const all = PAPERS.flatMap(p => live(p).map(a => ({p, a}))).sort((x, y) => sortKey(x.a) - sortKey(y.a));
+  const up = all.filter(x => !x.a.quiet), late = all.filter(x => x.a.quiet);
+  let n = 0;
   return `<h1 class="h1" tabindex="-1">What are you studying for?</h1>
-    <p class="sub">What's coming up next, or pick your paper.</p>
+    <p class="sub">Every exam is three things: rep the questions, write your answers, listen.</p>
     <label class="search">${ic("i-search")}<input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
       placeholder="e.g. blood pressure, pedigrees, mg to mL" aria-label="Search" value="${esc(Q)}">
       <button class="x" id="qx" aria-label="Clear the search" ${Q ? "" : "hidden"}>${ic("i-x")}</button></label>
     <div id="res" aria-live="polite"></div>
     <div id="rest">` +
-    (nx.length ? `<div class="eyebrow sec">${ic("i-spark")}Next up</div><div>` + nx.map(x => hotRow(x.p, x.a)).join("") + `</div>` : "") +
-    `<div class="eyebrow sec">Your papers</div>` +
-    PAPERS.map(p => { const L = byDate(live(p)), first = L.find(isNext);
-      return `<a class="card pcard lift" style="--h:${p.hue}" href="#${p.id}" data-nav>
-        <div class="ic">${ic(p.ic)}</div>
-        <div class="tx"><div class="nm">${p.nm}</div><div class="meta">${L.length} assessment${L.length === 1 ? "" : "s"} · ${p.blurb}</div>
-        ${first ? `<div class="pill">${ic("i-cal")}${when(first).line}</div>` : ""}</div>
-        <span class="chev">${ic("i-chev")}</span></a>`; }).join("") +
-    `<a class="card alltools lift" href="#tools" data-nav style="--h:var(--acc-tx)"><div class="ic sm">${ic("i-cards")}</div>
-      <div class="tx"><div class="t">Every tool</div><div class="s">All ${Object.keys(TOOLS).length}, filed by paper</div></div><span class="chev">${ic("i-chev")}</span></a></div>`;
+    `<div class="eyebrow sec">${ic("i-spark")}Coming up</div>` +
+    up.map(x => x.a.sides ? hotRow(x.p, x.a, n++) : aRow(x.p, x.a, true)).join("") +
+    (late.length ? `<div class="eyebrow sec">Resits and catch-ups</div>` + late.map(x => aRow(x.p, x.a, true)).join("") : "") +
+    `<a class="card alltools lift" href="#tools" data-nav style="--h:var(--acc-tx)"><div class="ic sm">${ic("i-book")}</div>
+      <div class="tx"><div class="t">Library</div><div class="s">Videos, the 3D body, the Genetics Trainer and every other tool, filed by paper</div></div><span class="chev">${ic("i-chev")}</span></a></div>`;
 }
-function paperScreen(p){
-  const L = byDate(live(p));
-  return trail(p) + `<h1 class="h1" tabindex="-1">${p.nm}</h1>
-    <p class="sub">${p.code} · Pick what you're studying for.</p>` + L.filter(a => !a.quiet).map(a => aRow(p, a)).join("") +
-    (L.some(a => a.quiet) ? `<div class="eyebrow sec">Resits and catch-ups</div>` + L.filter(a => a.quiet).map(a => aRow(p, a)).join("") : "");
-}
-function aScreen(p, a){
-  const w = when(a), startId = norm(a.start).id;
-  const rest = a.tools.map(norm).filter(e => e.id !== startId);
-  return trail(p, a.t) + `<h1 class="h1" tabindex="-1">${p.short} ${a.t}</h1>
+function aScreen(p, a, sid){
+  const w = when(a);
+  const head = trail(p.short + " " + a.t) + `<h1 class="h1" tabindex="-1">${p.short} ${a.t}</h1>
     <p class="sub" style="margin-bottom:${w && !w.past ? 10 : 18}px">${a.s}</p>` +
-    (w && !w.past ? `<div class="datebox" style="--h:${p.hue}">${ic("i-cal")}<span>${w.txt} · <b>${w.rel}</b></span></div>` : "") +
-    star(p, a.start) +
+    (w && !w.past ? `<div class="datebox" style="--h:${p.hue}">${ic("i-cal")}<span>${w.txt} · <b>${w.rel}</b></span></div>` : "");
+  if (a.sides) return head + sidesView(p, a, sid);
+  const startId = norm(a.start).id, rest = a.tools.map(norm).filter(e => e.id !== startId);
+  return head + star(p, a.start) +
     KINDS.map(([k, label]) => { const g = rest.filter(e => TOOLS[e.id].kind === k);
       return g.length ? `<div class="eyebrow sec">${label}</div>` + g.map(e => mini(e, {hue:p.hue})).join("") : ""; }).join("");
 }
 function toolsScreen(){
-  return trail(null, "Every tool") + `<h1 class="h1" tabindex="-1">Every tool</h1>
-    <p class="sub">For when you already know what you want.</p>` +
+  return trail("Library") + `<h1 class="h1" tabindex="-1">Library</h1>
+    <p class="sub">Every tool, filed by paper. For learning a topic from scratch. What an exam needs is already on its three sides.</p>` +
     PAPERS.map(p => { const ids = Object.keys(TOOLS).filter(id => TOOLS[id].pp === p.id)
         .sort((x, y) => KINDS.findIndex(k => k[0] === TOOLS[x].kind) - KINDS.findIndex(k => k[0] === TOOLS[y].kind));
       return `<div class="eyebrow sec" style="--h:${p.hue}"><span class="dot"></span>${p.nm}</div>` + ids.map(id => mini(id, {kind:true})).join(""); }).join("");
@@ -496,24 +528,26 @@ function results(){
     : `<div class="card empty"><b>Nothing matched “${esc(Q.trim())}”.</b>Try a simpler word (BP, med calc, pedigree, anatomy).</div>`;
 }
 
-/* ---------- routing: #paper, #paper/assessment, #tools ---------- */
+/* ---------- routing: #paper/assessment(/side), #tools. A bare #paper (the old paper screen,
+   gone 20 Oct) lands on Home. An exam opens on the side you last had open there. ---------- */
 let lastD = 0;
+const sideKey = (p, a) => "hub.side." + p.id + "/" + a.id;
 function route(){
-  const [pid, aid] = decodeURIComponent(location.hash.slice(1)).split("/");
+  const [pid, aid, sid] = decodeURIComponent(location.hash.slice(1)).split("/");
   if (pid === "tools") return {tools:true};
-  const p = pid ? P(pid) : null;
-  if (pid && !p) return {fix:""};
-  if (p && aid && !findA(p, aid)) return {fix:"#" + p.id};
-  return {p, a: p && aid ? findA(p, aid) : null};
+  const p = pid ? P(pid) : null, a = p && aid ? findA(p, aid) : null;
+  if (pid && !a) return {fix:""};
+  let s = sid; if (!s) try { s = localStorage.getItem(sideKey(p, a)) || ""; } catch (e) {}
+  return {p, a, sid:s};
 }
 function render(dir){
   let r = route();
   if (r.fix !== undefined) { history.replaceState({d:(history.state || {}).d || 0}, "", r.fix || location.pathname); r = route(); }
   const root = document.documentElement;
   if (r.p) { root.setAttribute("data-paper", r.p.id); root.style.setProperty("--paper", r.p.hue); } else root.removeAttribute("data-paper");
-  document.title = (r.a ? r.p.short + " " + r.a.t + " · " : r.p ? r.p.nm + " · " : r.tools ? "Every tool · " : "") + "BN2 Study Tools";
-  app.innerHTML = `<div class="${dir ? "in" + (dir === "back" ? " back-anim" : "") : ""}">${r.tools ? toolsScreen() : r.a ? aScreen(r.p, r.a) : r.p ? paperScreen(r.p) : homeScreen()}</div>`;
-  if (!r.p && !r.tools) wireSearch();
+  document.title = (r.a ? r.p.short + " " + r.a.t + " · " : r.tools ? "Library · " : "") + "BN2 Study Tools";
+  app.innerHTML = `<div class="${dir ? "in" + (dir === "back" ? " back-anim" : "") : ""}">${r.tools ? toolsScreen() : r.a ? aScreen(r.p, r.a, r.sid) : homeScreen()}</div>`;
+  if (!r.a && !r.tools) wireSearch();
   if (dir) { window.scrollTo(0, 0); const h = app.querySelector("h1"); if (h && !Q) h.focus({preventScroll:true}); }
 }
 function go(hash, parent, dir){
@@ -529,12 +563,20 @@ function wireSearch(){
   results();
 }
 document.addEventListener("click", e => {
+  /* a side swaps in place: the URL changes (so it can be shared) but back still leaves the exam */
+  const sd = e.target.closest("a[data-side]");
+  if (sd && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+    e.preventDefault();
+    const r = route();
+    history.replaceState(history.state, "", sd.getAttribute("href"));
+    try { localStorage.setItem(sideKey(r.p, r.a), sd.dataset.side); } catch (err) {}
+    render("");
+    return;
+  }
   const a = e.target.closest("a[data-nav]");
   if (a && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
     e.preventDefault();
-    const r = route(), st = history.state || {};
-    if (a.hasAttribute("data-up") && st.d > 0 && st.parent) { history.back(); return; }
-    go(a.getAttribute("href"), r.p && !r.a, a.hasAttribute("data-up") ? "back" : "fwd");
+    go(a.getAttribute("href"), false, "fwd");
     return;
   }
   const h = e.target.closest("a[data-home]");
