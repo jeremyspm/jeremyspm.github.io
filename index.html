@@ -323,8 +323,9 @@ const TOOLS = {
                     ds:"All 13 topics, with the drug classes laid out and how they connect."}
 };
 /* an exam is up to three sides, always in this order; one it has no tool for (no podcast yet) is left off.
-   terms (20 Oct): Pharm's third side, because Joan said "must, must, must" about the abbreviations. */
-const SIDES = [["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"]];
+   terms (20 Oct): Pharm's third side, because Joan said "must, must, must" about the abbreviations.
+   gen (20 Oct): HS2 Test 3's fourth side, the Genetics Trainer, promoted from a quiet link under Rep. */
+const SIDES = [["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
    as:[
@@ -333,10 +334,12 @@ const PAPERS = [
      kw:"test 3 three module 3 reproduction reproductive senses special eye ear hearing deafness vision smell lactation breast menstrual cycle fertility testes ovary hormones fsh lh proctoru",
      sides:{
       rep:{id:"hs2-test3", h:"learn", go:"Start repping", ds:"Every Module 3 quiz question we have. Each one marks itself the moment you answer, with her answer and slide underneath.",
-           more:[["hs2-test3","miss","Redo my misses","i-redo"],["hs2-genetics","","Pedigrees, Punnett squares and karyotypes, on her own charts","i-dna"]]},
+           more:[["hs2-test3","miss","Redo my misses","i-redo"]]},
       write:{id:"hs2-test3", h:"saq", go:"Write an answer", ds:"Her written questions. Type your answer the way you will in the test, then see her model answer and mark yourself.",
            more:[["hs2-test3","mock","Sit the timed mock, shaped like the real test","i-clock"]]},
-      listen:{id:"pod-t3", go:"Play the Test 3 tracks", ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each. Loop the shaky ones on the bus."}}},
+      listen:{id:"pod-t3", go:"Play the Test 3 tracks", ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each. Loop the shaky ones on the bus."},
+      gen:{id:"hs2-genetics", go:"Open the Genetics Trainer", ds:"Pedigree charts, Punnett squares and karyotypes, worked on Hannetjie's own charts with her answer keys. Her four-part pedigree SAQ is in here too.",
+           more:[["hs2-genetics","ped","Pedigree drills and her four-part SAQ","i-dna"],["hs2-genetics","her","Her charts, redrawn, with her questions","i-chart"]]}}},
     {id:"exam", t:"Final exam", s:"The ten starred case studies · Modules 1–3",
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
      kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
