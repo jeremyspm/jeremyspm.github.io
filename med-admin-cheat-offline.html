@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="CLS practical cheat sheet: med admin (paracetamol, metoprolol, drug interactions, the rights, Ask Build Check) and its traps.">
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('hub.theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
+<title>Med Admin Cheat Sheet</title>
+<style>
+/* Layout: one reading column (max 680px), jump chips up top, opaque cards only for
+   status, warnings, tables and the self-check. Palette = BN Hub house tokens by value;
+   --ph is the Pharmacology paper hue from bn2-brief. Dark-first. */
+:root{
+  --bg:#161719; --card:#1c1c1f; --card2:#242427;
+  --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.15);
+  --tx:#f2f2f6; --tx2:rgba(255,255,255,.62); --tx3:rgba(255,255,255,.40);
+  --acc:#6366F1; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
+  --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
+  --ph:#C084FC; --ph-soft:rgba(192,132,252,.14);
+  --r:14px; --maxw:680px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+    --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+    --tx:#16161a; --tx2:rgba(0,0,0,.62); --tx3:rgba(0,0,0,.45);
+    --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.10);
+    --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+    --ph:#7E22CE; --ph-soft:rgba(126,34,206,.08);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+  --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
+  --tx:#16161a; --tx2:rgba(0,0,0,.62); --tx3:rgba(0,0,0,.45);
+  --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.10);
+  --good:#12833A; --hard:#A35C00; --bad:#C62A20;
+  --ph:#7E22CE; --ph-soft:rgba(126,34,206,.08);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+a{color:var(--acc-tx);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(28px,7vw,38px);font-weight:750;letter-spacing:-.02em}
+h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:16px;font-weight:650}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+li::marker{color:var(--tx3)}
+b,strong{font-weight:650}
+.muted{color:var(--tx2)}
+.small{font-size:14px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ph)}
+section{display:grid;gap:14px;min-width:0;scroll-margin-top:12px}
+.sec-head{display:grid;gap:4px}
+
+/* header */
+header{display:grid;gap:14px}
+.lede{color:var(--tx2);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips a{font-size:14px;color:var(--tx);text-decoration:none;padding:6px 12px;border:1px solid var(--line2);border-radius:999px;background:var(--card)}
+.chips a:hover{border-color:var(--ph)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;min-width:0}
+.status{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{display:grid;gap:2px}
+.stat .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.stat .v{font-weight:650}
+.warn{border-color:color-mix(in srgb,var(--hard) 45%,transparent);background:color-mix(in srgb,var(--hard) 8%,var(--card))}
+.warn .t{color:var(--hard);font-weight:650}
+.exam{border-color:color-mix(in srgb,var(--ph) 45%,transparent);background:var(--ph-soft)}
+.exam .t{color:var(--ph);font-weight:650}
+.btn{display:inline-block;justify-self:start;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:10px 16px;border-radius:10px}
+.btn:hover{filter:brightness(1.06)}
+
+/* the 30-second list */
+.quick{counter-reset:q;list-style:none;padding:0;gap:10px}
+.quick li{counter-increment:q;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.quick li::before{content:counter(q);font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;color:var(--ph);border:1px solid color-mix(in srgb,var(--ph) 40%,transparent);border-radius:8px;height:28px;display:grid;place-items:center}
+
+/* definitions */
+dl.defs{margin:0;display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.def{padding:14px 16px;display:grid;gap:4px;border-top:1px solid var(--line)}
+.def:first-child{border-top:0}
+.def dt{font-weight:650}
+.def dd{margin:0;color:var(--tx)}
+.def .eg{color:var(--tx2);font-size:15px}
+.def .eg b{color:var(--tx2);font-weight:650}
+
+/* tables */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-top:1px solid var(--line)}
+thead th{border-top:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600;background:var(--card2)}
+td:first-child{font-weight:600;width:36%;min-width:7.5em}
+td .sci{display:block;font-weight:400;font-style:italic;color:var(--tx3);font-size:13px;white-space:normal}
+.flag{color:var(--hard)}
+
+/* two-up */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:8px;min-width:0}
+.mini.good h3{color:var(--good)}
+.mini.bad h3{color:var(--bad)}
+
+/* self-check */
+.qs{display:grid;gap:10px}
+details.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+details.q summary{cursor:pointer;list-style:none;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;font-weight:600}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .hint{font-size:13px;font-weight:500;color:var(--acc-tx);white-space:nowrap}
+details.q[open] summary .hint::after{content:" ✓"}
+details.q[open] summary{border-bottom:1px solid var(--line)}
+details.q .a{padding:12px 16px 16px;display:grid;gap:6px}
+details.q .a p{color:var(--tx)}
+details.q .a .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+
+.src{font-size:14px;color:var(--tx2)}
+.src li{padding-left:2px}
+footer{font-size:13px;color:var(--tx3);display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* this page */
+.back{justify-self:start;font-size:13px;font-weight:700;text-decoration:none;color:var(--tx);border:1px solid var(--line2);border-radius:9px;padding:7px 12px;background:var(--card)}
+.back:hover{border-color:var(--ph)}
+.drug-h{color:var(--ph);margin-bottom:8px}
+.def dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+#abc .def dt{font-size:16px;letter-spacing:0;text-transform:none;color:var(--tx);font-weight:650}
+.say{border-left:3px solid var(--ph);padding:10px 14px;background:var(--ph-soft);border-radius:0 10px 10px 0;font-weight:600}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:6px;vertical-align:2px;margin-left:4px}
+.tag.course{color:var(--good);border:1px solid color-mix(in srgb,var(--good) 45%,transparent)}
+.part{font-size:clamp(24px,6vw,30px);font-weight:750;letter-spacing:-.02em;padding-top:8px;border-top:2px solid var(--ph)}
+.code{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:var(--tx3);white-space:nowrap}
+.tag.ds{color:var(--tx2);border:1px solid var(--line2)}
+
+/* print (added by med-admin-cheat-offline.build.mjs) */
+@media print{
+  :root,:root[data-theme]{--bg:#fff;--card:#fff;--card2:#f4f5f7;--line:rgba(0,0,0,.18);--line2:rgba(0,0,0,.25);
+    --tx:#16161a;--tx2:rgba(0,0,0,.68);--tx3:rgba(0,0,0,.55);--acc:#4F46E5;--acc-tx:#4F46E5;--acc-soft:rgba(79,70,229,.10);
+    --good:#12833A;--hard:#A35C00;--bad:#C62A20;--ph:#7E22CE;--ph-soft:rgba(126,34,206,.08);color-scheme:light}
+  @page{size:A4;margin:14mm 12mm}
+  html,body{background:#fff;margin:0}
+  body{font-size:13px;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  nav.chips{display:none}
+  .wrap,header,section,.sec-head,.card,.mini,.def,dl.defs,ul,ol,.split,.quick li{display:block}
+  .wrap{max-width:none;padding:0}
+  .wrap>*+*{margin-top:26px}
+  header>*+*,section>*+*,.card>*+*,.mini>*+*,.def>*+*{margin-top:9px}
+  .sec-head>*+*{margin-top:3px}
+  section>h3{margin-top:16px}
+  li+li{margin-top:5px}
+  .split>*+*{margin-top:16px}
+  .quick li{position:relative;padding-left:38px;min-height:28px}
+  .quick li::before{position:absolute;left:0;top:0;width:28px}
+  dl.defs,.tscroll{overflow:visible}
+  h1{font-size:30px}
+  h2{font-size:19px}
+  .def,tr,.mini,.card,.say,li,p{break-inside:avoid}
+  .sec-head .eyebrow{display:block}
+  .sec-head{break-inside:avoid}
+  h2,h3,.sec-head{break-after:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">CLS practical · medication administration</span>
+  <h1>Med admin cheat sheet</h1>
+  <p class="lede">The med admin practical on one page: Mr Luke's two drugs and their interactions, the full run, Ask Build Check, and the traps. Read it out loud once, top to bottom.</p>
+  <nav class="chips" aria-label="Jump to">
+    <a href="#critical">Critical points</a>
+    <a href="#allergy">Allergy</a>
+    <a href="#drugs">The two drugs</a>
+    <a href="#interact">Interactions</a>
+    <a href="#deep">Know everything</a>
+    <a href="#rights">Full run</a>
+    <a href="#abc">Ask, Build, Check</a>
+    <a href="#traps">Med admin traps</a>
+    <a href="#whatif">What if…</a>
+    <a href="#know">Knowledge Qs</a>
+    <a href="#rubric">Marking sheet</a>
+  </nav>
+  <div class="card warn">
+    <p class="t">Read the chart in front of you</p>
+    <p>On the day, names, doses and times can differ from Mr Luke's practice chart. The chart on the day wins.</p>
+  </div>
+</header>
+
+<section id="critical">
+  <div class="sec-head">
+    <span class="eyebrow">Not all written on the sheet</span>
+    <h2>The critical points</h2>
+  </div>
+  <div class="card warn">
+    <p class="t">Miss any of these and you can fail on the spot</p>
+    <p>Anaphylaxis isn't written on the marking sheet, and it still failed an attempt. Treat every one of these as critical.</p>
+    <p class="small">The stakes: you must pass med admin, vital signs <b>and</b> drug calcs to go on placement, and failing placement means failing Intro to Nursing Practice too. <span class="tag course">INP lecture, 7 Oct</span></p>
+  </div>
+  <ol class="quick">
+    <li><span><b>ID</b>: he says his name and DOB, <b>and</b> you check the wristband <b>with the NHI</b> against the chart.</span></li>
+    <li><span><b>Allergies twice</b>: the chart box, <b>and</b> you ask him out loud.</span></li>
+    <li><span><b>Know the drug</b>: generic name, why <b>he</b> is on it, <b>all</b> the common side effects, <b>and anaphylaxis</b>.</span></li>
+    <li><span><b>The pre-check</b>. Metoprolol: <b>pulse and BP</b>. Paracetamol: <b>the last dose and the 24-h total</b>.</span></li>
+    <li><span><b>Right dose</b>: the tablet maths out loud, and <b>three label checks</b> against the chart.</span></li>
+    <li><span><b>Expiry read AND interpreted.</b></span></li>
+    <li><span><b>Infection control</b>: hand hygiene, and <b>never touch the tablet</b>.</span></li>
+    <li><span><b>Consent</b>, and respecting a refusal.</span></li>
+    <li><span><b>Watch him swallow it.</b> Never leave a medicine on the table.</span></li>
+    <li><span><b>Never crush the CR tablet.</b></span></li>
+    <li><span><b>Sign only after it's given</b>, with units. If it's not given, chart the code. Never leave the box blank.</span></li>
+    <li><span><b>Ask what else he takes</b>: Panadol or cold-and-flu products from home, and no second brand of metoprolol.</span></li>
+    <li><span><b>On time</b>: a regular dose within 30 min of the charted time.</span></li>
+    <li><span><b>Anything abnormal or unsure: stop and tell the RN.</b> Never guess.</span></li>
+  </ol>
+</section>
+
+<section id="allergy">
+  <div class="sec-head">
+    <span class="eyebrow">The minimum safety factor</span>
+    <h2>Allergy: what they expect you to say</h2>
+  </div>
+  <div class="card warn">
+    <p class="t">Straight from the allergy lecture</p>
+    <p>In the assessment you're expected to <b>tell the RN the signs of an allergic reaction</b>, and <b>explain to the patient in lay terms</b> what might happen and what to do. The lecturer called it “the minimum safety factor”. It applies to <b>both drugs</b>. <span class="tag course">Allergy lecture, 7 Oct</span></p>
+  </div>
+  <h3>To the RN: the signs, in the order they build</h3>
+  <p>It's a <b>continuum</b>: mild, then moderate, then severe (anaphylaxis). It can go from a rash to life-threatening <b>within minutes</b>, or stay mild.</p>
+  <dl class="defs">
+    <div class="def"><dt>Skin (early)</dt><dd><b>Rash</b>: hives (urticaria), raised red wheals or a blotchy rash. <b>Itch</b>, redness, swelling. <b>Lips tingle, then swell</b>; eyelids swell.</dd></div>
+    <div class="def"><dt>Then the airway</dt><dd>“What's behind the lips? <b>The tongue.</b>” The lecturer said you'll be asked this. The tongue swells, then the throat (oropharynx) and upper airway. That's what blocks the airway.</dd></div>
+    <div class="def"><dt>Breathing</dt><dd>Sneezing, runny nose, <b>wheeze</b>, difficulty breathing. He wants to sit up to breathe.</dd></div>
+    <div class="def"><dt>Gut</dt><dd>Nausea, vomiting, diarrhoea, tummy pain.</dd></div>
+    <div class="def"><dt>Circulation (shock)</dt><dd>Histamine dilates the blood vessels, so <b>BP drops</b>, with a <b>weak, rapid pulse</b>, dizziness, then collapse and unconsciousness. Very anxious and frightened. Deaths come from the <b>blocked airway or the shock</b>.</dd></div>
+    <div class="def"><dt>Don't jump to conclusions</dt><dd>Fainting after a drug may just be a vasovagal faint. Nausea alone isn't an allergy. Think about what else it could be (differential diagnosis), and work with the team.</dd></div>
+    <div class="def"><dt>Say to the RN</dt><dd>“The chart says no known allergies, but he's never had this drug, so he could still react. I'll warn him and watch him.” People with lots of allergies (<b>atopic</b>: eczema, hay fever, asthma, food allergies) are higher risk.</dd></div>
+  </dl>
+  <h3>To Mr Luke: how to say it</h3>
+  <ol class="quick">
+    <li><span><b>Side effects first, then allergy, separately.</b> Don't mix the two.</span></li>
+    <li><span><b>“You may… it's very rare”</b>, never “you will”, or he may refuse the drug.</span></li>
+    <li><span><b>Say how it starts</b>, in plain words: “a rash or itching, your lips or tongue tingling or swelling, your throat feeling tight, or trouble breathing.”</span></li>
+    <li><span><b>Say what to do</b>: “If you notice anything like that, or you're worried about anything at all, ring your bell straight away.”</span></li>
+    <li><span><b>For home</b>: “If it happens at home, stop taking it and contact your GP.” (Not back to the ward; for trouble breathing, call 111.)</span></li>
+  </ol>
+  <p class="say">“Some people may have an allergic reaction to a new medicine. It's very rare, but if you get a rash or itch, your lips or tongue start tingling or swelling, or it feels hard to breathe, ring your bell straight away.”</p>
+  <h3>Paracetamol: don't get confused</h3>
+  <p>Itch and rash are <b>not</b> side effects of paracetamol. They only appear if he's allergic to it. Its listed effects are all very rare (e.g. Stevens-Johnson syndrome, where the skin blisters and peels like a burn). A rash in someone on paracetamol is <b>most likely something else</b>, but you still report it. <span class="tag course">Allergy lecture, 7 Oct</span></p>
+  <h3>If it happens: treatment</h3>
+  <dl class="defs">
+    <div class="def"><dt>Adrenaline: the drug of choice</dt><dd>IM, e.g. an <b>EpiPen</b> into the outer thigh, even through clothing. It <b>constricts the blood vessels</b> to bring BP back up. It may not fully reverse the reaction, so <b>still call for help</b> (111 in the community). People with known severe allergies often carry their own.</dd></div>
+    <div class="def"><dt>Antihistamines</dt><dd>E.g. loratadine. Block histamine (good for itch, hay fever), but <b>too slow for anaphylaxis</b>.</dd></div>
+    <div class="def"><dt>Corticosteroids</dt><dd>Hydrocortisone, prednisone: anti-inflammatory, but <b>slow to work</b>, so not first line.</dd></div>
+    <div class="def"><dt>Support</dt><dd>Lie him flat (sitting up if he's struggling to breathe), oxygen, IV fluids for low BP, stay with him and monitor closely. The <b>ASCIA anaphylaxis action plan</b> is the NZ/Australia guide.</dd></div>
+  </dl>
+  <h3>Prevention and high-risk drugs</h3>
+  <p><b>Ask every time</b>: the yellow allergy box only exists because nobody used to ask. Take a history (previous reactions, atopy), look for a <b>medic alert bracelet</b>, watch closely after a new drug, and warn the patient. High-risk drugs: the <b>penicillin family</b> (“-cillins”), other antibiotics (in an NZ case, a woman wearing a co-trimoxazole allergy bracelet was prescribed and given it, and died), <b>aspirin</b>, iodine and contrast dye. Ibuprofen's stomach and BP problems are side effects, not allergy. <span class="tag course">Allergy lecture, 7 Oct</span></p>
+</section>
+
+<section id="drugs">
+  <div class="sec-head">
+    <span class="eyebrow">Marked on the rubric</span>
+    <h2>The two drugs</h2>
+  </div>
+  <p>Have three things ready for whichever drug you get: <b>the generic name, why HE is on it, and its common side effects.</b></p>
+  <p class="small muted">Learn <b>both</b>. Joan's video says the RN picks your drug the day before, but the 2026 brief says it's allocated on the day.</p>
+  <div class="card warn">
+    <p class="t">Every drug: say anaphylaxis</p>
+    <p>Assessors treat anaphylaxis as a <b>critical</b> point for every medicine, even when it isn't a common side effect. Leaving it out can fail the assessment. When you list side effects, end with: <b>“and, rarely, an allergic reaction or anaphylaxis: rash, swelling, trouble breathing.”</b> Tell him in plain words too: “If you get a rash, swelling, or trouble breathing, ring your bell straight away.”</p>
+  </div>
+  <div class="split">
+    <div>
+      <h3 class="drug-h">Paracetamol</h3>
+      <dl class="defs">
+      <div class="def"><dt>Pack may say</dt><dd>Pacimol / Panadol / Pamol</dd></div>
+      <div class="def"><dt>Generic + class</dt><dd>Paracetamol, an <b>analgesic</b> (it also lowers fever)</dd></div>
+      <div class="def"><dt>Order</dt><dd>1 g PO qid = <b>two 500 mg tabs</b></dd></div>
+      <div class="def"><dt>Why he's on it</dt><dd>His recurrent <b>backache</b></dd></div>
+      <div class="def"><dt>Side effects</dt><dd><b>None common</b> at the right dose. All very rare: rash or allergy, bronchospasm, low platelets, liver problems. The big risk is <b>liver damage if he has too much</b>.</dd></div>
+      <div class="def"><dt>Check first</dt><dd><b>When was his last dose?</b> At least 4 h apart, max 4 g in 24 h. 1 g qid is already 4 g, so <b>no other paracetamol at all</b>.</dd></div>
+      <div class="def"><dt>Critical: anaphylaxis</dt><dd>Rare, but <b>say it</b>: rash, swelling of the face or throat, trouble breathing. Stop, call for help, and follow the emergency protocol.</dd></div>
+      <div class="def"><dt>Must say</dt><dd>Ask about Panadol or cold-and-flu medicines from home (Codral, Lemsip, Coldrex, Maxigesic, Nuromol all contain paracetamol).</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3 class="drug-h">Metoprolol</h3>
+      <dl class="defs">
+      <div class="def"><dt>Pack may say</dt><dd>Betaloc CR / Myloc CR</dd></div>
+      <div class="def"><dt>Generic + class</dt><dd>Metoprolol succinate CR, a <b>beta blocker</b></dd></div>
+      <div class="def"><dt>Order</dt><dd>47.5 mg PO daily (mane) = <b>one CR tab</b></dd></div>
+      <div class="def"><dt>Why he's on it</dt><dd>His <b>high BP</b> (higher than usual lately) and his <b>heart failure</b></dd></div>
+      <div class="def"><dt>Side effects</dt><dd>Very common: <b>tiredness</b>. Common: <b>slow pulse, dizzy on standing, cold hands and feet</b>, palpitations, dizziness, headache, nausea, tummy pain, diarrhoea, constipation, breathless when active.</dd></div>
+      <div class="def"><dt>Check first</dt><dd><b>Pulse and BP.</b> If either is low, <b>withhold it and tell the RN</b>.</dd></div>
+      <div class="def"><dt>Critical: anaphylaxis</dt><dd><b>Say it, even though it's rare.</b> Watch for rash, swelling of the face or throat, wheeze, trouble breathing. Beta blockers can make an anaphylactic reaction <b>more severe</b> and <b>harder to treat with adrenaline</b> (data sheet warning). Stop, call for help, follow the emergency protocol.</dd></div>
+      <div class="def"><dt>Must say</dt><dd><b>Don't crush it</b> (CR; it can be halved). <b>Don't stop it suddenly</b>, because his heart failure can get worse. <b>Stand up slowly and ring the bell first</b> (falls risk; he's 79).</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="deep">
+  <div class="sec-head">
+    <span class="eyebrow">Beyond the common list</span>
+    <h2>Know everything about your drug</h2>
+  </div>
+  <p>The rubric asks for the generic name, the indication and the common side effects. Assessors can go further, so here's the rest, with <b>the same 14 headings for both drugs</b>. Unless tagged <span class="tag course">Course</span>, it's from the Medsafe data sheets and Healthify, not from your lectures.</p>
+  <div class="split">
+    <div>
+      <h3 class="drug-h">Paracetamol</h3>
+      <dl class="defs">
+        <div class="def"><dt>How it works</dt><dd>An <b>analgesic and antipyretic</b>. It acts mainly in the brain (it blocks prostaglandin production there), so it eases pain and lowers fever but does <b>little for inflammation</b>.</dd></div>
+        <div class="def"><dt>Other uses</dt><dd>Mild to moderate pain (headache, muscle and joint pain, osteoarthritis, dental pain), fever, cold-and-flu symptoms. For Mr Luke it's <b>his backache</b>.</dd></div>
+        <div class="def"><dt>Onset and half-life</dt><dd>Works in about <b>30–60 min</b> and lasts 4–6 h. Half-life <b>1–3 h</b>; most of a dose is out in the urine within 24 h. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>ADME</dt><dd>Absorbed rapidly (food can slow it). Distributed widely, little protein-bound. <b>Metabolised in the liver</b>: a small amount becomes a toxic metabolite that builds up in overdose. Excreted in the urine. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>Form and how to take it</dt><dd>500 mg tablets: <b>two tablets for 1 g</b>. Swallow with a glass of water, food or not. A liquid exists if he can't swallow tablets.</dd></div>
+        <div class="def"><dt>Withhold and tell the RN if</dt><dd>The last dose was <b>under 4 h ago</b>, the 24-h total would go <b>over 4 g</b>, or he's taken his <b>own paracetamol</b>. Any sign of allergy, or yellow skin or eyes (liver).</dd></div>
+        <div class="def"><dt>Don't give if</dt><dd>He's <b>allergic</b> to paracetamol, he's already had his <b>max for 24 h</b>, or he has <b>severe liver disease</b>.</dd></div>
+        <div class="def"><dt>Take care with</dt><dd><b>Liver disease, heavy alcohol use</b>, low body weight (under 50 kg) or malnutrition, dehydration, kidney problems, the frail elderly. Check with the RN: the max may need to be lower.</dd></div>
+        <div class="def"><dt>Common side effects</dt><dd><b>None are common</b> at the right dose. Say exactly that, then go on to the rare ones below.</dd></div>
+        <div class="def"><dt>Rare but serious</dt><dd><b>Anaphylaxis</b> and allergic reactions (rash, swelling, trouble breathing), bronchospasm in people sensitive to aspirin, serious skin reactions (blistering, peeling rash), low platelets or white cells (unusual bruising, infections), liver damage.</dd></div>
+        <div class="def"><dt>Stopping, or a missed dose</dt><dd>Can be stopped any time, no tapering. Missed dose: take it when he remembers, keeping 4 h between doses and no more than 4 g in 24 h. <b>Never double up.</b></dd></div>
+        <div class="def"><dt>Overdose</dt><dd>Often <b>no symptoms at first</b>, or just nausea and vomiting. Liver damage shows up <b>1–3 days later</b>. It's urgent even if he feels fine. The antidote is <b>acetylcysteine</b>. The toxic metabolite overwhelms the liver's glutathione at more than about <b>10 g, or 200 mg/kg</b>. Poisons Centre: 0800 764 766.</dd></div>
+        <div class="def"><dt>Monitor</dt><dd><b>Pain score before, and again 30–60 min after</b> to check it worked. The 24-h total. Temp, if it's for fever. Rash or swelling.</dd></div>
+        <div class="def"><dt>Tell him</dt><dd>What it's for (his back). <b>Don't take any other paracetamol</b> (Panadol, cold-and-flu products): check the labels. Ring your bell if you get a rash, swelling or trouble breathing. Go easy on alcohol. Tell us if the pain isn't easing.</dd></div>
+        <div class="def"><dt>Legal class</dt><dd>A <b>general sales medicine</b> (sold anywhere). Pregnancy category A. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>Other products that contain it</dt><dd>The “what OTC meds contain this?” question. <b>Cold-and-flu</b>: many Codral, Lemsip and Coldrex products. <b>Combination painkillers</b>: Maxigesic and Nuromol (paracetamol + ibuprofen), paracetamol + codeine (e.g. Panadeine). <b>Panadol Osteo / Apo-Osteo</b>: 665 mg modified-release paracetamol, the same drug. Answer it as safety: <b>he's already on the 4 g max, so any of these takes him over.</b> Bonus: cold-and-flu decongestants raise BP, and the ibuprofen in Maxigesic or Nuromol worsens heart failure.</dd></div>
+        <div class="def"><dt>Why not ibuprofen for his back?</dt><dd>NSAIDs make the body <b>hold fluid and raise BP</b>, so they worsen heart failure and work against his BP medicines. They also add kidney and stomach-bleed risk at 79. Paracetamol doesn't irritate the stomach, which is why it suits older people. <span class="tag ds">Data sheet</span></dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3 class="drug-h">Metoprolol succinate CR</h3>
+      <dl class="defs">
+        <div class="def"><dt>How it works</dt><dd>A <b>cardioselective (beta-1) beta blocker</b>, an antagonist: it blocks adrenaline at the heart's beta receptors. The heart beats <b>slower and less forcefully</b>, BP drops, and the heart works less hard. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>Other uses</dt><dd>Angina, fast heart rhythms (e.g. AF rate control), after a heart attack, palpitations, migraine prevention, an overactive thyroid. For Mr Luke it's <b>his BP and his heart failure</b>. <span class="tag ds">Data sheet</span></dd></div>
+        <div class="def"><dt>Onset and half-life</dt><dd>Half-life about <b>3–5 h</b>, but the CR tablet releases it slowly, so one dose covers <b>24 h</b>. The full BP effect builds over about a week; the heart failure benefit over weeks to months.</dd></div>
+        <div class="def"><dt>ADME</dt><dd>Well absorbed by mouth, but about half is lost on its <b>first pass through the liver</b>. Little protein-bound. <b>Metabolised in the liver</b> (the CYP2D6 enzyme, which is why fluoxetine and paroxetine raise its levels). Excreted in the urine.</dd></div>
+        <div class="def"><dt>Form and how to take it</dt><dd><b>Controlled release (CR)</b>: one 47.5 mg tablet, once a day. Swallow whole with a glass of water, food or not. It can be <b>halved, never crushed or chewed</b> (halves included): the tablet is hundreds of coated beads that release it over about 20 h, and crushing dumps the whole day's dose at once.</dd></div>
+        <div class="def"><dt>Why 47.5 mg?</dt><dd>It's the <b>succinate</b> salt: <b>47.5 mg succinate = 50 mg metoprolol tartrate</b>. Strengths are 23.75, 47.5, 95 and 190 mg. For heart failure it's started at 23.75 mg and <b>doubled every 2 weeks</b> towards a target of 190 mg daily; for BP the usual start is 47.5 mg. <span class="tag ds">Data sheet</span></dd></div>
+        <div class="def"><dt>Same drug, other names</dt><dd>Betaloc CR and Myloc CR are both metoprolol succinate CR. Two brands in his drawer = a <b>double dose</b> (the Mr Wei Tan case). <b>Metoprolol tartrate</b> (immediate-release, e.g. Lopresor) is <b>not</b> the same: don't give it in place of succinate CR. <span class="tag course">Course</span></dd></div>
+        <div class="def"><dt>Withhold and tell the RN if</dt><dd>His <b>pulse or BP is low</b>. Common ward cut-offs are a pulse under 60 or a systolic under 100, but <b>the chart or your RN sets the actual numbers</b>, so ask. Also if he's dizzy or faint, newly wheezy, or more breathless or swollen than usual.</dd></div>
+        <div class="def"><dt>Don't give if</dt><dd>He's <b>allergic</b> to it or another beta blocker. <b>Asthma or other obstructive lung disease</b> (the NZ data sheet lists it as a contraindication). A very slow pulse, 2nd or 3rd-degree heart block, or sick sinus syndrome (no pacemaker). Very low BP or shock. <b>Unstable or worsening heart failure</b> (e.g. fluid on the lungs). Severe circulation problems in the legs.</dd></div>
+        <div class="def"><dt>Take care with</dt><dd><b>Any wheeze</b>: it's cardioselective, so less bronchospasm than older beta blockers, but it can still cause it and it blocks salbutamol. <b>Diabetes</b>: it hides hypo signs like a fast heartbeat and tremor (sweating still shows). Liver problems. The elderly (falls). Before surgery, tell the anaesthetist.</dd></div>
+        <div class="def"><dt>Common side effects</dt><dd>Very common: <b>tiredness</b>. Common: <b>slow pulse, dizzy on standing, cold hands and feet</b>, palpitations, dizziness, headache, nausea, tummy pain, diarrhoea, constipation, breathless when active.</dd></div>
+        <div class="def"><dt>Rare but serious</dt><dd><b>Anaphylaxis</b>, and beta blockers make it <b>more severe and harder to treat with adrenaline</b>. Worsening heart failure (weight gain, swollen ankles, more breathless), heart block, fainting, bronchospasm. Less common: low mood, nightmares, trouble sleeping, confusion, rash, sexual problems.</dd></div>
+        <div class="def"><dt>Stopping, or a missed dose</dt><dd><b>Never stop it suddenly</b>: rebound high BP, chest pain or a heart attack, and worse heart failure. The body has made extra beta receptors (<b>upregulation</b>), so they over-respond once it's gone. The prescriber tapers it, over at least 2 weeks. <span class="tag course">Course</span> Missed dose: take it when he remembers, unless the next one is nearly due. <b>Never double up.</b></dd></div>
+        <div class="def"><dt>Overdose</dt><dd>A <b>very slow pulse, very low BP</b>, heart block, shock, bronchospasm, low blood sugar, collapse. It's an emergency: call for help.</dd></div>
+        <div class="def"><dt>Monitor</dt><dd><b>Pulse and BP</b> before and after (lying and standing if he's dizzy). Dizziness and falls. <b>Weight, swelling, breathlessness</b> (heart failure). Wheeze. Blood sugar if he's diabetic. Rash or swelling.</dd></div>
+        <div class="def"><dt>Tell him</dt><dd>What it's for (his BP and his heart). <b>Stand up slowly, and ring before getting up.</b> Tiredness often settles after the first weeks. <b>Don't stop it without the doctor.</b> Ring your bell if you get a rash, swelling or trouble breathing. Tell us if you feel faint, more breathless, your ankles swell or you're wheezy. Alcohol can make the dizziness worse.</dd></div>
+        <div class="def"><dt>Legal class</dt><dd>A <b>prescription medicine</b> (prescriber only). Pregnancy category C.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="interact">
+  <div class="sec-head">
+    <span class="eyebrow">If they ask</span>
+    <h2>Drug interactions</h2>
+  </div>
+  <p>Assessors can ask this because every Medsafe data sheet has an interactions section (4.5). They want to see that you'd stop and check, not a memorised list. If you're stuck, say:</p>
+  <p class="say">“I'd check the NZF interactions checker or section 4.5 of the data sheet, and talk to the pharmacist or RN before giving it.”</p>
+
+  <div class="split">
+    <div class="mini">
+      <h3>Metoprolol</h3>
+      <ul>
+        <li><b>Salbutamol</b> (asthma): works less well, because metoprolol blocks the beta receptors salbutamol needs. <span class="tag course">Joan, slide 45</span></li>
+        <li><b>Other BP drugs</b> (e.g. cilazapril): BP drops further, so more dizziness and falls. <span class="tag ds">Data sheet</span></li>
+        <li><b>Verapamil or diltiazem</b>: can slow his heart too much. <span class="tag ds">Data sheet</span></li>
+        <li><b>Insulin or diabetes tablets</b>: metoprolol can hide hypo signs, like a fast heartbeat. <span class="tag ds">Data sheet</span></li>
+        <li><b>NSAIDs</b> (ibuprofen): can blunt its BP-lowering effect. <span class="tag ds">Data sheet</span></li>
+        <li><b>Some antidepressants</b> (fluoxetine, paroxetine): raise metoprolol levels, so a slower pulse. <b>Digoxin</b>: an even slower pulse. <span class="tag ds">Data sheet</span></li>
+        <li><b>Cold-and-flu decongestants</b> (pseudoephedrine, phenylephrine): push his BP back up. <b>Alcohol</b>: more dizziness, and it raises metoprolol levels. <span class="tag ds">Data sheet</span></li>
+      </ul>
+    </div>
+    <div class="mini">
+      <h3>Paracetamol</h3>
+      <ul>
+        <li><b>Other paracetamol products</b> (Panadol, cold-and-flu): a double dose, so a liver risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Warfarin</b>: regular use can raise the INR, so more bleeding risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Heavy alcohol</b>, or enzyme-inducing drugs (carbamazepine, phenytoin, rifampicin): more liver risk. <span class="tag ds">Data sheet</span></li>
+        <li><b>Metoclopramide</b> speeds up its absorption. <b>Cholestyramine</b> slows it (give paracetamol 1 h before). <span class="tag ds">Data sheet</span></li>
+        <li><b>Flucloxacillin</b> (an antibiotic): together with regular paracetamol, a rare risk of acid build-up in the blood in very unwell or malnourished people. <span class="tag ds">Data sheet</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="small muted"><span class="tag course">Joan, slide 45</span> is from your course. <span class="tag ds">Data sheet</span> is general pharmacology from the Medsafe data sheets (section 4.5), added here and not taught in the course. Don't stress about those.</p>
+  <p class="small muted">For the final: metoprolol + salbutamol is the <b>opposing</b> example (an agonist against an antagonist at beta receptors), and warfarin + aspirin is the <b>additive</b> one (more bleeding).</p>
+</section>
+
+<section id="rights">
+  <div class="sec-head">
+    <span class="eyebrow">Every step, with the rubric line it scores</span>
+    <h2>The full run</h2>
+  </div>
+  <div class="card exam">
+    <p class="t">The 8 Rights + 2 checks <span class="tag course">Joan's deck</span></p>
+    <p>Right <b>patient</b> (three identifiers: name, DOB, NHI) · right <b>medication</b> · right <b>dose</b> · right <b>time</b> · right <b>route</b> · right <b>to refuse</b> · right <b>indication</b> · right <b>documentation</b>. Plus check the <b>expiry</b> and check <b>allergies</b>.</p>
+    <p class="small muted">The three label checks: when you take it from storage, when you prepare it against the chart, and again before you give it.</p>
+  </div>
+  <h3>With your RN, before the bedside</h3>
+  <ol class="quick">
+    <li><span><b>Hand hygiene</b> before you touch the chart or the meds. The drug room is shared by every nurse, so it's a cross-infection risk. <span class="tag course">Joan's video</span> <span class="code">a10</span></span></li>
+    <li><span><b>Read the chart out loud, finger on it</b>: name, NHI, DOB on the sticker, and the prescriber's handwritten name. No name means no drug. <span class="code">a11</span></span></li>
+    <li><span><b>The yellow boxes: Allergies AND Adverse Reactions</b> (two separate boxes). “Allergies ticked no, signed and dated. Adverse reactions ticked no, signed and dated. I'll still check with him at the bedside.” A “No” only means he was asked on admission: allergies can develop, or he may remember one, so you ask every time. <b>If anything is listed, check it isn't prescribed anywhere on the chart.</b> <span class="tag course">Joan's video</span> <span class="code">a9</span></span></li>
+    <li><span><b>Special Care box and supplementary charts</b>: say what's ticked. Special care: renal or hepatic impairment, pregnancy, breastfeeding, anticoagulation. Supplementary charts (kept separately): insulin, specialised analgesia, heparin, warfarin. E.g. if he were diabetic you'd check his blood sugar and the insulin chart. <span class="tag course">Joan's video</span> <span class="code">a11</span></span></li>
+    <li><span><b>Open the chart fully and find the order</b> on the blue regular page (the chart runs once-only, PRN, then regular pages). Prescriber's side on the left: date, <b>generic name</b>, dose and units, route, frequency, prescriber's signature (match it to the sample signatures on the front page, so you know who to call with a query). Note the drug's <b>letter in the margin</b> (I, J, K…): you'll sign in that drug's rows on the right-hand page. <span class="tag course">Joan's video</span> <span class="code">a2 a5 d1</span></span></li>
+    <li><span><b>Right time</b>: “Prescribed ___. The last dose was ___, so it's due now.” <span class="code">a4</span></span></li>
+    <li><span><b>The drug-specific check</b>. Paracetamol: <b>his pain score and the 24-h total</b>. Metoprolol: <b>his pulse and BP</b>, and whether they're OK to give. <span class="code">a11</span></span></li>
+    <li><span><b>The RN asks “Tell me about this drug.”</b> Generic name and class, why <b>he's</b> on it, <b>all</b> the common side effects, <b>then anaphylaxis</b>, then a nursing point. <span class="code">k1 k2 k3 a7</span></span></li>
+    <li><span><b>She may ask “Is that a normal dose?”</b> Paracetamol: yes, 1 g qid is the usual adult maximum (4 g a day). Metoprolol succinate CR: yes, 47.5 mg daily is the usual starting dose for high BP (heart failure starts lower, at 23.75 mg). <span class="tag course">Joan's video</span> <span class="code">a3</span></span></li>
+    <li><span><b>Label vs chart (check 1)</b>: “The label says ___. It's prescribed ___, so that's ___ tablet(s).” <span class="code">a2 a3</span></span></li>
+    <li><span><b>Expiry: read it AND interpret it</b>: “End of July 2027, so it's in date.” <span class="code">a8</span></span></li>
+    <li><span><b>Pop it into the cup without touching it.</b> Label vs chart again (check 2), and again as you put the pack away (check 3). Glass of water. <span class="code">a10 a3 a11</span></span></li>
+  </ol>
+  <h3>At the bedside</h3>
+  <ol class="quick">
+    <li><span><b>Knock, and hand hygiene</b> on the way in. <span class="code">a10</span></span></li>
+    <li><span><b>Introduce yourself AND your RN</b>, and say what you've brought. <span class="code">e5</span></span></li>
+    <li><span><b>ID</b>: <b>he</b> says his full name and DOB. <b>You</b> check the wristband (name, DOB, <b>NHI</b>) against the chart. <span class="code">a1</span></span></li>
+    <li><span><b>Allergies, out loud</b>: “Are you allergic to anything? Ever had a bad reaction to a medicine?” <span class="code">a9</span></span></li>
+    <li><span><b>ASK</b>: “Have you heard of ___? What do you know about it?” <span class="code">e1</span></span></li>
+    <li><span><b>BUILD</b>, in plain words: what it's for, how to take it, the side effects and what to do, <b>including “if you get a rash, swelling or trouble breathing, ring your bell straight away.”</b> Pause. Give him <b>the same common side effects you told the RN</b>: she'll prompt you if you leave one out. Then, <b>separately</b>, the allergy warning: “some people <b>may</b>… it's very rare”, with the signs (<b>rash or itch, tingly or swollen lips or tongue, a tight throat, trouble breathing</b>) and what to do: ring the bell if any appear in the next half hour to an hour, or at home stop it and call the GP. See <a href="#allergy">Allergy</a>. No jargon (Joan stopped the student at “resistance”). <span class="tag course">Joan's video</span> <span class="code">e2 k1–k3 a7</span></span></li>
+    <li><span><b>CHECK</b>: “Can you tell me in your own words…?” Never “Do you understand?” The video's student skips this step. Don't copy her: it's a marked line. <span class="code">e3</span></span></li>
+    <li><span><b>Consent</b>: “Are you happy to take it? Any questions?” <span class="code">a6</span></span></li>
+    <li><span><b>Give it</b>: him sitting upright, with water. <b>Stay until it's swallowed.</b> Never leave it on the table. <span class="code">a5 a11</span></span></li>
+    <li><span><b>Home tip</b>: “Take it at the same time each day, e.g. with breakfast, so it becomes a habit. When you're down to about a week's supply, ask your GP for a repeat, give them a couple of days, and collect it so you don't run out.” <span class="tag course">Joan's video</span> <span class="code">e2</span></span></li>
+    <li><span><b>Leave him safe</b>: call bell in reach, “ring before you get up,” thank him. <span class="code">a11 e5</span></span></li>
+    <li><span><b>Hand hygiene</b> on the way out. <span class="code">a10</span></span></li>
+  </ol>
+  <h3>Document and debrief</h3>
+  <ol class="quick">
+    <li><span><b>Your sample initials first</b>: the first time you sign on a chart, write your <b>full name, your initials and “MIT student”</b> in the front-page box <b>Sample initials – Administrators</b>. It's a legal requirement, so anyone can trace who gave the drug. Use a short initial that fits the tiny Giv/Chck boxes. <span class="tag course">Joan's video</span> <span class="code">d3</span></span></li>
+    <li><span><b>Sign only AFTER he's taken it</b>: date, 24-h time, <b>dose with units</b> (“47.5 mg”, never “47.5”). Your initials in <b>Giv</b>, your RN's in <b>Chck</b>. <b>Not given? The box is never blank:</b> write the code (<b>R</b> refused, <b>W</b> withheld, <b>N</b> not administered) and put the reason in the notes. <span class="code">d1 d2 d3</span> <span class="tag course">Course</span></span></li>
+    <li><span>The RN asks how you used <b>Ask, Build, Check</b>. Name all three and what you did in each. <span class="code">e4</span></span></li>
+    <li><span><b>Thank your RN.</b> <span class="code">e5</span></span></li>
+    <li><span><b>After</b>: the RN completes and signs the form. Photograph or scan <b>both sides</b> and upload them to the Canvas assignment (.jpg or .pdf).</span></li>
+  </ol>
+</section>
+
+<section id="abc">
+  <div class="sec-head">
+    <span class="eyebrow">Patient education</span>
+    <h2>Ask, Build, Check</h2>
+  </div>
+  <dl class="defs">
+    <div class="def"><dt>ASK</dt><dd>“What have you heard about this medicine?” An open question, not yes or no.</dd></div>
+    <div class="def"><dt>BUILD</dt><dd>What it's for and its side effects, in plain words. Explain any medical term, and pause.</dd></div>
+    <div class="def"><dt>CHECK</dt><dd>“Can you tell me back in your own words what it's for, and what you'd do if…?” <b>Never ask “Do you understand?”</b></dd></div>
+    <div class="def"><dt>If he can't tell it back</dt><dd>It's not a test of him: <b>the responsibility for being clear is yours</b>. “Sorry, I don't think I explained that well.” Go back to Build and say it a different way, in fewer words, or write it down. Use a small prompt if he missed one bit: “Do you remember what to do if you feel dizzy?” <span class="tag course">Course</span></dd></div>
+    <div class="def"><dt>He's 79: make it work for him</dt><dd>Extra time, a quiet space, speak clearly and slowly. <b>Check his glasses and hearing aids.</b> Large print if you give anything written. Involve whānau if <b>he</b> wants them there. Uphold his dignity and choices. <span class="tag course">Course</span></dd></div>
+    <div class="def"><dt>Use his words</dt><dd>In Build, reuse the words he used in Ask (“your back”, “your heart”). Explain any medical term you can't avoid, e.g. “blood pressure” or the generic name. <span class="tag course">Course</span></dd></div>
+  </dl>
+  <p>At the end, the RN asks you to <b>describe how you used Ask, Build, Check</b>. Name all three steps.</p>
+</section>
+
+<section id="traps">
+  <div class="sec-head">
+    <span class="eyebrow">Expect these</span>
+    <h2>Med admin traps</h2>
+  </div>
+  <p>Treat these as part of the assessment. The marking sheet doesn't list them, but the brief says you must know the <b>“key nursing considerations for safe administration”</b>, and assessors use that line to ask anything safety-related (a classmate got “what other OTC medicines contain this?”). The class also practised spotting errors on Mr Luke's chart, so expect a planted one. The rule for all of them: <b>if anything doesn't match, stop, don't give it, tell the RN, and say why.</b></p>
+  <div class="card warn">
+    <p class="t">Stopping is a pass</p>
+    <p>Spotting the problem and withholding is safe practice. Giving it anyway is the fail.</p>
+  </div>
+  <h3>On the chart</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>If…</th><th>You…</th></tr></thead>
+      <tbody>
+        <tr><td>The wristband name, DOB or NHI doesn't match the chart, or a page has no patient label</td><td>Stop. Don't give it. Tell the RN.</td></tr>
+        <tr><td>The allergy box is blank or unsigned</td><td>Don't give it until it's completed.</td></tr>
+        <tr><td>He mentions a new allergy (the chart says none)</td><td>Don't give it. Ask what happened (allergy or side effect?), tell the RN, get it charted first.</td></tr>
+        <tr><td>The order is missing a route, dose, units, frequency, date or signature, or the signature isn't in the sample signatures</td><td>Withhold. The RN gets the prescriber to fix it. Nurses can't change a prescription. <span class="tag course">Course</span></td></tr>
+        <tr><td>A brand name instead of the generic, or writing you can't read</td><td>Don't guess. Get it clarified.</td></tr>
+        <tr><td>Dangerous notation: a trailing zero (“47.50 mg”, or the “5.0 mg” enalapril on the class chart, which can read as 50), “ug”, “1 gm”, no units</td><td>Point it out. The NMC guide bans trailing zeros. Clarify before giving. <span class="tag course">Course</span></td></tr>
+        <tr><td>No administration time circled for a regular order (the class chart's enalapril has none)</td><td>Clarify the time. Don't assume.</td></tr>
+        <tr><td>Today's dose is already initialled, or the order is crossed through</td><td>Don't give it: that's a double dose. Read the whole row.</td></tr>
+        <tr><td>“Chart 1 of 2”, or a Special Care box ticked (renal, hepatic)</td><td>Find the other chart, and say what the flag means for this drug.</td></tr>
+        <tr><td>The class chart's other errors</td><td>The height is written as “1.67” in the cm box. His DOB makes him 83 in 2026, but the brief says 79: match the identifiers, don't argue his age.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>In the pack</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>If…</th><th>You…</th></tr></thead>
+      <tbody>
+        <tr><td>The wrong strength: metoprolol 95 or 23.75 mg, or paracetamol Osteo 665 mg</td><td>Do the maths out loud. 47.5 mg = one 47.5 mg or <b>two 23.75 mg</b> tablets. 1 g = two 500 mg tablets. Osteo tablets can't make 1 g, so it's the wrong product.</td></tr>
+        <tr><td>Metoprolol <b>tartrate</b> instead of succinate CR</td><td>Not the same. Don't give it. Tell the RN.</td></tr>
+        <tr><td>A different brand (Myloc CR vs Betaloc CR)</td><td>Fine if the generic name, salt, strength and form match. Say so out loud.</td></tr>
+        <tr><td>The pack is expired</td><td>Don't use it. Get a new one. A month-only date (07/2027) means the <b>end</b> of that month. Pharmacy-repacked with only a dispensing date: 12 months max from that date. <span class="tag course">Course</span></td></tr>
+        <tr><td>A damaged blister, or loose unlabelled tablets</td><td>Don't use them.</td></tr>
+        <tr><td>A look-alike name on the shelf</td><td>Read the whole label. A real NZ patient died when levomepromazine was given instead of levetiracetam. <span class="tag course">Course</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>At the bedside</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>If…</th><th>You…</th></tr></thead>
+      <tbody>
+        <tr><td>He says he took his own Panadol, or Codral, Lemsip or Maxigesic for a cold</td><td>Don't give the paracetamol (it would go over 4 g). Tell the RN. For metoprolol: decongestants push his BP up and NSAIDs fight it, so tell the RN too.</td></tr>
+        <tr><td>His last paracetamol was under 4 h ago</td><td>It's not due yet. Don't give it.</td></tr>
+        <tr><td>Pulse or BP is low before metoprolol (e.g. pulse 52, BP 96/58)</td><td>Withhold it. Tell the RN. Chart <b>W</b> in the dose box, with the reason (and the obs) in the notes.</td></tr>
+        <tr><td>He's wheezy, or says he has asthma, before metoprolol</td><td>Withhold it. Tell the RN. Asthma is a contraindication on the data sheet.</td></tr>
+        <tr><td>He asks you to crush the metoprolol</td><td>No: it's CR. It can be halved, never crushed. Check with the pharmacist.</td></tr>
+        <tr><td>Before paracetamol: he drinks heavily, or has liver problems</td><td>Check with the RN before giving it: the max may need to be lower.</td></tr>
+        <tr><td>“That pill looks different”</td><td>Stop and recheck. Patients usually know their own medicines. <span class="tag course">Course</span></td></tr>
+        <tr><td>“My back's fine today”</td><td>Paracetamol is charted regular, so it's normally still given. Tell the RN and suggest a review (right indication).</td></tr>
+        <tr><td>“Can I take my ibuprofen?” / “Can I have a wine?”</td><td>Not without checking: NSAIDs worsen heart failure and BP. Alcohol: liver risk with paracetamol, dizziness with metoprolol.</td></tr>
+        <tr><td>He refuses</td><td>Explain what could happen, respect his choice, tell the RN. Chart <b>R</b> in the dose box with the reason in the notes, and <b>discard</b> the dose (never store it). <b>Offer it again within 1 hour</b>; if he refuses again, the prescriber is contacted. <span class="tag course">Course</span></td></tr>
+        <tr><td>He's away, asleep or in the toilet</td><td>Code <b>U</b>. Never leave the medicine at the bedside.</td></tr>
+        <tr><td>He's confused, or unsure of his DOB</td><td>Rely on the wristband and the RN, and question whether he can consent.</td></tr>
+        <tr><td>Whānau are there</td><td>Ask who he'd like involved. Don't teach over his head.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Slip-ups that cost people</h3>
+  <ul>
+    <li><b>Signing before he's swallowed it</b>, or leaving it on the table.</li>
+    <li>Touching the tablet, or skipping hand hygiene.</li>
+    <li>“Do you understand?” instead of teach-back. Jargon in Build.</li>
+    <li>A textbook indication instead of <b>his</b> (his BP and heart failure; his backache).</li>
+    <li>Giving it <b>more than 30 min</b> from the charted time without noticing. <span class="tag course">Course</span></li>
+    <li>12-hour time, white-out, or made-up codes. Use 24-h actual time, one line through errors, and only NMC codes (<b>W</b>, <b>R</b>, <b>N</b>, <b>U</b>). <b>N</b> means the prescriber must be told. <span class="tag course">Course</span></li>
+    <li>Hiding a mistake. Tell the RN straight away: concealment means disciplinary action. <span class="tag course">Course</span></li>
+  </ul>
+</section>
+
+<section id="whatif">
+  <div class="sec-head">
+    <span class="eyebrow">If they ask</span>
+    <h2>What if…</h2>
+  </div>
+  <dl class="defs">
+    <div class="def"><dt>…he has an anaphylactic reaction?</dt><dd><b>Stop. Stay with him and call for help</b> (emergency bell). Lie him flat with his legs up, or sitting up if he's struggling to breathe. The RN gives <b>IM adrenaline</b> by protocol, plus oxygen. Monitor his obs. Then document it, record the allergy on the chart, and report it to <b>CARM</b>.</dd></div>
+    <div class="def"><dt>…you notice a medication error?</dt><dd><b>Tell the RN straight away</b> and check on him (obs). Follow the RN's instructions, document it, and fill in an incident report. Be honest.</dd></div>
+    <div class="def"><dt>…he vomits soon after taking it?</dt><dd>Tell the RN. <b>Don't give another dose</b> unless the RN or prescriber says to. Document it.</dd></div>
+    <div class="def"><dt>…he can't swallow tablets?</dt><dd>Paracetamol: ask the RN or pharmacist about a liquid. Metoprolol CR: it can be halved, <b>never crushed</b>. Ask the pharmacist.</dd></div>
+    <div class="def"><dt>…he asks something you don't know?</dt><dd>“That's a good question. I'll check with my RN or the pharmacist and come back to you.” Never guess.</dd></div>
+    <div class="def"><dt>…you suspect a side effect later on?</dt><dd>Assess him, tell the RN, document it. A suspected adverse reaction can be reported to <b>CARM</b> (anyone can report).</dd></div>
+    <div class="def"><dt>…you don't give the dose?</dt><dd>The dose box is <b>never left blank</b>. Write the non-administration code: <b>R</b> refused, <b>W</b> withheld, <b>N</b> not administered, <b>U</b> unavailable. Put the reason in the notes and tell the RN. <span class="tag course">Course</span></dd></div>
+    <div class="def"><dt>…the order is unclear or unsigned?</dt><dd>Don't give it. Tell the RN, who gets the prescriber to clarify it.</dd></div>
+  </dl>
+</section>
+
+<section id="know">
+  <div class="sec-head">
+    <span class="eyebrow">Expect these too</span>
+    <h2>Knowledge questions</h2>
+  </div>
+  <p>Not about the drug itself, but fair game under “key nursing considerations”. All from your course decks unless tagged.</p>
+  <dl class="defs">
+    <div class="def"><dt>Side effect vs adverse effect vs allergy?</dt><dd>A <b>side effect</b> is a known extra effect. An <b>adverse effect</b> is a harmful effect suspected to be caused by the medicine (Medsafe). An <b>allergy</b> is an immune hypersensitivity reaction, and it's a contraindication.</dd></div>
+    <div class="def"><dt>Contraindication vs precaution?</dt><dd>A contraindication: <b>don't use it</b>. A precaution: use it with extra monitoring or a dose change.</dd></div>
+    <div class="def"><dt>Mild allergy vs anaphylaxis?</dt><dd>Mild: rash, hives, itch, lip or eyelid swelling. Anaphylaxis: breathing difficulty, wheeze, throat swelling, low BP, a weak fast pulse, collapse. IM adrenaline and call for help. Joan said to do the Allergy session before this practical.</dd></div>
+    <div class="def"><dt>Is Mr Luke on polypharmacy?</dt><dd><b>Yes</b>: 3 regular + 2 new = <b>5 medicines</b> (polypharmacy is usually 5 or more). That means more interactions and a higher falls risk.</dd></div>
+    <div class="def"><dt>How do age and heart failure change things?</dt><dd>Slower liver and kidney clearance, more fat and less body water, more sensitivity to heart and BP drugs. Heart failure cuts blood flow to the liver and kidneys too. The big risks: <b>falls, postural hypotension, delirium</b>.</dd></div>
+    <div class="def"><dt>Who can prescribe? Can you change the dose?</dt><dd>Doctors, nurse practitioners, dentists, optometrists and midwives, plus designated prescribers (pharmacist and RN prescribers). <b>Nurses can't change an order</b>, and can't prescribe: even saying “take a couple of Panadol” to someone is prescribing. Double-check with another nurse before giving a drug you haven't given before. <span class="tag course">Legal &amp; ethical lecture</span></dd></div>
+    <div class="def"><dt>Which patient rights apply?</dt><dd>The HDC Code, especially <b>Right 6</b> (to be fully informed) and <b>Right 7</b> (informed choice and consent).</dd></div>
+    <div class="def"><dt>What's AI2DET?</dt><dd><b>A</b>cknowledge, <b>I</b>ntroduce, <b>I</b>dentify, <b>D</b>uration, <b>E</b>xplanation, <b>T</b>hank you.</dd></div>
+    <div class="def"><dt>Te Tiriti in medicine education?</dt><dd>Tino rangatiratanga: his choice. Equity: extra time if he needs it. Active protection: respect rongoā. Options: choices of timing and format. Partnership: involve whānau if he wants.</dd></div>
+    <div class="def"><dt>What can you do as a student nurse?</dt><dd>Give medicines <b>only under the direct supervision</b> of the RN, and <b>both of you sign</b>. The RN is accountable for you. You can decline a task you don't feel safe doing. Report any error to your RN straight away. <span class="tag course">NZNO guidelines</span></dd></div>
+    <div class="def"><dt>Pharmacokinetics vs pharmacodynamics?</dt><dd>PK = <b>what the body does to the drug</b> (absorption, distribution, metabolism, excretion). PD = <b>what the drug does to the body</b> (e.g. metoprolol is an antagonist: it blocks beta receptors). First pass: the liver breaks down part of an oral dose before it reaches the body, about half for metoprolol.</dd></div>
+    <div class="def"><dt>Generic vs brand name?</dt><dd>Generic (approved) name: <b>paracetamol</b>, <b>metoprolol succinate</b>. That's what's charted and what you say. Brand (proprietary) name: Panadol, Betaloc CR. Different brands, same drug, so check the generic name on the pack.</dd></div>
+    <div class="def"><dt>Types of hypersensitivity?</dt><dd>Type I immediate (hay fever, asthma, <b>anaphylaxis</b>) · Type II cytotoxic (transfusion reactions) · Type III immune complex (serum sickness) · Type IV delayed (contact dermatitis). Drug allergies are usually type I or IV.</dd></div>
+    <div class="def"><dt>What's a medication error, and how do you prevent one?</dt><dd>“Any preventable event that may cause or lead to inappropriate medication use or patient harm.” Prevent it: check labels (look-alike names), does the dose sound right (most doses are 1–2 tablets), check the decimal point, question sudden dose changes, learn new drugs first, never decipher bad handwriting. Most errors come from skipping one of the 8 Rights.</dd></div>
+    <div class="def"><dt>All the chart codes for a dose not given?</dt><dd><b>W</b> withheld · <b>R</b> refused · <b>N</b> not administered (tell the prescriber, reason in the notes) · <b>U</b> patient unavailable · <b>D</b> prescriber's instructions · <b>RV</b> review (used with W) · <b>SM</b> self-medicating · <b>CP</b> carer or parent gave it. Never invent codes. <span class="tag course">NMC guide</span></dd></div>
+    <div class="def"><dt>What must a chart have before you give anything?</dt><dd><b>Patient</b>: full name, NHI, DOB, allergies (or NKA ticked and signed), weight. <b>Chart</b>: chart number (1 of 1), special care boxes, sample signatures. <b>Each order</b>: date, generic name in capitals, dose and units, route, frequency or times, prescriber's signature. <span class="tag course">Course</span></dd></div>
+    <div class="def"><dt>Older people and medicines (Beers)?</dt><dd>The <b>Beers criteria</b> list drugs to avoid or use carefully in older adults, e.g. long-term NSAIDs (stomach bleeds). The common adverse effects in older people: <b>falls, postural hypotension, delirium</b>, kidney failure, GI and brain bleeds.</dd></div>
+    <div class="def"><dt>Why is there one National Medication Chart?</dt><dd>After an HDC complaint: a patient at Palmerston North Hospital died when staff, used to different charts in different hospitals, mixed them up and she was given drugs meant for someone else. One standard chart means everyone reads it the same way. Many wards now e-prescribe, but the principles are the same. <span class="tag course">Joan's video</span></dd></div>
+    <div class="def"><dt>Allergy vs adverse reaction (the two yellow boxes)?</dt><dd>An <b>allergy</b> is an immune reaction (e.g. rash, swelling, anaphylaxis). An <b>adverse reaction</b> is a bad reaction that isn't an allergy, e.g. he vomited a lot after a drug. Both are charted, and you ask about both at the bedside. <span class="tag course">Joan's video</span></dd></div>
+    <div class="def"><dt>Where do you look a medicine up?</dt><dd>The <b>NZ Formulary</b> and the <b>Medsafe</b> data sheet and consumer information.</dd></div>
+  </dl>
+</section>
+
+<section id="rubric">
+  <div class="sec-head">
+    <span class="eyebrow">Word for word</span>
+    <h2>The marking sheet</h2>
+  </div>
+  <div class="card">
+    <h3>722.544 Medication Administration Competence</h3>
+    <p class="small muted">Met / Not Met. One attempt plus one resit. You must show every step.</p>
+    <p><b>Apply knowledge of the medication (to the RN and the patient)</b></p>
+    <ul><li><span class="code">k1</span> Generic Medication Name</li><li><span class="code">k2</span> Indication(s) for use. Must be relevant to scenario</li><li><span class="code">k3</span> Common adverse effects</li></ul>
+    <p><b>Administers under RN supervision, with these steps/checks</b></p>
+    <ul><li><span class="code">a1</span> Right patient (verbal check &amp; visual wristband ID check)</li><li><span class="code">a2</span> Right medication (generic name)</li><li><span class="code">a3</span> Right dose</li><li><span class="code">a4</span> Right time (as prescribed, frequency &amp; check when last dose given)</li><li><span class="code">a5</span> Right route</li><li><span class="code">a6</span> Right to refuse (informed consent)</li><li><span class="code">a7</span> Right indication (with relevance to scenario)</li><li><span class="code">a8</span> Check &amp; interpret medication expiry date</li><li><span class="code">a9</span> Check for patient allergies (chart &amp; verbal check)</li><li><span class="code">a10</span> Maintain infection control practices</li><li><span class="code">a11</span> Overall the process is methodical, organised, and safe for the patient and the student nurse</li></ul>
+    <p><b>Accurately documents under RN supervision</b></p>
+    <ul><li><span class="code">d1</span> Correct medication</li><li><span class="code">d2</span> Correct date, time, dose</li><li><span class="code">d3</span> Appropriate initials</li></ul>
+    <p><b>Patient education: Ask, Build, Check</b></p>
+    <ul><li><span class="code">e1</span> Ask: Patient's knowledge assessed</li><li><span class="code">e2</span> Build: Relevant information explained, appropriate terms</li><li><span class="code">e3</span> Check: Evaluation of patient's understanding assessed</li><li><span class="code">e4</span> Describe to the RN the 3 ABC steps of medication education</li><li><span class="code">e5</span> Communication with the patient throughout the assessment is respectful, clear, and patient-centred</li></ul>
+  </div>
+  <p class="small muted">Copied from the CLS trainer, which took it from the Canvas sheet. Your marked feedback sheet is the one that counts: check it for anything else marked Not Met.</p>
+</section>
+
+<footer>
+  <p>Offline copy of jeremyspm.github.io/med-admin-cheat.html (med admin only).</p>
+  <p>Made 18 Oct 2026, expanded 19 and 20 Oct, from the CLS Practical Trainer's data, Joan's decks, full transcripts of Joan's role-play video and the 7 Oct allergy lecture, the Medsafe data sheets and Healthify. It isn't official course material: the chart on the day, Joan's slides and Canvas win if anything here disagrees.</p>
+</footer>
+
+</div>
+</body>
+</html>
