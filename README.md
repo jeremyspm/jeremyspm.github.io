@@ -5,50 +5,52 @@ The landing page for every study tool that is still in use, live at
 `jeremyspm.github.io`; that's what puts it at the root URL). One link to
 share with the cohort.
 
-**How it works (12 Oct 2026, replacing the "offline" placeholder that stood
-here since 5 Sep):** three screens, one question each: *which paper?* →
-*what are you struggling with?* → *the tool*, with the best tool marked
-"Start here", buttons that jump straight to the right screen inside it
-(`hs2-test3/#saq`, `cls-trainer/#bp`, …) and an "Also helps" list. A search
-box on the first screen ("bp", "pedigree", "mg to mL") skips the questions
-for people who know the word for their problem. Picked from three mockups
-(A questions / B one screen / C search): A, with C's search box.
+**How it works (20 Oct 2026):** everything is sorted by one thing, the
+assessments, because that's what people study for and the only part with
+dates. Three screens: *which paper?* → *which assessment?* → the tools for
+it. The first screen also has **Next up** (the nearest three assessments
+across all papers, the one place that sparkles), a search box and an
+**Every tool** page (`#tools`) for people who already know what they want.
+An assessment's screen has one tool marked "Start here" (with "Straight to"
+shortcuts into its screens), then the rest in three fixed sections, always in
+this order: **Practise**, **Learn it**, **Listen**.
 
-URLs are shareable: `/#hs2`, `/#hs2/t3`, `/#inp/bp`. The phone's back button
-walks back through the screens.
+Why (20 Oct, "way too many options" once past the papers): the old second
+screen mixed assessments (Test 3), topics (Anatomy, Genetics, Abbreviations),
+a way of learning ("I need it explained") and an event (Placement), so you
+couldn't guess where anything lived, and the same tools turned up under up to
+four of them. Topics are now tools inside assessments, and their words stay
+in search ("bp", "pedigree", "abbreviations" land on the right tool). Picked
+from a mockup the same day.
 
-## Adding a tool, or a problem (the whole process)
+URLs are shareable: `/#hs2`, `/#hs2/t3`, `/#tools`. The phone's back
+button walks back through the screens. Each paper's screens take on its hue
+(HS2 blue, INP green, Pharm purple), and every screen opens with a trail,
+`⌂ Home › HS2 › Test 3`.
 
-Everything the page shows is three lists at the top of the script in
+## Adding a tool, or an assessment (the whole process)
+
+Everything the page shows is two lists at the top of the script in
 `index.html`, between `CONTENT` and `ENGINE`:
 
-- **`TOOLS`**: `id: {nm, ic, url, ds, kw?}`. `url` is relative to the site
-  root (`medcalc/`, `pharm-final/chart.html`); `ic` is an id in the inline
-  SVG sprite; `kw` adds search words.
-- **`PAPERS`**: each paper's `needs` (the problems on screen 2). A need's
-  `tools` list is ordered, and **the first one is "Start here"**. A tool
-  entry is an id, or `{id, jump:[[hash,label,icon]], cta:[hash,label]}` to
-  add the deep-link buttons / point the main button at a screen.
-- **`date`** on a need: `{on}` or `{from,to}` (`YYYY-MM-DD`) plus `chip`,
-  `what`, `txt`, optional `verb` and `keep`. A dated need **hides itself the
+- **`TOOLS`**: `id: {nm, ic, url, ds, kind, pp, kw?}`. `url` is relative to
+  the site root (`medcalc/`, `pharm-final/chart.html`); `ic` is an id in
+  the inline SVG sprite; `kind` is `practise`, `learn` or `listen` (which
+  section it shows in); `pp` is the paper it's filed under on Every tool;
+  `kw` adds search words, including the everyday words for its topic.
+- **`PAPERS`**: each paper's assessments (`as`). An assessment has `t`,
+  `s`, `kw`, an optional `date`, a `start` tool and a `tools` list (can be
+  empty). `start` is an id, or `{id, jump:[[hash,label,icon]], cta:[hash,label]}`
+  for the shortcut buttons / to point the main button at a screen. A `tools`
+  entry is an id, or `{id, h, why}` to open that tool at one screen
+  (`cls-trainer/#walk/ma`) with its own one-line reason.
+- **`date`**: `{on}` or `{from,to}` (`YYYY-MM-DD`) plus `chip`, `what`,
+  `txt`, optional `verb` and `keep`. A dated assessment **hides itself the
   day after its date** unless it has `keep` (then only its date goes).
-- **Hot problems** (15 Oct): a need whose date is still to come goes under
-  "Coming up" on its paper's screen, as a glowing card with sparkles and a
-  badge with its date and countdown ("20–26 Oct · opens in 5 days"); the
-  rest are plain buttons under "Or pick a topic", so the list no longer
-  reads as a ranking. Cut back the same day ("way too much here"): the hot
-  cards show badge + title only, the paper's eyebrow and "Tap the closest
-  one" are gone, and "Every HS2 tool" is folded into one "All 8 HS2 tools"
-  line. `hot:{tag, until}` makes
-  an undated need hot too (Genetics: "On Test 3 and the exam", until 4 Nov).
-- **Getting around** (15 Oct, after "it's hard to get back to the start"):
-  every paper and problem screen opens with a trail, `⌂ Home › HS2 ›
-  Genetics & pedigrees`, in place of the old single ‹ back button. Each
-  paper card on the first screen lists its hot problems as chips, so they
-  are one tap from the start. And each paper's screens take on its hue
-  (`html[data-paper]`, `--paper`): HS2 blue, INP green, Pharm purple.
-  Every tool links back here top-left with **‹ All tools** (Anatomy Atlas,
-  MedCalc, the Pharmacology hub and the playlists already had "← Hub").
+  Assessments are sorted by date on their paper's screen.
+- **`quiet: true`** (20 Oct) marks an assessment most of the cohort is past
+  (Med calc test, Med admin practical): it sits under "Resits and catch-ups"
+  at the bottom of its paper and never shows in Next up.
 
 Then:
 
@@ -56,11 +58,12 @@ Then:
    script against a stub DOM and fails on: a tool no problem links to, a
    problem naming a tool that doesn't exist, a missing icon, a bad date, a
    script that won't parse, `color:var(--acc)`, the old navy palette, a
-   missing `noindex`, and **26 search probes** ("bp" must land on Taking a
-   blood pressure, "mg to ml" on Med calc, …). Probes whose problem has
-   hidden itself are skipped, not failed.
+   missing `noindex`, a tool with no `kind` or paper, a quiet assessment in
+   Next up, and **27 search probes** ("bp" must land on the CLS Practical
+   Trainer, "mg to ml" on MedCalc, "test 3" on Test 3, …). Probes whose
+   assessment has hidden itself are skipped, not failed.
 2. `node index.check.mjs --live` also fetches every tool and checks every
-   jump's `#screen` exists in that tool's router. Screens a Paper Sim only
+   jump's (and every `h`'s) `#screen` exists in that tool's router. Screens a Paper Sim only
    shows when it has content (`saq`, `focus`, `vid`) still deserve one look
    in a browser; all of them were checked on 12 Oct.
 3. Commit + push.
@@ -70,7 +73,9 @@ Nov, Pharm Thu 5 Nov), the Test 3 ProctorU window (Tue 20 – Mon 26 Oct), the
 med calc resit (Wed 21 Oct) and placement (9 Nov – 18 Dec). `CHECKED` is
 the date printed in the footer; bump it whenever they're re-checked.
 
-**Left off on purpose (his call, 12 Oct):** finished work (HS2 Test 1 and
+**Left off on purpose (his call, 12 Oct; 20 Oct):** the Vital signs practical and
+Taking a BP (the cohort is past them; the CLS trainer and its BP Lab are still
+under Placement, Med admin and Every tool), and finished work (HS2 Test 1 and
 Test 2 sims, the pharm essay). Also left off by default: the Module 1 sim
 (its three exam cases are inside HS2 Final), the old Module 1 hub,
 Placement Passport, the ED checklist, Ask Your Book and the BN2 brief. All
@@ -133,8 +138,8 @@ argument weakens and this page should be re-examined.
 
 **Where the landing page links it (12 Oct 2026):** all three playlists
 (`hs2-m1-videos.html`, `hs2-videos.html`, `hs2-m3-videos.html`) are `TOOLS` in
-`index.html`, under HS2 → *I need it explained* (Module 3 as Start here), and
-Module 3 also under *Test 3* and *Genetics*. The old hub tile on branch
+`index.html`, under **Learn it**: Module 3 on HS2 Test 3, and all three on the
+HS2 Final exam (20 Oct; they were under *I need it explained* before). The old hub tile on branch
 `claude/study-tool-video-playlist-bd5j3x` belonged to the dead hub and is not needed.
 
 ## Notes
@@ -150,7 +155,6 @@ Module 3 also under *Test 3* and *Genetics*. The old hub tile on branch
 ## For future Claude sessions
 
 When a new tool is built for Jeremy: publish it as its own `jeremyspm` repo
-with Pages, add a `TOOLS` entry, name it in the right problem's `tools` (first
-= Start here), run `node index.check.mjs --live`, push, and check the live page
-at 375px. When a sitting passes, its problem hides itself; when a whole paper
+with Pages, add a `TOOLS` entry, name it in the right assessment's `start` or `tools`, run `node index.check.mjs --live`, push, and check the live page
+at 375px. When a sitting passes, its assessment hides itself; when a whole paper
 is finished, remove it from `PAPERS` (and its tools that nothing else uses).

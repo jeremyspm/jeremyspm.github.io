@@ -6,79 +6,75 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#161719">
 <title>BN2 Study Tools</title>
-<meta name="description" content="Free study tools for BN2 Semester 2: pick your paper, say what you're stuck on, get the right practice tool.">
+<meta name="description" content="Free study tools for BN2 Semester 2: pick your paper, then what you're studying for, and get the right practice tool.">
 <meta property="og:title" content="BN2 Study Tools">
-<meta property="og:description" content="Pick your paper, say what you're stuck on, and get the right practice tool. HS2, INP and Pharmacology.">
+<meta property="og:description" content="Pick your paper, then the assessment you're studying for, and get the right practice tool. HS2, INP and Pharmacology.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366F1'/%3E%3Cpath d='M9.5 16.5l4.5 4.5 8.5-10' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('hub.theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}</script>
 <style>
 /* ── House palette (the BN Hub uniformity contract): Giga's liquid tokens, copied by value
-   from the pre-6b74471 hub/index.html. Paper hues are bn2-brief.html:20-22 / :40-42. ── */
+   from the pre-6b74471 hub/index.html. Paper hues are bn2-brief.html:20-22 / :40-42.
+   20 Oct 2026: the page is sorted by one axis, the assessments (README, "How it works"). ── */
 :root{
-  --bg:#161719; --bg2:#161719; --card:#1c1c1f; --card2:#242427;
+  --bg:#161719; --card:#1c1c1f; --card2:#242427;
   --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.15);
   --tx:#f2f2f6; --tx2:rgba(255,255,255,.56); --tx3:rgba(255,255,255,.34);
-  --acc:#6366F1; --acc2:#565AE6; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
-  --good:#32D74B; --hard:#FF9F0A; --bad:#FF453A;
-  --shadow:0 14px 36px rgba(0,0,0,.16);
+  --acc:#6366F1; --acc-tx:#818CF8; --acc-soft:rgba(99,102,241,.16);
+  --good:#32D74B;
   --r:14px; --maxw:600px;
   --ez:cubic-bezier(.4,0,.2,1); --ezo:cubic-bezier(.22,1,.36,1);
   --hs:#60A5FA; --inp:var(--good); --ph:#C084FC;
   --spark:#FFD24D; --sheen:rgba(255,210,77,.13);
 }
 html[data-theme="light"]{
-  --bg:#eceef3; --bg2:#eceef3; --card:#ffffff; --card2:#f4f5f7;
+  --bg:#eceef3; --card:#ffffff; --card2:#f4f5f7;
   --line:rgba(0,0,0,.10); --line2:rgba(0,0,0,.14);
   --tx:#16161a; --tx2:rgba(0,0,0,.52); --tx3:rgba(0,0,0,.34);
-  --acc:#4F46E5; --acc2:#4138CF; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.12);
-  --good:#12833A; --hard:#A35C00; --bad:#C62A20;
-  --shadow:0 14px 36px rgba(0,0,0,.08);
+  --acc:#4F46E5; --acc-tx:#4F46E5; --acc-soft:rgba(79,70,229,.12);
+  --good:#12833A;
   --hs:#1D4ED8; --ph:#7E22CE;
   --spark:#D18E00; --sheen:rgba(255,255,255,.8);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--tx);font:400 15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--tx);font:400 15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;transition:background-color .35s var(--ez)}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:8px}
 h1:focus{outline:none}
 svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-.wrap{max-width:var(--maxw);margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 16px 28px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:14px 16px 28px}
 .bar{display:flex;align-items:center;gap:10px;margin:4px 0 26px}
 .brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
-.mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--acc);color:#fff;font-weight:800;font-size:11.5px;letter-spacing:.02em;flex:none}
+.mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--acc);color:#fff;font-weight:800;font-size:11.5px;flex:none}
 .brand .nm{font-weight:700;font-size:15px;line-height:1.2}
 .brand .nm span{display:block;font-weight:500;font-size:12px;color:var(--tx3)}
-.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);color:var(--tx2);flex:none;transition:border-color .2s var(--ez),color .2s var(--ez)}
+.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);color:var(--tx2);flex:none}
 .ib:hover{color:var(--tx);border-color:var(--tx3)}
 .ib svg.i{width:18px;height:18px}
 
-/* type */
 .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)}
+.eyebrow svg.i{width:13px;height:13px;color:var(--spark);vertical-align:-2px;margin-right:5px}
 .eyebrow.hue{color:var(--h)}
 .h1{font-size:30px;line-height:1.08;font-weight:700;letter-spacing:-.025em;margin:8px 0 8px}
 .sub{color:var(--tx2);margin:0 0 18px;font-size:15px}
-.sec{margin:24px 0 10px}
-.crumb{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:0 0 4px}
+.sec{margin:26px 0 10px;display:flex;align-items:center;gap:8px}
+.sec .n{font-weight:600;color:var(--tx3);letter-spacing:0}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--h);display:inline-block;flex:none}
-/* the trail: Home is always the first stop, the paper the middle one */
+
 .trail{display:flex;align-items:center;gap:4px 6px;margin:0 0 16px;font-size:14px;font-weight:600;color:var(--tx3);min-width:0}
 .trail a{display:inline-flex;align-items:center;gap:5px;padding:6px 2px;flex:none;color:var(--h)}
-.trail a.home{padding:6px 12px 6px 10px;border-radius:999px;color:var(--acc-tx);background:var(--acc-soft);transition:filter .15s var(--ez)}
-.trail a.home:hover{filter:brightness(1.15)}
+.trail a.home{padding:6px 12px 6px 10px;border-radius:999px;color:var(--acc-tx);background:var(--acc-soft)}
 .trail a.home svg.i{width:16px;height:16px}
 .trail>svg.i{width:14px;height:14px;flex:none}
 .trail .here{color:var(--tx2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* each paper's screens take on its hue, so HS2, INP and Pharm read as separate rooms */
 html[data-paper]{--bg:color-mix(in srgb,var(--paper) 14%,#161719);--card:color-mix(in srgb,var(--paper) 8%,#1c1c1f);--card2:color-mix(in srgb,var(--paper) 10%,#242427)}
 html[data-theme="light"][data-paper]{--bg:color-mix(in srgb,var(--paper) 15%,#eceef3);--card:color-mix(in srgb,var(--paper) 3%,#ffffff);--card2:color-mix(in srgb,var(--paper) 7%,#f4f5f7)}
-body{transition:background-color .35s var(--ez)}
 
-/* surfaces: opaque cards, a hairline, lift on hover (Giga .st-card) */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);transition:transform .2s var(--ez),border-color .2s var(--ez)}
 .lift:hover{transform:translateY(-2px);border-color:var(--line2)}
 .lift:active{transform:translateY(0) scale(.99)}
@@ -87,9 +83,8 @@ body{transition:background-color .35s var(--ez)}
 .ic.sm svg.i{width:18px;height:18px}
 .chev{color:var(--tx3);display:flex}
 
-/* paper card */
-.pcard{display:block;margin:0 0 12px;position:relative;overflow:hidden;background:color-mix(in srgb,var(--h) 7%,var(--card));border-color:color-mix(in srgb,var(--h) 28%,var(--line))}
-.pcard .phead{display:flex;gap:14px;align-items:center;padding:16px}
+/* paper card (home) */
+.pcard{display:flex;gap:14px;align-items:center;padding:16px;margin:0 0 12px;position:relative;overflow:hidden;background:color-mix(in srgb,var(--h) 7%,var(--card));border-color:color-mix(in srgb,var(--h) 28%,var(--line))}
 .pcard::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--h) 13%,transparent),transparent 55%);pointer-events:none}
 .pcard>*{position:relative;z-index:1}
 .pcard .tx{flex:1;min-width:0}
@@ -97,104 +92,75 @@ body{transition:background-color .35s var(--ez)}
 .pcard .meta{color:var(--tx2);font-size:13px;margin-top:2px}
 .pill{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;font-weight:600;color:var(--h);background:color-mix(in srgb,var(--h) 12%,transparent);padding:3px 9px;border-radius:999px}
 .pill svg.i{width:13px;height:13px}
-/* a paper's hot problems, one tap from the start */
-.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:-4px;padding:0 16px 16px 76px}
-.quick a{display:inline-flex;align-items:center;gap:6px;padding:7px 12px 7px 10px;border-radius:999px;font-size:13px;font-weight:650;color:var(--h);background:color-mix(in srgb,var(--h) 12%,transparent);border:1px solid color-mix(in srgb,var(--h) 30%,transparent);transition:background-color .15s var(--ez)}
-.quick a:hover{background:color-mix(in srgb,var(--h) 22%,transparent)}
-.quick svg.i{width:12px;height:12px;color:var(--spark)}
-@media (max-width:440px){ .quick{padding-left:16px} }
 
-/* problem row */
-.row{display:flex;align-items:center;gap:12px;width:100%;padding:14px;margin:0 0 10px}
+/* assessment row: one style everywhere, date on the right */
+.row{display:flex;align-items:center;gap:12px;width:100%;padding:14px 14px 14px 16px;margin:0 0 10px}
 .row .tx{flex:1;min-width:0}
-.row .t{font-weight:650;font-size:15.5px}
+.row .t{font-weight:650;font-size:16px}
 .row .s{color:var(--tx2);font-size:13px;margin-top:1px}
 .row .pp{font-size:11px;font-weight:700;color:var(--h);text-transform:uppercase;letter-spacing:.06em}
-.when{font-size:11.5px;font-weight:700;color:var(--h);white-space:nowrap;text-align:right;line-height:1.25}
+.when{font-size:12px;font-weight:700;color:var(--h);text-align:right;line-height:1.25;flex:none;max-width:96px}
+.when small{display:block;font-weight:600;color:var(--tx3);font-size:11px}
+.row.past{opacity:.6}
 
-/* hot problems: dated and still to come, or flagged hot. A plain list read as a ranking
-   (Anatomy sat above Genetics), so these get a glow and sparkles, and the rest go in a grid.
-   The glow's negative spread keeps it inside #app's overflow-x clip */
-.eyebrow svg.i{width:13px;height:13px;color:var(--spark);vertical-align:-2px;margin-right:5px}
-.hot{position:relative;overflow:hidden;padding:16px;margin:0 0 12px;border-color:color-mix(in srgb,var(--h) 50%,var(--line));
+/* Next up (home only): the one place that sparkles */
+.hot{position:relative;overflow:hidden;border-color:color-mix(in srgb,var(--h) 50%,var(--line));
   background:linear-gradient(135deg,color-mix(in srgb,var(--h) 20%,var(--card)),var(--card) 65%);
   box-shadow:0 12px 24px -12px color-mix(in srgb,var(--h) 50%,transparent)}
-.hot:hover{border-color:color-mix(in srgb,var(--h) 75%,var(--line))}
 .hot>*{position:relative;z-index:1}
 .hot::before{content:"";position:absolute;inset:0;pointer-events:none;transform:translateX(-110%);animation:sheen 6s var(--ez) infinite;
   background:linear-gradient(105deg,transparent 30%,var(--sheen) 50%,transparent 70%)}
 .hot:nth-child(2)::before{animation-delay:.8s}
 .hot:nth-child(3)::before{animation-delay:1.6s}
 @keyframes sheen{0%,55%{transform:translateX(-110%)}100%{transform:translateX(110%)}}
-.hot .t{font-size:17px;font-weight:700;letter-spacing:-.01em}
 .tag{display:inline-flex;align-items:center;gap:5px;margin:0 0 5px;padding:3px 9px 3px 7px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h);background:color-mix(in srgb,var(--h) 14%,transparent)}
 .tag svg.i{width:12px;height:12px;color:var(--spark)}
-.hot>.spk{position:absolute;top:0;right:46px;width:120px;height:48px;z-index:0;pointer-events:none;color:var(--spark);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--spark) 60%,transparent))}
-.spk svg.i{position:absolute;animation:tw 2.4s ease-in-out infinite}
-.spk svg:nth-child(1){width:19px;height:19px;top:8px;right:54px}
-.spk svg:nth-child(2){width:12px;height:12px;top:28px;right:32px;animation-duration:2s;animation-delay:.8s}
-.spk svg:nth-child(3){width:9px;height:9px;top:9px;right:18px;animation-duration:2.8s;animation-delay:1.5s}
-@keyframes tw{0%,100%{opacity:.9;transform:scale(1) rotate(0)}50%{opacity:.2;transform:scale(.45) rotate(30deg)}}
-.topics{display:flex;flex-wrap:wrap;gap:8px}
-.topics a{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:14.5px;transition:border-color .2s var(--ez)}
-.topics a:hover{border-color:color-mix(in srgb,var(--h) 55%,var(--line))}
-/* the paper's whole tool list, folded */
-.all{margin:26px 0 0}
-.all summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:3px;padding:6px 0;margin:0 0 8px;color:var(--acc-tx);font-weight:600;font-size:14px}
-.all summary::-webkit-details-marker{display:none}
-.all summary svg.i{width:16px;height:16px;transition:transform .2s var(--ez)}
-.all[open] summary svg.i{transform:rotate(90deg)}
 
-/* the Start-here tool */
-.star{padding:18px;margin:6px 0 18px;border-color:color-mix(in srgb,var(--h) 45%,var(--line))}
+/* Start here */
+.star{padding:18px;margin:6px 0 4px;border-color:color-mix(in srgb,var(--h) 45%,var(--line))}
 .star .head{display:flex;gap:12px;align-items:center;margin:0 0 10px}
 .star .nm{font-weight:700;font-size:17px;letter-spacing:-.01em}
 .star p{margin:0 0 14px;color:var(--tx2);font-size:14px}
-.star p b{color:var(--tx);font-weight:600}
-.cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 16px;border-radius:12px;background:var(--acc);color:#fff;font-weight:650;font-size:15px;box-shadow:0 1px 3px rgba(0,0,0,.22);transition:filter .15s var(--ez)}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 16px;border-radius:12px;background:var(--acc);color:#fff;font-weight:650;font-size:15px;box-shadow:0 1px 3px rgba(0,0,0,.22)}
 .cta:hover{filter:brightness(1.06)}
 .cta svg.i{width:17px;height:17px}
-.jump{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 0}
-.jump a{display:flex;align-items:center;gap:8px;padding:10px 11px;border-radius:11px;background:var(--card2);border:1px solid var(--line);font-size:13px;font-weight:600;min-width:0;transition:border-color .2s var(--ez)}
-.jump a:hover{border-color:var(--line2)}
-.jump a:last-child:nth-child(odd){grid-column:1/-1}
-.jump a span{min-width:0;line-height:1.2}
-.jump a svg.i{width:16px;height:16px;color:var(--h)}
-.mini{display:flex;gap:12px;align-items:center;padding:12px 14px;margin:0 0 10px}
+.go{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:12px 0 0}
+.go>span{font-size:12px;font-weight:600;color:var(--tx3);margin-right:2px}
+.go a{display:inline-flex;align-items:center;gap:5px;padding:5px 10px 5px 8px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--card2);border:1px solid var(--line)}
+.go a:hover{border-color:var(--line2)}
+.go a svg.i{width:13px;height:13px;color:var(--h)}
+
+/* a tool */
+.mini{display:flex;gap:12px;align-items:center;padding:12px 14px;margin:0 0 8px}
 .mini .tx{flex:1;min-width:0}
 .mini .nm{font-weight:650;font-size:14.5px}
-.mini .ds{color:var(--tx2);font-size:12.5px;margin-top:1px}
-.more{display:inline-flex;align-items:center;gap:2px;color:var(--acc-tx);font-weight:600;font-size:14px;margin:-6px 0 6px;padding:6px 0}
-.more svg.i{width:16px;height:16px}
+.mini .ds{color:var(--tx2);font-size:12.5px;margin-top:1px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mini .pp{font-size:10.5px;font-weight:700;color:var(--h);text-transform:uppercase;letter-spacing:.06em}
+.kind{font-size:10.5px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;flex:none}
+
 .datebox{display:flex;align-items:center;gap:8px;margin:0 0 16px;font-size:14px;color:var(--tx2)}
 .datebox svg.i{width:16px;height:16px;color:var(--h)}
 .datebox b{color:var(--h);font-weight:650}
 
-/* search */
-.search{display:flex;align-items:center;gap:10px;padding:0 6px 0 14px;height:54px;border-radius:15px;background:var(--card);border:1.5px solid var(--line2);margin:4px 0 0;transition:border-color .2s var(--ez)}
+.alltools{display:flex;align-items:center;gap:12px;padding:14px 16px;margin:18px 0 0}
+.alltools .tx{flex:1}
+.alltools .t{font-weight:650}
+.alltools .s{color:var(--tx2);font-size:13px}
+
+.search{display:flex;align-items:center;gap:10px;padding:0 6px 0 14px;height:54px;border-radius:15px;background:var(--card);border:1.5px solid var(--line2);margin:4px 0 0}
 .search:focus-within{border-color:var(--acc)}
 .search>svg.i{color:var(--tx3)}
 .search input{flex:1;min-width:0;height:100%;background:none;border:0;outline:0;color:var(--tx);font:inherit;font-size:16.5px;-webkit-appearance:none;appearance:none}
 .search input::-webkit-search-cancel-button{display:none}
 .search input::placeholder{color:var(--tx3)}
 .search .x{width:40px;height:40px;display:grid;place-items:center;color:var(--tx3);border-radius:50%}
-.search .x:hover{color:var(--tx)}
 .search .x[hidden]{display:none}
-#res:not(:empty){margin-top:18px}
-.why{font-size:12.5px;color:var(--tx3);margin:2px 0 8px}
-.why b{color:var(--tx2);font-weight:600}
+#res:not(:empty){margin-top:8px}
 .empty{padding:16px 18px;color:var(--tx2);font-size:14px}
 .empty b{display:block;color:var(--tx);margin-bottom:3px}
 
 .foot{margin:34px 0 0;padding-top:18px;border-top:1px solid var(--line);color:var(--tx3);font-size:12.5px;text-align:center;line-height:1.6}
 .foot button{color:var(--acc-tx);font-weight:600}
-
-/* screen change (clipped, or the 22px slide-in briefly widens the page on a phone) */
-#app{overflow-x:hidden;overflow-x:clip}
-.in{animation:inR .32s var(--ezo) both}
-.in.back-anim{animation-name:inL}
-@keyframes inR{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
-@keyframes inL{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
 
 /* help sheet: a modal is the one thing that floats, so it is the one thing with blur behind it */
 dialog{border:1px solid var(--line2);border-radius:20px;background:var(--card);color:var(--tx);padding:0;width:min(520px,calc(100% - 32px));max-height:min(86vh,720px);box-shadow:0 24px 60px rgba(0,0,0,.35)}
@@ -218,12 +184,17 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   .sheet{padding-bottom:max(22px,env(safe-area-inset-bottom))}
 }
 @keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+
+#app{overflow-x:hidden;overflow-x:clip}
+.in{animation:inR .32s var(--ezo) both}
+.in.back-anim{animation-name:inL}
+@keyframes inR{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
 @media (min-width:700px){ .wrap{padding-top:34px} .h1{font-size:34px} }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-dna" viewBox="0 0 24 24"><path d="M8 3c0 4.6 8 4.4 8 9s-8 4.4-8 9"/><path d="M16 3c0 4.6-8 4.4-8 9s8 4.4 8 9"/><path d="M9.2 6.5h5.6M9.2 17.5h5.6"/></symbol>
   <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M20.4 8.8A4.8 4.8 0 0 0 12 5.6a4.8 4.8 0 0 0-8.4 3.2C3.6 14 12 19.5 12 19.5s8.4-5.5 8.4-10.7z"/><path d="M4 12h3.6l1.8-2.6 2.8 5.2 1.8-2.6H20"/></symbol>
@@ -253,7 +224,6 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2Q13 11 22 12Q13 13 12 22Q11 13 2 12Q11 11 12 2Z" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 3.6v16.8a8.4 8.4 0 0 0 0-16.8z" fill="currentColor"/></symbol>
 </svg>
-
 <div class="wrap">
   <header class="bar">
     <a class="brand" href="./" data-home>
@@ -263,9 +233,7 @@ dialog[open]{animation:pop .26s var(--ezo) both}
     <button class="ib" id="helpBtn" aria-label="How this page works" title="How this page works"><svg class="i"><use href="#i-q"/></svg></button>
     <button class="ib" id="themeBtn" aria-label="Switch light or dark" title="Light / dark"><svg class="i"><use href="#i-theme"/></svg></button>
   </header>
-
   <main id="app"></main>
-
   <footer class="foot">
     Free study tools made by a BN2 student for the cohort. Not official MIT material.<br>
     Dates checked <span id="checked"></span> · <button id="helpLink">How this page works</button>
@@ -276,133 +244,112 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <div class="sheet">
     <div class="top"><h2 id="helpT">How this page works</h2><button class="ib" id="helpX" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
     <ol>
-      <li><b>Pick your paper, then the thing you're stuck on.</b> The tool marked “Start here” is the best place to begin. Anything under “Also helps” is worth a go after.</li>
-      <li><b>Or just type.</b> The search box knows everyday words like BP, obs, mg to mL, pedigree and abbreviations, plus every tool's name.</li>
+      <li><b>Pick your paper, then what you're studying for.</b> Each test, exam or practical has one tool marked “Start here”, then everything else that helps, sorted into Practise, Learn it and Listen.</li>
+      <li><b>Or just type.</b> The search box knows everyday words like BP, obs, mg to mL, pedigree and abbreviations, plus every tool's name. “Every tool” on the first screen lists them all.</li>
       <li><b>The tools are free practice</b>, built from our own course material: the lecturers' quizzes, slides, case studies and demo videos. A student made them, not MIT, so if a tool and Canvas ever disagree, Canvas wins.</li>
       <li><b>Dates</b> were last checked on <span class="checked"></span>. Each one disappears by itself once it has passed. Check Canvas for times and rooms.</li>
       <li><b>Your progress</b> is saved inside each tool, in this browser on this device.</li>
     </ol>
     <details>
       <summary>For the admin: where this page's content lives</summary>
-      <p>Everything on this page comes from three lists at the top of the script in <code>index.html</code> (repo <code>jeremyspm.github.io</code>, local <code>github/hub</code>): <code>TOOLS</code> (name, link, one line each), <code>PAPERS</code> (each paper's problems, and the tools for each; the first tool is “Start here”) and each problem's optional <code>date</code>. A dated problem without <code>keep</code> hides itself once its date has passed.</p>
-      <p>To add a tool: one <code>TOOLS</code> entry, then name it in a problem's <code>tools</code> list. Run <code>node index.check.mjs</code> before pushing. It fails on a tool nobody links to, a link to a tool that doesn't exist, a bad date, or a script that won't parse.</p>
+      <p>Everything on this page comes from two lists at the top of the script in <code>index.html</code> (repo <code>jeremyspm.github.io</code>, local <code>github/hub</code>): <code>TOOLS</code> (name, link, one line, its <code>kind</code> and the paper it's filed under) and <code>PAPERS</code> (each paper's assessments: a date, a <code>start</code> tool and the other <code>tools</code>). <code>quiet</code> moves an assessment most of the cohort is past to “Resits and catch-ups”.</p>
+      <p>To add a tool: one <code>TOOLS</code> entry, then name it in an assessment. Run <code>node index.check.mjs</code> before pushing. It fails on a tool no assessment links to, a link to a tool that doesn't exist, a bad date, a search word that lands in the wrong place, or a script that won't parse.</p>
     </details>
   </div>
 </dialog>
 
 <script>
-/* ======================= CONTENT: the only part to edit =======================
-   TOOLS   id → {nm, ic (sprite id), url (relative to the site root), ds, kw?}
-   PAPERS  each paper's problems ("needs"). A need's tools: the FIRST is "Start here".
-           A tool entry is an id, or {id, jump:[[hash,label,icon]], cta:[hash,label], note}.
-           date: {on | from+to (YYYY-MM-DD), chip, what, txt, keep?}. Without keep, the
-           need hides itself the day after its date.
-           A need with a date still to come is "hot": it goes under "Coming up" with sparkles.
-           hot: {tag, until} makes an undated need hot too, with tag on its badge, until that day.
-           node index.check.mjs gates all of it. */
+/* ======================= CONTENT =======================
+   TOOLS   id → {nm, ic, url, ds, kind: practise | learn | listen, pp: the paper it's filed under, kw?}
+   PAPERS  each paper's assessments, in any order (the page sorts them by date).
+           start: the "Start here" tool (an id, or {id, jump:[[hash,label,icon]], cta:[hash,label]}).
+           tools: everything else that helps; the page groups them by kind. An entry can be
+           {id, h, why} to open a tool at one of its screens with a one-line reason.
+           quiet: most of the cohort is past it (resits, catch-ups). It stays on its paper, under
+           its own heading at the bottom, and never shows in Next up. */
 const CHECKED = "12 Oct 2026";
+const KINDS = [["practise","Practise"],["learn","Learn it"],["listen","Listen"]];
 const TOOLS = {
-  "hs2-test3":     {nm:"HS2 Test 3 · Paper Sim", ic:"i-target", url:"hs2-test3/", kw:"paper sim module 3 quiz quizzes saq",
+  "hs2-test3":     {nm:"HS2 Test 3 · Paper Sim", ic:"i-target", url:"hs2-test3/", kind:"practise", pp:"hs2", kw:"paper sim module 3 quiz quizzes saq",
                     ds:"Every Module 3 quiz question we have, a written-answer trainer and a timed mock shaped like the real test."},
-  "hs2-final":     {nm:"HS2 Final · Paper Sim", ic:"i-target", url:"hs2-final/", kw:"paper sim cases case studies",
+  "hs2-final":     {nm:"HS2 Final · Paper Sim", ic:"i-target", url:"hs2-final/", kind:"practise", pp:"hs2", kw:"paper sim cases case studies",
                     ds:"Modules 1–3 in one place, with all ten starred case studies marked against Hannetjie's model answers."},
-  "pod-t3":        {nm:"Test 3 · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#t3", kw:"podcast audio listen mp3 saq written answers",
-                    ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each: loop the shaky ones on the bus, and play Rapid-fire the night before."},
-  "pod-final":     {nm:"Final · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#final", kw:"podcast audio listen mp3 saq written answers",
-                    ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each, to loop until it sticks."},
-  "hs2-genetics":  {nm:"Genetics Trainer", ic:"i-dna", url:"hs2-genetics/", kw:"genetics pedigree punnett karyotype",
+  "hs2-genetics":  {nm:"Genetics Trainer", ic:"i-dna", url:"hs2-genetics/", kind:"practise", pp:"hs2", kw:"genetics pedigree pedigrees punnett karyotype karyotypes inheritance dominant recessive x-linked carrier alleles genotype phenotype",
                     ds:"Pedigree charts, Punnett squares and karyotypes, worked on Hannetjie's own charts with her answer keys."},
-  "flesh-and-bone":{nm:"Flesh & Bone", ic:"i-body", url:"flesh-and-bone/", kw:"flesh bone 3d anatomy",
+  "flesh-and-bone":{nm:"Flesh & Bone", ic:"i-body", url:"flesh-and-bone/", kind:"practise", pp:"hs2", kw:"flesh bone 3d anatomy bones muscles skeleton femur pelvis skull landmarks",
                     ds:"A 3D body: find the bone or muscle, name it, or just explore. Starts with the ones in Hannetjie's quizzes."},
-  "anatomy-atlas": {nm:"Anatomy Atlas", ic:"i-body", url:"anatomy-atlas/", kw:"atlas 3d anatomy body systems",
-                    ds:"Explore a 3D body, one system at a time."},
-  "m1-videos":     {nm:"Module 1 videos", ic:"i-play", url:"hs2-m1-videos.html", kw:"heart cardiac circulation blood vessels ecg breathing respiratory lungs lymphatic immunity",
-                    ds:"Heart and circulation, breathing, lymphatics and immunity. 158 short videos in 15 topics."},
-  "m2-videos":     {nm:"Module 2 videos", ic:"i-play", url:"hs2-videos.html", kw:"bone joints muscles nervous brain neurons spinal endocrine hormones thyroid diabetes",
-                    ds:"Bones, joints and muscles, the nervous system and hormones. 153 short videos in 20 topics."},
-  "m3-videos":     {nm:"Module 3 videos", ic:"i-play", url:"hs2-m3-videos.html", kw:"reproduction genetics eye ear smell",
+  "m3-videos":     {nm:"Module 3 videos", ic:"i-play", url:"hs2-m3-videos.html", kind:"learn", pp:"hs2", kw:"video videos explain watch reproduction genetics eye ear smell",
                     ds:"Reproduction, genetics, and the eye, ear and smell. 67 short videos in 13 topics."},
-  "inp-final":     {nm:"INP Final · Paper Sim", ic:"i-target", url:"inp-final/", kw:"paper sim quiz quizzes",
+  "m1-videos":     {nm:"Module 1 videos", ic:"i-play", url:"hs2-m1-videos.html", kind:"learn", pp:"hs2", kw:"video videos explain watch heart cardiac circulation blood vessels ecg breathing respiratory lungs lymphatic immunity",
+                    ds:"Heart and circulation, breathing, lymphatics and immunity. 158 short videos in 15 topics."},
+  "m2-videos":     {nm:"Module 2 videos", ic:"i-play", url:"hs2-videos.html", kind:"learn", pp:"hs2", kw:"video videos explain watch bone joints muscles nervous brain neurons spinal endocrine hormones thyroid diabetes",
+                    ds:"Bones, joints and muscles, the nervous system and hormones. 153 short videos in 20 topics."},
+  "anatomy-atlas": {nm:"Anatomy Atlas", ic:"i-body", url:"anatomy-atlas/", kind:"learn", pp:"hs2", kw:"atlas 3d anatomy body systems",
+                    ds:"Explore a 3D body, one system at a time."},
+  "pod-t3":        {nm:"Test 3 · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#t3", kind:"listen", pp:"hs2", kw:"podcast audio listen mp3 saq written answers",
+                    ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each. Loop the shaky ones on the bus."},
+  "pod-final":     {nm:"Final · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#final", kind:"listen", pp:"hs2", kw:"podcast audio listen mp3 saq written answers",
+                    ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."},
+  "inp-final":     {nm:"INP Final · Paper Sim", ic:"i-target", url:"inp-final/", kind:"practise", pp:"inp", kw:"paper sim quiz quizzes nursing practice",
                     ds:"Every INP quiz question in one bank, with practice by topic and a timed full mock."},
-  "cls-trainer":   {nm:"CLS Practical Trainer", ic:"i-steth", url:"cls-trainer/", kw:"cls practical trainer rehearse",
-                    ds:"Vital signs and med admin step by step, built from the course's own demo videos. Practise it out loud, and try the BP Lab."},
-  "med-cheat":     {nm:"Practical cheat sheet", ic:"i-list", url:"med-admin-cheat.html", kw:"cheat sheet cram summary interactions interaction salbutamol warfarin normal ranges",
-                    ds:"Vital signs and med admin on one page to cram from: normal ranges, the routines, two-step BP, both drugs and their interactions, and the traps."},
-  "chart-sim":     {nm:"Chart Sim", ic:"i-chart", url:"pharm-final/chart.html", kw:"chart sim nmc 8-day medication chart",
+  "chart-sim":     {nm:"Chart Sim", ic:"i-chart", url:"pharm-final/chart.html", kind:"practise", pp:"inp", kw:"chart sim nmc 8-day medication med chart charting sign signing codes prescription",
                     ds:"The NZ 8-day medication chart, box for box. Read it, then sign the med rounds yourself."},
-  "chart-speak":   {nm:"Chart Speak", ic:"i-abc", url:"pharm-final/terms.html", kw:"chart speak terms abbreviations",
+  "chart-speak":   {nm:"Chart Speak", ic:"i-abc", url:"pharm-final/terms.html", kind:"learn", pp:"inp", kw:"chart speak terms abbreviations abbreviation acronyms od bd tds qid prn stat mane nocte route po iv im sc sl",
                     ds:"Over 400 med-chart terms and abbreviations (OD, BD, PRN…), orders to decode and dangers to spot."},
-  "medcalc":       {nm:"MedCalc — Joan's way", ic:"i-calc", url:"medcalc/", kw:"medcalc med calc joan",
+  "cls-trainer":   {nm:"CLS Practical Trainer", ic:"i-steth", url:"cls-trainer/", kind:"practise", pp:"inp", kw:"cls practical trainer rehearse vital signs obs observations pulse heart rate respirations resp rate temperature temp spo2 sats oxygen saturation bp blood pressure cuff stethoscope korotkoff sphygmomanometer two-step systolic diastolic med admin",
+                    ds:"Vital signs and med admin step by step, built from the course's own demo videos. Practise it out loud, and try the BP Lab."},
+  "medcalc":       {nm:"MedCalc — Joan's way", ic:"i-calc", url:"medcalc/", kind:"practise", pp:"ph", kw:"medcalc med calc calcs calculation calculations joan dose dosage mg ml mcg tablets tablet drip rate infusion dilution formula maths math numeracy",
                     ds:"Joan's method: a short learn path, your working marked box by box, and a test in her 15-question format."},
-  "pharm-final":   {nm:"Pharm Final · Paper Sim", ic:"i-target", url:"pharm-final/", kw:"paper sim",
+  "med-cheat":     {nm:"Practical cheat sheet", ic:"i-list", url:"med-admin-cheat.html", kind:"learn", pp:"ph", kw:"cheat sheet cram summary interactions salbutamol warfarin normal ranges med admin",
+                    ds:"Vital signs and med admin on one page to cram from: normal ranges, the routines, two-step BP, both drugs and their interactions, and the traps."},
+  "pharm-final":   {nm:"Pharm Final · Paper Sim", ic:"i-target", url:"pharm-final/", kind:"practise", pp:"ph", kw:"paper sim",
                     ds:"Pharmacology questions by topic, short answers in Joan's format (a definition and an example), and a timed mock."},
-  "intro-pharm":   {nm:"Pharmacology hub", ic:"i-book", url:"intro-pharm/", kw:"hub topics drug classes",
+  "intro-pharm":   {nm:"Pharmacology hub", ic:"i-book", url:"intro-pharm/", kind:"learn", pp:"ph", kw:"hub topics drug classes pharmacokinetics pharmacodynamics antibiotics analgesics opioids receptors side effects adverse",
                     ds:"All 13 topics, with the drug classes laid out and how they connect."}
 };
 const SIM = [["learn","Practise questions","i-cards"],["saq","Written answers","i-pen"],["mock","Timed mock","i-clock"],["miss","Redo my misses","i-redo"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
-   needs:[
+   as:[
     {id:"t3", t:"Test 3", s:"Reproduction · genetics · special senses",
      date:{from:"2026-10-20", to:"2026-10-26", chip:"20–26 Oct", what:"Test 3 window", verb:"opens", txt:"Book a ProctorU slot between Tue 20 and Mon 26 Oct"},
-     kw:"test 3 three module 3 reproduction reproductive genetics senses special eye ear hearing deafness vision smell lactation breast menstrual cycle fertility testes ovary hormones fsh lh proctoru",
-     tools:[{id:"hs2-test3", jump:[["saq","Written answers","i-pen"],["learn","Practise questions","i-cards"],["mock","Timed mock","i-clock"],["vid","Videos","i-play"]]},"pod-t3","hs2-genetics","m3-videos"]},
-    {id:"exam", t:"The final exam", s:"The ten starred case studies · Modules 1–3",
+     kw:"test 3 three module 3 reproduction reproductive senses special eye ear hearing deafness vision smell lactation breast menstrual cycle fertility testes ovary hormones fsh lh proctoru",
+     start:{id:"hs2-test3", jump:[["saq","Written answers","i-pen"],["learn","Questions","i-cards"],["mock","Timed mock","i-clock"],["vid","Videos","i-play"]]},
+     tools:["hs2-genetics","m3-videos","pod-t3"]},
+    {id:"exam", t:"Final exam", s:"The ten starred case studies · Modules 1–3",
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
-     kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington",
-     tools:[{id:"hs2-final", jump:[["saq","Case study answers","i-pen"],["allcase","Every case question","i-cards"],["mock","Timed mock","i-clock"]]},"pod-final","flesh-and-bone","hs2-genetics"]},
-    {id:"anat", t:"Anatomy", s:"Bones, muscles, where things are",
-     kw:"anatomy bones bone muscles muscle skeleton skeletal muscular 3d femur pelvis skull landmarks",
-     tools:["flesh-and-bone","anatomy-atlas","m2-videos"]},
-    {id:"gen", t:"Genetics & pedigrees", s:"Punnett squares, pedigree charts, karyotypes",
-     hot:{tag:"On Test 3 and the exam", until:"2026-11-04"},
-     kw:"genetics genetic pedigree pedigrees punnett karyotype karyotypes inheritance dominant recessive x-linked carrier alleles genotype phenotype",
-     tools:["hs2-genetics","m3-videos"]},
-    {id:"vid", t:"I need it explained", s:"Short videos, matched to Hannetjie's topics",
-     kw:"video videos explain explained watch youtube dr matt mike understand lecture",
-     tools:["m3-videos","m1-videos","m2-videos"]}
-  ]},
+     kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
+     start:{id:"hs2-final", jump:[["saq","Case answers","i-pen"],["allcase","Every case question","i-cards"],["mock","Timed mock","i-clock"]]},
+     tools:["hs2-genetics","flesh-and-bone","m1-videos","m2-videos","m3-videos","anatomy-atlas","pod-final"]}
+   ]},
   {id:"inp", code:"722.556", nm:"Intro to Nursing Practice", short:"INP", ic:"i-pulse", hue:"var(--inp)", blurb:"Clinical skills, vital signs and placement",
-   needs:[
-    {id:"vs", t:"Vital signs practical", s:"Rehearse the assessment step by step, out loud",
-     kw:"vital signs practical assessment cls obs observations pulse heart rate respirations resp rate temperature temp spo2 sats oxygen saturation",
-     tools:["med-cheat",{id:"cls-trainer", jump:[["walk/vs","Walkthrough","i-book"],["setup/vs","Live run, out loud","i-steth"],["bp","BP Lab","i-gauge"],["rubric/vs","Marking sheet","i-list"]]}]},
-    {id:"bp", t:"Taking a blood pressure", s:"The two-step method on a virtual cuff, with the sounds",
-     kw:"bp blood pressure cuff stethoscope korotkoff sphygmomanometer two-step systolic diastolic manual aneroid",
-     tools:[{id:"cls-trainer", cta:["bp","Open the BP Lab"], jump:[["order/vs/bp","The two-step order","i-cards"],["walk/vs","Whole walkthrough","i-book"]]}]},
-    {id:"exam", t:"The final exam", s:"Every INP quiz question and a full mock",
+   as:[
+    {id:"exam", t:"Final exam", s:"Every INP quiz question and a full mock",
      date:{on:"2026-11-02", chip:"Mon 2 Nov", what:"Final exam", txt:"Mon 2 Nov · on campus"},
      kw:"final exam quiz quizzes mock nursing practice",
-     tools:[{id:"inp-final", jump:SIM}]},
-    {id:"chart", t:"Reading a med chart", s:"The real NZ chart, and what everything on it means",
-     kw:"med chart medication chart charting nmc 8-day sign signing codes prescription",
-     tools:["chart-sim","chart-speak"]},
-    {id:"place", t:"Getting ready for placement", s:"Charts, abbreviations, med calc and your skills",
+     start:{id:"inp-final", jump:SIM}, tools:[]},
+    {id:"place", t:"Placement", s:"Charts, abbreviations, med calc and your skills",
      date:{from:"2026-11-09", to:"2026-12-18", chip:"9 Nov", what:"Placement", verb:"starts", txt:"Placement runs Mon 9 Nov – Fri 18 Dec", keep:true},
      kw:"placement clinical ward prep ready preceptor",
-     tools:["chart-speak","chart-sim","medcalc","cls-trainer"]}
-  ]},
+     start:"chart-speak",
+     tools:["chart-sim","medcalc",{id:"cls-trainer", h:"walk/vs", why:"Run through vital signs again before the ward."}]}
+   ]},
   {id:"ph", code:"722.544", nm:"Intro to Pharmacology", short:"Pharm", ic:"i-pill", hue:"var(--ph)", blurb:"Drugs, doses and giving medicines",
-   needs:[
-    {id:"calc", t:"Med calc test", s:"Joan's three formulas, with your working marked",
+   as:[
+    {id:"calc", quiet:true, t:"Med calc test", s:"Joan's three formulas, with your working marked",
      date:{on:"2026-10-21", chip:"Wed 21 Oct", what:"Med calc resit", txt:"Next resit Wed 21 Oct", keep:true},
-     kw:"med calc calcs calculation calculations dose dosage mg ml mcg tablets tablet drip rate infusion dilution formula maths math numeracy",
-     tools:["medcalc"]},
-    {id:"admin", t:"Med admin practical", s:"Rehearse giving a medicine, start to finish",
-     hot:{tag:"Window closes 30 Oct", until:"2026-10-30"},
+     kw:"med calc test resit",
+     start:"medcalc", tools:[]},
+    {id:"admin", quiet:true, t:"Med admin practical", s:"Giving a medicine, start to finish",
+     date:{on:"2026-10-30", chip:"By Fri 30 Oct", what:"Window", verb:"closes", txt:"The assessment window closes Fri 30 Oct"},
      kw:"med admin medication administration practical assessment rights cilazapril paracetamol metoprolol give giving",
-     tools:["med-cheat",{id:"cls-trainer", jump:[["walk/ma","Walkthrough","i-book"],["setup/ma","Live run, out loud","i-steth"],["chart/ma","Chart it","i-chart"],["rubric/ma","Marking sheet","i-list"]]},"chart-sim"]},
-    {id:"exam", t:"The final exam", s:"Short answers: a definition and an example",
+     start:"med-cheat",
+     tools:[{id:"cls-trainer", h:"walk/ma", why:"The med admin run-through, out loud, with its marking sheet."},"chart-sim","chart-speak"]},
+    {id:"exam", t:"Final exam", s:"Short answers: a definition and an example",
      date:{on:"2026-11-05", chip:"Thu 5 Nov", what:"Final exam", txt:"Thu 5 Nov · on campus, AM or PM group"},
      kw:"final exam short answer answers definition pharmacology mock",
-     tools:[{id:"pharm-final", jump:SIM},"intro-pharm"]},
-    {id:"terms", t:"Abbreviations & chart words", s:"OD, BD, QID, PRN, stat, mane, nocte…",
-     kw:"abbreviations abbreviation acronyms terms words od bd tds qid prn stat mane nocte route po iv im sc sl",
-     tools:["chart-speak","chart-sim"]},
-    {id:"drugs", t:"Understanding drug classes", s:"What each class does, and how they connect",
-     kw:"drug drugs class classes pharmacokinetics pharmacodynamics antibiotics analgesics opioids receptors side effects adverse",
-     tools:["intro-pharm","pharm-final"]}
-  ]}
+     start:{id:"pharm-final", jump:SIM}, tools:["intro-pharm","chart-speak"]}
+   ]}
 ];
 
 /* ======================= ENGINE ======================= */
@@ -414,179 +361,164 @@ const P = id => PAPERS.find(p => p.id === id);
 const norm = t => typeof t === "string" ? {id:t} : t;
 const link = (id, h) => TOOLS[id].url + (h ? "#" + h : "");
 
-/* dates are local calendar days; a need without keep hides the day after it ends */
 const day = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
 const diff = s => { const t = new Date(); t.setHours(0,0,0,0); return Math.round((day(s) - t) / 864e5); };
 const rel = n => n === 0 ? "today" : n === 1 ? "tomorrow" : "in " + n + " days";
-function when(n){
-  const D = n.date; if (!D) return null;
-  const a = diff(D.from || D.on), b = D.to ? diff(D.to) : a;
-  if (b < 0) return {past:true};
-  if (a > 0) return {chip:D.chip, line:D.what + (D.verb ? " " + D.verb + " " : " ") + rel(a), txt:D.txt, rel:rel(a)};
-  const now = D.to ? (b === 0 ? "ends today" : "on now, ends " + rel(b)) : "today";
-  return {chip: D.to ? "On now" : "Today", line:D.what + " " + now, txt:D.txt, rel:now};
+function when(a){
+  const D = a.date; if (!D) return null;
+  const s = diff(D.from || D.on), e = D.to ? diff(D.to) : s;
+  if (e < 0) return {past:true};
+  if (s > 0) return {chip:D.chip, rel:rel(s), txt:D.txt, line:D.what + (D.verb ? " " + D.verb + " " : " ") + rel(s), now:false};
+  const now = D.to ? (e === 0 ? "ends today" : "on now, ends " + rel(e)) : "today";
+  return {chip: D.to ? "On now" : "Today", rel:now, txt:D.txt, line:D.what + " " + now, now:true};
 }
-const needs = p => p.needs.filter(n => { const w = when(n); return !(w && w.past && !n.date.keep); });
-const findNeed = (p, id) => needs(p).find(n => n.id === id);
-function nextLine(p){
-  let best = null;
-  needs(p).forEach(n => { const w = when(n); if (!w || w.past) return;
-    const a = diff(n.date.from || n.date.on); if (!best || a < best.a) best = {a, w}; });
-  return best ? best.w.line : "";
-}
-/* the badge on a hot need ("20–26 Oct · opens in 5 days"), or "" when it isn't hot */
-function hotTag(n){
-  if (n.hot && diff(n.hot.until) >= 0) return n.hot.tag;
-  const w = when(n); if (!w || w.past) return "";
-  const a = diff(n.date.from || n.date.on);
-  return a > 0 ? n.date.chip + " · " + (n.date.verb ? n.date.verb + " " : "") + rel(a) : w.rel;
-}
+/* a dated assessment without keep disappears the day after it; keep leaves it, undated */
+const live = p => p.as.filter(a => { const w = when(a); return !(w && w.past && !a.date.keep); });
+const sortKey = a => { const w = when(a); if (!w) return 900; if (w.past) return 1000; return w.now ? -1 : diff(a.date.from || a.date.on); };
+const isNext = a => { const w = when(a); return !a.quiet && w && !w.past; };
+const byDate = list => [...list].sort((x, y) => sortKey(x) - sortKey(y));
+const findA = (p, id) => live(p).find(a => a.id === id);
+const nextUp = () => PAPERS.flatMap(p => live(p).map(a => ({p, a})))
+  .filter(x => isNext(x.a) && sortKey(x.a) <= 21)
+  .sort((x, y) => sortKey(x.a) - sortKey(y.a)).slice(0, 3);
 
 /* ---------- pieces ---------- */
+function aRow(p, a, showPaper){
+  const w = when(a);
+  return `<a class="card row lift" style="--h:${p.hue}" href="#${p.id}/${a.id}" data-nav>
+    <div class="tx">${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${a.t}</div><div class="s">${a.s}</div></div>
+    ${w && !w.past ? `<div class="when">${w.chip}<small>${w.now ? w.rel : w.rel}</small></div>` : ""}<span class="chev">${ic("i-chev")}</span></a>`;
+}
+function hotRow(p, a){
+  const w = when(a);
+  return `<a class="card row hot lift" style="--h:${p.hue}" href="#${p.id}/${a.id}" data-nav>
+    <div class="tx"><div class="tag">${ic("i-spark")}${w.now ? w.rel : w.chip + " · " + w.rel}</div><div class="t">${p.short} ${a.t}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
+}
 function star(p, entry){
   const e = norm(entry), T = TOOLS[e.id];
-  const ctaHref = e.cta ? link(e.id, e.cta[0]) : link(e.id);
-  const ctaTx = e.cta ? e.cta[1] : "Open " + T.nm.split(" · ")[0];
-  const jump = e.jump ? `<div class="jump">${e.jump.map(j => `<a href="${link(e.id, j[0])}">${ic(j[2])}<span>${j[1]}</span></a>`).join("")}</div>` : "";
+  const href = e.cta ? link(e.id, e.cta[0]) : link(e.id);
+  const tx = e.cta ? e.cta[1] : "Open " + T.nm.split(" · ")[0];
+  const go = e.jump ? `<div class="go"><span>Straight to</span>${e.jump.map(j => `<a href="${link(e.id, j[0])}">${ic(j[2])}${j[1]}</a>`).join("")}</div>` : "";
   return `<div class="card star" style="--h:${p.hue}">
     <div class="head"><div class="ic">${ic(T.ic)}</div><div><div class="eyebrow hue">Start here</div><div class="nm">${T.nm}</div></div></div>
-    <p>${T.ds}${e.note ? " <b>" + e.note + "</b>" : ""}</p>
-    <a class="cta" href="${ctaHref}">${ctaTx} ${ic("i-open")}</a>${jump}</div>`;
+    <p>${T.ds}</p><a class="cta" href="${href}">${tx} ${ic("i-open")}</a>${go}</div>`;
 }
-function mini(p, id){
-  const T = TOOLS[id];
-  return `<a class="card mini lift" style="--h:${p.hue}" href="${link(id)}">
-    <div class="ic sm">${ic(T.ic)}</div><div class="tx"><div class="nm">${T.nm}</div><div class="ds">${T.ds}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
+function mini(entry, opts = {}){
+  const e = norm(entry), T = TOOLS[e.id], p = P(T.pp);
+  return `<a class="card mini lift" style="--h:${(opts.hue || p.hue)}" href="${link(e.id, e.h)}">
+    <div class="ic sm">${ic(T.ic)}</div>
+    <div class="tx">${opts.paper ? `<div class="pp">${p.short}</div>` : ""}<div class="nm">${T.nm}</div><div class="ds">${e.why || T.ds}</div></div>
+    ${opts.kind ? `<span class="kind">${KINDS.find(k => k[0] === T.kind)[1]}</span>` : `<span class="chev">${ic("i-chev")}</span>`}</a>`;
 }
-function needRow(p, n, showPaper){
-  const w = when(n);
-  return `<a class="card row lift" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
-    <div class="tx">${showPaper ? `<div class="pp">${p.short}</div>` : ""}<div class="t">${n.t}</div><div class="s">${n.s}</div></div>
-    ${w && !w.past ? `<div class="when">${w.chip}</div>` : ""}<span class="chev">${ic("i-chev")}</span></a>`;
-}
-/* a hot need: badge (its date) and title only; the blurb waits for its own screen */
-function hotRow(p, n){
-  return `<a class="card row hot lift" style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>
-    <span class="spk" aria-hidden="true">${ic("i-spark").repeat(3)}</span>
-    <div class="tx"><div class="tag">${ic("i-spark")}${hotTag(n)}</div><div class="t">${n.t}</div></div><span class="chev">${ic("i-chev")}</span></a>`;
+function trail(p, here){
+  const sep = ic("i-chev");
+  return `<nav class="trail" style="--h:${p ? p.hue : "var(--acc-tx)"}" aria-label="Where you are"><a class="home" href="./" data-home>${ic("i-home")}Home</a>${sep}` +
+    (p && here ? `<a href="#${p.id}" data-nav data-up>${p.short}</a>${sep}<span class="here">${here}</span>` : `<span class="here">${p ? p.nm : here}</span>`) + `</nav>`;
 }
 
 /* ---------- screens ---------- */
 let Q = "";
 function homeScreen(){
-  document.title = "BN2 Study Tools";
-  return `<h1 class="h1" tabindex="-1">What do you need help with?</h1>
-    <p class="sub">Pick your paper, or type what you're stuck on.</p>
-    <label class="search">${ic("i-search")}<input id="q" type="search" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false"
-      placeholder="e.g. blood pressure, pedigrees, mg to mL" aria-label="What are you stuck on?" value="${esc(Q)}">
+  const nx = nextUp();
+  return `<h1 class="h1" tabindex="-1">What are you studying for?</h1>
+    <p class="sub">What's coming up next, or pick your paper.</p>
+    <label class="search">${ic("i-search")}<input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+      placeholder="e.g. blood pressure, pedigrees, mg to mL" aria-label="Search" value="${esc(Q)}">
       <button class="x" id="qx" aria-label="Clear the search" ${Q ? "" : "hidden"}>${ic("i-x")}</button></label>
     <div id="res" aria-live="polite"></div>
-    <div class="eyebrow sec">Your papers</div>` +
-    PAPERS.map(p => { const nx = nextLine(p), hot = needs(p).filter(hotTag);
-      return `<div class="card pcard lift" style="--h:${p.hue}"><a class="phead" href="#${p.id}" data-nav>
+    <div id="rest">` +
+    (nx.length ? `<div class="eyebrow sec">${ic("i-spark")}Next up</div><div>` + nx.map(x => hotRow(x.p, x.a)).join("") + `</div>` : "") +
+    `<div class="eyebrow sec">Your papers</div>` +
+    PAPERS.map(p => { const L = byDate(live(p)), first = L.find(isNext);
+      return `<a class="card pcard lift" style="--h:${p.hue}" href="#${p.id}" data-nav>
         <div class="ic">${ic(p.ic)}</div>
-        <div class="tx"><div class="nm">${p.nm}</div><div class="meta">${p.code} · ${p.blurb}</div>
-        ${nx ? `<div class="pill">${ic("i-cal")}${nx}</div>` : ""}</div>
-        <span class="chev">${ic("i-chev")}</span></a>` +
-        (hot.length ? `<div class="quick">${hot.map(n => `<a href="#${p.id}/${n.id}" data-nav>${ic("i-spark")}${n.t}</a>`).join("")}</div>` : "") +
-        `</div>`; }).join("");
+        <div class="tx"><div class="nm">${p.nm}</div><div class="meta">${L.length} assessment${L.length === 1 ? "" : "s"} · ${p.blurb}</div>
+        ${first ? `<div class="pill">${ic("i-cal")}${when(first).line}</div>` : ""}</div>
+        <span class="chev">${ic("i-chev")}</span></a>`; }).join("") +
+    `<a class="card alltools lift" href="#tools" data-nav style="--h:var(--acc-tx)"><div class="ic sm">${ic("i-cards")}</div>
+      <div class="tx"><div class="t">Every tool</div><div class="s">All ${Object.keys(TOOLS).length}, filed by paper</div></div><span class="chev">${ic("i-chev")}</span></a></div>`;
 }
 function paperScreen(p){
-  document.title = p.nm + " · BN2 Study Tools";
-  const ids = [...new Set(needs(p).flatMap(n => n.tools.map(t => norm(t).id)))];
-  const hot = needs(p).filter(hotTag), rest = needs(p).filter(n => !hotTag(n));
-  /* kept short on purpose (15 Oct, "way too much here"): dates first, topics as plain buttons,
-     the full tool list folded away */
-  return trail(p) +
-    `<h1 class="h1" tabindex="-1">What are you struggling with?</h1>` +
-    (hot.length ? `<div class="eyebrow sec">${ic("i-spark")}Coming up</div><div>` + hot.map(n => hotRow(p, n)).join("") + `</div>` : "") +
-    (rest.length ? `<div class="eyebrow sec">${hot.length ? "Or pick a topic" : "Pick a topic"}</div><div class="topics">` +
-      rest.map(n => `<a style="--h:${p.hue}" href="#${p.id}/${n.id}" data-nav>${n.t}</a>`).join("") + `</div>` : "") +
-    `<details class="all"><summary>All ${ids.length} ${p.short} tools ${ic("i-chev")}</summary>` + ids.map(id => mini(p, id)).join("") + `</details>`;
+  const L = byDate(live(p));
+  return trail(p) + `<h1 class="h1" tabindex="-1">${p.nm}</h1>
+    <p class="sub">${p.code} · Pick what you're studying for.</p>` + L.filter(a => !a.quiet).map(a => aRow(p, a)).join("") +
+    (L.some(a => a.quiet) ? `<div class="eyebrow sec">Resits and catch-ups</div>` + L.filter(a => a.quiet).map(a => aRow(p, a)).join("") : "");
 }
-function needScreen(p, n){
-  document.title = p.short + " · " + n.t + " · BN2 Study Tools";
-  const w = when(n), [first, ...rest] = n.tools;
-  return trail(p, n) +
-    `<h1 class="h1" tabindex="-1">${n.t}</h1>
-    <p class="sub" style="margin-bottom:${w && !w.past ? 10 : 18}px">${n.s}</p>` +
+function aScreen(p, a){
+  const w = when(a), startId = norm(a.start).id;
+  const rest = a.tools.map(norm).filter(e => e.id !== startId);
+  return trail(p, a.t) + `<h1 class="h1" tabindex="-1">${p.short} ${a.t}</h1>
+    <p class="sub" style="margin-bottom:${w && !w.past ? 10 : 18}px">${a.s}</p>` +
     (w && !w.past ? `<div class="datebox" style="--h:${p.hue}">${ic("i-cal")}<span>${w.txt} · <b>${w.rel}</b></span></div>` : "") +
-    star(p, first) +
-    (rest.length ? `<div class="eyebrow sec">Also helps</div>` + rest.map(t => mini(p, norm(t).id)).join("") : "") +
-    `<a class="more" href="#${p.id}" data-nav data-up>Something else in ${p.short} ${ic("i-chev")}</a>`;
+    star(p, a.start) +
+    KINDS.map(([k, label]) => { const g = rest.filter(e => TOOLS[e.id].kind === k);
+      return g.length ? `<div class="eyebrow sec">${label}</div>` + g.map(e => mini(e, {hue:p.hue})).join("") : ""; }).join("");
 }
-/* Home › paper › problem: every step above this one is a link */
-function trail(p, n){
-  const sep = ic("i-chev");
-  return `<nav class="trail" style="--h:${p.hue}" aria-label="Where you are"><a class="home" href="./" data-home>${ic("i-home")}Home</a>${sep}` +
-    (n ? `<a href="#${p.id}" data-nav data-up>${p.short}</a>${sep}<span class="here">${n.t}</span>` : `<span class="here">${p.nm}</span>`) + `</nav>`;
+function toolsScreen(){
+  return trail(null, "Every tool") + `<h1 class="h1" tabindex="-1">Every tool</h1>
+    <p class="sub">For when you already know what you want.</p>` +
+    PAPERS.map(p => { const ids = Object.keys(TOOLS).filter(id => TOOLS[id].pp === p.id)
+        .sort((x, y) => KINDS.findIndex(k => k[0] === TOOLS[x].kind) - KINDS.findIndex(k => k[0] === TOOLS[y].kind));
+      return `<div class="eyebrow sec" style="--h:${p.hue}"><span class="dot"></span>${p.nm}</div>` + ids.map(id => mini(id, {kind:true})).join(""); }).join("");
 }
 
-/* ---------- search: plain keyword matching, nothing leaves the page ---------- */
+/* ---------- search: assessments and tools, plain keyword matching ---------- */
 const STOP = new Set("a an the i im my me to of and or for with on in is it its how do does what whats help stuck need needs about can get doing understand".split(" "));
 const split = s => s.toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean);
+function score(ws, bags){
+  let sc = 0, all = true;
+  ws.forEach(w => { let wt = 0;
+    for (const [bag, v] of bags) if (bag.includes(w)) { wt = v; break; }
+    if (!wt && w.length > 2) for (const [bag] of bags) if (bag.some(x => x.startsWith(w))) { wt = 1; break; }
+    if (wt) sc += wt; else all = false; });
+  return sc ? sc + (all ? 100 : 0) : 0;
+}
 function search(q){
   const ws = q.toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter(w => w && !STOP.has(w) && (w.length > 1 || /\d/.test(w)));
   if (!ws.length) return null;
   const out = [];
-  PAPERS.forEach(p => needs(p).forEach(n => {
-    /* a word in the problem's title counts 3; its blurb, keywords, paper or Start-here tool 2;
-       one of its other tools 1; a word that only starts one of these (pedi → pedigree) 1 */
-    const ts = n.tools.map(t => TOOLS[norm(t).id]);
-    const bags = [[split(n.t), 3],
-      [split([n.s, n.kw, p.nm, p.short, p.code, ts[0].nm, ts[0].kw || ""].join(" ")), 2],
-      [split(ts.slice(1).map(T => T.nm + " " + (T.kw || "")).join(" ")), 1]];
-    let score = 0; const hit = [];
-    ws.forEach(w => {
-      let wt = 0, m = w;
-      for (const [bag, v] of bags) if (bag.includes(w)) { wt = v; break; }
-      if (!wt && w.length > 2) for (const [bag] of bags) { const h = bag.find(x => x.startsWith(w)); if (h) { wt = 1; m = h; break; } }
-      if (wt) { score += wt; hit.push(m); }
-    });
-    if (score) out.push({p, n, score, hit:[...new Set(hit)], all: hit.length === ws.length});
+  PAPERS.forEach(p => live(p).forEach(a => {
+    const sc = score(ws, [[split(a.t), 3], [split([a.kw, p.nm, p.short].join(" ")), 2], [split(a.s), 1]]);
+    if (sc) out.push({sc: sc + 0.5, p, a});
   }));
-  return out.sort((a, b) => (b.all - a.all) || (b.score - a.score));
+  Object.keys(TOOLS).forEach(id => { const T = TOOLS[id];
+    const sc = score(ws, [[split(T.nm), 3], [split((T.kw || "") + " " + P(T.pp).short), 2], [split(T.ds), 1]]);
+    if (sc) out.push({sc, tool:id});
+  });
+  return out.sort((x, y) => y.sc - x.sc).slice(0, 6);
 }
 function results(){
   const res = $("#res"); if (!res) return;
-  $("#qx").hidden = !Q;
+  $("#qx").hidden = !Q; $("#rest").hidden = !!Q.trim();
   const hits = search(Q.trim());
   if (!hits) { res.innerHTML = ""; return; }
-  if (!hits.length) {
-    res.innerHTML = `<div class="card empty"><b>Nothing matched “${esc(Q.trim())}”.</b>Try a simpler word (BP, med calc, pedigree, anatomy), or pick your paper below.</div>`;
-    return;
-  }
-  const [top, ...rest] = hits;
-  res.innerHTML = `<div class="crumb" style="--h:${top.p.hue}"><span class="dot"></span><span class="eyebrow hue">Best match · ${top.p.short} · ${top.n.t}</span></div>
-    <div class="why">Matched <b>${esc(top.hit.join(", "))}</b></div>` + star(top.p, top.n.tools[0]) +
-    `<a class="more" href="#${top.p.id}/${top.n.id}" data-nav>Everything for “${top.n.t}” ${ic("i-chev")}</a>` +
-    (rest.length ? `<div class="eyebrow sec">Other matches</div>` + rest.slice(0, 5).map(x => needRow(x.p, x.n, true)).join("") : "");
+  res.innerHTML = hits.length ? `<div class="eyebrow sec">Matches</div>` + hits.map(h => h.tool ? mini(h.tool, {paper:true}) : aRow(h.p, h.a, true)).join("")
+    : `<div class="card empty"><b>Nothing matched “${esc(Q.trim())}”.</b>Try a simpler word (BP, med calc, pedigree, anatomy).</div>`;
 }
 
-/* ---------- routing: #paper and #paper/need, real history so the phone's back button works ---------- */
+/* ---------- routing: #paper, #paper/assessment, #tools ---------- */
 let lastD = 0;
 function route(){
-  const [pid, nid] = decodeURIComponent(location.hash.slice(1)).split("/");
+  const [pid, aid] = decodeURIComponent(location.hash.slice(1)).split("/");
+  if (pid === "tools") return {tools:true};
   const p = pid ? P(pid) : null;
   if (pid && !p) return {fix:""};
-  if (p && nid && !findNeed(p, nid)) return {fix:"#" + p.id};
-  return {p, n: p && nid ? findNeed(p, nid) : null};
+  if (p && aid && !findA(p, aid)) return {fix:"#" + p.id};
+  return {p, a: p && aid ? findA(p, aid) : null};
 }
 function render(dir){
   let r = route();
-  if (r.fix !== undefined) { history.replaceState({d: (history.state || {}).d || 0}, "", r.fix || location.pathname + location.search); r = route(); }
+  if (r.fix !== undefined) { history.replaceState({d:(history.state || {}).d || 0}, "", r.fix || location.pathname); r = route(); }
   const root = document.documentElement;
-  if (r.p) { root.setAttribute("data-paper", r.p.id); root.style.setProperty("--paper", r.p.hue); }
-  else root.removeAttribute("data-paper");
-  app.innerHTML = `<div class="${dir ? "in" + (dir === "back" ? " back-anim" : "") : ""}">${r.n ? needScreen(r.p, r.n) : r.p ? paperScreen(r.p) : homeScreen()}</div>`;
-  if (!r.p) wireSearch();
-  if (dir) { window.scrollTo(0, 0); const h = app.querySelector("h1"); if (h && !(r.p == null && Q)) h.focus({preventScroll:true}); }
+  if (r.p) { root.setAttribute("data-paper", r.p.id); root.style.setProperty("--paper", r.p.hue); } else root.removeAttribute("data-paper");
+  document.title = (r.a ? r.p.short + " " + r.a.t + " · " : r.p ? r.p.nm + " · " : r.tools ? "Every tool · " : "") + "BN2 Study Tools";
+  app.innerHTML = `<div class="${dir ? "in" + (dir === "back" ? " back-anim" : "") : ""}">${r.tools ? toolsScreen() : r.a ? aScreen(r.p, r.a) : r.p ? paperScreen(r.p) : homeScreen()}</div>`;
+  if (!r.p && !r.tools) wireSearch();
+  if (dir) { window.scrollTo(0, 0); const h = app.querySelector("h1"); if (h && !Q) h.focus({preventScroll:true}); }
 }
-/* state: d = how many of our own screens deep; parent = this screen was opened from its own
-   paper, so the trail's paper link and "Something else in …" can just go back */
 function go(hash, parent, dir){
   const d = ((history.state || {}).d || 0) + 1;
-  history.pushState({d, parent:!!parent}, "", hash || location.pathname + location.search);
+  history.pushState({d, parent:!!parent}, "", hash || location.pathname);
   lastD = d; render(dir || "fwd");
 }
 function wireSearch(){
@@ -602,29 +534,26 @@ document.addEventListener("click", e => {
     e.preventDefault();
     const r = route(), st = history.state || {};
     if (a.hasAttribute("data-up") && st.d > 0 && st.parent) { history.back(); return; }
-    go(a.getAttribute("href"), r.p && !r.n, a.hasAttribute("data-up") ? "back" : "fwd");
+    go(a.getAttribute("href"), r.p && !r.a, a.hasAttribute("data-up") ? "back" : "fwd");
     return;
   }
   const h = e.target.closest("a[data-home]");
   if (h && !e.metaKey && !e.ctrlKey) { e.preventDefault(); Q = ""; if (location.hash) go("", false, "back"); else render("back"); }
 });
 addEventListener("popstate", () => { const d = (history.state || {}).d || 0; render(d < lastD ? "back" : "fwd"); lastD = d; });
-
-/* ---------- help + theme ---------- */
+$("#themeBtn").addEventListener("click", () => {
+  const t = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem("hub.theme", t); } catch (e) {}
+});
 const dlg = $("#help");
 const openHelp = () => { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); };
 $("#helpBtn").addEventListener("click", openHelp);
 $("#helpLink").addEventListener("click", openHelp);
 $("#helpX").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
-$("#themeBtn").addEventListener("click", () => {
-  const t = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
-  document.documentElement.setAttribute("data-theme", t);
-  try { localStorage.setItem("hub.theme", t); } catch (e) {}
-});
 $("#checked").textContent = CHECKED;
 document.querySelectorAll(".checked").forEach(el => el.textContent = CHECKED);
-
 if (!history.state) history.replaceState({d:0}, "", location.href);
 lastD = history.state.d || 0;
 render("");
