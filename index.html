@@ -322,8 +322,9 @@ const TOOLS = {
   "intro-pharm":   {nm:"Pharmacology hub", ic:"i-book", url:"intro-pharm/", kind:"learn", pp:"ph", kw:"hub topics drug classes pharmacokinetics pharmacodynamics antibiotics analgesics opioids receptors side effects adverse",
                     ds:"All 13 topics, with the drug classes laid out and how they connect."}
 };
-/* an exam is three sides, always in this order; one it has no tool for (no podcast yet) is left off */
-const SIDES = [["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["listen","Listen","i-pod"]];
+/* an exam is up to three sides, always in this order; one it has no tool for (no podcast yet) is left off.
+   terms (20 Oct): Pharm's third side, because Joan said "must, must, must" about the abbreviations. */
+const SIDES = [["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
    as:[
@@ -380,7 +381,9 @@ const PAPERS = [
       rep:{id:"pharm-final", h:"learn", go:"Start repping", ds:"Pharmacology questions by topic. Each one marks itself the moment you answer.",
            more:[["pharm-final","miss","Redo my misses","i-redo"]]},
       write:{id:"pharm-final", h:"saq", go:"Write an answer", ds:"Short answers in Joan's format, a definition and an example. Type yours, then mark it against the model answer.",
-           more:[["pharm-final","mock","Sit the timed mock","i-clock"]]}}}
+           more:[["pharm-final","mock","Sit the timed mock","i-clock"]]},
+      terms:{id:"chart-speak", h:"drill", go:"Drill the abbreviations", ds:"Joan, 20 Oct: “you’ve got to know them all”. TDS, QID, BD, Q6H, PRN, EC, SR, CR and the rest. Expect a prescription to read: drug, route, time on the 24-hour clock.",
+           more:[["chart-speak","chart","Read a prescription off the med chart","i-chart"],["chart-speak","glossary","Every abbreviation, to look up","i-book"]]}}}
    ]}
 ];
 

@@ -153,7 +153,7 @@ if (process.argv.includes('--live')) {
   }
   for (const [id, hash, at] of jumps) {
     const name = hash.split('/')[0], src = pages[id] || '';
-    const known = new RegExp(`\\b${name}\\s*:\\s*\\{t:|name === '${name}'`).test(src);
+    const known = new RegExp(`\\b${name}\\s*:\\s*\\{\\s*t:|name === '${name}'`).test(src);
     if (!known) fail(`live ${at}: ${TOOLS[id].url}#${hash} — no screen "${name}" found in the live page`);
   }
   note(`live: ${Object.keys(TOOLS).length} tools fetched, ${jumps.length} jumps checked`);

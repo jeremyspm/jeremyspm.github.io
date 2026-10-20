@@ -11,7 +11,10 @@ sparkles**. Tap an exam and it is **three sides**, always in this order:
 **Rep questions** (the sim's question bank, marked as you go), **Write
 answers** (the sim's SAQ trainer, typed like on the day; the timed mock is a
 quiet link under it) and **Listen** (the podcast, only where one exists, so
-INP and Pharm have two sides for now). Each side is one big button and at
+INP has two sides for now). **Pharm's third side is Abbreviations**
+(Chart Speak): in the 20 Oct revision session Joan said "must, must, must"
+about the abbreviations ("you've got to know them all", 1:18:53 in
+`pharm-final/transcripts/Pharm 20 Oct - transcript.md`). Each side is one big button and at
 most two quiet links. Placement and the resits keep the old layout (one
 "Start here" tool, then the rest). Everything else (videos, the 3D body, the
 Pharmacology hub, Chart Speak…) is in the **Library** (`#tools`), filed by
@@ -43,7 +46,7 @@ Everything the page shows is two lists at the top of the script in
   section it shows in); `pp` is the paper it's filed under in the Library;
   `kw` adds search words, including the everyday words for its topic.
 - **`PAPERS`**: each paper's assessments (`as`). An **exam** has `t`, `s`,
-  `kw`, a `date` and `sides`: `{rep, write, listen?}`, each
+  `kw`, a `date` and `sides`: `{rep, write, listen?, terms?}`, each
   `{id, h, go, ds, more:[[toolId, hash, label, icon]]}` (the tool and screen
   the big button opens, its label, one line, and at most two quiet links).
   Anything else has `t`, `s`, `kw`, an optional `date`, a `start` tool and
