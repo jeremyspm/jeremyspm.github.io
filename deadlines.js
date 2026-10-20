@@ -35,7 +35,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 window.DEADLINES = {
   v: 1,
-  updated: '2026-07-24',
+  updated: '2026-10-21',
   stream: null,          // '1A' | '1B' | '2A' | '2B' — set when the roster posts
 
   papers: {
@@ -54,9 +54,9 @@ window.DEADLINES = {
       name:'Test 2 — Module 2', notes:'42 Q · 22% SAQ · Wk 5–8', done:null },
     { id:'hs2-t3', paper:'hs2', kind:'test', due:'2026-10-26', weight:16.6,
       name:'Test 3 — Module 3', notes:'37 Q · 30% SAQ · Wk 9–11', done:null },
-    { id:'hs2-final', paper:'hs2', kind:'exam', due:'2026-11-05', time:'1230',
+    { id:'hs2-final', paper:'hs2', kind:'exam', due:'2026-11-04', timeUnconf:true,
       weight:50, name:'HS2 Final Exam',
-      notes:'32 Q · 37% SAQ · rooms 301/312 · Wk 1–12 · starred Booklet A cases', done:null },
+      notes:'Echoexam · 2 h 10 min · 90 marks (33 SAQ) · time & venue TBC · Wk 1–12 · all 10 starred Booklet A cases', done:null },
     { id:'hs2-labs', paper:'hs2', kind:'practical', hurdle:true,
       name:'Practical labs (5 of 6)', due:'2026-11-01', done:null },
 
