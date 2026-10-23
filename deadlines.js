@@ -35,7 +35,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 window.DEADLINES = {
   v: 1,
-  updated: '2026-10-21',
+  updated: '2026-10-24',
   stream: null,          // '1A' | '1B' | '2A' | '2B' — set when the roster posts
 
   papers: {
@@ -56,7 +56,7 @@ window.DEADLINES = {
       name:'Test 3 — Module 3', notes:'37 Q · 30% SAQ · Wk 9–11', done:null },
     { id:'hs2-final', paper:'hs2', kind:'exam', due:'2026-11-04', timeUnconf:true,
       weight:50, name:'HS2 Final Exam',
-      notes:'Echoexam · 2 h 10 min · 90 marks (33 SAQ) · time & venue TBC · Wk 1–12 · all 10 starred Booklet A cases', done:null },
+      notes:'Echoexam · 2 h 10 min · 90 marks (33 SAQ) · 09:30–11:40 or 12:30–14:40 by group, room TBC · Wk 1–12 · all 10 starred Booklet A cases', done:null },
     { id:'hs2-labs', paper:'hs2', kind:'practical', hurdle:true,
       name:'Practical labs (5 of 6)', due:'2026-11-01', done:null },
 
@@ -70,9 +70,9 @@ window.DEADLINES = {
     { id:'inp-vitals', paper:'inp', kind:'practical', hurdle:true,
       name:'Vital Signs practical', window:{open:'2026-10-05', close:'2026-10-30'},
       notes:'roster slot TBA · shares the window & skill set with pharm-medadmin', done:null },
-    { id:'inp-final', paper:'inp', kind:'exam', due:'2026-11-04', time:'1300',
+    { id:'inp-final', paper:'inp', kind:'exam', due:'2026-11-02', timeUnconf:true,
       weight:50, name:'INP Final Exam',
-      notes:'60 MCQ + 10 SAQ · Canvas opens 1230 · venue TBA', done:null },
+      notes:'Echoexam · 2 h 30 · 40 MCQ + 15 SAQ · 09:30–12:00 or 13:00–15:30 by group, room TBC', done:null },
     { id:'inp-soc', paper:'inp', kind:'signoff', hurdle:true,
       name:'Standards of Competence sign-offs', due:'2026-11-20',
       resits:['2026-12-04','2026-12-18'], done:null },
@@ -87,8 +87,8 @@ window.DEADLINES = {
       window:{open:'2026-10-05', close:'2026-10-30'}, notes:'max 2 attempts', done:null },
     { id:'pharm-essay', paper:'pharm', kind:'assignment', due:'2026-10-12',
       time:'0900', weight:50, name:'Pharmacology Essay', notes:'APA 7th', done:null },
-    { id:'pharm-final', paper:'pharm', kind:'exam', due:'2026-11-06',
+    { id:'pharm-final', paper:'pharm', kind:'exam', due:'2026-11-05',
       timeUnconf:true, weight:50, name:'Pharmacology Final Exam',
-      notes:'80 min · 50 pts · 30 MCQ + SAQs · all modules · afternoon', done:null },
+      notes:'Echoexam · 1 h 20 · 50 pts · 30 MCQ + SAQs · all modules · 09:30–10:50 or 12:00–13:20 by group, room TBC', done:null },
   ],
 };

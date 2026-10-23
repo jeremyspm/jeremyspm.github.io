@@ -133,7 +133,8 @@ if (/#0e1420|#182133/i.test(html)) fail('legacy navy palette found');
 if (!/<meta name="robots" content="noindex">/.test(html)) fail('noindex meta missing');
 
 /* 6. --live: every tool answers 200 and every jump's #screen is one that tool's router knows
-   (a Paper Sim's SCR entry `saq: {t:` / a CLS route `name === 'bp'`). A screen the sim only
+   (a Paper Sim's SCR entry `saq: {t:` / a CLS route `name === 'bp'` / a Genetics Trainer route
+   `a === 'ped'`). A screen the sim only
    shows when it has content (saq, focus, vid) still needs one look in a browser. */
 if (process.argv.includes('--live')) {
   const BASE = 'https://jeremyspm.github.io/';
@@ -153,7 +154,7 @@ if (process.argv.includes('--live')) {
   }
   for (const [id, hash, at] of jumps) {
     const name = hash.split('/')[0], src = pages[id] || '';
-    const known = new RegExp(`\\b${name}\\s*:\\s*\\{\\s*t:|name === '${name}'`).test(src);
+    const known = new RegExp(`\\b${name}\\s*:\\s*\\{\\s*t:|(name|a) === '${name}'`).test(src);
     if (!known) fail(`live ${at}: ${TOOLS[id].url}#${hash} — no screen "${name}" found in the live page`);
   }
   note(`live: ${Object.keys(TOOLS).length} tools fetched, ${jumps.length} jumps checked`);
