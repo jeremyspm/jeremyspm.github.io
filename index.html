@@ -290,7 +290,7 @@ const TOOLS = {
   "hs2-final":     {nm:"HS2 Final · Paper Sim", ic:"i-target", url:"hs2-final/", kind:"practise", pp:"hs2", kw:"paper sim cases case studies",
                     ds:"Modules 1–3 in one place, with all ten starred case studies marked against Hannetjie's model answers."},
   "hs2-learn":     {nm:"Learn the ten cases", ic:"i-book", url:"hs2-final/rep.html", kind:"learn", pp:"hs2", kw:"learn teach guided recall spaced review ten cases",
-                    ds:"All ten starred cases taught piece by piece: explain, rebuild, recall on your own, then spaced reviews over the next days."},
+                    ds:"Every question on the ten starred cases, a piece at a time: read it, type it, the page marks it, and it comes back over the next days."},
   "hs2-genetics":  {nm:"Genetics Trainer", ic:"i-dna", url:"hs2-genetics/", kind:"practise", pp:"hs2", kw:"genetics pedigree pedigrees punnett karyotype karyotypes inheritance dominant recessive x-linked carrier alleles genotype phenotype",
                     ds:"Pedigree charts, Punnett squares and karyotypes, worked on Hannetjie's own charts with her answer keys."},
   "flesh-and-bone":{nm:"Flesh & Bone", ic:"i-body", url:"flesh-and-bone/", kind:"practise", pp:"hs2", kw:"flesh bone 3d anatomy bones muscles skeleton femur pelvis skull landmarks",
@@ -329,8 +329,10 @@ const TOOLS = {
 /* an exam is up to three sides, always in this order; one it has no tool for (no podcast yet) is left off.
    terms (20 Oct): Pharm's third side, because Joan said "must, must, must" about the abbreviations.
    gen (20 Oct): HS2 Test 3's fourth side, the Genetics Trainer, promoted from a quiet link under Rep.
-   learn (27 Oct): HS2 Final's guided-recall page; first, so the exam opens on it. */
-const SIDES = [["learn","Learn","i-book"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
+   learn (27 Oct): HS2 Final's guided-recall page; first, so the exam opens on it.
+   mock (27 Oct): HS2 Final is Learn · Mock · Listen. Learn holds every case question that Rep and Write did (typed,
+   page-marked, spaced), so those two became quiet links and the timed mock got the side. */
+const SIDES = [["learn","Learn","i-book"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
    as:[
@@ -349,11 +351,10 @@ const PAPERS = [
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
      kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
      sides:{
-      learn:{id:"hs2-learn", go:"Start learning", ds:"All ten starred cases taught piece by piece: read the explanation, rebuild the answer, recall it on your own, then tick what you got. What you miss comes back, and what you get returns over the next few days."},
-      rep:{id:"hs2-final", h:"allcase", go:"Start repping", ds:"Every question to do with the ten starred cases: her written questions, her case test, her revision deck and the case quizzes. Least-seen and misses first.",
-           more:[["hs2-genetics","","Cases 14 and 15: pedigrees and Punnett squares, on her own charts","i-dna"]]},
-      write:{id:"hs2-final", h:"saq", go:"Write an answer", ds:"The ten starred cases. Type your answer the way you will on the day, then mark it against Hannetjie's model answer.",
-           more:[["hs2-final","mock","Sit the timed mock","i-clock"]]},
+      learn:{id:"hs2-learn", go:"Start learning", ds:"Every question on the ten starred cases, a piece at a time: read her answer, type the key words, then write it out from memory. The page marks it, misses come back, and what you get returns over the next few days.",
+           more:[["hs2-final","allcase","Every case question, quick-fire (for the last days)","i-cards"],["hs2-genetics","","Cases 14 and 15: pedigrees and Punnett squares, on her own charts","i-dna"]]},
+      mock:{id:"hs2-final", h:"mock", go:"Sit the mock", ds:"Built like her exam: 32 questions in 130 minutes, with 37% of the marks written from the cases. Or a 15-minute mini when that's all you've got.",
+           more:[["hs2-final","saq","Write one answer against her model answer","i-pen"]]},
       listen:{id:"pod-final", go:"Play the case tracks", ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."}}}
    ]},
   {id:"inp", code:"722.556", nm:"Intro to Nursing Practice", short:"INP", ic:"i-pulse", hue:"var(--inp)", blurb:"Clinical skills, vital signs and placement",

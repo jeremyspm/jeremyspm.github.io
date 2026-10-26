@@ -57,7 +57,9 @@ for (const p of PAPERS) {
       if (a.start || a.tools) fail(`${at}: has sides, so it takes no start or tools`);
       const known = new Set(SIDES.map(x => x[0]));
       for (const k of Object.keys(a.sides)) if (!known.has(k)) fail(`${at}: side "${k}" is not one of ${[...known].join(', ')}`);
-      for (const k of ['rep', 'write']) if (!a.sides[k]) fail(`${at}: an exam needs a ${k} side`);
+      /* a way to learn the questions (rep, or HS2 Final's learn) and a way to sit them (write, or a mock) */
+      if (!a.sides.rep && !a.sides.learn) fail(`${at}: an exam needs a rep or learn side`);
+      if (!a.sides.write && !a.sides.mock) fail(`${at}: an exam needs a write or mock side`);
       for (const [k, S] of Object.entries(a.sides)) {
         for (const f of ['id', 'go', 'ds']) if (!S[f]) fail(`${at}/${k}: missing ${f}`);
         if (S.id && !TOOLS[S.id]) { fail(`${at}/${k}: tool ${S.id} does not exist`); continue; }
