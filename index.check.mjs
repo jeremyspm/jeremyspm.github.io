@@ -110,9 +110,9 @@ for (const x of nextUp()) if (x.a.quiet) fail(`Next up shows ${x.p.id}/${x.a.id}
    itself is skipped). "tool:" means the best match is that tool. */
 const PROBES = [
   ['blood pressure', 'tool:cls-trainer'], ['bp', 'tool:cls-trainer'], ['obs', 'tool:cls-trainer'], ['sats', 'tool:cls-trainer'],
-  ['test 3', 'hs2/t3'], ['ear', 'hs2/t3'], ['lactation', 'hs2/t3'], ['pedigree', 'tool:hs2-genetics'], ['punnett', 'tool:hs2-genetics'],
+  ['pedigree', 'tool:hs2-genetics'], ['punnett', 'tool:hs2-genetics'],
   ['bones', 'tool:flesh-and-bone'], ['flesh and bone', 'tool:flesh-and-bone'], ['cystic fibrosis', 'hs2/exam'], ['hs2 exam', 'hs2/exam'],
-  ['videos', 'tool:m3-videos'], ['podcast', 'tool:pod-t3'], ['mg to ml', 'tool:medcalc'], ['drip rate', 'tool:medcalc'], ['medcalc', 'tool:medcalc'],
+  ['videos', 'tool:m3-videos'], ['podcast', 'tool:pod-final'], ['mg to ml', 'tool:medcalc'], ['drip rate', 'tool:medcalc'], ['medcalc', 'tool:medcalc'],
   ['med admin', 'ph/admin'], ['abbreviations', 'tool:chart-speak'], ['qid', 'tool:chart-speak'], ['drug classes', 'tool:intro-pharm'],
   ['pharm exam', 'ph/exam'], ['inp exam', 'inp/exam'], ['med chart', 'tool:chart-sim'], ['chart sim', 'tool:chart-sim'], ['placement', 'inp/place'],
 ];

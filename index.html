@@ -256,7 +256,7 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <div class="sheet">
     <div class="top"><h2 id="helpT">How this page works</h2><button class="ib" id="helpX" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
     <ol>
-      <li><b>Pick the exam.</b> Each one is three things: <b>Rep questions</b> (they mark themselves as you go), <b>Write answers</b> (type your answer like on the day, then see the model answer; the timed mock is here too) and <b>Listen</b> (the written answers read aloud, where there's a podcast). Placement and resits keep their own tools.</li>
+      <li><b>Pick the exam.</b> Its tabs are everything it needs. Usually <b>Rep questions</b> (they mark themselves as you go), <b>Write answers</b> (type your answer like on the day, then see the model answer; the timed mock is here too) and <b>Listen</b> (the written answers read aloud, where there's a podcast). HS2's final is <b>Learn</b> (every case question, typed and marked, coming back over the days), <b>Mock exam</b> and <b>Listen</b>. Placement and resits keep their own tools.</li>
       <li><b>Or just type.</b> The search box knows everyday words like BP, obs, mg to mL, pedigree and abbreviations, plus every tool's name. The <b>Library</b> at the bottom of the first screen has every tool, including the videos and the 3D body.</li>
       <li><b>The tools are free practice</b>, built from our own course material: the lecturers' quizzes, slides, case studies and demo videos. A student made them, not MIT, so if a tool and Canvas ever disagree, Canvas wins.</li>
       <li><b>Dates</b> were last checked on <span class="checked"></span>. Each one disappears by itself once it has passed. Check Canvas for times and rooms.</li>
@@ -285,8 +285,6 @@ dialog[open]{animation:pop .26s var(--ezo) both}
 const CHECKED = "12 Oct 2026";
 const KINDS = [["practise","Practise"],["learn","Learn it"],["listen","Listen"]];
 const TOOLS = {
-  "hs2-test3":     {nm:"HS2 Test 3 · Paper Sim", ic:"i-target", url:"hs2-test3/", kind:"practise", pp:"hs2", kw:"paper sim module 3 quiz quizzes saq",
-                    ds:"Every Module 3 quiz question we have, a written-answer trainer and a timed mock shaped like the real test."},
   "hs2-final":     {nm:"HS2 Final · Paper Sim", ic:"i-target", url:"hs2-final/", kind:"practise", pp:"hs2", kw:"paper sim cases case studies",
                     ds:"Modules 1–3 in one place, with all ten starred case studies marked against Hannetjie's model answers."},
   "hs2-learn":     {nm:"Learn the ten cases", ic:"i-book", url:"hs2-final/rep.html", kind:"learn", pp:"hs2", kw:"learn teach guided recall spaced review ten cases",
@@ -303,8 +301,6 @@ const TOOLS = {
                     ds:"Bones, joints and muscles, the nervous system and hormones. 153 short videos in 20 topics."},
   "anatomy-atlas": {nm:"Anatomy Atlas", ic:"i-body", url:"anatomy-atlas/", kind:"learn", pp:"hs2", kw:"atlas 3d anatomy body systems",
                     ds:"Explore a 3D body, one system at a time."},
-  "pod-t3":        {nm:"Test 3 · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#t3", kind:"listen", pp:"hs2", kw:"podcast audio listen mp3 saq written answers",
-                    ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each. Loop the shaky ones on the bus."},
   "pod-final":     {nm:"Final · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#final", kind:"listen", pp:"hs2", kw:"podcast audio listen mp3 saq written answers",
                     ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."},
   "inp-final":     {nm:"INP Final · Paper Sim", ic:"i-target", url:"inp-final/", kind:"practise", pp:"inp", kw:"paper sim quiz quizzes nursing practice",
@@ -335,18 +331,9 @@ const TOOLS = {
 const SIDES = [["learn","Learn","i-book"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
+   /* Test 3 (window 20–26 Oct) is over: its assessment, its Paper Sim and its podcast left the hub on 27 Oct.
+      The sim and the podcast's Test 3 episode stay up at their own addresses. */
    as:[
-    {id:"t3", t:"Test 3", s:"Reproduction · genetics · special senses",
-     date:{from:"2026-10-20", to:"2026-10-26", chip:"20–26 Oct", what:"Test 3 window", verb:"opens", txt:"Book a ProctorU slot between Tue 20 and Mon 26 Oct"},
-     kw:"test 3 three module 3 reproduction reproductive senses special eye ear hearing deafness vision smell lactation breast menstrual cycle fertility testes ovary hormones fsh lh proctoru",
-     sides:{
-      rep:{id:"hs2-test3", h:"learn", go:"Start repping", ds:"Every Module 3 quiz question we have. Each one marks itself the moment you answer, with her answer and slide underneath.",
-           more:[["hs2-test3","miss","Redo my misses","i-redo"]]},
-      write:{id:"hs2-test3", h:"saq", go:"Write an answer", ds:"Her written questions. Type your answer the way you will in the test, then see her model answer and mark yourself.",
-           more:[["hs2-test3","mock","Sit the timed mock, shaped like the real test","i-clock"]]},
-      listen:{id:"pod-t3", go:"Play the Test 3 tracks", ds:"Every point on her Module 3 checklist read aloud as a written answer, one track each. Loop the shaky ones on the bus."},
-      gen:{id:"hs2-genetics", go:"Open the Genetics Trainer", ds:"Pedigree charts, Punnett squares and karyotypes, worked on Hannetjie's own charts with her answer keys. Her four-part pedigree SAQ is in here too.",
-           more:[["hs2-genetics","ped","Pedigree drills and her four-part SAQ","i-dna"],["hs2-genetics","her","Her charts, redrawn, with her questions","i-chart"]]}}},
     {id:"exam", t:"Final exam", s:"The ten starred case studies · Modules 1–3",
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
      kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
@@ -476,7 +463,7 @@ function homeScreen(){
   const up = all.filter(x => !x.a.quiet), late = all.filter(x => x.a.quiet);
   let n = 0;
   return `<h1 class="h1" tabindex="-1">What are you studying for?</h1>
-    <p class="sub">Every exam is three things: rep the questions, write your answers, listen.</p>
+    <p class="sub">Pick your exam. Everything it needs is on its tabs.</p>
     <label class="search">${ic("i-search")}<input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
       placeholder="e.g. blood pressure, pedigrees, mg to mL" aria-label="Search" value="${esc(Q)}">
       <button class="x" id="qx" aria-label="Clear the search" ${Q ? "" : "hidden"}>${ic("i-x")}</button></label>
@@ -501,7 +488,7 @@ function aScreen(p, a, sid){
 }
 function toolsScreen(){
   return trail("Library") + `<h1 class="h1" tabindex="-1">Library</h1>
-    <p class="sub">Every tool, filed by paper. For learning a topic from scratch. What an exam needs is already on its three sides.</p>` +
+    <p class="sub">Every tool, filed by paper. For learning a topic from scratch. What an exam needs is already on its tabs.</p>` +
     PAPERS.map(p => { const ids = Object.keys(TOOLS).filter(id => TOOLS[id].pp === p.id)
         .sort((x, y) => KINDS.findIndex(k => k[0] === TOOLS[x].kind) - KINDS.findIndex(k => k[0] === TOOLS[y].kind));
       return `<div class="eyebrow sec" style="--h:${p.hue}"><span class="dot"></span>${p.nm}</div>` + ids.map(id => mini(id, {kind:true})).join(""); }).join("");
