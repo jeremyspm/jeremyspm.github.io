@@ -256,7 +256,7 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <div class="sheet">
     <div class="top"><h2 id="helpT">How this page works</h2><button class="ib" id="helpX" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
     <ol>
-      <li><b>Pick the exam.</b> Its tabs are everything it needs. Usually <b>Rep questions</b> (they mark themselves as you go), <b>Write answers</b> (type your answer like on the day, then see the model answer; the timed mock is here too) and <b>Listen</b> (the written answers read aloud, where there's a podcast). HS2's final is <b>Learn</b> (every case question, typed and marked, coming back over the days), <b>Mock exam</b> and <b>Listen</b>. Placement and resits keep their own tools.</li>
+      <li><b>Pick the exam.</b> Its tabs are everything it needs. Usually <b>Rep questions</b> (they mark themselves as you go), <b>Write answers</b> (type your answer like on the day, then see the model answer; the timed mock is here too) and <b>Listen</b> (the written answers read aloud, where there's a podcast). HS2's final is <b>Learn</b> (the written case questions, typed and marked, coming back over the days), <b>Rep</b> (the ones that mark themselves), <b>Mock exam</b> and <b>Listen</b>. Placement and resits keep their own tools.</li>
       <li><b>Or just type.</b> The search box knows everyday words like BP, obs, mg to mL, pedigree and abbreviations, plus every tool's name. The <b>Library</b> at the bottom of the first screen has every tool, including the videos and the 3D body.</li>
       <li><b>The tools are free practice</b>, built from our own course material: the lecturers' quizzes, slides, case studies and demo videos. A student made them, not MIT, so if a tool and Canvas ever disagree, Canvas wins.</li>
       <li><b>Dates</b> were last checked on <span class="checked"></span>. Each one disappears by itself once it has passed. Check Canvas for times and rooms.</li>
@@ -326,8 +326,8 @@ const TOOLS = {
    terms (20 Oct): Pharm's third side, because Joan said "must, must, must" about the abbreviations.
    gen (20 Oct): HS2 Test 3's fourth side, the Genetics Trainer, promoted from a quiet link under Rep.
    learn (27 Oct): HS2 Final's guided-recall page; first, so the exam opens on it.
-   mock (27 Oct): HS2 Final is Learn · Mock · Listen. Learn holds every case question that Rep and Write did (typed,
-   page-marked, spaced), so those two became quiet links and the timed mock got the side. */
+   mock (27 Oct): HS2 Final is Learn · Rep · Mock · Listen. Learn holds the written case questions (typed, page-marked,
+   spaced); Rep came back the same day for the 81 that mark themselves; Write became a quiet link under Mock. */
 const SIDES = [["learn","Learn","i-book"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
@@ -338,9 +338,11 @@ const PAPERS = [
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
      kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
      sides:{
-      learn:{id:"hs2-learn", go:"Start learning", ds:"Every question on the ten starred cases, a piece at a time: read her answer, type the key words, then write it out from memory. The page marks it, misses come back, and what you get returns over the next few days.",
-           more:[["hs2-final","allcase","Every case question, quick-fire (for the last days)","i-cards"],["hs2-genetics","","Cases 14 and 15: pedigrees and Punnett squares, on her own charts","i-dna"]]},
-      mock:{id:"hs2-final", h:"mock", go:"Sit the mock", ds:"Built like her exam: 32 questions in 130 minutes, with 37% of the marks written from the cases. Or a 15-minute mini when that's all you've got.",
+      learn:{id:"hs2-learn", go:"Start learning", ds:"Her written questions on the ten starred cases, a piece at a time: read her answer, type the key words, then write it out from memory. The page marks it, misses come back, and what you get returns over the next few days.",
+           more:[["hs2-genetics","","Cases 14 and 15: pedigrees and Punnett squares, on her own charts","i-dna"]]},
+      rep:{id:"hs2-final", h:"rep", go:"Start repping", ds:"The 81 case questions that mark themselves: multiple choice, true/false, matching and blanks, from her case test, her revision deck and the case quizzes. Least-seen and misses first. The written ones are in Learn.",
+           more:[["hs2-final","allcase","Every case question, written ones too, quick-fire","i-cards"]]},
+      mock:{id:"hs2-final", h:"mock", go:"Sit the mock", ds:"Built like her exam: 32 questions in 130 minutes, with 37% of the marks written from the cases.",
            more:[["hs2-final","saq","Write one answer against her model answer","i-pen"]]},
       listen:{id:"pod-final", go:"Play the case tracks", ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."}}}
    ]},
