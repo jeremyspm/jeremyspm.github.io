@@ -52,14 +52,14 @@ for (const p of PAPERS) {
     if (aids.has(a.id)) fail(`${at}: assessment id twice`); aids.add(a.id);
     for (const k of ['t', 's', 'kw']) if (!a[k]) fail(`${at}: missing ${k}`);
     if ('quiet' in a && typeof a.quiet !== 'boolean') fail(`${at}: quiet must be true or false`);
-    /* an exam has three sides (rep and write required, listen optional); anything else has start + tools */
+    /* an exam has sides (write and a rep or mock required); anything else has start + tools */
     if (a.sides) {
       if (a.start || a.tools) fail(`${at}: has sides, so it takes no start or tools`);
       const known = new Set(SIDES.map(x => x[0]));
       for (const k of Object.keys(a.sides)) if (!known.has(k)) fail(`${at}: side "${k}" is not one of ${[...known].join(', ')}`);
-      /* a way to learn the questions (rep, or HS2 Final's learn) and a way to sit them (write, or a mock) */
-      if (!a.sides.rep && !a.sides.learn) fail(`${at}: an exam needs a rep or learn side`);
-      if (!a.sides.write && !a.sides.mock) fail(`${at}: an exam needs a write or mock side`);
+      /* a way to write the answers (the guided-recall page) and a way to sit the questions (rep, or a mock) */
+      if (!a.sides.write) fail(`${at}: an exam needs a write side`);
+      if (!a.sides.rep && !a.sides.mock) fail(`${at}: an exam needs a rep or mock side`);
       for (const [k, S] of Object.entries(a.sides)) {
         for (const f of ['id', 'go', 'ds']) if (!S[f]) fail(`${at}/${k}: missing ${f}`);
         if (S.id && !TOOLS[S.id]) { fail(`${at}/${k}: tool ${S.id} does not exist`); continue; }

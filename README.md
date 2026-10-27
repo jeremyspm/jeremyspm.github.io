@@ -7,15 +7,23 @@ share with the cohort.
 
 **How it works (20 Oct 2026, second pass):** two taps to studying. Home lists
 everything coming up, by date, across all three papers; **every exam
-sparkles**. Tap an exam and it is **three sides**, always in this order:
-**Rep questions** (the sim's question bank, marked as you go), **Write
-answers** (the sim's SAQ trainer, typed like on the day; the timed mock is a
-quiet link under it) and **Listen** (the podcast, only where one exists, so
-INP has two sides for now). **Pharm's third side is Abbreviations**
-(Chart Speak): in the 20 Oct revision session Joan said "must, must, must"
-about the abbreviations ("you've got to know them all", 1:18:53 in
-`pharm-final/transcripts/Pharm 20 Oct - transcript.md`). Each side is one big button and at
-most two quiet links. Placement and the resits keep the old layout (one
+sparkles**. Tap an exam and it is its **sides**, always in this order:
+**Write** (the sim's guided-recall page, `rep.html`: the lecturers' own
+written questions, verbatim, typed as key words and drilled over days),
+**Flashcards** (`cards.html`: everything that isn't verbatim, Anki-style),
+**Rep questions** (the sim's question bank, marked as you go), **Mock exam**
+and **Listen** (the podcast, only where one exists). INP and Pharm are Write ·
+Flashcards · Rep · Mock; HS2 Final is Write · Rep · Mock · Listen. Each side is
+one big button and at most two quiet links.
+
+27 Oct cleanup: the old **Write answers** side (the sim's `#saq`, the tool's
+own short answers against a model answer) is gone, because those answers are
+in Flashcards now and the Write side is verbatim only; the timed mock it hid
+as a quiet link is its own side. **Abbreviations** (Chart Speak, Pharm's side
+since Joan's "must, must, must" on 20 Oct) went too: all of them are Pharm
+flashcards, and Chart Speak is still under Placement and in the Library.
+Learn was renamed **Write** at the same time: on short-answer exams it's
+where you type the answers. Placement and the resits keep the old layout (one
 "Start here" tool, then the rest). Everything else (videos, the 3D body, the
 Pharmacology hub, Chart Speak…) is in the **Library** (`#tools`), filed by
 paper, and still found by search.
@@ -46,7 +54,7 @@ Everything the page shows is two lists at the top of the script in
   section it shows in); `pp` is the paper it's filed under in the Library;
   `kw` adds search words, including the everyday words for its topic.
 - **`PAPERS`**: each paper's assessments (`as`). An **exam** has `t`, `s`,
-  `kw`, a `date` and `sides`: `{rep, write, listen?, terms?}`, each
+  `kw`, a `date` and `sides`: `{write, cards?, rep?, mock?, listen?}` (a rep or a mock is required), each
   `{id, h, go, ds, more:[[toolId, hash, label, icon]]}` (the tool and screen
   the big button opens, its label, one line, and at most two quiet links).
   Anything else has `t`, `s`, `kw`, an optional `date`, a `start` tool and
@@ -66,7 +74,7 @@ Then:
 
 1. `node index.check.mjs`, which must print `ok:`. It runs the page's own
    script against a stub DOM and fails on: an assessment naming a tool
-   that doesn't exist, an exam without a rep and a write side, a side with more
+   that doesn't exist, an exam without a write side and a rep or mock side, a side with more
    than two quiet links, a missing icon, a bad date, a
    script that won't parse, `color:var(--acc)`, the old navy palette, a
    missing `noindex`, a tool with no `kind` or paper, a quiet assessment in

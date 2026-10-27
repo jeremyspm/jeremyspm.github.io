@@ -278,7 +278,7 @@ dialog[open]{animation:pop .26s var(--ezo) both}
            start: the "Start here" tool (an id, or {id, jump:[[hash,label,icon]], cta:[hash,label]}).
            tools: everything else that helps; the page groups them by kind. An entry can be
            {id, h, why} to open a tool at one of its screens with a one-line reason.
-           sides: an exam has these instead of start/tools (20 Oct): {rep, write, listen?}, each
+           sides: an exam has these instead of start/tools (20 Oct): {write, cards?, rep?, mock?, listen?}, each
            {id, h, go, ds, more:[[toolId, hash, label, icon]]}: one big button, then at most two
            quiet links. Every tool is also in the Library (#tools), filed by paper.
            quiet: most of the cohort is past it (resits, catch-ups). It stays on its paper, under
@@ -337,8 +337,12 @@ const TOOLS = {
    learn (27 Oct): HS2 Final's guided-recall page; first, so the exam opens on it. INP and Pharm got the same page
    (rep.html in each Paper Sim) the same evening, and the same first side.
    mock (27 Oct): HS2 Final is Learn · Rep · Mock · Listen. Learn holds the written case questions (typed, page-marked,
-   spaced); Rep came back the same day for the 81 that mark themselves; Write became a quiet link under Mock. */
-const SIDES = [["learn","Learn","i-book"],["cards","Flashcards","i-stack"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
+   spaced); Rep came back the same day for the 81 that mark themselves; Write became a quiet link under Mock.
+   27 Oct, later: Learn is renamed Write (on these short-answer exams it is where you type answers), and the old
+   Write answers side (the sim's #saq, the tool's own short answers) is gone: those answers are in Flashcards now,
+   and the timed mock it hid becomes its own side. Abbreviations went too: Pharm's Flashcards hold all of them.
+   Every exam is Write · Flashcards · Rep · Mock, plus Listen where there's a podcast. */
+const SIDES = [["write","Write","i-pen"],["cards","Flashcards","i-stack"],["rep","Rep questions","i-cards"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["gen","Genetics","i-dna"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
    /* Test 3 (window 20–26 Oct) is over: its assessment, its Paper Sim and its podcast left the hub on 27 Oct.
@@ -348,12 +352,11 @@ const PAPERS = [
      date:{on:"2026-11-04", chip:"Wed 4 Nov", what:"Final exam", txt:"Wed 4 Nov · on campus · 90 marks"},
      kw:"final exam case cases studies starred mock module 1 2 3 asthma panic lymph diabetes arthritis joints cortisol parkinson neurotransmitters stroke fertility colour color blindness cystic fibrosis huntington anatomy",
      sides:{
-      learn:{id:"hs2-learn", go:"Start learning", ds:"Her written questions on the ten starred cases, learned as key words, not sentences. Read her answer, then the key words hide bit by bit: one a line, then all of them, then from memory. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid. A miss drops you back a step, never to a blank page.",
+      write:{id:"hs2-learn", go:"Start writing", ds:"Her written questions on the ten starred cases, learned as key words, not sentences. Read her answer, then the key words hide bit by bit: one a line, then all of them, then from memory. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid. A miss drops you back a step, never to a blank page.",
            more:[["hs2-genetics","","Cases 14 and 15: pedigrees and Punnett squares, on her own charts","i-dna"]]},
-      rep:{id:"hs2-final", h:"rep", go:"Start repping", ds:"The 81 case questions that mark themselves: multiple choice, true/false, matching and blanks, from her case test, her revision deck and the case quizzes. Least-seen and misses first. The written ones are in Learn.",
+      rep:{id:"hs2-final", h:"rep", go:"Start repping", ds:"The 81 case questions that mark themselves: multiple choice, true/false, matching and blanks, from her case test, her revision deck and the case quizzes. Least-seen and misses first. The written ones are in Write.",
            more:[["hs2-final","allcase","Every case question, written ones too, quick-fire","i-cards"]]},
-      mock:{id:"hs2-final", h:"mock", go:"Sit the mock", ds:"Built like her exam: 32 questions in 130 minutes, with 37% of the marks written from the cases.",
-           more:[["hs2-final","saq","Write one answer against her model answer","i-pen"]]},
+      mock:{id:"hs2-final", h:"mock", go:"Sit the mock", ds:"Built like her exam: 32 questions in 130 minutes, with 37% of the marks written from the cases."},
       listen:{id:"pod-final", go:"Play the case tracks", ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."}}}
    ]},
   {id:"inp", code:"722.556", nm:"Intro to Nursing Practice", short:"INP", ic:"i-pulse", hue:"var(--inp)", blurb:"Clinical skills, vital signs and placement",
@@ -362,12 +365,11 @@ const PAPERS = [
      date:{on:"2026-11-02", chip:"Mon 2 Nov", what:"Final exam", txt:"Mon 2 Nov · on campus"},
      kw:"final exam quiz quizzes mock nursing practice",
      sides:{
-      learn:{id:"inp-learn", go:"Start learning", ds:"Only the lecturers' own written questions, verbatim: the Te Tiriti video quiz, answered in the speaker's words. Learned as key words, then drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      write:{id:"inp-learn", go:"Start writing", ds:"Only the lecturers' own written questions, verbatim: the Te Tiriti video quiz, answered in the speaker's words. Learned as key words, then drilled: 2 in a row to lock a day, 3 days running to be solid."},
       cards:{id:"inp-cards", go:"Study the cards", ds:"Anki, stripped down. Lisa sets no practice short answers, so these come from the lecturers' own material: Janine's revision slides, and their quiz questions without the options. Then the tool's short answers. Again, Hard, Good or Easy, and it schedules the rest."},
       rep:{id:"inp-final", h:"learn", go:"Start repping", ds:"Every INP quiz question in one bank, the lecturers' first. Each one marks itself the moment you answer.",
            more:[["inp-final","miss","Redo my misses","i-redo"]]},
-      write:{id:"inp-final", h:"saq", go:"Write an answer", ds:"Short answers on the exam themes. Type yours the way you will on the day, then mark it against the model answer.",
-           more:[["inp-final","mock","Sit the timed mock","i-clock"]]}}},
+      mock:{id:"inp-final", h:"mock", go:"Sit the mock", ds:"Built like the paper: 40 multi-choice and 15 short answers, timed at 160 minutes. The lecturers' own quiz questions are dealt first."}}},
     {id:"place", t:"Placement", s:"Charts, abbreviations, med calc and your skills",
      date:{from:"2026-11-09", to:"2026-12-18", chip:"9 Nov", what:"Placement", verb:"starts", txt:"Placement runs Mon 9 Nov – Fri 18 Dec", keep:true},
      kw:"placement clinical ward prep ready preceptor",
@@ -389,14 +391,11 @@ const PAPERS = [
      date:{on:"2026-11-05", chip:"Thu 5 Nov", what:"Final exam", txt:"Thu 5 Nov · on campus, AM or PM group"},
      kw:"final exam short answer answers definition pharmacology mock",
      sides:{
-      learn:{id:"pharm-learn", go:"Start learning", ds:"Joan's own 18 short answers from her mini-exams, verbatim, as key words, not sentences. Read it, then the key words hide bit by bit. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      write:{id:"pharm-learn", go:"Start writing", ds:"Joan's own 18 short answers from her mini-exams, verbatim, as key words, not sentences. Read it, then the key words hide bit by bit. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
       cards:{id:"pharm-cards", go:"Study the cards", ds:"Anki, stripped down: the 23 must-know abbreviations a card each, then the tool's short answers in Joan's format. Again, Hard, Good or Easy, and it schedules the rest."},
       rep:{id:"pharm-final", h:"learn", go:"Start repping", ds:"Joan's own mini-exam questions first, then the drugs she named. Each one marks itself the moment you answer.",
            more:[["pharm-final","miss","Redo my misses","i-redo"]]},
-      write:{id:"pharm-final", h:"saq", go:"Write an answer", ds:"Short answers in Joan's format, a definition and an example. Type yours, then mark it against the model answer.",
-           more:[["pharm-final","mock","Sit the timed mock","i-clock"],["m9-sum","","Module 9 on one page (PDF)","i-list"]]},
-      terms:{id:"chart-speak", h:"drill", go:"Drill the abbreviations", ds:"Joan, 20 Oct: “you’ve got to know them all”. TDS, QID, BD, Q6H, PRN, EC, SR, CR and the rest. Expect a prescription to read: drug, route, time on the 24-hour clock.",
-           more:[["chart-speak","chart","Read a prescription off the med chart","i-chart"],["chart-speak","glossary","Every abbreviation, to look up","i-book"]]}}}
+      mock:{id:"pharm-final", h:"mock", go:"Sit the mock", ds:"Built like Joan's paper: 30 multi-choice and 11 short answers worth 20 marks, in 80 minutes. Her own questions are dealt first."}}}
    ]}
 ];
 
