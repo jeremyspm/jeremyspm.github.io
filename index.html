@@ -218,6 +218,7 @@ dialog[open]{animation:pop .26s var(--ezo) both}
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4V12l3 2"/></symbol>
   <symbol id="i-pod" viewBox="0 0 24 24"><path d="M4 15.4V12a8 8 0 0 1 16 0v3.4"/><rect x="3" y="14" width="4.4" height="6.6" rx="1.6"/><rect x="16.6" y="14" width="4.4" height="6.6" rx="1.6"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.2 9.4v5.2l4.4-2.6z"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11.4" rx="2.2"/><path d="M6.4 6h11.2M8.6 3.2h6.8"/><path d="M9.4 14.6h5.2"/></symbol>
   <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="7.4" width="12.6" height="13" rx="2.2"/><path d="M7.4 7.4V5.2A2.2 2.2 0 0 1 9.6 3H19a2 2 0 0 1 2 2v9.4a2.2 2.2 0 0 1-2.2 2.2h-3.2"/></symbol>
   <symbol id="i-steth" viewBox="0 0 24 24"><path d="M5.4 3v5a4.6 4.6 0 0 0 9.2 0V3"/><path d="M10 12.6v1.8a4.8 4.8 0 0 0 9.6 0v-1.6"/><circle cx="19.6" cy="10.6" r="2"/></symbol>
   <symbol id="i-gauge" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13l3.6-3.6M8 13h.01M12 9h.01M16 13h.01"/></symbol>
@@ -303,8 +304,10 @@ const TOOLS = {
                     ds:"Explore a 3D body, one system at a time."},
   "pod-final":     {nm:"Final · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#final", kind:"listen", pp:"hs2", kw:"podcast audio listen mp3 saq written answers",
                     ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."},
-  "inp-learn":     {nm:"Learn the INP short answers", ic:"i-book", url:"inp-final/rep.html", kind:"learn", pp:"inp", kw:"learn guided recall spaced review short answers saq written revision janine key words",
-                    ds:"Janine's revision slides and the lecturers' own quiz answers, a piece at a time: read it, type the key words, it comes back over the next days."},
+  "inp-learn":     {nm:"Learn the INP short answers", ic:"i-book", url:"inp-final/rep.html", kind:"learn", pp:"inp", kw:"learn guided recall spaced review short answers saq written te tiriti kawa whakaruruhau key words",
+                    ds:"The lecturers' own written questions (the Te Tiriti video quiz), verbatim, a piece at a time: read it, type the key words, it comes back over the next days."},
+  "inp-cards":     {nm:"INP Flashcards", ic:"i-stack", url:"inp-final/cards.html", kind:"learn", pp:"inp", kw:"flashcards flash cards anki spaced repetition srs revision janine quiz",
+                    ds:"Anki, stripped down: Janine's revision slides, the lecturers' quiz questions without their options, and the tool's short answers."},
   "inp-final":     {nm:"INP Final · Paper Sim", ic:"i-target", url:"inp-final/", kind:"practise", pp:"inp", kw:"paper sim quiz quizzes nursing practice",
                     ds:"Every INP quiz question in one bank, with practice by topic and a timed full mock."},
   "chart-sim":     {nm:"Chart Sim", ic:"i-chart", url:"pharm-final/chart.html", kind:"practise", pp:"inp", kw:"chart sim nmc 8-day medication med chart charting sign signing codes prescription",
@@ -318,7 +321,9 @@ const TOOLS = {
   "med-cheat":     {nm:"Practical cheat sheet", ic:"i-list", url:"med-admin-cheat.html", kind:"learn", pp:"ph", kw:"cheat sheet cram summary interactions salbutamol warfarin normal ranges med admin",
                     ds:"Vital signs and med admin on one page to cram from: normal ranges, the routines, two-step BP, both drugs and their interactions, and the traps."},
   "pharm-learn":   {nm:"Learn the Pharm short answers", ic:"i-book", url:"pharm-final/rep.html", kind:"learn", pp:"ph", kw:"learn guided recall spaced review short answers saq written key words joan",
-                    ds:"Joan's 18 short answers first, then the tool's, a piece at a time: read it, type the key words, it comes back over the next days."},
+                    ds:"Joan's own 18 short answers, verbatim, a piece at a time: read it, type the key words, it comes back over the next days."},
+  "pharm-cards":   {nm:"Pharm Flashcards", ic:"i-stack", url:"pharm-final/cards.html", kind:"learn", pp:"ph", kw:"flashcards flash cards anki spaced repetition srs abbreviations prn tds",
+                    ds:"Anki, stripped down: the must-know abbreviations and the tool's short answers in Joan's format."},
   "pharm-final":   {nm:"Pharm Final · Paper Sim", ic:"i-target", url:"pharm-final/", kind:"practise", pp:"ph", kw:"paper sim",
                     ds:"Joan's three mini-exams first, then short answers in her format (a definition and an example), and a timed mock."},
   "m9-sum":        {nm:"Module 9 on one page", ic:"i-list", url:"pharm-final/m9-summary.pdf", kind:"learn", pp:"ph", kw:"summary pdf module 9 licit illicit drugs toxicology addiction dependence tolerance withdrawal poisoning antidote naloxone poisons centre",
@@ -333,7 +338,7 @@ const TOOLS = {
    (rep.html in each Paper Sim) the same evening, and the same first side.
    mock (27 Oct): HS2 Final is Learn · Rep · Mock · Listen. Learn holds the written case questions (typed, page-marked,
    spaced); Rep came back the same day for the 81 that mark themselves; Write became a quiet link under Mock. */
-const SIDES = [["learn","Learn","i-book"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
+const SIDES = [["learn","Learn","i-book"],["cards","Flashcards","i-stack"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
 const PAPERS = [
   {id:"hs2", code:"722.541", nm:"Health Science 2", short:"HS2", ic:"i-dna", hue:"var(--hs)", blurb:"Body systems, genetics and the senses",
    /* Test 3 (window 20–26 Oct) is over: its assessment, its Paper Sim and its podcast left the hub on 27 Oct.
@@ -357,7 +362,8 @@ const PAPERS = [
      date:{on:"2026-11-02", chip:"Mon 2 Nov", what:"Final exam", txt:"Mon 2 Nov · on campus"},
      kw:"final exam quiz quizzes mock nursing practice",
      sides:{
-      learn:{id:"inp-learn", go:"Start learning", ds:"Lisa sets no practice short answers, so this learns the written section from the lecturers' own material: Janine's revision slides in her words, then their quiz questions asked without the options, as key words, not sentences. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      learn:{id:"inp-learn", go:"Start learning", ds:"Only the lecturers' own written questions, verbatim: the Te Tiriti video quiz, answered in the speaker's words. Learned as key words, then drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      cards:{id:"inp-cards", go:"Study the cards", ds:"Anki, stripped down. Lisa sets no practice short answers, so these come from the lecturers' own material: Janine's revision slides, and their quiz questions without the options. Then the tool's short answers. Again, Hard, Good or Easy, and it schedules the rest."},
       rep:{id:"inp-final", h:"learn", go:"Start repping", ds:"Every INP quiz question in one bank, the lecturers' first. Each one marks itself the moment you answer.",
            more:[["inp-final","miss","Redo my misses","i-redo"]]},
       write:{id:"inp-final", h:"saq", go:"Write an answer", ds:"Short answers on the exam themes. Type yours the way you will on the day, then mark it against the model answer.",
@@ -383,7 +389,8 @@ const PAPERS = [
      date:{on:"2026-11-05", chip:"Thu 5 Nov", what:"Final exam", txt:"Thu 5 Nov · on campus, AM or PM group"},
      kw:"final exam short answer answers definition pharmacology mock",
      sides:{
-      learn:{id:"pharm-learn", go:"Start learning", ds:"The written section as key words, not sentences: Joan's 18 short answers from her mini-exams first, then the tool's in her format. Read it, then the key words hide bit by bit. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      learn:{id:"pharm-learn", go:"Start learning", ds:"Joan's own 18 short answers from her mini-exams, verbatim, as key words, not sentences. Read it, then the key words hide bit by bit. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      cards:{id:"pharm-cards", go:"Study the cards", ds:"Anki, stripped down: the 23 must-know abbreviations a card each, then the tool's short answers in Joan's format. Again, Hard, Good or Easy, and it schedules the rest."},
       rep:{id:"pharm-final", h:"learn", go:"Start repping", ds:"Joan's own mini-exam questions first, then the drugs she named. Each one marks itself the moment you answer.",
            more:[["pharm-final","miss","Redo my misses","i-redo"]]},
       write:{id:"pharm-final", h:"saq", go:"Write an answer", ds:"Short answers in Joan's format, a definition and an example. Type yours, then mark it against the model answer.",
