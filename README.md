@@ -23,7 +23,14 @@ as a quiet link is its own side. **Abbreviations** (Chart Speak, Pharm's side
 since Joan's "must, must, must" on 20 Oct) went too: all of them are Pharm
 flashcards, and Chart Speak is still under Placement and in the Library.
 Learn was renamed **Write** at the same time: on short-answer exams it's
-where you type the answers. Placement and the resits keep the old layout (one
+where you type the answers.
+
+Same night, after an audit against the 27 Oct revision recap: **INP's Write
+opens the sim's short-answer trainer** (`#saq`, the tool's 23, typed and
+marked against a model answer), with the verbatim page as a quiet link. INP's
+15 short answers are about 4 marks each, most of the paper, and the verbatim
+page holds only 4 pieces (Lisa sets no practice short answers). The HS2 mock
+card no longer claims the mock is built like her exam. Placement and the resits keep the old layout (one
 "Start here" tool, then the rest). Everything else (videos, the 3D body, the
 Pharmacology hub, Chart Speak…) is in the **Library** (`#tools`), filed by
 paper, and still found by search.
