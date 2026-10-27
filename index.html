@@ -303,6 +303,8 @@ const TOOLS = {
                     ds:"Explore a 3D body, one system at a time."},
   "pod-final":     {nm:"Final · SAQ Podcast", ic:"i-pod", url:"hs2-podcast/#final", kind:"listen", pp:"hs2", kw:"podcast audio listen mp3 saq written answers",
                     ds:"Every written question in the ten starred cases read aloud, in booklet order, one track each."},
+  "inp-learn":     {nm:"Learn the INP short answers", ic:"i-book", url:"inp-final/rep.html", kind:"learn", pp:"inp", kw:"learn guided recall spaced review short answers saq written revision janine key words",
+                    ds:"Janine's revision slides and the lecturers' own quiz answers, a piece at a time: read it, type the key words, it comes back over the next days."},
   "inp-final":     {nm:"INP Final · Paper Sim", ic:"i-target", url:"inp-final/", kind:"practise", pp:"inp", kw:"paper sim quiz quizzes nursing practice",
                     ds:"Every INP quiz question in one bank, with practice by topic and a timed full mock."},
   "chart-sim":     {nm:"Chart Sim", ic:"i-chart", url:"pharm-final/chart.html", kind:"practise", pp:"inp", kw:"chart sim nmc 8-day medication med chart charting sign signing codes prescription",
@@ -315,8 +317,10 @@ const TOOLS = {
                     ds:"Joan's method: a short learn path, your working marked box by box, and a test in her 15-question format."},
   "med-cheat":     {nm:"Practical cheat sheet", ic:"i-list", url:"med-admin-cheat.html", kind:"learn", pp:"ph", kw:"cheat sheet cram summary interactions salbutamol warfarin normal ranges med admin",
                     ds:"Vital signs and med admin on one page to cram from: normal ranges, the routines, two-step BP, both drugs and their interactions, and the traps."},
+  "pharm-learn":   {nm:"Learn the Pharm short answers", ic:"i-book", url:"pharm-final/rep.html", kind:"learn", pp:"ph", kw:"learn guided recall spaced review short answers saq written key words joan",
+                    ds:"Joan's 18 short answers first, then the tool's, a piece at a time: read it, type the key words, it comes back over the next days."},
   "pharm-final":   {nm:"Pharm Final · Paper Sim", ic:"i-target", url:"pharm-final/", kind:"practise", pp:"ph", kw:"paper sim",
-                    ds:"Pharmacology questions by topic, short answers in Joan's format (a definition and an example), and a timed mock."},
+                    ds:"Joan's three mini-exams first, then short answers in her format (a definition and an example), and a timed mock."},
   "m9-sum":        {nm:"Module 9 on one page", ic:"i-list", url:"pharm-final/m9-summary.pdf", kind:"learn", pp:"ph", kw:"summary pdf module 9 licit illicit drugs toxicology addiction dependence tolerance withdrawal poisoning antidote naloxone poisons centre",
                     ds:"Licit and illicit drugs and toxicology on one printable page: every term with an example, her correction, the Poisons Centre and antidotes."},
   "intro-pharm":   {nm:"Pharmacology hub", ic:"i-book", url:"intro-pharm/", kind:"learn", pp:"ph", kw:"hub topics drug classes pharmacokinetics pharmacodynamics antibiotics analgesics opioids receptors side effects adverse",
@@ -325,7 +329,8 @@ const TOOLS = {
 /* an exam is up to three sides, always in this order; one it has no tool for (no podcast yet) is left off.
    terms (20 Oct): Pharm's third side, because Joan said "must, must, must" about the abbreviations.
    gen (20 Oct): HS2 Test 3's fourth side, the Genetics Trainer, promoted from a quiet link under Rep.
-   learn (27 Oct): HS2 Final's guided-recall page; first, so the exam opens on it.
+   learn (27 Oct): HS2 Final's guided-recall page; first, so the exam opens on it. INP and Pharm got the same page
+   (rep.html in each Paper Sim) the same evening, and the same first side.
    mock (27 Oct): HS2 Final is Learn · Rep · Mock · Listen. Learn holds the written case questions (typed, page-marked,
    spaced); Rep came back the same day for the 81 that mark themselves; Write became a quiet link under Mock. */
 const SIDES = [["learn","Learn","i-book"],["rep","Rep questions","i-cards"],["write","Write answers","i-pen"],["mock","Mock exam","i-clock"],["listen","Listen","i-pod"],["terms","Abbreviations","i-abc"],["gen","Genetics","i-dna"]];
@@ -352,9 +357,10 @@ const PAPERS = [
      date:{on:"2026-11-02", chip:"Mon 2 Nov", what:"Final exam", txt:"Mon 2 Nov · on campus"},
      kw:"final exam quiz quizzes mock nursing practice",
      sides:{
-      rep:{id:"inp-final", h:"learn", go:"Start repping", ds:"Every INP quiz question in one bank. Each one marks itself the moment you answer.",
+      learn:{id:"inp-learn", go:"Start learning", ds:"Lisa sets no practice short answers, so this learns the written section from the lecturers' own material: Janine's revision slides in her words, then their quiz questions asked without the options, as key words, not sentences. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      rep:{id:"inp-final", h:"learn", go:"Start repping", ds:"Every INP quiz question in one bank, the lecturers' first. Each one marks itself the moment you answer.",
            more:[["inp-final","miss","Redo my misses","i-redo"]]},
-      write:{id:"inp-final", h:"saq", go:"Write an answer", ds:"Short answers across the quizzed topics. Type yours the way you will on the day, then mark it against the model answer.",
+      write:{id:"inp-final", h:"saq", go:"Write an answer", ds:"Short answers on the exam themes. Type yours the way you will on the day, then mark it against the model answer.",
            more:[["inp-final","mock","Sit the timed mock","i-clock"]]}}},
     {id:"place", t:"Placement", s:"Charts, abbreviations, med calc and your skills",
      date:{from:"2026-11-09", to:"2026-12-18", chip:"9 Nov", what:"Placement", verb:"starts", txt:"Placement runs Mon 9 Nov – Fri 18 Dec", keep:true},
@@ -377,7 +383,8 @@ const PAPERS = [
      date:{on:"2026-11-05", chip:"Thu 5 Nov", what:"Final exam", txt:"Thu 5 Nov · on campus, AM or PM group"},
      kw:"final exam short answer answers definition pharmacology mock",
      sides:{
-      rep:{id:"pharm-final", h:"learn", go:"Start repping", ds:"Pharmacology questions by topic. Each one marks itself the moment you answer.",
+      learn:{id:"pharm-learn", go:"Start learning", ds:"The written section as key words, not sentences: Joan's 18 short answers from her mini-exams first, then the tool's in her format. Read it, then the key words hide bit by bit. Then it's drilled: 2 in a row to lock a day, 3 days running to be solid."},
+      rep:{id:"pharm-final", h:"learn", go:"Start repping", ds:"Joan's own mini-exam questions first, then the drugs she named. Each one marks itself the moment you answer.",
            more:[["pharm-final","miss","Redo my misses","i-redo"]]},
       write:{id:"pharm-final", h:"saq", go:"Write an answer", ds:"Short answers in Joan's format, a definition and an example. Type yours, then mark it against the model answer.",
            more:[["pharm-final","mock","Sit the timed mock","i-clock"],["m9-sum","","Module 9 on one page (PDF)","i-list"]]},
