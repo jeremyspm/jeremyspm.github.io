@@ -1,0 +1,257 @@
+[
+ {
+  "id": "hub",
+  "lines": [
+   {
+    "text": "This is the BN2 study tools page.",
+    "file": "audio/hub-61a374f56b99.wav",
+    "sec": 2.332
+   },
+   {
+    "text": "All three finals are here, soonest first.",
+    "file": "audio/hub-88db43393c18.wav",
+    "sec": 2.295
+   },
+   {
+    "text": "Pick the exam you're studying for.",
+    "file": "audio/hub-166365b24bc0.wav",
+    "sec": 1.724
+   }
+  ]
+ },
+ {
+  "id": "tabs",
+  "lines": [
+   {
+    "text": "Each exam has a few tabs.",
+    "file": "audio/tabs-2968ee36c586.wav",
+    "sec": 1.691
+   },
+   {
+    "text": "Write, Flashcards, Rep questions and Mock.",
+    "file": "audio/tabs-40db557a15ed.wav",
+    "sec": 2.687
+   },
+   {
+    "text": "HS2 has Listen instead of Flashcards.",
+    "file": "audio/tabs-03537a7e8436.wav",
+    "sec": 2.538
+   },
+   {
+    "text": "I'll go through each one.",
+    "file": "audio/tabs-209d378c097b.wav",
+    "sec": 1.275
+   }
+  ]
+ },
+ {
+  "id": "write",
+  "lines": [
+   {
+    "text": "Write is for the written questions.",
+    "file": "audio/write-7682fcc4caf0.wav",
+    "sec": 1.695
+   },
+   {
+    "text": "For HS2 and Pharm, these are the lecturer's own questions.",
+    "file": "audio/write-8569003df3ed.wav",
+    "sec": 3.659
+   },
+   {
+    "text": "Nearly all the answers are hers too, from her model answers and her revision sessions.",
+    "file": "audio/write-b3c69406abbd.wav",
+    "sec": 4.772
+   },
+   {
+    "text": "The few that aren't are marked.",
+    "file": "audio/write-bad5085791cf.wav",
+    "sec": 1.477
+   },
+   {
+    "text": "You don't learn the whole answer word for word.",
+    "file": "audio/write-0c5880d69701.wav",
+    "sec": 2.127
+   },
+   {
+    "text": "You learn the key words that get the marks.",
+    "file": "audio/write-72a037393599.wav",
+    "sec": 2.058
+   },
+   {
+    "text": "First you read the answer.",
+    "file": "audio/write-33305229129a.wav",
+    "sec": 1.317
+   },
+   {
+    "text": "Then the key words get hidden, a few at a time.",
+    "file": "audio/write-dc62986a15f3.wav",
+    "sec": 2.428
+   },
+   {
+    "text": "Then you type them from memory, and the page marks it.",
+    "file": "audio/write-8837196418ae.wav",
+    "sec": 2.817
+   },
+   {
+    "text": "Get one right twice in a row and it's done for the day.",
+    "file": "audio/write-df0c8941574e.wav",
+    "sec": 2.841
+   },
+   {
+    "text": "Get it right three days in a row and you know it.",
+    "file": "audio/write-40bf16a88f36.wav",
+    "sec": 2.426
+   },
+   {
+    "text": "The box at the top tells you how many to do each day to finish before the exam.",
+    "file": "audio/write-000965192571.wav",
+    "sec": 4.44
+   }
+  ]
+ },
+ {
+  "id": "inp",
+  "lines": [
+   {
+    "text": "INP works a bit differently.",
+    "file": "audio/inp-f34f2f681bd9.wav",
+    "sec": 1.79
+   },
+   {
+    "text": "The short answers are about four marks each, so they're most of the paper.",
+    "file": "audio/inp-787854db6571.wav",
+    "sec": 3.747
+   },
+   {
+    "text": "The lecturers haven't given out practice ones, so these are written from the lecture slides.",
+    "file": "audio/inp-01df468fdd17.wav",
+    "sec": 4.757
+   },
+   {
+    "text": "Read the model answer, fill in the gaps, then write the whole thing yourself.",
+    "file": "audio/inp-82aba4cf006e.wav",
+    "sec": 4.064
+   },
+   {
+    "text": "Aim for about a hundred and fifty words, and use full sentences if the question says discuss.",
+    "file": "audio/inp-cdeeace5dbe5.wav",
+    "sec": 5.547
+   },
+   {
+    "text": "Keep going until you get eighty percent.",
+    "file": "audio/inp-3ed02a9aa96d.wav",
+    "sec": 2.152
+   }
+  ]
+ },
+ {
+  "id": "cards",
+  "lines": [
+   {
+    "text": "Flashcards are for everything else you need to remember.",
+    "file": "audio/cards-fda3cac5c1dc.wav",
+    "sec": 2.699
+   },
+   {
+    "text": "Revision slides, quiz questions without the options, abbreviations and short answers.",
+    "file": "audio/cards-9d0146c69bc5.wav",
+    "sec": 5.236
+   },
+   {
+    "text": "Think of the answer, then tap Show answer.",
+    "file": "audio/cards-254f7d845d60.wav",
+    "sec": 2.169
+   },
+   {
+    "text": "Then pick Again, Hard, Good or Easy.",
+    "file": "audio/cards-2963befa30bb.wav",
+    "sec": 2.251
+   },
+   {
+    "text": "Be honest, because that decides when the card comes back.",
+    "file": "audio/cards-c226f96bcd59.wav",
+    "sec": 3.033
+   },
+   {
+    "text": "It gives you enough new cards each day to get through them all before the exam.",
+    "file": "audio/cards-8ab3a061e55a.wav",
+    "sec": 4.237
+   }
+  ]
+ },
+ {
+  "id": "rep",
+  "lines": [
+   {
+    "text": "Rep questions is the multiple choice.",
+    "file": "audio/rep-ab1de190010d.wav",
+    "sec": 2.317
+   },
+   {
+    "text": "The lecturers' own quiz questions come first.",
+    "file": "audio/rep-a960382887be.wav",
+    "sec": 2.522
+   },
+   {
+    "text": "It marks each one as soon as you answer.",
+    "file": "audio/rep-f5d477d93be6.wav",
+    "sec": 1.921
+   },
+   {
+    "text": "Questions you haven't seen much come up first.",
+    "file": "audio/rep-6a6f7d748885.wav",
+    "sec": 2.247
+   },
+   {
+    "text": "Anything you get wrong goes into your misses, so you can redo just those.",
+    "file": "audio/rep-a32087845b94.wav",
+    "sec": 3.979
+   }
+  ]
+ },
+ {
+  "id": "mock",
+  "lines": [
+   {
+    "text": "Mock is a full practice exam with a timer.",
+    "file": "audio/mock-27d82512adc5.wav",
+    "sec": 2.445
+   },
+   {
+    "text": "Do one for each exam before the real thing, so you know how the time feels.",
+    "file": "audio/mock-ea1a14d0353a.wav",
+    "sec": 4.19
+   },
+   {
+    "text": "For HS2, the Listen tab has every written case question read out, one track each, so you can study while you're out.",
+    "file": "audio/mock-ecfdd48c3633.wav",
+    "sec": 7.131
+   }
+  ]
+ },
+ {
+  "id": "close",
+  "lines": [
+   {
+    "text": "So each day, do your Write round first, then flashcards, then some Rep.",
+    "file": "audio/close-214427f26a2d.wav",
+    "sec": 3.816
+   },
+   {
+    "text": "Leave the mock until a few days before.",
+    "file": "audio/close-ed5550e767f3.wav",
+    "sec": 2.27
+   },
+   {
+    "text": "Your progress is saved in your browser, so use the same device each time.",
+    "file": "audio/close-f76b84e72b9c.wav",
+    "sec": 4.339
+   },
+   {
+    "text": "Good luck.",
+    "file": "audio/close-6a0320be340e.wav",
+    "sec": 0.736
+   }
+  ]
+ }
+]

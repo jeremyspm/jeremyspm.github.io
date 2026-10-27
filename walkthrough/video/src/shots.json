@@ -1,0 +1,314 @@
+{
+ "w": 1120,
+ "h": 630,
+ "shots": {
+  "hub": {
+   "click": {
+    "x": 276,
+    "y": 293.1,
+    "width": 568,
+    "height": 100.0
+   },
+   "zoom": null
+  },
+  "inp-tabs": {
+   "click": null,
+   "zoom": {
+    "x": 276,
+    "y": 263.1,
+    "width": 568,
+    "height": 72.6
+   }
+  },
+  "hs2-tabs": {
+   "click": null,
+   "zoom": {
+    "x": 276,
+    "y": 263.1,
+    "width": 568,
+    "height": 72.6
+   }
+  },
+  "w-home": {
+   "click": {
+    "x": 229,
+    "y": 341.0,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": {
+    "x": 214,
+    "y": 199.7,
+    "width": 692,
+    "height": 203.1
+   }
+  },
+  "w-read": {
+   "click": {
+    "x": 229,
+    "y": 591.8,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": {
+    "x": 229,
+    "y": 453.8,
+    "width": 662,
+    "height": 120
+   }
+  },
+  "w-hide0": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 365.8,
+    "width": 662,
+    "height": 174.4
+   }
+  },
+  "w-hide1": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 365.8,
+    "width": 662,
+    "height": 174.4
+   }
+  },
+  "w-hide2": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 365.8,
+    "width": 662,
+    "height": 174.4
+   }
+  },
+  "w-hide3": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 365.8,
+    "width": 662,
+    "height": 174.4
+   }
+  },
+  "w-hide4": {
+   "click": {
+    "x": 229,
+    "y": 558.2,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": {
+    "x": 229,
+    "y": 365.8,
+    "width": 662,
+    "height": 174.4
+   }
+  },
+  "w-checked": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 299.5,
+    "width": 662,
+    "height": 120
+   }
+  },
+  "i-tab": {
+   "click": {
+    "x": 295,
+    "y": 464.7,
+    "width": 530,
+    "height": 47.8
+   },
+   "zoom": null
+  },
+  "i-list": {
+   "click": {
+    "x": 232,
+    "y": 235.2,
+    "width": 659,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "i-read": {
+   "click": {
+    "x": 229,
+    "y": 626.4,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "i-write0": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 244.5,
+    "width": 662,
+    "height": 200
+   }
+  },
+  "i-write1": {
+   "click": null,
+   "zoom": null
+  },
+  "i-write2": {
+   "click": null,
+   "zoom": null
+  },
+  "i-write3": {
+   "click": null,
+   "zoom": null
+  },
+  "i-write4": {
+   "click": null,
+   "zoom": null
+  },
+  "i-write5": {
+   "click": {
+    "x": 229,
+    "y": 459.3,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "i-marked": {
+   "click": null,
+   "zoom": null
+  },
+  "c-tab": {
+   "click": {
+    "x": 295,
+    "y": 464.7,
+    "width": 530,
+    "height": 47.8
+   },
+   "zoom": null
+  },
+  "c-decks": {
+   "click": {
+    "x": 229,
+    "y": 849.9,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "c-front": {
+   "click": {
+    "x": 214,
+    "y": 341.9,
+    "width": 692,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "c-back": {
+   "click": {
+    "x": 563,
+    "y": 449,
+    "width": 168.5,
+    "height": 84.3
+   },
+   "zoom": {
+    "x": 214,
+    "y": 435,
+    "width": 692,
+    "height": 108.3
+   }
+  },
+  "c-next": {
+   "click": null,
+   "zoom": null
+  },
+  "r-tab": {
+   "click": {
+    "x": 295,
+    "y": 422.7,
+    "width": 530,
+    "height": 47.8
+   },
+   "zoom": null
+  },
+  "r-menu": {
+   "click": {
+    "x": 232,
+    "y": 246.2,
+    "width": 659,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "r-q": {
+   "click": {
+    "x": 229,
+    "y": 300.2,
+    "width": 662,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "r-picked": {
+   "click": {
+    "x": 564,
+    "y": 573.2,
+    "width": 542,
+    "height": 46.8
+   },
+   "zoom": null
+  },
+  "r-checked": {
+   "click": null,
+   "zoom": null
+  },
+  "r-misses": {
+   "click": null,
+   "zoom": {
+    "x": 232,
+    "y": 301.0,
+    "width": 659,
+    "height": 99.6
+   }
+  },
+  "m-tab": {
+   "click": {
+    "x": 295,
+    "y": 443.7,
+    "width": 530,
+    "height": 47.8
+   },
+   "zoom": null
+  },
+  "m-menu": {
+   "click": null,
+   "zoom": {
+    "x": 229,
+    "y": 311.6,
+    "width": 662,
+    "height": 46.8
+   }
+  },
+  "l-tab": {
+   "click": {
+    "x": 295,
+    "y": 422.7,
+    "width": 530,
+    "height": 47.8
+   },
+   "zoom": null
+  },
+  "l-pod": {
+   "click": null,
+   "zoom": null
+  },
+  "end": {
+   "click": null,
+   "zoom": null
+  }
+ }
+}

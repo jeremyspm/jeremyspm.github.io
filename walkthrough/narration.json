@@ -1,0 +1,85 @@
+[
+ {
+  "id": "hub",
+  "lines": [
+   "This is the BN2 study tools page.",
+   "All three finals are here, soonest first.",
+   "Pick the exam you're studying for."
+  ]
+ },
+ {
+  "id": "tabs",
+  "lines": [
+   "Each exam has a few tabs.",
+   "Write, Flashcards, Rep questions and Mock.",
+   "HS2 has Listen instead of Flashcards.",
+   "I'll go through each one."
+  ]
+ },
+ {
+  "id": "write",
+  "lines": [
+   "Write is for the written questions.",
+   "For HS2 and Pharm, these are the lecturer's own questions.",
+   "Nearly all the answers are hers too, from her model answers and her revision sessions.",
+   "The few that aren't are marked.",
+   "You don't learn the whole answer word for word.",
+   "You learn the key words that get the marks.",
+   "First you read the answer.",
+   "Then the key words get hidden, a few at a time.",
+   "Then you type them from memory, and the page marks it.",
+   "Get one right twice in a row and it's done for the day.",
+   "Get it right three days in a row and you know it.",
+   "The box at the top tells you how many to do each day to finish before the exam."
+  ]
+ },
+ {
+  "id": "inp",
+  "lines": [
+   "INP works a bit differently.",
+   "The short answers are about four marks each, so they're most of the paper.",
+   "The lecturers haven't given out practice ones, so these are written from the lecture slides.",
+   "Read the model answer, fill in the gaps, then write the whole thing yourself.",
+   "Aim for about a hundred and fifty words, and use full sentences if the question says discuss.",
+   "Keep going until you get eighty percent."
+  ]
+ },
+ {
+  "id": "cards",
+  "lines": [
+   "Flashcards are for everything else you need to remember.",
+   "Revision slides, quiz questions without the options, abbreviations and short answers.",
+   "Think of the answer, then tap Show answer.",
+   "Then pick Again, Hard, Good or Easy.",
+   "Be honest, because that decides when the card comes back.",
+   "It gives you enough new cards each day to get through them all before the exam."
+  ]
+ },
+ {
+  "id": "rep",
+  "lines": [
+   "Rep questions is the multiple choice.",
+   "The lecturers' own quiz questions come first.",
+   "It marks each one as soon as you answer.",
+   "Questions you haven't seen much come up first.",
+   "Anything you get wrong goes into your misses, so you can redo just those."
+  ]
+ },
+ {
+  "id": "mock",
+  "lines": [
+   "Mock is a full practice exam with a timer.",
+   "Do one for each exam before the real thing, so you know how the time feels.",
+   "For HS2, the Listen tab has every written case question read out, one track each, so you can study while you're out."
+  ]
+ },
+ {
+  "id": "close",
+  "lines": [
+   "So each day, do your Write round first, then flashcards, then some Rep.",
+   "Leave the mock until a few days before.",
+   "Your progress is saved in your browser, so use the same device each time.",
+   "Good luck."
+  ]
+ }
+]
