@@ -12,9 +12,17 @@ sparkles**. Tap an exam and it is its **sides**, always in this order:
 written questions, verbatim, typed as key words and drilled over days),
 **Flashcards** (`cards.html`: everything that isn't verbatim, Anki-style),
 **Rep questions** (the sim's question bank, marked as you go), **Mock exam**
-and **Listen** (the podcast, only where one exists). INP and Pharm are Write ·
-Flashcards · Rep · Mock; HS2 Final is Write · Rep · Mock · Listen. Each side is
-one big button and at most two quiet links.
+and **Listen** (the podcast, only where one exists). INP is Write · Flashcards ·
+Rep · Mock · Listen; Pharm is Write · Flashcards · Rep · Mock; HS2 Final is
+Write · Rep · Mock · Listen. Each side is one big button and at most two quiet
+links.
+
+31 Oct: **INP's Listen** is the forecast podcast
+([inp-pharm-podcast](https://jeremyspm.github.io/inp-pharm-podcast/#inp), its
+own repo, since hs2-podcast stays HS2 only). There is no case booklet and no
+posted short answer, so each track is a question the lecturers pointed at (the
+Exam Content themes, both revision decks, the 27 Oct session), answered the way
+Lisa's marking guide splits the marks. Pharm's episode goes in the same podcast.
 
 27 Oct cleanup: the old **Write answers** side (the sim's `#saq`, the tool's
 own short answers against a model answer) is gone, because those answers are
